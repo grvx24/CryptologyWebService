@@ -12218,23 +12218,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hubi\\.nuget\\packages\\": {},
+    "C:\\Users\\Kamil\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hubi\\Desktop\\Generatorsv3\\CryptologyWebService\\CryptoWebService.csproj",
+      "projectUniqueName": "C:\\Users\\Kamil\\source\\repos\\CryptoWebService\\CryptoWebService\\CryptoWebService.csproj",
       "projectName": "CryptoWebService",
-      "projectPath": "C:\\Users\\Hubi\\Desktop\\Generatorsv3\\CryptologyWebService\\CryptoWebService.csproj",
-      "packagesPath": "C:\\Users\\Hubi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hubi\\Desktop\\Generatorsv3\\CryptologyWebService\\obj\\",
+      "projectPath": "C:\\Users\\Kamil\\source\\repos\\CryptoWebService\\CryptoWebService\\CryptoWebService.csproj",
+      "packagesPath": "C:\\Users\\Kamil\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kamil\\source\\repos\\CryptoWebService\\CryptoWebService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Hubi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kamil\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
