@@ -16,4 +16,16 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Backend\CryptographicAlgorithms\RSA\" />
+    <Folder Include="Backend\Generators\" />
+    <Folder Include="Backend\FipsTests\" />
+    <Folder Include="Backend\ClassicCiphers\" />
+    <Folder Include="Backend\VisualCryptography\" />
+    <Folder Include="Backend\Quiz\" />
+    <Folder Include="Backend\StreamEncoder\" />
+    <Folder Include="Images\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
