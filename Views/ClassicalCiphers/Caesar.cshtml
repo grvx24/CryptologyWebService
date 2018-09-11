@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Caesar";
+}
+
+<h2>Caesar</h2>
+
+@using (Html.BeginForm("Caesar", "ClassicalCiphers", null, FormMethod.Post))
+{
+    <input type="text" name="message"/>
+    <input type="text" name ="key"/>
+    <input type="submit" value="Szyfruj"/>
+
+}
+
+@{
+    @Html.Raw(ViewData["EncryptedMessage"]);
+}

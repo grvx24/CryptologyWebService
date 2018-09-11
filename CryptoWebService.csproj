@@ -6,26 +6,50 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Backend\ClassicCiphers\**" />
+    <Compile Remove="Backend\FipsTests\**" />
+    <Compile Remove="Backend\Generators\**" />
+    <Compile Remove="Backend\Quiz\**" />
+    <Compile Remove="Backend\RSA\**" />
+    <Compile Remove="Backend\StreamEncoder\**" />
+    <Compile Remove="Backend\VisualCryptography\**" />
+    <Content Remove="Backend\ClassicCiphers\**" />
+    <Content Remove="Backend\FipsTests\**" />
+    <Content Remove="Backend\Generators\**" />
+    <Content Remove="Backend\Quiz\**" />
+    <Content Remove="Backend\RSA\**" />
+    <Content Remove="Backend\StreamEncoder\**" />
+    <Content Remove="Backend\VisualCryptography\**" />
+    <EmbeddedResource Remove="Backend\ClassicCiphers\**" />
+    <EmbeddedResource Remove="Backend\FipsTests\**" />
+    <EmbeddedResource Remove="Backend\Generators\**" />
+    <EmbeddedResource Remove="Backend\Quiz\**" />
+    <EmbeddedResource Remove="Backend\RSA\**" />
+    <EmbeddedResource Remove="Backend\StreamEncoder\**" />
+    <EmbeddedResource Remove="Backend\VisualCryptography\**" />
+    <None Remove="Backend\ClassicCiphers\**" />
+    <None Remove="Backend\FipsTests\**" />
+    <None Remove="Backend\Generators\**" />
+    <None Remove="Backend\Quiz\**" />
+    <None Remove="Backend\RSA\**" />
+    <None Remove="Backend\StreamEncoder\**" />
+    <None Remove="Backend\VisualCryptography\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="Views\Shared\_CustomLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Backend\CryptographicAlgorithms\RSA\" />
-    <Folder Include="Backend\Generators\" />
-    <Folder Include="Backend\FipsTests\" />
-    <Folder Include="Backend\ClassicCiphers\" />
-    <Folder Include="Backend\VisualCryptography\" />
-    <Folder Include="Backend\Quiz\" />
-    <Folder Include="Backend\StreamEncoder\" />
-    <Folder Include="Images\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

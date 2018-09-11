@@ -7,7 +7,6 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/simple-sidebar.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -16,62 +15,58 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    <style>
-        #wrapper.active #sidebar-wrapper 
-        {
-            left: 50px;
-        }
-    </style>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-left">
-            <a id="sidebarCollapse" class="glyphicon glyphicon-list navbar-brand"></a>
-        </div>
+    <nav class="navbar navbar-default">
         <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Cryptography Harvester</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Krypto-Kombajn</a>
             </div>
-            <div class="navbar-collapse collapse">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Autorzy</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">IndexTest</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">AboutTest</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">ContactTest</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfry klasyczne <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Szyfr1</a></li>
+                            <li><a href="#">Szyfr2</a></li>
+                            <li><a href="#">Szyfr3</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Testy</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Testy2</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <partial name="_LoginPartial" />
-            </div>
-        </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <partial name="_LoginPartial"/>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
     </nav>
 
-<div id="wrapper" class="toggled">
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand"><a href="#">Kategorie </a></li>
-            <li><a href="#">Somsiady</a> </li>
-            <li><a href="#">Menele</a> </li>
-            <li><a href="#">Małpy</a> </li>
-            <li><a href="#">Zwierzaki</a> </li>
-            <li><a href="#">Dziki</a> </li>
-        </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <br />
-        <br />
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
         @RenderBody()
-        
         <hr />
         <footer>
             <p>&copy; 2018 - CryptoWebService</p>
         </footer>
     </div>
-    <!-- /#page-content-wrapper -->
-</div>
-
-
-<partial name="_CookieConsentPartial" />
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -97,13 +92,3 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script>
-
-
-    $(document).ready(function () {
-        $("#sidebarCollapse").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    });
-</script>
