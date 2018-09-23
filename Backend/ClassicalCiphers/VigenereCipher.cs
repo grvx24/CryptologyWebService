@@ -8,7 +8,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 {
     public class VigenereCipher : IClassicalCiphers
     {
-        private Dictionary<char, int> _positionDictionary;
+        private readonly Dictionary<char, int> _positionDictionary;
         public string Alphabet { get; set; }
         public string Key { get; set; }
 
