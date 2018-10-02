@@ -2,17 +2,54 @@
 @{
     ViewData["Title"] = "Caesar";
 }
+<link rel="stylesheet" type="text/css" href="~/css/classical_ciphers.css">
+    <div class="tab">
+        <button  class="tablinks" onclick="openTab(event, 'Description')">Opis</button>
+        <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Working')">Działanie</button>
+    </div>
 
-<h2>Caesar</h2>
+    <div id="Description" class="tabcontent">
+        <h3>Opis</h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
-@using (Html.BeginForm("Caesar", "ClassicalCiphers", null, FormMethod.Post))
-{
-    <input type="text" name="message"/>
-    <input type="text" name ="key"/>
-    <input type="submit" value="Szyfruj"/>
+            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
 
-}
+            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
 
-@{
-    @Html.Raw(ViewData["EncryptedMessage"]);
-}
+            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
+
+        </p>
+    </div>
+
+    <div id="Working" class="tabcontent">
+        <h3>Działanie</h3>
+        <p>U mnie działa.</p>
+        <div class="form-group">
+            <label for="comment">Wpisz tekst do zaszyfrowania:</label>
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="comment">Zaszyfrowany tekst.</label>
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+        </div>
+    </div>
+
+<script>
+
+    document.getElementById("defaultOpen").click();
+
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>

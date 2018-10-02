@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CryptoWebService.Backend.ClassicalCiphers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CryptoWebService.Controllers.ClassicalCiphers
+namespace CryptoWebService.Controllers.Ciphers
 {
     public class ClassicalCiphersController : Controller
     {

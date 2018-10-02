@@ -47,6 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\classical_ciphers.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Shared\_CustomLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
