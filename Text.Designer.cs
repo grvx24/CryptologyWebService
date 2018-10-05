@@ -70,6 +70,24 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wartość A.
+        /// </summary>
+        public static string AffineCipherKeyA {
+            get {
+                return ResourceManager.GetString("AffineCipherKeyA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wartość B.
+        /// </summary>
+        public static string AffineCipherKeyB {
+            get {
+                return ResourceManager.GetString("AffineCipherKeyB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Angielski.
         /// </summary>
         public static string Alphabet_EN {

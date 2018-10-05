@@ -11,37 +11,50 @@ namespace CryptoWebService.Backend.ClassicalCiphers
     public class AffineCipher : IClassicalCiphers
     {
         private Dictionary<char, int> _positionDictionary;
-        public string Alphabet { get; set; }
+        private string _alphabet;
+
+        public string Alphabet
+        {
+            get => _alphabet;
+            set
+            {
+                _alphabet = value;
+                _positionDictionary = new Dictionary<char, int>();
+
+                for (var i = 0; i < Alphabet.Length; i++)
+                {
+                    _positionDictionary.Add(Alphabet[i], i);
+                }
+            }
+        }
 
         public int A { get; set; }
         public int B { get; set; }
 
-        public AffineCipher(int A,int B)
+        public AffineCipher(int a,int b)
         {
-            if (A % 2 == 0)
+            if (a % 2 == 0)
             {
-                throw new ArgumentException("Argument A must be odd",nameof(A));
+                throw new ArgumentException("Argument A must be odd",nameof(a));
             }
 
-            this.A = A;
-            this.B = B;
+            this.A = a;
+            this.B = b;
 
-            _positionDictionary = new Dictionary<char, int>();
 
-            for (var i = 0; i < Alphabet.Length; i++)
-            {
-                _positionDictionary.Add(Alphabet[i], i);
-            }
         }
 
         public string Encrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+            char[] encrypted = new char[message.Length];
             try
             {
-                char[] encrypted = new char[message.Length];
+
                 for (int i = 0; i < message.Length; i++)
                 {
-                    int offset = (A * _positionDictionary[message[i]] + B) % Alphabet.Length;
+                    int offset = (A * _positionDictionary[message[i]] + B) % Alphabet.Length-1;
                     encrypted[i] = Alphabet[offset];
                 }
 
@@ -57,6 +70,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Decrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+
             var aInversed = MathHelper.ModInverse(A, Alphabet.Length);
             char[] decrypted = new char[message.Length];
             try
@@ -64,7 +80,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 for (int i = 0; i < message.Length; i++)
                 {
                     var charPosition = _positionDictionary[message[i]];
-                    var offset = (aInversed * (charPosition - B)) % Alphabet.Length;
+                    var offset = (aInversed * (charPosition - B)) % Alphabet.Length-1;
                     decrypted[i] = Alphabet[offset];
                 }
 

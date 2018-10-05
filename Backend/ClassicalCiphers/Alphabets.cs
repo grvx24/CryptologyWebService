@@ -36,30 +36,22 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             PL_Digits_Extended
         }
 
-        public string Alphabet { get; set; }
-
-        public Alphabets(AlphabetType type)
+        public static string GetAlphabet(AlphabetType type)
         {
             switch (type)
             {
                 case AlphabetType.EN:
-                    Alphabet = ALPHABET_EN;
-                    break;
+                    return ALPHABET_EN;
                 case AlphabetType.PL:
-                    Alphabet = ALPHABET_PL;
-                    break;
+                    return ALPHABET_PL;
                 case AlphabetType.EN_Digits:
-                    Alphabet = ALPHABET_EN + DIGITS;
-                    break;
+                    return ALPHABET_EN + DIGITS;
                 case AlphabetType.PL_Digits:
-                    Alphabet = ALPHABET_PL + DIGITS;
-                    break;
+                    return ALPHABET_PL + DIGITS;
                 case AlphabetType.EN_Digits_Extended:
-                    Alphabet = ALPHABET_EN + DIGITS + PUNCTUATION+WHITESPACE;
-                    break;
+                    return ALPHABET_EN + DIGITS + PUNCTUATION+WHITESPACE;
                 case AlphabetType.PL_Digits_Extended:
-                    Alphabet = ALPHABET_PL + DIGITS + PUNCTUATION + WHITESPACE;
-                    break;
+                    return ALPHABET_PL + DIGITS + PUNCTUATION + WHITESPACE;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

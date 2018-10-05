@@ -27,29 +27,11 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult CaesarEncrypt([FromBody]CaesarCipherViewModel viewModel)
         {
-            CaesarCipher cipher = new CaesarCipher(Alphabets.ALPHABET_EN,viewModel.Key);
-            switch ((Alphabets.AlphabetType)viewModel.AlphabetType)
+            CaesarCipher cipher = new CaesarCipher(viewModel.Key)
             {
-                case Alphabets.AlphabetType.EN:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN;
-                    break;
-                case Alphabets.AlphabetType.PL:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL;
-                    break;
-                case Alphabets.AlphabetType.EN_Digits:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN_DIGITS;
-                    break;
-                case Alphabets.AlphabetType.PL_Digits:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL_DIGITS;
-                    break;
-                case Alphabets.AlphabetType.EN_Digits_Extended:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN_EXTENDED;
-                    break;
-                case Alphabets.AlphabetType.PL_Digits_Extended:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL_EXTENDED;
-                    break;
-            }
-            
+                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType) viewModel.AlphabetType)
+            };
+            cipher.Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType) viewModel.AlphabetType);
 
             string encrypted = "";
             try
@@ -70,28 +52,10 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult CaesarDecrypt([FromBody]CaesarCipherViewModel viewModel)
         {
-            CaesarCipher cipher = new CaesarCipher(Alphabets.ALPHABET_EN, viewModel.Key);
-            switch ((Alphabets.AlphabetType)viewModel.AlphabetType)
+            CaesarCipher cipher = new CaesarCipher(viewModel.Key)
             {
-                case Alphabets.AlphabetType.EN:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN;
-                    break;
-                case Alphabets.AlphabetType.PL:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL;
-                    break;
-                case Alphabets.AlphabetType.EN_Digits:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN_DIGITS;
-                    break;
-                case Alphabets.AlphabetType.PL_Digits:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL_DIGITS;
-                    break;
-                case Alphabets.AlphabetType.EN_Digits_Extended:
-                    cipher.Alphabet = Alphabets.ALPHABET_EN_EXTENDED;
-                    break;
-                case Alphabets.AlphabetType.PL_Digits_Extended:
-                    cipher.Alphabet = Alphabets.ALPHABET_PL_EXTENDED;
-                    break;
-            }
+                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType) viewModel.AlphabetType)
+            };
 
             string decrypted = "";
             try
@@ -102,6 +66,55 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
+            return Json(decrypted);
+        }
+
+        [HttpGet]
+        public IActionResult Affine()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AffineEncrypt([FromBody] AffineCipherViewModel viewModel)
+        {
+            AffineCipher cipher = new AffineCipher(viewModel.KeyA, viewModel.KeyB)
+            {
+                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType) viewModel.AlphabetType)
+            };
+
+            string encrypted = "";
+
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+
+            return Json(encrypted);
+        }
+        [HttpPost]
+        public IActionResult AffineDecrypt([FromBody] AffineCipherViewModel viewModel)
+        {
+            AffineCipher cipher = new AffineCipher(viewModel.KeyA, viewModel.KeyB)
+            {
+                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType)
+            };
+
+            string decrypted = "";
+
+            try
+            {
+                decrypted = cipher.Decrypt(viewModel.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+
             return Json(decrypted);
         }
     }

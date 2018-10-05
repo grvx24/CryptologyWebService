@@ -30,9 +30,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public int Key{ get; set; }
 
-        public CaesarCipher(string alphabet,int key)
+        public CaesarCipher(int key)
         {
-            this.Alphabet = alphabet;
             this.Key = key;
         }
 

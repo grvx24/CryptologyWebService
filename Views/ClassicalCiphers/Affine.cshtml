@@ -1,8 +1,9 @@
-﻿@model CryptoWebService.Models.Ciphers.CaesarCipherViewModel
-@using CryptoWebService.Backend.ClassicalCiphers
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+
 @{
-    ViewData["Title"] = "Caesar";
+    ViewData["Title"] = "Affine";
 }
+
 <script src="~/js/ciphers/ClassicalCiphers.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/classical_ciphers.css">
 
@@ -33,11 +34,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <label for="keyEncrypt">@Text.Key</label>
-                    <select id="keyEncrypt" class="form-control">
+                <div class="col-md-3">
+                    <label for="keyEncryptA">@Text.AffineCipherKeyA</label>
+                    <select id="keyEncryptA" class="form-control">
                         @{
-                            for (int i = 1; i <= 50; i++)
+                            for (int i = 1; i <= 50; i+=2)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="keyEncryptB">@Text.AffineCipherKeyB</label>
+                    <select id="keyEncryptB" class="form-control">
+                        @{
+                            for (int i = 0; i <= 50; i++)
                             {
                                 @Html.Raw("<option value=" + i + ">" + i + "</option>")
                             }
@@ -101,11 +113,22 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <label for="keyDecrypt">@Text.Key</label>
-                    <select id="keyDecrypt" class="form-control">
+                <div class="col-md-3">
+                    <label for="keyDecryptA">@Text.AffineCipherKeyA</label>
+                    <select id="keyDecryptA" class="form-control">
                         @{
-                            for (int i = 1; i <= 50; i++)
+                            for (int i = 1; i <= 50; i += 2)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="keyDecryptB">@Text.AffineCipherKeyB</label>
+                    <select id="keyDecryptB" class="form-control">
+                        @{
+                            for (int i = 0; i <= 50; i++)
                             {
                                 @Html.Raw("<option value=" + i + ">" + i + "</option>")
                             }
@@ -234,14 +257,17 @@
             }
         });
 
-
     //Ajax
-    var caesarInit = CaesarCipherInit({
+    var affineInit = AffineCipherInit({
         urls: {
-            encryptUrl: '@Url.Action("CaesarEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("CaesarDecrypt", "ClassicalCiphers")'
+            encryptUrl: '@Url.Action("AffineEncrypt", "ClassicalCiphers")',
+            decryptUrl: '@Url.Action("AffineDecrypt", "ClassicalCiphers")'
         }
     });
 
-    caesarInit.init();
+    affineInit.init();
+
+
+
+
 </script>

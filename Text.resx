@@ -120,6 +120,12 @@
   <data name="Action" xml:space="preserve">
     <value>Działanie</value>
   </data>
+  <data name="AffineCipherKeyA" xml:space="preserve">
+    <value>Wartość A</value>
+  </data>
+  <data name="AffineCipherKeyB" xml:space="preserve">
+    <value>Wartość B</value>
+  </data>
   <data name="Alphabet_EN" xml:space="preserve">
     <value>Angielski</value>
   </data>
