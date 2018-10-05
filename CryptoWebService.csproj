@@ -47,12 +47,32 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\classical_ciphers.css" />
+    <None Include="wwwroot\js\ciphers\ClassicalCiphers.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Text.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Text.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Shared\_CustomLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\WaterMarks.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Text.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
