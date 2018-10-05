@@ -1,15 +1,19 @@
-﻿
+﻿@model CryptoWebService.Models.Ciphers.CaesarCipherViewModel
+@using CryptoWebService.Backend.ClassicalCiphers
 @{
     ViewData["Title"] = "Caesar";
 }
+<script src="~/js/ciphers/ClassicalCiphers.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/classical_ciphers.css">
+
+<div class="container">
     <div class="tab">
-        <button  class="tablinks" onclick="openTab(event, 'Description')">Opis</button>
-        <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Working')">Działanie</button>
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        <h3>Opis</h3>
+        <h2>@Text.Description</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
@@ -21,35 +25,236 @@
 
         </p>
     </div>
-
     <div id="Working" class="tabcontent">
-        <h3>Działanie</h3>
-        <p>U mnie działa.</p>
-        <div class="form-group">
-            <label for="comment">Wpisz tekst do zaszyfrowania:</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 align="center">@Text.Encryptor</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="keyEncrypt">@Text.Key</label>
+                    <select id="keyEncrypt" class="form-control">
+                        @{
+                            for (int i = 1; i <= 50; i++)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="alphabetEncrypt">@Text.ChooseAlphabet</label>
+                    <select id="alphabetEncrypt" class="form-control">
+                        @{
+                            for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
+                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="outputEncrypt">@Text.EncryptedText</label>
+                        <textarea class="form-control" rows="5" id="outputEncrypt"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-6">
+                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Szyfruj</button>
+                </span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>@Text.AvailableCharacters</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="word-break: break-all;" id="availableCharsEncrypt">@Alphabets.ALPHABET_EN</p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="comment">Zaszyfrowany tekst.</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 align="center">@Text.Decryptor</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="keyDecrypt">@Text.Key</label>
+                    <select id="keyDecrypt" class="form-control">
+                        @{
+                            for (int i = 1; i <= 50; i++)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="alphabetDecrypt">@Text.ChooseAlphabet</label>
+                    <select id="alphabetDecrypt" class="form-control">
+                        @{
+                            for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
+                            {
+                                @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="inputDecrypt">@Text.WriteTextToDecrypt</label>
+                        <textarea class="form-control" rows="5" id="inputDecrypt"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="outputDecrypt">@Text.DecryptedText</label>
+                        <textarea class="form-control" rows="5" id="outputDecrypt"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-6">
+                    <button style="margin-top: 5px" class="btn btn-primary" id="decryptButton" type="submit">Deszyfruj</button>
+                </span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>@Text.AvailableCharacters</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="word-break: break-all;" id="availableCharsDecrypt"> @Alphabets.ALPHABET_EN</p>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
 
 <script>
 
-    document.getElementById("defaultOpen").click();
+    document.getElementById("defaultPageButton").click();
 
     function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
         }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
         }
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
+
+    $("#alphabetEncrypt").on('change',
+        function() {
+            var paragraph = $("#availableCharsEncrypt");
+            var selectedAlphabet = $("#alphabetEncrypt").prop("selectedIndex");
+            switch (selectedAlphabet) {
+            case 0:
+                paragraph.html('@Alphabets.ALPHABET_EN');
+                break;
+            case 1:
+                paragraph.html('@Alphabets.ALPHABET_PL');
+                break;
+            case 2:
+                paragraph.html('@Alphabets.ALPHABET_EN_DIGITS');
+                break;
+            case 3:
+                paragraph.html('@Alphabets.ALPHABET_PL_DIGITS');
+                break;
+            case 4:
+                paragraph.html('@Alphabets.ALPHABET_EN_EXTENDED');
+                break;
+            case 5:
+                paragraph.html('@Alphabets.ALPHABET_PL_EXTENDED');
+                break;
+            }
+        });
+
+    $("#alphabetDecrypt").on('change',
+        function() {
+            var paragraph = $("#availableCharsDecrypt");
+            var selectedAlphabet = $("#alphabetDecrypt").prop("selectedIndex");
+            switch (selectedAlphabet) {
+                case 0:
+                    paragraph.html('@Alphabets.ALPHABET_EN');
+                    break;
+                case 1:
+                    paragraph.html('@Alphabets.ALPHABET_PL');
+                    break;
+                case 2:
+                    paragraph.html('@Alphabets.ALPHABET_EN_DIGITS');
+                    break;
+                case 3:
+                    paragraph.html('@Alphabets.ALPHABET_PL_DIGITS');
+                    break;
+                case 4:
+                    paragraph.html('@Alphabets.ALPHABET_EN_EXTENDED');
+                    break;
+                case 5:
+                    paragraph.html('@Alphabets.ALPHABET_PL_EXTENDED');
+                    break;
+            }
+        });
+
+    
+
+
+    function changeAlphabetDecrypt() {
+        var select = document.getElementById("alphabetDecrypt");
+        var alphabetParagraph = document.getElementById("availableCharsDecrypt");
+        var index = select.selectedIndex;
+
+    }
+
+    //Ajax
+    var caesarInit = CaesarCipherInit({
+        urls: {
+            caesarEncryptUrl: '@Url.Action("CaesarEncrypt", "ClassicalCiphers")',
+            caesarDecryptUrl: '@Url.Action("CaesarDecrypt", "ClassicalCiphers")'
+        }
+    });
+
+    caesarInit.init();
+
+
+
+
 </script>
