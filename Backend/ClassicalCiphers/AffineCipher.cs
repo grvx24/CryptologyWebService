@@ -51,10 +51,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             char[] encrypted = new char[message.Length];
             try
             {
-
                 for (int i = 0; i < message.Length; i++)
                 {
-                    int offset = (A * _positionDictionary[message[i]] + B) % Alphabet.Length-1;
+                    int offset = (A * _positionDictionary[message[i]] + B) % Alphabet.Length;
                     encrypted[i] = Alphabet[offset];
                 }
 
@@ -62,8 +61,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw e;
             }
 
         }
@@ -80,7 +78,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 for (int i = 0; i < message.Length; i++)
                 {
                     var charPosition = _positionDictionary[message[i]];
-                    var offset = (aInversed * (charPosition - B)) % Alphabet.Length-1;
+                    var x = (aInversed * (charPosition - B));
+                    var offset = MathHelper.Modulo(x, Alphabet.Length);
                     decrypted[i] = Alphabet[offset];
                 }
 

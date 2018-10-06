@@ -13,11 +13,6 @@ namespace CryptoWebService.Controllers.Ciphers
 {
     public class ClassicalCiphersController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Caesar()
         {
@@ -116,6 +111,12 @@ namespace CryptoWebService.Controllers.Ciphers
             }
 
             return Json(decrypted);
+        }
+
+        [HttpGet]
+        public IActionResult Bacon()
+        {
+            return View();
         }
     }
 }
