@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoWebService", "CryptoWebService.csproj", "{AB580420-CAAA-408F-AD8E-7046A36C8EEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB580420-CAAA-408F-AD8E-7046A36C8EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB580420-CAAA-408F-AD8E-7046A36C8EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB580420-CAAA-408F-AD8E-7046A36C8EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB580420-CAAA-408F-AD8E-7046A36C8EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0268ADF4-B6B7-42EC-86B1-A708D8E71CF4}
+	EndGlobalSection
+EndGlobal

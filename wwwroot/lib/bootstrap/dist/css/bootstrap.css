@@ -4493,8 +4493,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+    background-color: white;
+    border-color: #1c5aa6;
 }
 .navbar-default .navbar-brand {
   color: #777;
@@ -4508,12 +4508,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777;
+  color: #1c5aa6;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333;
-  background-color: transparent;
+  color: white;
+  background-color: #1c5aa6;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -6755,3 +6755,46 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+#navbar-default-top {
+    background-color: #1c5aa6;
+    min-height: 30px;
+    max-height: 30px;
+    height: 30px;
+    
+}
+
+#navbar-nav-top a {
+    background-color: #1c5aa6;
+    color: #fff;
+    min-height: 29px;
+    max-height: 29px;
+    height: 29px;
+    padding-bottom:3.5px;
+    padding-top:3.5px;
+}
+
+#navbar-nav-top a:hover {
+        color: midnightblue;
+    }
+
+#navbar-nav-top .active a {
+    background-color: wheat;
+    color: deeppink;
+}
+
+#icon-bar-top {
+    background: white !important; 
+    width: 20px;
+    height: 1px;
+    margin: 5px 5px 1px 5px;
+}
+
+#navbar-toggle-top {
+    background: #1c5aa6 !important; 
+    border-bottom-color:white;
+    margin: 4px 2px 2px 0px;
+    width: 25px;
+    height: 5px;
+}
+
+
