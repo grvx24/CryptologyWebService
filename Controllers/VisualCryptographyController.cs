@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Drawing;
 
 namespace CryptoWebService.Controllers
 {
@@ -21,9 +22,9 @@ namespace CryptoWebService.Controllers
 
             ms.Write(imageBytes, 0, imageBytes.Length);
 
+            var image = new Bitmap(System.Drawing.Image.FromFile(inputPath);
 
-            
-            Bitmap bmpReturn = null;
+            //Bitmap bmpReturn = null;
 
             //string fileName = "MyUniqueImageFileName.png";
             //string fileNameWitPath = Path.Combine(Server.MapPath("~/FolderToSave"), fileName);
