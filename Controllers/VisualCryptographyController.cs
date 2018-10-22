@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace CryptoWebService.Controllers
@@ -14,30 +15,14 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public IActionResult Secret([FromBody] string imageData)
+        public IActionResult Secret([FromBody] string imageDataWithoutHeader)
         {
-            byte[] imageBytes = Convert.FromBase64String(imageData);
+            
+            byte[] imageBytes = Convert.FromBase64String(imageDataWithoutHeader);
             MemoryStream ms = new MemoryStream(imageBytes, 0,imageBytes.Length);
 
-            ms.Write(imageBytes, 0, imageBytes.Length);
+            Bitmap bitmap = new Bitmap(ms);
 
-
-            
-            Bitmap bmpReturn = null;
-
-            //string fileName = "MyUniqueImageFileName.png";
-            //string fileNameWitPath = Path.Combine(Server.MapPath("~/FolderToSave"), fileName);
-
-            //using (FileStream fs = new FileStream(fileNameWitPath, FileMode.Create))
-            //{
-            //    using (BinaryWriter bw = new BinaryWriter(fs))
-            //    {
-            //        byte[] data = Convert.FromBase64String(imageData);
-            //        bw.Write(data);
-            //        bw.Close();
-            //    }
-            //    fs.Close();
-            //}
             return View();
         }
 
