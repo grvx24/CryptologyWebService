@@ -12,28 +12,24 @@
     <Compile Remove="Backend\Quiz\**" />
     <Compile Remove="Backend\RSA\**" />
     <Compile Remove="Backend\StreamEncoder\**" />
-    <Compile Remove="Backend\VisualCryptography\**" />
     <Content Remove="Backend\ClassicCiphers\**" />
     <Content Remove="Backend\FipsTests\**" />
     <Content Remove="Backend\Generators\**" />
     <Content Remove="Backend\Quiz\**" />
     <Content Remove="Backend\RSA\**" />
     <Content Remove="Backend\StreamEncoder\**" />
-    <Content Remove="Backend\VisualCryptography\**" />
     <EmbeddedResource Remove="Backend\ClassicCiphers\**" />
     <EmbeddedResource Remove="Backend\FipsTests\**" />
     <EmbeddedResource Remove="Backend\Generators\**" />
     <EmbeddedResource Remove="Backend\Quiz\**" />
     <EmbeddedResource Remove="Backend\RSA\**" />
     <EmbeddedResource Remove="Backend\StreamEncoder\**" />
-    <EmbeddedResource Remove="Backend\VisualCryptography\**" />
     <None Remove="Backend\ClassicCiphers\**" />
     <None Remove="Backend\FipsTests\**" />
     <None Remove="Backend\Generators\**" />
     <None Remove="Backend\Quiz\**" />
     <None Remove="Backend\RSA\**" />
     <None Remove="Backend\StreamEncoder\**" />
-    <None Remove="Backend\VisualCryptography\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Backend\VisualCryptography\" />
     <Folder Include="Images\" />
     <Folder Include="Services\" />
   </ItemGroup>
