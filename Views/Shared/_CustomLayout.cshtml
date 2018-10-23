@@ -17,18 +17,17 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top"  id="navbar-default-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" id="navbar-toggle-top" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar" id="icon-bar-top"></span>
+                    <span class="icon-bar" id="icon-bar-top"></span>
+                    <span class="icon-bar" id="icon-bar-top"></span>
 
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Krypto-Kombajn</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,14 +59,71 @@
                         </ul>
                     </li>
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
                     <partial name="_LoginPartial"/>
+                <ul class="nav navbar-nav navbar-right" id="navbar-nav-top">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">O nas</a></li>
+                    <partial name="_LoginPartial" />
                 </ul>
             </div><!-- /.navbar-collapse -->
+
         </div><!-- /.container-fluid -->
     </nav>
+    <header>
 
+        <img src="~/images/logo1.png" alt="Main logo" width="600" style="margin-left:100px; margin-top:-20px;">
+
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar" id="icon-bar-menu"></span>
+                        <span class="icon-bar" id="icon-bar-menu"></span>
+                        <span class="icon-bar" id="icon-bar-menu"></span>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav" >
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Generatory</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">Szyfry</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Funkcje skrótu</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfrowanie obrazów <span class="caret"></span></a>
+                            <div class="dropdown-menu">  
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a class="dropdown-item" href="#">Rodzinka</a>
+                                            <a class="dropdown-item" href="#">Janusz</a>
+                                            <a class="dropdown-item" href="#">Grażyna</a>
+                                            <a class="dropdown-item" href="#">Jessica</a>
+                                            <a class="dropdown-item" href="#">Brajan</a>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a class="dropdown-item" href="#">Ekypa</a>
+                                            <a class="dropdown-item" href="#">Hubert</a>
+                                            <a class="dropdown-item" href="#">Kamil</a>
+                                            <a class="dropdown-item" href="#">Paula</a>
+                                        </div>
+                                    </div>                  
+                                </div>
+                                                      
+                            </div>
+                        </li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+    </header>
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
