@@ -61,14 +61,14 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                    <ul class="nav navbar-nav" >
+                    <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Generatory</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">Szyfry</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Funkcje skrótu</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfrowanie obrazów <span class="caret"></span></a>
-                            <div class="dropdown-menu">  
+                            <div class="dropdown-menu">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-xs-6">
@@ -84,9 +84,22 @@
                                             <a class="dropdown-item" href="#">Kamil</a>
                                             <a class="dropdown-item" href="#">Paula</a>
                                         </div>
-                                    </div>                  
+                                    </div>
                                 </div>
-                                                      
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kryptografia Wizualna<span class="caret"></span></a>
+                            <div class="dropdown-menu">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Kryptografia Wizualna</a>
+                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Podział na sekrety</a>
+                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Steganografia</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
