@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public class Secret
+    public class VisualCryptography
     {
     }
 }

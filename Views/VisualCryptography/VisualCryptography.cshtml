@@ -7,15 +7,60 @@
 <h2 class="page-header">Kryptografia Wizualna</h2>
 <div class=" col-lg-12">
     <div class="body-content">
-        fasdasda abdafavad sada Kryptografia Wizualna jest to technika którą pozwala na zaszyfrowanie informacji w obrazie.
-        Do deszyfracji używamy wzroku.
-
-        Poniżej zostaną opisane dwie techniki:
-        superpozycja
-        blablaba
+        Koncepcja kryptografii wizualnej narodziła się około 10 lat temu na konferencji Eurocrypt
+        94. Podczas swojej prelekcji Shamir i Naor zaproponowali nowy sposób graficznego
+        kodowania informacji. Jego podstawą było wykorzystanie określonej liczby
+        podobrazów zwanych udziałami. Ich nałożenie na siebie dawało obraz zawierający
+        tajną wiadomość. W efekcie odszyfrowanie informacji byłoby możliwe jedynie przy
+        użyciu wzroku — stąd nazwa metody. Ale po kolei.
     </div>
+    <div>
+        <br />
+        <br />
+    </div>
+    <div class="body-content">
+        Każdy obraz cyfrowy składa się z tzw. pikseli (ang. pixels). Są to malutkie kwadraty
+        wypełnione jednolitym kolorem. Położone obok siebie w rzędach i kolumnach tworzą
+        obraz, który widzimy na ekranie komputera. Koncepcja udziałów (ang. shares) zakłada
+        podział pikseli na jeszcze mniejsze części, tzw. subpiksele. Piksele oryginalnego
+        obrazu zawierającego tajną wiadomość są dzielone na subpiksele. Ich liczba zależy od
+        liczby udziałów, które chcemy uzyskać. Na rysunku 3.8 znajduje się najprostszy możliwy
+        schemat podziału oparty na obrazie czarno-białym.
+    </div>
+    <div>
+        <br />
+        <br />
+    </div>
+    <div class="body-content">
+        Jak widać, każdy udział składa się z dwóch subpikseli. W wyniku nałożenia na siebie
+        udziałów piksela białego otrzymamy obraz składający się z białego i czarnego subpiksela,
+        co da w efekcie wrażenie koloru szarego. Udziały piksela czarnego po nałożeniu
+        dają obraz pierwotny. Obrazy składające się z udziałów nie dają żadnych informacji o zaszyfrowanej
+        wiadomości, ponieważ każda kombinacja subpikseli pojawia się z prawdopodobieństwem
+        50%, co jest równoważne z rozkładem losowym. Kiedy oba obrazy
+        zostaną na siebie nałożone, ukaże się obraz pierwotny (z tą różnicą, iż jego białe obszary
+        będą teraz widoczne jako szare). Można oczywiście dzielić piksele na więcej części,
+        tworząc tym samym więcej udziałów.
+    </div>
+    <div>
+        <br />
+        <div class="body-content">
+            Schemat progowy
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="body-content">
+            Opisaną powyżej technikę wykorzystuje się do tworzenia tzw. schematów progowych.
+            Jest to sposób dzielenia sekretów polegający na rozbiciu tajnej wiadomości na n udziałów.
+            Odczytanie wiadomości jest możliwe przy użyciu określonej części z nich. Prosty
+            schemat progowy dla dwóch udziałów przedstawiony został na rysunku 3.8. Schemat
+            taki opisywany jest za pomocą macierzy. Każdy wiersz reprezentuje jeden udział
+            składający się z m subpikseli. Poniżej znajdują się macierze reprezentujące schemat
+            progowy z dwoma udziałami składającymi się z dwóch subpikseli:
+        </div>
 
-</div>
+    </div>
 <div class="col-lg-12">
     <div class=" col-lg-8">
         <div id="container" class="myCanvas">
@@ -207,7 +252,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Secret", "VisualCryptography")',
+            url: '@Url.Action("Secrets", "VisualCryptography")',
             data: JSON.stringify(dataURL),
             dataType: 'json',
             contentType: "application/json",

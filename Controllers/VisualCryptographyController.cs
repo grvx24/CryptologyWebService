@@ -2,28 +2,34 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace CryptoWebService.Controllers
 {
     public class VisualCryptographyController : Controller
     {
-        #region Secret
+        #region VisualCryptography
 
-        public IActionResult Secret()
+        public IActionResult VisualCryptography()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Secret([FromBody] string imageDataWithoutHeader)
+        public HttpResponseMessage Secrets([FromBody] string imageDataWithoutHeader)
         {
-            
             byte[] imageBytes = Convert.FromBase64String(imageDataWithoutHeader);
             MemoryStream ms = new MemoryStream(imageBytes, 0,imageBytes.Length);
 
             Bitmap bitmap = new Bitmap(ms);
 
-            return View();
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(imageBytes);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+            return result;
         }
 
 
