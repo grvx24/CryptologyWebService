@@ -205,6 +205,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skrót.
+        /// </summary>
+        public static string Hash {
+            get {
+                return ResourceManager.GetString("Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wpisano niedozwolony znak!.
         /// </summary>
         public static string InvalidCharacter {
@@ -219,6 +228,15 @@ namespace CryptoWebService {
         public static string Key {
             get {
                 return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja sktótu MD5.
+        /// </summary>
+        public static string MD5Hash {
+            get {
+                return ResourceManager.GetString("MD5Hash", resourceCulture);
             }
         }
         

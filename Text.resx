@@ -177,4 +177,11 @@
   <data name="WriteTextToEncrypt" xml:space="preserve">
     <value>Wpisz tekst do zaszyfrowania</value>
   </data>
+  <data name="MD5Hash" xml:space="preserve">
+    <value>Funkcja sktótu MD5</value>
+  </data>
+  <data name="Hash" xml:space="preserve">
+    <value>Skrót</value>
+  </data>
+  
 </root>
