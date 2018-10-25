@@ -18,18 +18,18 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Secrets([FromBody] string imageDataWithoutHeader)
+        public IActionResult Secrets([FromBody] string imageDataWithoutHeader)
         {
             byte[] imageBytes = Convert.FromBase64String(imageDataWithoutHeader);
             MemoryStream ms = new MemoryStream(imageBytes, 0,imageBytes.Length);
 
             Bitmap bitmap = new Bitmap(ms);
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(imageBytes);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+          //  HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+          //  result.Content = new ByteArrayContent(imageBytes);
+          //  result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
-            return result;
+            return Json(new { img1 = imageBytes, img2 = imageBytes });
         }
 
 
