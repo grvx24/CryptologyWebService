@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace CryptoWebService.Backend.HashFunctions
 {
-    public class MD5Hash : IHashFunctions
+    public class SHA1Hash : IHashFunctions
     {
-       
+
         public string Encrypt(string message)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
             try
-            { 
-                md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(message));
- 
-                byte[] result = md5.Hash;
+            {
+                sha1.ComputeHash(ASCIIEncoding.ASCII.GetBytes(message));
+
+                byte[] result = sha1.Hash;
 
                 StringBuilder hash = new StringBuilder();
                 for (int i = 0; i < result.Length; i++)

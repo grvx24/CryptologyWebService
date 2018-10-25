@@ -169,6 +169,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalkulator.
+        /// </summary>
+        public static string Calculator {
+            get {
+                return ResourceManager.GetString("Calculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wybierz alfabet.
         /// </summary>
         public static string ChooseAlphabet {
@@ -259,6 +268,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skrót.
+        /// </summary>
+        public static string Hash {
+            get {
+                return ResourceManager.GetString("Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wysokość.
         /// </summary>
         public static string HeightMode {
@@ -295,6 +313,33 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu MD5.
+        /// </summary>
+        public static string MD5Hash {
+            get {
+                return ResourceManager.GetString("MD5Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-1.
+        /// </summary>
+        public static string SHA1Hash {
+            get {
+                return ResourceManager.GetString("SHA1Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-256.
+        /// </summary>
+        public static string SHA256Hash {
+            get {
+                return ResourceManager.GetString("SHA256Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfrowanie tekstu.
         /// </summary>
         public static string TextEncryption {
@@ -327,6 +372,15 @@ namespace CryptoWebService {
         public static string WriteTextToEncrypt {
             get {
                 return ResourceManager.GetString("WriteTextToEncrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wpisz tekst do obliczenia skrótu.
+        /// </summary>
+        public static string WriteTextToHash {
+            get {
+                return ResourceManager.GetString("WriteTextToHash", resourceCulture);
             }
         }
     }

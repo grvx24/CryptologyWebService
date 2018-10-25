@@ -49,7 +49,6 @@
 
         <nav class="navbar navbar-default">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -64,30 +63,28 @@
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Generatory</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">Szyfry</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Funkcje skrótu</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfrowanie obrazów <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funkcje skrótu<span class="caret"></span></a>
                             <div class="dropdown-menu">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a class="dropdown-item" href="#">Rodzinka</a>
-                                            <a class="dropdown-item" href="#">Janusz</a>
-                                            <a class="dropdown-item" href="#">Grażyna</a>
-                                            <a class="dropdown-item" href="#">Jessica</a>
-                                            <a class="dropdown-item" href="#">Brajan</a>
+                                            <h5>Bez klucza</h5>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a>
+                                            <a class="dropdown-item" href="#">SHA-256</a>
+                                            <a class="dropdown-item" href="#">SHA-3</a>
+                                            <a class="dropdown-item" href="#">BLAKE</a>
                                         </div>
                                         <div class="col-xs-6">
-                                            <a class="dropdown-item" href="#">Ekypa</a>
-                                            <a class="dropdown-item" href="#">Hubert</a>
-                                            <a class="dropdown-item" href="#">Kamil</a>
-                                            <a class="dropdown-item" href="#">Paula</a>
+                                            <h5>Z kluczem</h5>
+                                            <a class="dropdown-item" href="#">MAC</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kryptografia Wizualna<span class="caret"></span></a>
                             <div class="dropdown-menu">

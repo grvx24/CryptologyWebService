@@ -1,7 +1,7 @@
-﻿@model CryptoWebService.Models.HashFunctions.MD5ViewModel
+﻿@model CryptoWebService.Models.HashFunctions.SHA1ViewModel
 @using CryptoWebService.Backend.HashFunctions
 @{
-    ViewData["Title"] = "MD5";
+    ViewData["Title"] = "SHA256";
 }
 <script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/classical_ciphers.css">
@@ -14,7 +14,7 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">@Text.MD5Hash</h2>
+        <h2 align="center">@Text.SHA256Hash</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
@@ -35,7 +35,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 align="center">@Text.MD5Hash</h2>
+                    <h2 align="center">@Text.SHA256Hash</h2>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
 </div>
 
 
-        <script>
+<script>
 
     document.getElementById("defaultPageButton").click();
 
@@ -93,11 +93,11 @@
 
 
     //Ajax
-    var md5Init = MD5FunctionInit({
+    var sha256Init = SHA256FunctionInit({
         urls: {
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
+            encryptUrl: '@Url.Action("SHA256Encrypt", "HashFunctions")'
         }
     });
 
-    md5Init.init();
-        </script>
+    sha256Init.init();
+</script>

@@ -207,4 +207,22 @@
   <data name="KeyLength" xml:space="preserve">
     <value>Długość klucza</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Kalkulator</value>
+  </data>
+  <data name="Hash" xml:space="preserve">
+    <value>Skrót</value>
+  </data>
+  <data name="MD5Hash" xml:space="preserve">
+    <value>Funkcja skrótu MD5</value>
+  </data>
+  <data name="SHA1Hash" xml:space="preserve">
+    <value>Funkcja skrótu SHA-1</value>
+  </data>
+  <data name="SHA256Hash" xml:space="preserve">
+    <value>Funkcja skrótu SHA-256</value>
+  </data>
+  <data name="WriteTextToHash" xml:space="preserve">
+    <value>Wpisz tekst do obliczenia skrótu</value>
+  </data>
 </root>
