@@ -1,7 +1,7 @@
 ﻿@using CryptoWebService.Backend.ClassicalCiphers
 
 @{
-    ViewData["Title"] = "Affine";
+    ViewData["Title"] = "Bacon";
 }
 
 <script src="~/js/ciphers/ClassicalCiphers.js"></script>
@@ -17,7 +17,7 @@
         <h2>@Text.Description</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
-            
+
             Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
 
             Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
@@ -34,46 +34,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <label for="keyEncryptA">@Text.AffineCipherKeyA</label>
-                    <select id="keyEncryptA" class="form-control">
-                        @{
-                            for (int i = 1; i <= 50; i+=2)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="keyEncryptB">@Text.AffineCipherKeyB</label>
-                    <select id="keyEncryptB" class="form-control">
-                        @{
-                            for (int i = 0; i <= 50; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="alphabetEncrypt">@Text.ChooseAlphabet</label>
-                    <select id="alphabetEncrypt" class="form-control">
-                        @{
-                            for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="form-group">
                     <div class="col-md-12">
                         <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
                         <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -108,42 +73,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 align="center">@Text.Decryptor</h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="keyDecryptA">@Text.AffineCipherKeyA</label>
-                    <select id="keyDecryptA" class="form-control">
-                        @{
-                            for (int i = 1; i <= 50; i += 2)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="keyDecryptB">@Text.AffineCipherKeyB</label>
-                    <select id="keyDecryptB" class="form-control">
-                        @{
-                            for (int i = 0; i <= 50; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="alphabetDecrypt">@Text.ChooseAlphabet</label>
-                    <select id="alphabetDecrypt" class="form-control">
-                        @{
-                            for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
-                            }
-                        }
-                    </select>
                 </div>
             </div>
 
@@ -204,67 +133,15 @@
         evt.currentTarget.className += " active";
     }
 
-    $("#alphabetEncrypt").on('change',
-        function() {
-            var paragraph = $("#availableCharsEncrypt");
-            var selectedAlphabet = $("#alphabetEncrypt").prop("selectedIndex");
-            switch (selectedAlphabet) {
-            case 0:
-                paragraph.html('@Alphabets.ALPHABET_EN');
-                break;
-            case 1:
-                paragraph.html('@Alphabets.ALPHABET_PL');
-                break;
-            case 2:
-                paragraph.html('@Alphabets.ALPHABET_EN_DIGITS');
-                break;
-            case 3:
-                paragraph.html('@Alphabets.ALPHABET_PL_DIGITS');
-                break;
-            case 4:
-                paragraph.html('@Alphabets.ALPHABET_EN_EXTENDED');
-                break;
-            case 5:
-                paragraph.html('@Alphabets.ALPHABET_PL_EXTENDED');
-                break;
-            }
-        });
-
-    $("#alphabetDecrypt").on('change',
-        function() {
-            var paragraph = $("#availableCharsDecrypt");
-            var selectedAlphabet = $("#alphabetDecrypt").prop("selectedIndex");
-            switch (selectedAlphabet) {
-                case 0:
-                    paragraph.html('@Alphabets.ALPHABET_EN');
-                    break;
-                case 1:
-                    paragraph.html('@Alphabets.ALPHABET_PL');
-                    break;
-                case 2:
-                    paragraph.html('@Alphabets.ALPHABET_EN_DIGITS');
-                    break;
-                case 3:
-                    paragraph.html('@Alphabets.ALPHABET_PL_DIGITS');
-                    break;
-                case 4:
-                    paragraph.html('@Alphabets.ALPHABET_EN_EXTENDED');
-                    break;
-                case 5:
-                    paragraph.html('@Alphabets.ALPHABET_PL_EXTENDED');
-                    break;
-            }
-        });
-
     //Ajax
-    var routeInit = RouteCipherInit({
+    var baconInit = BaconCipherInit({
         urls: {
-            encryptUrl: '@Url.Action("RouteEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("RouteDecrypt", "ClassicalCiphers")'
+            encryptUrl: '@Url.Action("BaconEncrypt", "ClassicalCiphers")',
+            decryptUrl: '@Url.Action("BaconDecrypt", "ClassicalCiphers")'
         }
     });
 
-    routeInit.init();
+    baconInit.init();
 
 
 

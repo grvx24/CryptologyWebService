@@ -150,6 +150,9 @@
   <data name="ChooseAlphabet" xml:space="preserve">
     <value>Wybierz alfabet</value>
   </data>
+  <data name="Decrypt" xml:space="preserve">
+    <value>Deszyfruj</value>
+  </data>
   <data name="DecryptedText" xml:space="preserve">
     <value>Odszyfrowany tekst</value>
   </data>
@@ -159,8 +162,14 @@
   <data name="Description" xml:space="preserve">
     <value>Opis</value>
   </data>
+  <data name="Encrypt" xml:space="preserve">
+    <value>Szyfruj</value>
+  </data>
   <data name="EncryptedText" xml:space="preserve">
     <value>Zaszyfrowany tekst</value>
+  </data>
+  <data name="EncryptMode" xml:space="preserve">
+    <value>Tryb szyfrowania</value>
   </data>
   <data name="Encryptor" xml:space="preserve">
     <value>Szyfrator</value>
@@ -177,11 +186,25 @@
   <data name="WriteTextToEncrypt" xml:space="preserve">
     <value>Wpisz tekst do zaszyfrowania</value>
   </data>
-  <data name="MD5Hash" xml:space="preserve">
-    <value>Funkcja sktótu MD5</value>
+  <data name="HeightMode" xml:space="preserve">
+    <value>Wysokość</value>
   </data>
-  <data name="Hash" xml:space="preserve">
-    <value>Skrót</value>
+  <data name="WidthMode" xml:space="preserve">
+    <value>Szerokość</value>
   </data>
-  
+  <data name="BlockCiphers" xml:space="preserve">
+    <value>Szyfry blokowe</value>
+  </data>
+  <data name="FileEncryption" xml:space="preserve">
+    <value>Szyfrowanie pliku</value>
+  </data>
+  <data name="TextEncryption" xml:space="preserve">
+    <value>Szyfrowanie tekstu</value>
+  </data>
+  <data name="Algorithm" xml:space="preserve">
+    <value>Algorytm</value>
+  </data>
+  <data name="KeyLength" xml:space="preserve">
+    <value>Długość klucza</value>
+  </data>
 </root>
