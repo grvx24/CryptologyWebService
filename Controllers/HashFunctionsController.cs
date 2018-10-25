@@ -100,5 +100,34 @@ namespace CryptoWebService.Controllers
             return Json(encrypted);
         }
 
+
+        [HttpGet]
+        public IActionResult SHA512()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SHA512Encrypt([FromBody]SHA1ViewModel viewModel)
+        {
+            SHA512Hash hash = new SHA512Hash();
+
+
+            string encrypted = "";
+            try
+            {
+                encrypted = hash.Encrypt(viewModel.Message);
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(encrypted);
+        }
+
     }
 }

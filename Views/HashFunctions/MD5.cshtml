@@ -8,9 +8,9 @@
 
 <div class="container">
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
     </div>
 
     <div id="Description" class="tabcontent">
@@ -32,34 +32,49 @@
     </div>
 
     <div id="Calculator" class="tabcontent col-lg-12">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <h2 align="center">@Text.MD5Hash</h2>
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="form-group">
-                    <div class="col-md-12">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
                         <label for="inputEncrypt">@Text.WriteTextToHash</label>
                         <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <div class="column">
+                    <span class="col-md-8">
+                        <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
+                        <button style="margin-top: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
+                    </span>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="form-group">
-                    <div class="col-md-12">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
                         <label for="outputEncrypt">@Text.Hash</label>
                         <textarea class="form-control" rows="1" id="outputEncrypt" disabled></textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <span class="col-md-6">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <span class="col-md-8">
                     <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
                 </span>
             </div>

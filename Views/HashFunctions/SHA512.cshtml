@@ -1,7 +1,7 @@
 ﻿@model CryptoWebService.Models.HashFunctions.SHA1ViewModel
 @using CryptoWebService.Backend.HashFunctions
 @{
-    ViewData["Title"] = "SHA1";
+    ViewData["Title"] = "SHA512";
 }
 <script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/classical_ciphers.css">
@@ -9,12 +9,12 @@
 <div class="container">
     <div class="tab">
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button  class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
-        <button  class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+        <button class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">@Text.SHA1Hash</h2>
+        <h2 align="center">@Text.SHA512Hash</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
@@ -35,7 +35,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 align="center">@Text.SHA1Hash</h2>
+                    <h2 align="center">@Text.SHA512Hash</h2>
                 </div>
             </div>
 
@@ -69,10 +69,11 @@
                     <div class="col-lg-1"></div>
                     <div class="col-md-8">
                         <label for="outputEncrypt">@Text.Hash</label>
-                        <textarea class="form-control" rows="1" id="outputEncrypt" disabled></textarea>
+                        <textarea class="form-control" rows="2" id="outputEncrypt" disabled></textarea>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-1"></div>
@@ -110,11 +111,11 @@
 
 
     //Ajax
-    var sha1Init = SHA1FunctionInit({
+    var sha512Init = SHA512FunctionInit({
         urls: {
-            encryptUrl: '@Url.Action("SHA1Encrypt", "HashFunctions")'
+            encryptUrl: '@Url.Action("SHA512Encrypt", "HashFunctions")'
         }
     });
 
-    sha1Init.init();
+    sha512Init.init();
 </script>

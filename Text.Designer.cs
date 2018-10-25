@@ -340,6 +340,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-512.
+        /// </summary>
+        public static string SHA512Hash {
+            get {
+                return ResourceManager.GetString("SHA512Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfrowanie tekstu.
         /// </summary>
         public static string TextEncryption {

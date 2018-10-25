@@ -222,6 +222,9 @@
   <data name="SHA256Hash" xml:space="preserve">
     <value>Funkcja skrótu SHA-256</value>
   </data>
+  <data name="SHA512Hash" xml:space="preserve">
+    <value>Funkcja skrótu SHA-512</value>
+  </data>
   <data name="WriteTextToHash" xml:space="preserve">
     <value>Wpisz tekst do obliczenia skrótu</value>
   </data>

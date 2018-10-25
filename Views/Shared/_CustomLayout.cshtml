@@ -62,7 +62,32 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Generatory</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Szyfry</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfry<span class="caret"></span></a>
+                            <div class="dropdown-menu">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <h5>Klasyczne</h5>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Affine">Afiniczny</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Bacon">Bacona</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Caesar">Cezara</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="ColumnarTransposition">Przestawieniowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Fence">Płotkowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Playfair">Playfair</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Route">Ścieżkowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Vigenere">Vigenere'a</a>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <h5>Blokowe</h5>
+                                            <a class="dropdown-item" href="#">DES</a>
+                                            <a class="dropdown-item" href="#">AES</a>
+                                            <a class="dropdown-item" href="#">Blowfish</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funkcje skrótu<span class="caret"></span></a>
                             <div class="dropdown-menu">
@@ -72,9 +97,9 @@
                                             <h5>Bez klucza</h5>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a>
-                                            <a class="dropdown-item" href="#">SHA-256</a>
-                                            <a class="dropdown-item" href="#">SHA-3</a>
-                                            <a class="dropdown-item" href="#">BLAKE</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a>
+                                            <a class="dropdown-item" href="#">SHA-3 (Keccak)</a>
                                         </div>
                                         <div class="col-xs-6">
                                             <h5>Z kluczem</h5>
