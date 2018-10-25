@@ -11,14 +11,14 @@ namespace CryptoWebService.Backend.ClassicalCiphers
     {
         private readonly Dictionary<char, string> _charDictionary;
         private readonly Dictionary<string, char> _stringDictionary;
-        private readonly string _alphabet = Alphabets.ALPHABET_EN;
+        private readonly string _alphabet = Alphabets.ALPHABET_EN_WITHOUT_J_V;
         private static readonly string[] Keys =
         {
-            "aaaaa","aaaab","aaaba","aaabb","aabaa",
-            "aabab","aabba","aabbb","abaaa","abaab",
-            "ababa","ababb","abbaa","abbab","abbba",
-            "abbbb","baaaa","baaab","baaba","baabb",
-            "babaa","babab","babba","babbb"
+            "AAAAA","AAAAB","AAABA","AAABB","AABAA",
+            "AABAB","AABBA","AABBB","ABAAA","ABAAB",
+            "ABABA","ABABB","ABBAA","ABBAB","ABBBA",
+            "ABBBB","BAAAA","BAAAB","BAABA","BAABB",
+            "BABAA","BABAB","BABBA","BABBB"
         };
 
 
@@ -31,16 +31,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             var keysIndex = 0;
             for (int i = 0; i < _alphabet.Length; i++)
             {
-                if (_alphabet[i] == 'I'|| _alphabet[i] == 'U')
-                {
-                    _charDictionary.Add(_alphabet[i], Keys[keysIndex]);
-                    
-                }
-                else
-                {
-                    _charDictionary.Add(_alphabet[i], Keys[keysIndex]);
-                    keysIndex++;
-                }
+                _charDictionary.Add(_alphabet[i], Keys[keysIndex]);
+                keysIndex++;
             }
 
             foreach (var item in _charDictionary)
@@ -53,9 +45,10 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Encrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
             try
             {
-                message = message.ToUpper();
                 var encrypted = new StringBuilder();
 
                 for (int i = 0; i < message.Length; i++)
@@ -67,8 +60,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw e;
             }
 
 
@@ -76,6 +68,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Decrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+
             try
             {
                 message = message.ToUpper();
@@ -92,8 +87,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw e;
             }
         }
     }

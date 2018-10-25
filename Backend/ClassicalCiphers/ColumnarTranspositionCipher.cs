@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Backend.ClassicalCiphers
 {
     public class ColumnarTranspositionCipher:IClassicalCiphers
     {
-        public string Key { get; set; }
-        public bool FillEmptyCharacters { get; set; }
+        private string _key;
+        public string Key
+        {
+            get => _key;
+            set => _key = value.ToUpper();
+        }
+
         private char[] _sortedKey;
         private int[] _columnNumbers;
         private char[,] _charMatrixEncrypted;
         private char[,] _charMatrixDecrypted;
 
-        public ColumnarTranspositionCipher(string key,bool fillEmptyCharacters=false)
+        public ColumnarTranspositionCipher(string key)
         {
             Key = key;
-            FillEmptyCharacters = fillEmptyCharacters;
         }
 
         public string Encrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
-            Key = Key.ToUpper();
             _sortedKey = Key.OrderBy(c => c).ToArray();
             _columnNumbers = new int[_sortedKey.Length];
             int[] columnOrder = new int[_columnNumbers.Length];
@@ -60,6 +65,13 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 rows = message.Length / columns;
             }
             _charMatrixEncrypted = new char[rows, columns];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    _charMatrixEncrypted[i, j] = 'X';
+                }
+            }
 
             int messageCounter = 0;
             for (int i = 0; i < _charMatrixEncrypted.GetLength(0); i++)
@@ -93,8 +105,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Decrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
-            Key = Key.ToUpper();
             _sortedKey = Key.OrderBy(c => c).ToArray();
             _columnNumbers = new int[_sortedKey.Length];
             int[] columnOrder = new int[_columnNumbers.Length];

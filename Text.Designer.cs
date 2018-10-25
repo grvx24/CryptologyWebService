@@ -88,6 +88,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Algorytm.
+        /// </summary>
+        public static string Algorithm {
+            get {
+                return ResourceManager.GetString("Algorithm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Angielski.
         /// </summary>
         public static string Alphabet_EN {
@@ -151,11 +160,29 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Szyfry blokowe.
+        /// </summary>
+        public static string BlockCiphers {
+            get {
+                return ResourceManager.GetString("BlockCiphers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wybierz alfabet.
         /// </summary>
         public static string ChooseAlphabet {
             get {
                 return ResourceManager.GetString("ChooseAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deszyfruj.
+        /// </summary>
+        public static string Decrypt {
+            get {
+                return ResourceManager.GetString("Decrypt", resourceCulture);
             }
         }
         
@@ -187,6 +214,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Szyfruj.
+        /// </summary>
+        public static string Encrypt {
+            get {
+                return ResourceManager.GetString("Encrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zaszyfrowany tekst.
         /// </summary>
         public static string EncryptedText {
@@ -196,11 +232,38 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tryb szyfrowania.
+        /// </summary>
+        public static string EncryptMode {
+            get {
+                return ResourceManager.GetString("EncryptMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfrator.
         /// </summary>
         public static string Encryptor {
             get {
                 return ResourceManager.GetString("Encryptor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szyfrowanie pliku.
+        /// </summary>
+        public static string FileEncryption {
+            get {
+                return ResourceManager.GetString("FileEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wysokość.
+        /// </summary>
+        public static string HeightMode {
+            get {
+                return ResourceManager.GetString("HeightMode", resourceCulture);
             }
         }
         
@@ -219,6 +282,33 @@ namespace CryptoWebService {
         public static string Key {
             get {
                 return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Długość klucza.
+        /// </summary>
+        public static string KeyLength {
+            get {
+                return ResourceManager.GetString("KeyLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szyfrowanie tekstu.
+        /// </summary>
+        public static string TextEncryption {
+            get {
+                return ResourceManager.GetString("TextEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szerokość.
+        /// </summary>
+        public static string WidthMode {
+            get {
+                return ResourceManager.GetString("WidthMode", resourceCulture);
             }
         }
         
