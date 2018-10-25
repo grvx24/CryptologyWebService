@@ -12,7 +12,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public string Alphabet { get; set; }
         public string Key { get; set; }
 
-        public VigenereCipher(string alphabet,string key)
+        public VigenereCipher(string key)
         {
             this.Key = key;
             if (key.Length < 1)
@@ -20,7 +20,6 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 throw new ArgumentException("Invalid key length!");
             }
 
-            this.Alphabet = alphabet;
             _positionDictionary = new Dictionary<char, int>();
 
             for (int i = 0; i < Alphabet.Length; i++)

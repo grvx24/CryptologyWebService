@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Backend.ClassicalCiphers
 {
@@ -10,31 +11,38 @@ namespace CryptoWebService.Backend.ClassicalCiphers
     {
         public int FenceLevel { get; set; }
 
-        public FenceCipher(string alphabet, int fenceLevel)
+        public FenceCipher(int fenceLevel)
         {
             this.FenceLevel = fenceLevel;
         }
 
         public string Encrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+
             try
             {
                 message = message.ToUpper();
 
                 var rows = new List<char>[FenceLevel];
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    rows[i]=new List<char>();
+                }
 
                 int currentRow = 0;
                 int direction = 1;
                 for (int i = 0; i < message.Length; i++)
                 {
                     rows[currentRow].Add(message[i]);
-                    currentRow += direction;
 
-                    if (currentRow >= FenceLevel)
+                    if ((currentRow == FenceLevel - 1 && direction==1) || (currentRow==0 && direction==-1))
                     {
-                        direction *= -1;
+                        direction = -direction;
                     }
 
+                    currentRow += direction;
                 }
 
                 var encrypted = new StringBuilder(message.Length);
@@ -57,6 +65,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Decrypt(string message)
         {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+
             try
             {
                 message = message.ToUpper();
