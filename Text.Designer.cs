@@ -295,6 +295,24 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nie.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuń wypełnienie.
+        /// </summary>
+        public static string RemovePadding {
+            get {
+                return ResourceManager.GetString("RemovePadding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfrowanie tekstu.
         /// </summary>
         public static string TextEncryption {
@@ -327,6 +345,15 @@ namespace CryptoWebService {
         public static string WriteTextToEncrypt {
             get {
                 return ResourceManager.GetString("WriteTextToEncrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tak.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

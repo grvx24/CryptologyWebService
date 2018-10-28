@@ -1,57 +1,36 @@
 ﻿<div class="container">
 <div class="col-lg-12">
 
+
+
+
+
+
 <div class="col-lg-6">
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 align="center">@Text.Encryptor</h2>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 align="center">@Text.Encryptor</h2>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-lg-6">
     <div class="row">
-        <div class="col-lg-12">
-            <h2 align="center">@Text.Decryptor</h2>
+        <div class="col-lg-6">
+            <label for="inputModeEncrypt">Format wejściowy</label>
+            <select id="inputModeEncrypt" class="form-control">
+                <option value="text" selected>Tekst</option>
+                <option value="file">Plik</option>
+            </select>
+        </div>
+        <div class="col-lg-6">
+            <label for="algorithmSelectModeEncrypt">@Text.EncryptMode</label>
+            <select id="algorithmSelectModeEncrypt" class="form-control">
+                <option value=0>CBC</option>
+                <option value=2>ECB</option>
+            </select>
         </div>
     </div>
-</div>
-<div class="col-lg-3">
-    <label for="algorithmSelectEncrypt">@Text.Algorithm</label>
-    <select id="algorithmSelectEncrypt" class="form-control">
-        <option value="DES">DES</option>
-        <option value="3DES">3DES</option>
-        <option value="AES">AES</option>
-        <option value="Blowfish">Blowfish</option>
-    </select>
-</div>
-<div class="col-lg-3">
-    <label for="algorithmSelectModeEncrypt">@Text.EncryptMode</label>
-    <select id="algorithmSelectModeEncrypt" class="form-control">
-        <option value=0>CBC</option>
-        <option value=1>CFB</option>
-        <option value=2>ECB</option>
-        <option value=3>OFB</option>
-    </select>
-</div>
-<div class="col-lg-3">
-    <label for="algorithmSelectDecrypt">@Text.Algorithm</label>
-    <select id="algorithmSelectDecrypt" class="form-control">
-        <option value="DES">DES</option>
-        <option value="3DES">3DES</option>
-        <option value="AES">AES</option>
-        <option value="Blowfish">Blowfish</option>
-    </select>
-</div>
-<div class="col-lg-3">
-    <label for="algorithmSelectModeDecrypt">@Text.EncryptMode</label>
-    <select id="algorithmSelectModeDecrypt" class="form-control">
-        <option value=0>CBC</option>
-        <option value=1>CFB</option>
-        <option value=2>ECB</option>
-        <option value=3>OFB</option>
-    </select>
-</div>
-<div class="col-lg-6">
+
     <div class="row">
         <div class="col-lg-12">
             <label for="KeyLengthEncrypt">@Text.KeyLength</label>
@@ -62,17 +41,19 @@
                 <text>192</text>
                 <input type="radio" name="keyLengthEncrypt" value="256">
                 <text>256</text>
+
             </fieldset>
+
             <div class="input-group">
-                <input placeholder="Klucz" id="keyEncrypt" class="form-control" type="text"/>
+                <input maxlength="256" placeholder="Klucz" id="keyEncrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button class="btn btn-success">Losuj</button>
+                    <button id="btnRandomKeyEncrypt" class="btn btn-success">Losuj</button>
+                    <button id="keyCounterEncrypt" class="btn btn-danger">0</button>
+
                 </span>
             </div>
             <fieldset>
-                <input type="radio" name="keyFormatEncrypt" value=4 checked>
-                <text>Integer</text>
-                <input type="radio" name="keyFormatEncrypt" value=1>
+                <input type="radio" name="keyFormatEncrypt" value=1 checked>
                 <text>Hex</text>
                 <input type="radio" name="keyFormatEncrypt" value=2>
                 <text>Binary string</text>
@@ -83,15 +64,14 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="input-group">
-                <input placeholder="Wektor inicjujący" id="IVEncrypt" class="form-control" type="text"/>
+                <input maxlength="128" placeholder="Wektor inicjujący" id="IVEncrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button class="btn btn-success">Losuj</button>
+                    <button id="btnRandomIVEncrypt" class="btn btn-success">Losuj</button>
+                    <button id="IVCounterEncrypt" class="btn btn-danger">0</button>
                 </span>
             </div>
             <fieldset>
-                <input type="radio" name="IVFormatEncrypt" value=4 checked>
-                <text>Integer</text>
-                <input type="radio" name="IVFormatEncrypt" value=1>
+                <input type="radio" name="IVFormatEncrypt" value=1 checked>
                 <text>Hex</text>
                 <input type="radio" name="IVFormatEncrypt" value=2>
                 <text>Binary string</text>
@@ -102,21 +82,15 @@
         <div class="form-group">
             <div class="col-lg-12">
                 <br/>
-                <fieldset>
-                    <input type="radio" name="encryptInputMode" value="text" checked/>
-                    <text>Tekst</text>
-                    <input type="radio" name="encryptInputMode" value="file"/>
-                    <text>Plik</text>
-                </fieldset>
                 <div id="textPanelEncrypt">
                     <textarea placeholder="@Text.WriteTextToEncrypt" class="form-control" rows="5" id="inputEncrypt"></textarea>
-                    
+
                     <fieldset>
-                        <input type="radio" name="inputFormatEncrypt" value="ASCII" checked>
+                        <input type="radio" name="inputFormatEncrypt" value=0 checked>
                         <text>ASCII</text>
-                        <input type="radio" name="inputFormatEncrypt" value="Hex">
+                        <input type="radio" name="inputFormatEncrypt" value=1>
                         <text>Hex</text>
-                        <input type="radio" name="inputFormatEncrypt" value="BinaryString">
+                        <input type="radio" name="inputFormatEncrypt" value=2>
                         <text>BinaryString</text>
                     </fieldset>
                 </div>
@@ -145,110 +119,142 @@
     </div>
     <br/>
     <div class="row">
-        <div class="col-lg-12">
+        <div id="outputGroupEncrypt" class="col-lg-12">
             <textarea placeholder="@Text.EncryptedText" class="form-control" rows="5" id="outputEncrypt"></textarea>
+            <fieldset>
+                <input type="radio" name="outputFormatEncrypt" value=3 checked>
+                <text>Base64</text>
+            </fieldset>
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 align="center">@Text.Decryptor</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <label for="inputModeDecrypt">Format wejściowy</label>
+            <select id="inputModeDecrypt" class="form-control">
+                <option value="text" selected>Tekst</option>
+                <option value="file">Plik</option>
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <label for="algorithmSelectModeDecrypt">@Text.EncryptMode</label>
+            <select id="algorithmSelectModeDecrypt" class="form-control">
+                <option value=0>CBC</option>
+                <option value=2>ECB</option>
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <label for="paddingToggle">@Text.RemovePadding</label>
+            <input checked id="paddingToggle" type="checkbox" data-toggle="toggle" data-on="@Text.Yes" data-off="@Text.No">
+            <button class="btn btn-info">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+            </button>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="KeyLengthDecrypt">@Text.KeyLength</label>
+            <fieldset id="KeyLengthDecrypt">
+                <input type="radio" name="keyLengthDecrypt" value="128" checked>
+                <text>128</text>
+                <input type="radio" name="keyLengthDecrypt" value="192">
+                <text>192</text>
+                <input type="radio" name="keyLengthDecrypt" value="256">
+                <text>256</text>
+            </fieldset>
+            <div class="input-group">
+                <input placeholder="Klucz" id="keyDecrypt" class="form-control" type="text"/>
+                <span class="input-group-btn">
+                    <button id="btnRandomKeyDecrypt" class="btn btn-success">Losuj</button>
+                    <button id="keyCounterDecrypt" class="btn btn-danger">0</button>
+                </span>
+            </div>
+
+            <fieldset>
+                <input type="radio" name="keyFormatDecrypt" value=1 checked>
+                <text>Hex</text>
+                <input type="radio" name="keyFormatDecrypt" value=2>
+                <text>Binary string</text>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="input-group">
+                <input placeholder="Wektor inicjujący" id="IVDecrypt" class="form-control" type="text"/>
+                <span class="input-group-btn">
+                    <button id="btnRandomIVDecrypt" class="btn btn-success">Losuj</button>
+                    <button id="IVCounterDecrypt" class="btn btn-danger">0</button>
+                </span>
+            </div>
+            <fieldset>
+                <input type="radio" name="IVFormatDecrypt" value=1 checked>
+                <text>Hex</text>
+                <input type="radio" name="IVFormatDecrypt" value=2>
+                <text>Binary string</text>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <br/>
+                <div id="textPanelDecrypt">
+                    <textarea placeholder="@Text.WriteTextToDecrypt" class="form-control" rows="5" id="inputDecrypt"></textarea>
+                    <fieldset>
+                        <input type="radio" name="inputFormatDecrypt" value=3 checked>
+                        <text>Base64</text>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="filePanelDecrypt" style="display: none">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Wczytaj plik&hellip; <input id="fileDecrypt" type="file" style="display: none;">
+                        </span>
+                    </label>
+                    <input id="FilenameToDecrypt" type="text" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-12">
+            <button id="decryptButton" class="btn btn-primary">@Text.Decrypt</button>
+        </div>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div id="outputGroupDecrypt" class="col-lg-12">
+            <textarea placeholder="@Text.DecryptedText" class="form-control" rows="5" id="outputDecrypt"></textarea>
+            <fieldset>
+                <input type="radio" name="outputFormatDecrypt" value=0 checked>
+                <text>ASCII</text>
+                <input type="radio" name="outputFormatDecrypt" value=1>
+                <text>HEX</text>
+                <input type="radio" name="outputFormatDecrypt" value=2>
+                <text>Binary string</text>
+            </fieldset>
         </div>
     </div>
 </div>
-    <div class="col-lg-6">
-        <div class="row">
-            <div class="col-lg-12">
-                <label for="KeyLengthDecrypt">@Text.KeyLength</label>
-                <fieldset id="KeyLengthDecrypt">
-                    <input type="radio" name="keyLengthDecrypt" value="128" checked>
-                    <text>128</text>
-                    <input type="radio" name="keyLengthDecrypt" value="192">
-                    <text>192</text>
-                    <input type="radio" name="keyLengthDecrypt" value="256">
-                    <text>256</text>
-                </fieldset>
-                <div class="input-group">
-                    <input placeholder="Klucz" id="keyDecrypt" class="form-control" type="text"/>
-                    <span class="input-group-btn">
-                        <button id="btnRandomKeyDecrypt" class="btn btn-success">Losuj</button>
-                    </span>
-                </div>
-
-                <fieldset>
-                    <input type="radio" name="keyFormatDecrypt" value=4 checked>
-                    <text>Integer</text>
-                    <input type="radio" name="keyFormatDecrypt" value=1>
-                    <text>Hex</text>
-                    <input type="radio" name="keyFormatDecrypt" value=2>
-                    <text>Binary string</text>
-                </fieldset>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="input-group">
-                    <input placeholder="Wektor inicjujący" id="IVDecrypt" class="form-control" type="text"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-success">Losuj</button>
-                    </span>
-                </div>
-                <fieldset>
-                    <input type="radio" name="IVFormat" value=4 checked>
-                    <text>Integer</text>
-                    <input type="radio" name="IVFormat" value=1>
-                    <text>Hex</text>
-                    <input type="radio" name="IVFormat" value=2>
-                    <text>Binary string</text>
-                </fieldset>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <br/>
-                    <fieldset>
-                        <input type="radio" name="decryptInputMode" value="text" checked/>
-                        <text>Tekst</text>
-                        <input type="radio" name="decryptInputMode" value="file"/>
-                        <text>Plik</text>
-                    </fieldset>
-                    <div id="textPanelDecrypt">
-                        <textarea placeholder="@Text.WriteTextToDecrypt" class="form-control" rows="5" id="inputDecrypt"></textarea>
-                        <fieldset>
-                            <input type="radio" name="inputFormat" value=3 checked>
-                            <text>Base64</text>
-                            <input type="radio" name="inputFormat" value=1>
-                            <text>Hex</text>
-                            <input type="radio" name="inputFormat" value=2>
-                            <text>BinaryString</text>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="filePanelDecrypt" style="display: none">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="input-group">
-                        <label class="input-group-btn">
-                            <span class="btn btn-primary">
-                                Wczytaj plik&hellip; <input id="fileDecrypt" type="file" style="display: none;">
-                            </span>
-                        </label>
-                        <input id="FilenameToDecrypt" type="text" class="form-control" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-lg-12">
-                <button id="decryptButton" class="btn btn-primary">@Text.Decrypt</button>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-lg-12">
-                <textarea placeholder="@Text.DecryptedText" class="form-control" rows="5" id="outputDecrypt"></textarea>
-            </div>
-        </div>
-    </div>
 </div>
 </div>
 
@@ -264,6 +270,7 @@
         });
 
         blockCiphersInit.init();
+
 
     });
 

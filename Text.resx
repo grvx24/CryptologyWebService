@@ -207,4 +207,13 @@
   <data name="KeyLength" xml:space="preserve">
     <value>Długość klucza</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="RemovePadding" xml:space="preserve">
+    <value>Usuń wypełnienie</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
 </root>

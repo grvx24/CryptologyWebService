@@ -12,10 +12,11 @@ namespace CryptoWebService.Models.BlockCiphers
         public string Message { get; set; }
         public string Key { get; set; }
         public string IV { get; set; }
-        public int Mode { get; set; }
-        public int Encoding { get; set; }
-        public int KeyEncoding { get; set; }
-        public int IVEncoding { get; set; }
+        public string Mode { get; set; }
+        public string Encoding { get; set; }
+        public string KeyEncoding { get; set; }
+        public string IVEncoding { get; set; }
+        public bool Padding { get; set; }
 
     }
 }
