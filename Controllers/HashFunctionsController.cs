@@ -129,5 +129,31 @@ namespace CryptoWebService.Controllers
             return Json(encrypted);
         }
 
+        [HttpGet]
+        public IActionResult HMAC()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult HMACEncrypt([FromBody]HMACViewModel viewModel)
+        {
+            HMAC hmac = new HMAC(viewModel.HashType);
+
+            string encrypted = "";
+
+            try
+            {
+                encrypted = hmac.Encrypt(viewModel.Message,viewModel.Key);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+
+            return Json(encrypted);
+
+        }
+
     }
 }

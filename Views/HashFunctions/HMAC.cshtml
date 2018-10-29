@@ -1,7 +1,7 @@
-﻿@model CryptoWebService.Models.HashFunctions.MD5ViewModel
+﻿@model CryptoWebService.Models.HashFunctions.HMACViewModel
 @using CryptoWebService.Backend.HashFunctions
 @{
-    ViewData["Title"] = "MD5";
+    ViewData["Title"] = "HMAC";
 }
 <script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
@@ -14,7 +14,7 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">@Text.MD5Hash</h2>
+        <h2 align="center">Dupa</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
@@ -28,69 +28,76 @@
     </div>
 
     <div id="Working" class="tabcontent col-lg-12">
-        <h2>Działanie algorytmu krok po kroku</h2>                                                                                                                         
-
-
-
+        <h2>Działanie algorytmu krok po kroku</h2>
     </div>
 
     <div id="Calculator" class="tabcontent col-lg-12">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 align="center">@Text.MD5Hash</h2>
+                    <h2 align="center">Dupa</h2>
                 </div>
             </div>
 
+
             <div class="row">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-md-8">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="hashSelectTypeEncrypt">Wybrana funkcja skrótu</label>
+                        <select id="hashSelectTypeEncrypt" class="form-control">
+                            <option value=0>MD5</option>
+                            <option value=1>SHA-1</option>
+                            <option value=2>SHA-256</option>
+                            <option value=3>SHA-512</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="keyEncrypt">Wpisz klucz</label>
+                        <textarea class="form-control" rows="1" id="keyEncrypt"></textarea>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
                         <label for="inputEncrypt">@Text.WriteTextToHash</label>
                         <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1"></div>
-                <div class="column">
-                    <span class="col-md-8">
-                        <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
-                        <button style="margin-top: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
-                    </span>
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="col-md-8">
+                                <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
+                                <button style="margin-top: 5px" class="btn btn-primary" id="clearButton1" type="submit">Wyczyść wszystko</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="outputEncrypt">@Text.Hash</label>
+                                <textarea class="form-control" rows="2" id="outputEncrypt" disabled></textarea>
+                            </div>
+                        </div>
+                        <span class="col-md-8">
+                            <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-md-8">
-                        <label for="outputEncrypt">@Text.Hash</label>
-                        <textarea class="form-control" rows="1" id="outputEncrypt" disabled></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1"></div>
-                <span class="col-md-8">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
-                </span>
-            </div>
+
+
         </div>
-    </div>
 
-
-
-
+        </div>
 </div>
 
 
-        <script>
+<script>
 
     document.getElementById("defaultPageButton").click();
 
@@ -109,13 +116,12 @@
     }
 
 
-
     //Ajax
-    var md5Init = MD5FunctionInit({
+    var hmacInit = HMACInit({
         urls: {
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
+            encryptUrl: '@Url.Action("HMACEncrypt", "HashFunctions")'
         }
     });
 
-    md5Init.init();
-        </script>
+    hmacInit.init();
+</script>
