@@ -3,5 +3,291 @@
     ViewData["Title"] = "WaterMarks";
 }
 
+<script src="https://cdn.rawgit.com/konvajs/konva/2.4.0/konva.min.js"></script>
+<script src="~/js/visualCryptography/VisualCryptography.js"></script>
+
 <h2>WaterMarks</h2>
 
+<h2 class="page-header">Kryptografia Wizualna</h2>
+@*<div class=" col-lg-12">
+        <div class="body-content">
+            Koncepcja kryptografii wizualnej narodziła się około 10 lat temu na konferencji Eurocrypt
+            94. Podczas swojej prelekcji Shamir i Naor zaproponowali nowy sposób graficznego
+            kodowania informacji. Jego podstawą było wykorzystanie określonej liczby
+            podobrazów zwanych udziałami. Ich nałożenie na siebie dawało obraz zawierający
+            tajną wiadomość. W efekcie odszyfrowanie informacji byłoby możliwe jedynie przy
+            użyciu wzroku — stąd nazwa metody. Ale po kolei.
+        </div>
+        <div>
+            <br />
+            <br />
+        </div>
+        <div class="body-content">
+            Każdy obraz cyfrowy składa się z tzw. pikseli (ang. pixels). Są to malutkie kwadraty
+            wypełnione jednolitym kolorem. Położone obok siebie w rzędach i kolumnach tworzą
+            obraz, który widzimy na ekranie komputera. Koncepcja udziałów (ang. shares) zakłada
+            podział pikseli na jeszcze mniejsze części, tzw. subpiksele. Piksele oryginalnego
+            obrazu zawierającego tajną wiadomość są dzielone na subpiksele. Ich liczba zależy od
+            liczby udziałów, które chcemy uzyskać. Na rysunku 3.8 znajduje się najprostszy możliwy
+            schemat podziału oparty na obrazie czarno-białym.
+        </div>
+        <div>
+            <br />
+            <br />
+        </div>
+        <div class="body-content">
+            Jak widać, każdy udział składa się z dwóch subpikseli. W wyniku nałożenia na siebie
+            udziałów piksela białego otrzymamy obraz składający się z białego i czarnego subpiksela,
+            co da w efekcie wrażenie koloru szarego. Udziały piksela czarnego po nałożeniu
+            dają obraz pierwotny. Obrazy składające się z udziałów nie dają żadnych informacji o zaszyfrowanej
+            wiadomości, ponieważ każda kombinacja subpikseli pojawia się z prawdopodobieństwem
+            50%, co jest równoważne z rozkładem losowym. Kiedy oba obrazy
+            zostaną na siebie nałożone, ukaże się obraz pierwotny (z tą różnicą, iż jego białe obszary
+            będą teraz widoczne jako szare). Można oczywiście dzielić piksele na więcej części,
+            tworząc tym samym więcej udziałów.
+        </div>
+        <div>
+            <br />
+            <div class="body-content">
+                Schemat progowy
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="body-content">
+            Opisaną powyżej technikę wykorzystuje się do tworzenia tzw. schematów progowych.
+            Jest to sposób dzielenia sekretów polegający na rozbiciu tajnej wiadomości na n udziałów.
+            Odczytanie wiadomości jest możliwe przy użyciu określonej części z nich. Prosty
+            schemat progowy dla dwóch udziałów przedstawiony został na rysunku 3.8. Schemat
+            taki opisywany jest za pomocą macierzy. Każdy wiersz reprezentuje jeden udział
+            składający się z m subpikseli. Poniżej znajdują się macierze reprezentujące schemat
+            progowy z dwoma udziałami składającymi się z dwóch subpikseli:
+        </div>
+    </div>*@
+<div class="col-lg-12">
+    <div class=" col-lg-8">
+        <div id="container" class="myCanvas">
+
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="col-lg-12">
+            <label for="tool2">Kolor:</label>
+            <select class="form-control selcls" id="tool2">
+                <option value="black">Czarny</option>
+                <option value="white">Biały</option>
+            </select>
+        </div>
+        <div class="col-lg-12">
+            <label for="tool">Narzędzie:</label>
+            <select class="form-control selcls" id="tool">
+                <option value="brush">Pisak</option>
+                <option value="eraser">Gumka</option>
+            </select>
+        </div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-6">
+            <button class="btn btn-primary" style="margin:10px" id="sendCanvasToDivide" type="submit">Sekret !</button>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    <div class="col-lg-12" style="height:100px"></div>
+</div>
+
+
+<div id="Secret" class=" col-lg-12">
+    <div id="container2" class="myCanvas">
+    </div>
+</div>
+
+
+<style>
+    .myCanvas {
+        background-color: #F0F0F0;
+    }
+</style>
+
+<script>
+    var x = document.getElementById("container");
+    var width = x.offsetWidth;
+    var height = 300;/* window.innerHeight - 25;*/
+
+
+    $('#sendCanvasToDivide').click(function () {
+    var canvas = document.querySelector('#container canvas');
+        var dataURL = canvas.toDataURL("image/png");
+        console.log(dataURL);
+    dataURL = dataURL.replace('data:image/png;base64,', '');
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Secrets", "VisualCryptography")',
+        data: JSON.stringify(dataURL),
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            for (var i = 0; i < response.secrets.length; i++) {
+                var secret = response.secrets[i];
+                LoadImageToLayerFromData(layer2, secret.value);
+            }
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    });
+
+    InitDrawingKonvoControl('container', width, height);
+
+    var isPaint = false;
+    var lastPointerPosition;
+    var toolMode = 'brush';
+    var brushColor = 'black';
+
+    var toolModElement = document.getElementById('tool');
+
+    toolModElement.addEventListener('change', function () {
+        toolMode = toolModElement.value;
+    });
+
+    var brushColorElement = document.getElementById('tool2');
+    brushColorElement.addEventListener('change', function () {
+        brushColor = brushColorElement.value;
+    });
+
+    function InitDrawingKonvoControl(stageName, stageWidth, stageHeight) {
+
+        var stage = new Konva.Stage({
+            container: stageName,
+            width: stageWidth,
+            height: stageHeight,
+        });
+
+        var layer = new Konva.Layer();
+        stage.add(layer);
+
+        var canvas = document.createElement('canvas');
+        canvas.width = stage.width();
+        canvas.height = stage.height();
+
+        var image = new Konva.Image({
+            image: canvas
+        });
+
+        layer.add(image);
+        stage.draw();
+
+        var context = canvas.getContext('2d');
+        context.strokeStyle = "black";
+        //context.lineJoin = "round";
+        context.lineWidth = 5;
+
+        image.on('mousedown touchstart', function () {
+            isPaint = true;
+            lastPointerPosition = stage.getPointerPosition();
+        });
+
+        stage.addEventListener('mouseup touchend', function () {
+            isPaint = false;
+        });
+
+        stage.addEventListener('mousemove touchmove', function () {
+            if (!isPaint) {
+                return;
+            }
+            if (toolMode === 'brush') {
+                context.globalCompositeOperation = 'source-over';
+            }
+            if (toolMode === 'eraser') {
+                context.globalCompositeOperation = 'destination-out';
+            }
+            if (brushColor === 'black') {
+                context.strokeStyle = "black";
+            }
+            if (brushColor === 'white') {
+                context.strokeStyle = "white";
+            }
+
+            context.beginPath();
+
+            var localPos = {
+                x: lastPointerPosition.x - image.x(),
+                y: lastPointerPosition.y - image.y()
+            };
+            context.moveTo(localPos.x, localPos.y);
+            var pos = stage.getPointerPosition();
+            localPos = {
+                x: pos.x - image.x(),
+                y: pos.y - image.y()
+            };
+            context.lineTo(localPos.x, localPos.y);
+            context.closePath();
+            context.stroke();
+
+            lastPointerPosition = pos;
+            layer.batchDraw();
+        });
+    }
+
+    var x2 = document.getElementById("container2");
+    var width2 = x2.offsetWidth;
+    var height2 = 400;
+
+    var stage2 = new Konva.Stage({
+        container: 'container2',
+        width: width2,
+        height: height2
+
+    });
+    var layer2 = new Konva.Layer();
+    stage2.add(layer2);
+
+    LoadImageToLayer(layer2, '/images/smile.png');
+    //LoadImageToLayer(layer2, '/images/2.bmp');
+
+    layer2.on('mouseover', function (evt) {
+        var shape = evt.target;
+        document.body.style.cursor = 'pointer';
+        layer2.draw();
+    });
+
+    layer2.on('mouseout', function (evt) {
+        var shape = evt.target;
+        document.body.style.cursor = 'default';
+        shape.scaleX(1);
+        shape.scaleY(1);
+        layer2.draw();
+    });
+
+    function LoadImageToLayer(layer, path) {
+        var KonvoImage = new Konva.Image({
+            draggable: true,
+            opacity: 0.6
+        });
+        layer.add(KonvoImage);
+
+        var image = new Image();
+        image.onload = function () {
+            KonvoImage.image(image);
+            layer.draw();
+        };
+        image.src = path;
+    }
+
+    function LoadImageToLayerFromData(layer, data) {
+        var KonvoImage = new Konva.Image({
+            draggable: true,
+            opacity: 0.6
+        });
+        layer.add(KonvoImage);
+
+        var image = new Image();
+        image.onload = function () {
+            KonvoImage.image(image);
+            layer.draw();
+        };
+        image.src = 'data:image/png;base64,' + data;
+        console.log(image.src);
+    }
+
+</script>

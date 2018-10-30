@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using CryptoWebService.Backend.VisualCryptography;
 
 namespace CryptoWebService.Controllers
 {
@@ -18,18 +17,21 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Secrets([FromBody] string imageDataWithoutHeader)
+        public IActionResult Secrets([FromBody] string imageDataWithoutHeader)
         {
-            byte[] imageBytes = Convert.FromBase64String(imageDataWithoutHeader);
-            MemoryStream ms = new MemoryStream(imageBytes, 0,imageBytes.Length);
+            string[] lista = VisualCryptographyService.DivideStringImageToSecrets(imageDataWithoutHeader);
 
-            Bitmap bitmap = new Bitmap(ms);
+            JArray secretList = new JArray();
+            for (int i = 0; i < lista.Length; i++)
+            {
+                secretList.Add(new JObject(
+                    new JProperty ("value", lista[i])
+                    ));
+            }
+           
+            Object rss =new JObject(new JProperty("secrets", secretList));
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(imageBytes);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-
-            return result;
+            return Json(rss);
         }
 
 
