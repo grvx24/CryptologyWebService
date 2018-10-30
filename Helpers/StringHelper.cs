@@ -48,6 +48,7 @@ namespace CryptoWebService.Helpers
 
         #region HexToByteConversion
 
+        //BYTES --> HEX
         private static readonly uint[] Lookup32 = CreateLookup32();
 
         private static uint[] CreateLookup32()
@@ -74,6 +75,18 @@ namespace CryptoWebService.Helpers
             return new string(result);
         }
 
+        private static int GetHexVal(char hex)
+        {
+            int val = (int)hex;
+            //For uppercase A-F letters:
+            return val - (val < 58 ? 48 : 55);
+            //For lowercase a-f letters:
+            //return val - (val < 58 ? 48 : 87);
+            //Or the two combined, but a bit slower:
+            //return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
+        }
+
+        //HEX --> BYTES
         public static byte[] StringHexToByteArray(string hex)
         {
             if (hex.Length % 2 == 1)
@@ -89,19 +102,34 @@ namespace CryptoWebService.Helpers
             return arr;
         }
 
-        private static int GetHexVal(char hex)
-        {
-            int val = (int)hex;
-            //For uppercase A-F letters:
-            return val - (val < 58 ? 48 : 55);
-            //For lowercase a-f letters:
-            //return val - (val < 58 ? 48 : 87);
-            //Or the two combined, but a bit slower:
-            //return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
-        }
+
 
         #endregion
 
+        public static byte[] BinaryStringToBytes(string input)
+        {
+            if (input.Length % 8 != 0)
+            {
+                int padding = 8 - input.Length % 8;
+                char[] zeros = new char[padding];
+                for (int i = 0; i < zeros.Length; i++)
+                {
+                    zeros[i] = '0';
+                }
+                string begin = new string(zeros);
+
+                input = string.Join(begin, input);
+            }
+
+            int numOfBytes = input.Length / 8;
+            byte[] bytes = new byte[numOfBytes];
+            for (int i = 0; i < numOfBytes; ++i)
+            {
+                bytes[i] = Convert.ToByte(input.Substring(8 * i, 8), 2);
+            }
+
+            return bytes;
+        }
 
 
     }
