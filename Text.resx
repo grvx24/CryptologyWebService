@@ -205,7 +205,7 @@
     <value>Algorytm</value>
   </data>
   <data name="KeyLength" xml:space="preserve">
-    <value>Długość klucza</value>
+    <value>Długość klucza (w bitach)</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Nie</value>
@@ -215,5 +215,29 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Tak</value>
+  </data>
+  <data name="asciiInfo" xml:space="preserve">
+    <value>Kodowanie według standardu ASCII</value>
+  </data>
+  <data name="BinaryInfo" xml:space="preserve">
+    <value>Zestaw znaków: 0 i 1</value>
+  </data>
+  <data name="CharactersCount" xml:space="preserve">
+    <value>Liczba wpisanych znaków</value>
+  </data>
+  <data name="HexInfo" xml:space="preserve">
+    <value>Zestaw znaków: 0-9 oraz A-F</value>
+  </data>
+  <data name="PaddingInfo" xml:space="preserve">
+    <value>Usuwa ostatnie bity nie będące częścią wiadomości, działa tylko gdy wiadomość jest poprawnie odszyfrowana</value>
+  </data>
+  <data name="RandomIVInfo" xml:space="preserve">
+    <value>Generuje wektor inicjalizacyjny o podanym formacie</value>
+  </data>
+  <data name="RandomKeyInfo" xml:space="preserve">
+    <value>Generuje klucz o podanej długości i formacie</value>
+  </data>
+  <data name="Visualization" xml:space="preserve">
+    <value>Wizualizacja</value>
   </data>
 </root>

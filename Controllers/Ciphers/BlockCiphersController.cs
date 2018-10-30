@@ -30,11 +30,9 @@ namespace CryptoWebService.Controllers.Ciphers
         public IActionResult AesEncrypt([FromBody]AesViewModel viewModel)
         {
             var mode = int.Parse(viewModel.Mode);
-            var messageEncoding = int.Parse(viewModel.Encoding);
             EncodingInformation keyEncoding = (EncodingInformation)int.Parse(viewModel.KeyEncoding);
             EncodingInformation IVEncoding = (EncodingInformation)int.Parse(viewModel.IVEncoding);
-
-            EncodingInformation encoding = (EncodingInformation)messageEncoding;
+            EncodingInformation encoding = (EncodingInformation)int.Parse(viewModel.Encoding);
 
             CustomAes aes = new CustomAes()
             {
@@ -64,6 +62,7 @@ namespace CryptoWebService.Controllers.Ciphers
                 case EncodingInformation.BINARY_STRING:
                     iv = StringHelper.BinaryStringToBytes(viewModel.IV);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -87,13 +86,15 @@ namespace CryptoWebService.Controllers.Ciphers
                 }
                 case EncodingInformation.BINARY_STRING:
                 {
-                    byte[] message = Convert.FromBase64String(viewModel.Message);
+                    byte[] message = StringHelper.BinaryStringToBytes(viewModel.Message);
                     var encrypted = aes.Encrypt(message, key, iv);
                     return Json(encrypted);
                 }
                 case EncodingInformation.BASE64:
                 {
-                    return Json("");
+                    byte[] message = Convert.FromBase64String(viewModel.Message);
+                    var encrypted = aes.Encrypt(message, key, iv);
+                    return Json(encrypted);
                 }
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -138,14 +139,12 @@ namespace CryptoWebService.Controllers.Ciphers
 
             CustomAes aes = new CustomAes(viewModel.Padding)
             {
-                CipherMode = (BlockCipherMode)mode,
-                
+                CipherMode = (BlockCipherMode)mode
             };
 
             var decrypted = aes.Decrypt(message, key, iv);
-            string result = Encoding.ASCII.GetString(decrypted);
-
-            return Json(result);
+            
+            return Json(decrypted);
         }
     }
 }

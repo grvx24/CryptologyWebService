@@ -1,108 +1,209 @@
 ﻿var BlockCiphersInit = function(config) {
 
+    //for output encoding
+    var outputDecryptASCII = '';
+    var outputDecryptHEX = '';
+    var outputDecryptBase64 = '';
+
     //Useful Functions
-    function checkBin(n) { return /^[01]{1,64}$/.test(n) }
-    function checkDec(n) { return /^[0-9]{1,64}$/.test(n) }
-    function checkHex(n) { return /^[0-9A-Fa-f]{1,64}$/.test(n) }
-    function pad(s, z) { s = "" + s; return s.length < z ? pad("0" + s, z) : s }
-    function unpad(s) { s = "" + s; return s.replace(/^0+/, '') }
+    function base64toHEX(base64) {
 
-    //Decimal operations
-    function Dec2Bin(n) { if (!checkDec(n) || n < 0) return 0; return n.toString(2) }
-    function Dec2Hex(n) { if (!checkDec(n) || n < 0) return 0; return n.toString(16) }
+        var raw = atob(base64);
 
-    //Binary Operations
-    function Bin2Dec(n) { if (!checkBin(n)) return 0; return parseInt(n, 2).toString(10) }
-    function Bin2Hex(n) { if (!checkBin(n)) return 0; return parseInt(n, 2).toString(16) }
+        var HEX = '';
 
-    //Hexadecimal Operations
-    function Hex2Bin(n) { if (!checkHex(n)) return 0; return parseInt(n, 16).toString(2) }
-    function Hex2Dec(n) { if (!checkHex(n)) return 0; return parseInt(n, 16).toString(10) }
+        for (i = 0; i < raw.length; i++) {
 
+            var _hex = raw.charCodeAt(i).toString(16)
 
+            HEX += (_hex.length == 2 ? _hex : '0' + _hex);
 
-    var encryptInit = function () {
+        }
+        return HEX.toUpperCase();
+
+    }
+    
+    var encryptInit = function() {
 
         $('#encryptButton').click(function() {
 
-            //get file object
-            
+            var inputModeEncrypt = $('#inputModeEncrypt option:selected').val();
 
             if (validateEncryptionForm() == false) {
                 return;
             }
 
-            var file = document.getElementById('fileEncrypt').files[0];
-            if (file) {
-                // create reader
+            if (inputModeEncrypt === 'text') {
+
+                var model = {
+                    Message: $('#inputEncrypt').val(),
+                    Key: $('#keyEncrypt').val(),
+                    IV: $('#IVEncrypt').val(),
+                    Mode: $('#algorithmSelectModeEncrypt option:selected').val(),
+                    Encoding: $("input[name='inputFormatEncrypt']:checked").val(),
+                    KeyEncoding: $("input[name='keyFormatEncrypt']:checked").val(),
+                    IVEncoding: $("input[name='IVFormatEncrypt']:checked").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: config.urls.encryptUrl,
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: JSON.stringify(model),
+                    success: function(data) {
+
+                        $('#outputEncrypt').val(data);
+                    },
+                    error: function(response) {
+                        alert(response.responseJSON.message);
+                    }
+                });
+
+            } else if (inputModeEncrypt === 'file') {
+                var file = document.getElementById('fileEncrypt').files[0];
+
+                
+
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = function () {
-                    console.log(reader.result);
+                    
+                    var fileData = reader.result.split(',')[1];
+
+                    console.log(fileData);
+
+                    var model = {
+                        Message: fileData,
+                        Key: $('#keyEncrypt').val(),
+                        IV: $('#IVEncrypt').val(),
+                        Mode: $('#algorithmSelectModeEncrypt option:selected').val(),
+                        Encoding: 3,
+                        KeyEncoding: $("input[name='keyFormatEncrypt']:checked").val(),
+                        IVEncoding: $("input[name='IVFormatEncrypt']:checked").val()
+                    }
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: config.urls.encryptUrl,
+                        dataType: 'json',
+                        contentType: "application/json",
+                        data: JSON.stringify(model),
+                        success: function (data) {
+                            
+                            var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Zaszyfrowany plik</a>';
+                            $('#encryptedFile').html(downloadLink);
+                        },
+                        error: function (response) {
+                            alert(response.responseJSON.message);
+                        }
+                    });
                 };
             }
-
-            var model = {
-                Message: $('#inputEncrypt').val(),
-                Key: $('#keyEncrypt').val(),
-                IV: $('#IVEncrypt').val(),
-                Mode: $('#algorithmSelectModeEncrypt option:selected').val(),
-                Encoding: $("input[name='inputFormatEncrypt']:checked").val(),
-                KeyEncoding: $("input[name='keyFormatEncrypt']:checked").val(),
-                IVEncoding: $("input[name='IVFormatEncrypt']:checked").val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: config.urls.encryptUrl,
-                dataType: 'json',
-                contentType: "application/json",
-                data: JSON.stringify(model),
-                success: function (data) {
-
-                    $('#outputEncrypt').val(data);
-                },
-                error: function (response) {
-                    alert(response.responseJSON.message);
-                }
-            });
-        });     
+        })
     }
 
-    var decryptInit = function () {
+var decryptInit = function () {
 
         $('#decryptButton').click(function () {
+
+            var inputModeEncrypt = $('#inputModeDecrypt option:selected').val();
 
             if (validateDecryptionForm() == false) {
                 return;
             }
 
-            var model = {
-                message: $('#inputDecrypt').val(),
-                key: $('#keyDecrypt').val(),
-                IV: $('#IVDecrypt').val(),
-                mode: $('#algorithmSelectModeDecrypt option:selected').val(),
-                encoding: $("input[name='inputFormatDecrypt']:checked").val(),
-                keyEncoding: $("input[name='keyFormatDecrypt']:checked").val(),
-                IVEncoding: $("input[name='IVFormatDecrypt']:checked").val(),
-                Padding: $("#paddingToggle").is(':checked')
-            }
+            if (inputModeEncrypt === 'text') {
 
-            $.ajax({
-                type: 'POST',
-                url: config.urls.decryptUrl,
-                dataType: 'json',
-                contentType: "application/json",
-                data: JSON.stringify(model),
-                success: function (data) {
-                    
-                    $('#outputDecrypt').val(data);
-                },
-                error: function (response) {
-                    alert(response.responseJSON.message);
+                var model = {
+                    Message: $('#inputDecrypt').val(),
+                    Key: $('#keyDecrypt').val(),
+                    IV: $('#IVDecrypt').val(),
+                    Mode: $('#algorithmSelectModeDecrypt option:selected').val(),
+                    Encoding: $("input[name='inputFormatDecrypt']:checked").val(),
+                    KeyEncoding: $("input[name='keyFormatDecrypt']:checked").val(),
+                    IVEncoding: $("input[name='IVFormatDecrypt']:checked").val(),
+                    Padding: $("#paddingToggle").is(':checked')
                 }
-            });
-        });
+
+                $.ajax({
+                    type: 'POST',
+                    url: config.urls.decryptUrl,
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: JSON.stringify(model),
+                    success: function (data) {
+
+                        outputDecryptBase64 = '';
+                        outputDecryptASCII = '';
+                        outputDecryptHEX = '';
+
+                        var mode = $("input[name='outputFormatDecrypt']:checked").val();
+                        var output = $('#outputDecrypt');
+
+                        outputDecryptBase64 = data;
+
+                        switch (mode) {
+                            case "0":
+                            {
+                                outputDecryptASCII = atob(outputDecryptBase64);
+                                output.val(outputDecryptASCII);
+                                break;
+                            }
+                            case "1":
+                            {
+                                outputDecryptHEX = base64toHEX(outputDecryptBase64);
+                                output.val(outputDecryptHEX);
+                                break;
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        alert(response.responseJSON.message);
+                    }
+                });
+
+            } else if (inputModeEncrypt === 'file') {
+                var file = document.getElementById('fileDecrypt').files[0];
+
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    
+                    var fileData = reader.result.split(',')[1];
+
+                    console.log(fileData);
+
+                    var model = {
+                        Message: fileData,
+                        Key: $('#keyDecrypt').val(),
+                        IV: $('#IVDecrypt').val(),
+                        Mode: $('#algorithmSelectModeDecrypt option:selected').val(),
+                        Encoding: 3,
+                        KeyEncoding: $("input[name='keyFormatDecrypt']:checked").val(),
+                        IVEncoding: $("input[name='IVFormatDecrypt']:checked").val(),
+                        Padding: true
+                    }
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: config.urls.decryptUrl,
+                        dataType: 'json',
+                        contentType: "application/json",
+                        data: JSON.stringify(model),
+                        success: function (data) {
+                            
+                            var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Odszyfrowany plik</a>';
+                            $('#decryptedFile').html(downloadLink);
+
+                        },
+                        error: function (response) {
+                            alert(response.responseJSON.message);
+                        }
+                    });
+                };
+            }
+        })
     }
 
 
@@ -500,46 +601,52 @@
         }
 
         if (mode != "2") {
-
             switch (ivFormat) {
-            case "1":
-            {
-                if (iv.length != ivLength / 4) {
-                    alerts.push('Niepoprawna długość wektora inicjalizacyjnego')
-                    correct = false;
-                }
+                case "1":
+                    {
+                        if (iv.length != ivLength / 4) {
+                            alerts.push('Niepoprawna długość wektora inicjalizacyjnego')
+                            correct = false;
+                        }
 
-                if (!isHexadecimal(iv)) {
-                    correct = false;
-                    alerts.push('Niepoprawny format heksadecymalny dla wektora');
-                }
+                        if (!isHexadecimal(iv)) {
+                            correct = false;
+                            alerts.push('Niepoprawny format heksadecymalny dla wektora');
+                        }
 
-                break;
-            }
-            case "2":
-            {
+                        break;
+                    }
+                case "2":
+                    {
+                        if (iv.length != ivLength) {
+                            alerts.push('Niepoprawna długość wektora inicjalizacyjnego')
+                            correct = false;
+                        }
 
-                if (iv.length != ivLength) {
-                    alerts.push('Niepoprawna długość wektora inicjalizacyjnego')
-                    correct = false;
-                }
-
-                if (!isBinaryString(iv)) {
-                    correct = false;
-                    alerts.push('Niepoprawny format binarny dla wektora');
-                }
-                break;
-            }
+                        if (!isBinaryString(iv)) {
+                            correct = false;
+                            alerts.push('Niepoprawny format binarny dla wektora');
+                        }
+                        break;
+                    }
             }
         }
-        
 
-        if (inputTextarea.length == 0) {
-            alerts.push('Pole tekstowe jest puste');
-            correct = false;
+        var inputMode = $("#inputModeEncrypt option:selected").val();
+        if (inputMode === "file") {
+
+            var file = document.getElementById('fileEncrypt').files[0];
+            if (!file) {
+                alerts.push('Nie wybrano pliku');
+            }
         }
 
-
+        if (inputMode === "text") {
+            if (inputTextarea.length == 0) {
+                alerts.push('Pole tekstowe jest puste');
+                correct = false;
+            }
+        }
         if (!correct) {
             alert(alerts.join('\n'));
         }
@@ -588,6 +695,44 @@
             });
     }
 
+    var tooltipInit = function() {
+        $('[data-toggle="tooltip"]').tooltip({trigger:"hover"});
+    }
+
+
+    
+
+    var outputConversionInit = function()
+    {
+        $("input[type=radio][name='outputFormatDecrypt']").change(function () {
+            var mode = $("input[name='outputFormatDecrypt']:checked").val();
+            var output = $('#outputDecrypt');
+
+            console.log(mode);
+            switch (mode) {
+            case "0":
+            {
+                if (outputDecryptASCII != '') {
+                    output.val(outputDecryptASCII);
+                } else {
+                    output.val(atob(outputDecryptBase64));
+                }
+
+                break;
+            }
+            case "1":
+            {
+                if (outputDecryptHEX != '') {
+                    output.val(outputDecryptHEX);
+                } else {
+                    output.val(base64toHEX(outputDecryptBase64));
+                }
+                break;
+            }
+            }
+        });   
+    }
+
 
     var init = function() {
         encryptInit();
@@ -597,6 +742,8 @@
         buttonsEncryptSideInit();
         buttonsDecryptSideInit();
         DisableIVAtECB();
+        tooltipInit();
+        outputConversionInit();
 
         textChangeInit();
     }

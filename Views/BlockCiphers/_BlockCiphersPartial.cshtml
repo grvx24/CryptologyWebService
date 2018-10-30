@@ -1,11 +1,4 @@
-﻿<div class="container">
-<div class="col-lg-12">
-
-
-
-
-
-
+﻿<div class="col-lg-12">
 <div class="col-lg-6">
     <div class="col-lg-12">
         <div class="row">
@@ -47,8 +40,8 @@
             <div class="input-group">
                 <input maxlength="256" placeholder="Klucz" id="keyEncrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button id="btnRandomKeyEncrypt" class="btn btn-success">Losuj</button>
-                    <button id="keyCounterEncrypt" class="btn btn-danger">0</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.RandomKeyInfo" id="btnRandomKeyEncrypt" class="btn btn-success">Losuj</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.CharactersCount" id="keyCounterEncrypt" class="btn btn-danger">0</button>
 
                 </span>
             </div>
@@ -66,8 +59,8 @@
             <div class="input-group">
                 <input maxlength="128" placeholder="Wektor inicjujący" id="IVEncrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button id="btnRandomIVEncrypt" class="btn btn-success">Losuj</button>
-                    <button id="IVCounterEncrypt" class="btn btn-danger">0</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.RandomIVInfo" id="btnRandomIVEncrypt" class="btn btn-success">Losuj</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.CharactersCount" id="IVCounterEncrypt" class="btn btn-danger">0</button>
                 </span>
             </div>
             <fieldset>
@@ -83,7 +76,7 @@
             <div class="col-lg-12">
                 <br/>
                 <div id="textPanelEncrypt">
-                    <textarea placeholder="@Text.WriteTextToEncrypt" class="form-control" rows="5" id="inputEncrypt"></textarea>
+                    <textarea maxlength="50000" placeholder="@Text.WriteTextToEncrypt" class="form-control" rows="5" id="inputEncrypt"></textarea>
 
                     <fieldset>
                         <input type="radio" name="inputFormatEncrypt" value=0 checked>
@@ -115,12 +108,13 @@
     <div class="row">
         <div class="col-lg-12">
             <button id="encryptButton" class="btn btn-primary">@Text.Encrypt</button>
+            <span id="encryptedFile"></span>
         </div>
     </div>
     <br/>
     <div class="row">
         <div id="outputGroupEncrypt" class="col-lg-12">
-            <textarea placeholder="@Text.EncryptedText" class="form-control" rows="5" id="outputEncrypt"></textarea>
+            <textarea readonly placeholder="@Text.EncryptedText" class="form-control" rows="5" id="outputEncrypt"></textarea>
             <fieldset>
                 <input type="radio" name="outputFormatEncrypt" value=3 checked>
                 <text>Base64</text>
@@ -155,7 +149,7 @@
         <div class="col-lg-4">
             <label for="paddingToggle">@Text.RemovePadding</label>
             <input checked id="paddingToggle" type="checkbox" data-toggle="toggle" data-on="@Text.Yes" data-off="@Text.No">
-            <button class="btn btn-info">
+            <button data-toggle="tooltip" data-placement="top" title="@Text.PaddingInfo" class="btn btn-info">
                 <span class="glyphicon glyphicon-exclamation-sign"></span>
             </button>
         </div>
@@ -174,8 +168,8 @@
             <div class="input-group">
                 <input placeholder="Klucz" id="keyDecrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button id="btnRandomKeyDecrypt" class="btn btn-success">Losuj</button>
-                    <button id="keyCounterDecrypt" class="btn btn-danger">0</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.RandomKeyInfo" id="btnRandomKeyDecrypt" class="btn btn-success">Losuj</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.CharactersCount" id="keyCounterDecrypt" class="btn btn-danger">0</button>
                 </span>
             </div>
 
@@ -193,8 +187,8 @@
             <div class="input-group">
                 <input placeholder="Wektor inicjujący" id="IVDecrypt" class="form-control" type="text"/>
                 <span class="input-group-btn">
-                    <button id="btnRandomIVDecrypt" class="btn btn-success">Losuj</button>
-                    <button id="IVCounterDecrypt" class="btn btn-danger">0</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.RandomIVInfo" id="btnRandomIVDecrypt" class="btn btn-success">Losuj</button>
+                    <button data-toggle="tooltip" data-placement="top" title="@Text.CharactersCount" id="IVCounterDecrypt" class="btn btn-danger">0</button>
                 </span>
             </div>
             <fieldset>
@@ -210,7 +204,7 @@
             <div class="col-lg-12">
                 <br/>
                 <div id="textPanelDecrypt">
-                    <textarea placeholder="@Text.WriteTextToDecrypt" class="form-control" rows="5" id="inputDecrypt"></textarea>
+                    <textarea maxlength="50000" placeholder="@Text.WriteTextToDecrypt" class="form-control" rows="5" id="inputDecrypt"></textarea>
                     <fieldset>
                         <input type="radio" name="inputFormatDecrypt" value=3 checked>
                         <text>Base64</text>
@@ -237,24 +231,22 @@
     <div class="row">
         <div class="col-lg-12">
             <button id="decryptButton" class="btn btn-primary">@Text.Decrypt</button>
+            <span id="decryptedFile"></span>
         </div>
     </div>
 
     <br/>
     <div class="row">
         <div id="outputGroupDecrypt" class="col-lg-12">
-            <textarea placeholder="@Text.DecryptedText" class="form-control" rows="5" id="outputDecrypt"></textarea>
+            <textarea readonly placeholder="@Text.DecryptedText" class="form-control" rows="5" id="outputDecrypt"></textarea>
             <fieldset>
                 <input type="radio" name="outputFormatDecrypt" value=0 checked>
                 <text>ASCII</text>
                 <input type="radio" name="outputFormatDecrypt" value=1>
                 <text>HEX</text>
-                <input type="radio" name="outputFormatDecrypt" value=2>
-                <text>Binary string</text>
             </fieldset>
         </div>
     </div>
-</div>
 </div>
 </div>
 

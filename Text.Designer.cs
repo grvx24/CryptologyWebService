@@ -151,6 +151,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kodowanie według standardu ASCII.
+        /// </summary>
+        public static string asciiInfo {
+            get {
+                return ResourceManager.GetString("asciiInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dostępne znaki.
         /// </summary>
         public static string AvailableCharacters {
@@ -160,11 +169,29 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zestaw znaków: 0 i 1.
+        /// </summary>
+        public static string BinaryInfo {
+            get {
+                return ResourceManager.GetString("BinaryInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfry blokowe.
         /// </summary>
         public static string BlockCiphers {
             get {
                 return ResourceManager.GetString("BlockCiphers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liczba wpisanych znaków.
+        /// </summary>
+        public static string CharactersCount {
+            get {
+                return ResourceManager.GetString("CharactersCount", resourceCulture);
             }
         }
         
@@ -268,6 +295,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zestaw znaków: 0-9 oraz A-F.
+        /// </summary>
+        public static string HexInfo {
+            get {
+                return ResourceManager.GetString("HexInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wpisano niedozwolony znak!.
         /// </summary>
         public static string InvalidCharacter {
@@ -286,7 +322,7 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Długość klucza.
+        ///   Looks up a localized string similar to Długość klucza (w bitach).
         /// </summary>
         public static string KeyLength {
             get {
@@ -300,6 +336,33 @@ namespace CryptoWebService {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuwa ostatnie bity nie będące częścią wiadomości, działa tylko gdy wiadomość jest poprawnie odszyfrowana.
+        /// </summary>
+        public static string PaddingInfo {
+            get {
+                return ResourceManager.GetString("PaddingInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generuje wektor inicjalizacyjny o podanym formacie.
+        /// </summary>
+        public static string RandomIVInfo {
+            get {
+                return ResourceManager.GetString("RandomIVInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generuje klucz o podanej długości i formacie.
+        /// </summary>
+        public static string RandomKeyInfo {
+            get {
+                return ResourceManager.GetString("RandomKeyInfo", resourceCulture);
             }
         }
         
@@ -318,6 +381,15 @@ namespace CryptoWebService {
         public static string TextEncryption {
             get {
                 return ResourceManager.GetString("TextEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wizualizacja.
+        /// </summary>
+        public static string Visualization {
+            get {
+                return ResourceManager.GetString("Visualization", resourceCulture);
             }
         }
         
