@@ -228,4 +228,13 @@
   <data name="WriteTextToHash" xml:space="preserve">
     <value>Wpisz tekst do obliczenia skrótu</value>
   </data>
+  <data name="HashFunction" xml:space="preserve">
+    <value>Funkcja skrótu</value>
+  </data>
+  <data name="WithKey" xml:space="preserve">
+    <value>Funkcja skrótu z kluczem</value>
+  </data>
+  <data name="WithoutKey" xml:space="preserve">
+    <value>Funkcja skrótu bez klucza</value>
+  </data>
 </root>

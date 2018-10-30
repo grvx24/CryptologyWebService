@@ -94,7 +94,7 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <h5>Bez klucza</h5>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MDC">Bez klucza:</a>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a>
@@ -102,7 +102,7 @@
                                             <a class="dropdown-item" href="#">SHA-3 (Keccak)</a>
                                         </div>
                                         <div class="col-xs-6">
-                                            <h5>Z kluczem</h5>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MAC">Z kluczem:</a>
                                             <a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC</a>
                                         </div>
                                     </div>

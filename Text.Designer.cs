@@ -277,6 +277,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu.
+        /// </summary>
+        public static string HashFunction {
+            get {
+                return ResourceManager.GetString("HashFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wysokość.
         /// </summary>
         public static string HeightMode {
@@ -363,6 +372,24 @@ namespace CryptoWebService {
         public static string WidthMode {
             get {
                 return ResourceManager.GetString("WidthMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu z kluczem.
+        /// </summary>
+        public static string WithKey {
+            get {
+                return ResourceManager.GetString("WithKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu bez klucza.
+        /// </summary>
+        public static string WithoutKey {
+            get {
+                return ResourceManager.GetString("WithoutKey", resourceCulture);
             }
         }
         

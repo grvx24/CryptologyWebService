@@ -155,5 +155,17 @@ namespace CryptoWebService.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult HashFunction()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MDC()
+        { 
+            return View();
+        }
+
     }
 }

@@ -10,6 +10,6 @@ namespace CryptoWebService.Models.HashFunctions
     {
         public string Message { get; set; }
         public string Key { get; set; }
-        public int HashType { get; set; }
+        public HashFunctionType HashType { get; set; }
     }
 }
