@@ -2,11 +2,47 @@
 @{
     ViewData["Title"] = "Index";
 }
+
 <script src="~/js/ciphers/BlockCiphers.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/block_ciphers.css">
+ 
+<div class="container">
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+    </div>
 
-<body>
+    <div id="Description" class="tabcontent">
+        Aes to fajny szyfr używany w wielu miejscach gdzie bezpieczeństwo to podstawa!
+    </div>
+    <div id="Tools" class="tabcontent col-lg-12">
 
-    @await Html.PartialAsync("_BlockCiphersPartial")
+        @await Html.PartialAsync("_BlockCiphersPartial")
 
-</body>
+    </div>
+
+    <div id="Visualization" class="tabcontent col-lg-12">
+        MAKAPAKA aciapacia
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById("defaultPageButton").click();
+
+    function openTab(evt, tabName) {
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>

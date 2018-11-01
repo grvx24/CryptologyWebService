@@ -10,13 +10,12 @@ namespace CryptoWebService.Backend.BlockCiphers
 {
     public class CustomAes : BlockCiphers
     {
-        private RijndaelManaged aes;
-        private int _keySize=128;
-        private int _blockSize = 128;
+        private AesCryptoServiceProvider aes;
 
-        public CustomAes()
+        public CustomAes(bool padding=true)
         {
-            this.aes = new RijndaelManaged();
+            this.aes = new AesCryptoServiceProvider();
+            this.Padding = padding;
         }
 
         public override byte[] GenerateKey(int length)
@@ -34,9 +33,13 @@ namespace CryptoWebService.Backend.BlockCiphers
 
         public override byte[] Encrypt(byte[] message, byte[] key, byte[] IV)
         {
+            aes.KeySize = key.Length*8;
             aes.Key = key;
-            aes.IV = IV;
             SetCipherMode();
+
+
+            if (aes.Mode!=System.Security.Cryptography.CipherMode.ECB)
+                aes.IV = IV;
 
             var encryptor = aes.CreateEncryptor(aes.Key,aes.IV);
             byte[] encrypted;
@@ -62,10 +65,17 @@ namespace CryptoWebService.Backend.BlockCiphers
             int decryptedLength = 0;
             SetCipherMode();
 
+            if (!this.Padding)
+            {
+                aes.Padding = PaddingMode.None;
+            }
+            aes.KeySize = key.Length*8;
             aes.Key = key;
-            aes.IV = IV;
 
-            var decryptor = aes.CreateDecryptor(aes.Key,aes.IV);
+            if (aes.Mode != System.Security.Cryptography.CipherMode.ECB)
+                aes.IV = IV;
+
+            var decryptor = aes.CreateDecryptor();
 
             using (MemoryStream ms = new MemoryStream(message))
             {
@@ -88,15 +98,8 @@ namespace CryptoWebService.Backend.BlockCiphers
                 case BlockCipherMode.CBC:
                     aes.Mode = System.Security.Cryptography.CipherMode.CBC;
                     break;
-                case BlockCipherMode.CFB:
-                    aes.FeedbackSize = 128;
-                    aes.Mode = System.Security.Cryptography.CipherMode.CFB;
-                    break;
                 case BlockCipherMode.ECB:
                     aes.Mode = System.Security.Cryptography.CipherMode.ECB;
-                    break;
-                case BlockCipherMode.OFB:
-                    aes.Mode = System.Security.Cryptography.CipherMode.OFB;
                     break;
             }
         }

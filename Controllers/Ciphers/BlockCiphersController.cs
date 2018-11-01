@@ -16,8 +16,7 @@ namespace CryptoWebService.Controllers.Ciphers
         ASCII,
         HEX,
         BINARY_STRING,
-        BASE64,
-        INTEGER
+        BASE64
     }
 
     public class BlockCiphersController : Controller
@@ -30,18 +29,45 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult AesEncrypt([FromBody]AesViewModel viewModel)
         {
-
-
-            EncodingInformation encoding = (EncodingInformation)viewModel.Encoding;
+            var mode = int.Parse(viewModel.Mode);
+            EncodingInformation keyEncoding = (EncodingInformation)int.Parse(viewModel.KeyEncoding);
+            EncodingInformation IVEncoding = (EncodingInformation)int.Parse(viewModel.IVEncoding);
+            EncodingInformation encoding = (EncodingInformation)int.Parse(viewModel.Encoding);
 
             CustomAes aes = new CustomAes()
             {
-                CipherMode = (BlockCipherMode)viewModel.Mode
+                CipherMode = (BlockCipherMode)mode
             };
 
-            
-            byte[] key = Encoding.ASCII.GetBytes(viewModel.Key);
-            byte[] iv = Encoding.ASCII.GetBytes(viewModel.IV);
+            byte[] key = null;
+            byte[] iv = null;
+
+            switch (keyEncoding)
+            {
+                case EncodingInformation.HEX:
+                    key=StringHelper.StringHexToByteArray(viewModel.Key.ToUpper());
+                    break;
+                case EncodingInformation.BINARY_STRING:
+                    key = StringHelper.BinaryStringToBytes(viewModel.Key);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            switch (IVEncoding)
+            {
+                case EncodingInformation.HEX:
+                    iv = StringHelper.StringHexToByteArray(viewModel.IV.ToUpper());
+                    break;
+                case EncodingInformation.BINARY_STRING:
+                    iv = StringHelper.BinaryStringToBytes(viewModel.IV);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+
 
             switch (encoding)
             {
@@ -60,13 +86,15 @@ namespace CryptoWebService.Controllers.Ciphers
                 }
                 case EncodingInformation.BINARY_STRING:
                 {
-                    byte[] message = Convert.FromBase64String(viewModel.Message);
+                    byte[] message = StringHelper.BinaryStringToBytes(viewModel.Message);
                     var encrypted = aes.Encrypt(message, key, iv);
                     return Json(encrypted);
                 }
                 case EncodingInformation.BASE64:
                 {
-                    return Json("");
+                    byte[] message = Convert.FromBase64String(viewModel.Message);
+                    var encrypted = aes.Encrypt(message, key, iv);
+                    return Json(encrypted);
                 }
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -75,32 +103,47 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult AesDecrypt([FromBody]AesViewModel viewModel)
         {
+            var mode = int.Parse(viewModel.Mode);
+            var messageEncoding = int.Parse(viewModel.Encoding);
+            EncodingInformation keyEncoding = (EncodingInformation)int.Parse(viewModel.KeyEncoding);
+            EncodingInformation IVEncoding = (EncodingInformation)int.Parse(viewModel.IVEncoding);
+
             byte[] message = Convert.FromBase64String(viewModel.Message);
-            byte[] key = Encoding.ASCII.GetBytes(viewModel.Key);
-            byte[] iv = Encoding.ASCII.GetBytes(viewModel.IV);
 
-            EncodingInformation encoding = (EncodingInformation)viewModel.Encoding;
+            byte[] key = null;
+            byte[] iv = null;
 
-            CustomAes aes = new CustomAes()
+            switch (keyEncoding)
             {
-                CipherMode = (BlockCipherMode)viewModel.Mode
-            };
-
-            var decrypted = aes.Decrypt(message, key, iv);
-
-            switch (encoding)
-            {
-                case EncodingInformation.ASCII:
-                    break;
                 case EncodingInformation.HEX:
+                    key = StringHelper.StringHexToByteArray(viewModel.Key);
                     break;
                 case EncodingInformation.BINARY_STRING:
+                    key = StringHelper.BinaryStringToBytes(viewModel.Key);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
+            switch (IVEncoding)
+            {
+                case EncodingInformation.HEX:
+                    iv = StringHelper.StringHexToByteArray(viewModel.IV);
+                    break;
+                case EncodingInformation.BINARY_STRING:
+                    iv = StringHelper.BinaryStringToBytes(viewModel.IV);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
+            CustomAes aes = new CustomAes(viewModel.Padding)
+            {
+                CipherMode = (BlockCipherMode)mode
+            };
+
+            var decrypted = aes.Decrypt(message, key, iv);
+            
             return Json(decrypted);
         }
     }
