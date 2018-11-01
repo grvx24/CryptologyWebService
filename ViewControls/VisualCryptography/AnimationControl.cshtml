@@ -1,48 +1,46 @@
-﻿<div id="visualCryptographyAnimationControl">
-    <div class="row">
-        <div class="col-lg-12">
-            <div id="AnimationContainer" class="myCanvas" />
-        </div>
-    </div>
+﻿<div id="visualCryptographyAnimationControl" class="col-lg-12">
+    <div id="AnimationContainer" class="myCanvas" style=" width:@(Model.TotalWidthWithBorders + "px" ); height:@(Model.TotalHeightWithBorders + "px")"/>
 </div>
 
 <style>
     .myCanvas {
         background-color: #F0F0F0;
+        border: 2px solid black;
     }
 </style>
 
 <script>
     var width = '@Model.Width';
+    var period = '@Model.Period';
     var height = '@Model.Height';
+    var amplitude = '@Model.Amplitude';
+    var totalWidth = '@Model.TotalWidth';
 
     var mainLayer = new Konva.Layer();
 
-    var StaticKonvaImage    = InitImage('@Model.StaticImage', mainLayer);
-    var AnimationKonvaImage = InitImage('@Model.MovingImage', mainLayer);
+    var StaticKonvaImage = InitImage('@Model.StaticImage', mainLayer, amplitude);
+    var AnimationKonvaImage = InitImage('@Model.MovingImage', mainLayer,0);
 
     mainLayer.add(StaticKonvaImage);
     mainLayer.add(AnimationKonvaImage);
 
     var stage = new Konva.Stage({
         container: 'AnimationContainer',
-        width: width + 50,
+        width: totalWidth,
         height: height
     });
 
     stage.add(mainLayer);
 
-    var amplitude = 50;
-    var period = 20000;
-
     var anim = new Konva.Animation(function (frame) {
-        AnimationKonvaImage.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period));
+        AnimationKonvaImage.setX((amplitude * Math.sin(frame.time * 2 * Math.PI / period)));
     }, mainLayer);
 
     anim.start();
 
-    function InitImage(imageSrc, layer) {
+    function InitImage(imageSrc, layer,XPosition) {
         var KonvaImage = new Konva.Image({
+            x: XPosition,
             width: width,
             height: height
         });

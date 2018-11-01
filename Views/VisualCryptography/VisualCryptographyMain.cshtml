@@ -5,7 +5,6 @@
     ViewData["Title"] = "Secret";
 }
 <script src="https://cdn.rawgit.com/konvajs/konva/2.4.0/konva.min.js"></script>
-<script src="~/js/visualCryptography/VisualCryptography.js"></script>
 
 <h2 class="page-header">Kryptografia Wizualna</h2>
 <div class=" col-lg-12">
@@ -17,11 +16,12 @@
         tajną wiadomość. W efekcie odszyfrowanie informacji byłoby możliwe jedynie przy
         użyciu wzroku — stąd nazwa metody. Ale po kolei.
     </div>
-    <div id="Secret" class=" col-lg-12">
+    <div class="row">
         @{
-            await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("AnimationControl"),Model);
+            await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("AnimationControl"), Model);
         }
     </div>
+
     <div>
         <br />
         <br />
