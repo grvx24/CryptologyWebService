@@ -57,6 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="ViewControls\VisualCryptography\AnimationControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_CustomLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
