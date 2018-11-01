@@ -1,27 +1,21 @@
-﻿
-<div class="col-lg-12" style="height:300px">
-    <form class="input-group" method="post" enctype="multipart/form-data" asp-controller="VisualCryptography" asp-action="UploadFile" name="myForm">
-        <div class="btn btn-primary" onclick="getFile()">
-            Wczytaj plik&hellip;
+﻿<div id="uploadControl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Wczytaj plik&hellip; <input id="fileUploader" type="file" style="display: none;">
+                    </span>
+                </label>
+                <input id="uploadedFileName" type="text" class="form-control" readonly>
+            </div>
         </div>
-        <div style='height: 0px;width: 0px; overflow:hidden;'>
-            <input id="upfile" type="file" value="upload" onchange="sub(this)" />
-        </div>
-        <label id="yourBtn">
-
-        </label>
-    </form>
+    </div>
 </div>
 
 <script>
-    function getFile() {
-        document.getElementById("upfile").click();
-    }
-    function sub(obj) {
-        var file = obj.value;
-        var fileName = file.split("\\");
-        document.getElementById("yourBtn").innerHTML = fileName[fileName.length - 1];
-        document.myForm.submit();
-        event.preventDefault();
-    }
+    $('#fileUploader').change(function () {
+        var filename = $(this).val().split('\\').pop();
+        $('#uploadedFileName').val(filename);
+    });
 </script>
