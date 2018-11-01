@@ -21,6 +21,11 @@
             await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("ImageControl"), Model.ImageList[0]);
         }
     </div>
+    <div class="body-content  text-center">
+        @{
+            await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("ImageControl"), Model.ImageList[1]);
+        }
+    </div>
     <div class="body-content">
         Każdy obraz cyfrowy składa się z tzw. pikseli (ang. pixels). Są to malutkie kwadraty
         wypełnione jednolitym kolorem. Położone obok siebie w rzędach i kolumnach tworzą

@@ -45,7 +45,16 @@ namespace CryptoWebService.Controllers
 
             List<ImageDto> Images = new List<ImageDto>
             {
-                new ImageDto("/images/SimpleMethod1.png")
+                new ImageDto("/images/SimpleMethodBlackPixel.png")
+                {
+                    Width = 991,
+                    Height = 250
+                },
+                new ImageDto("/images/SimpleMethodWhitePixel.png")
+                {
+                    Width = 991,
+                    Height = 250
+                }
             };
             VieModelDto.AnimationList = Animations;
             VieModelDto.ImageList = Images;
