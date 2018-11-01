@@ -1,4 +1,6 @@
-﻿
+﻿@using CryptoWebService.Helpers;
+@using CryptoWebService.Models.VisualCryptography;
+@model AnimationDto;
 @{
     ViewData["Title"] = "Secret";
 }
@@ -16,8 +18,9 @@
         użyciu wzroku — stąd nazwa metody. Ale po kolei.
     </div>
     <div id="Secret" class=" col-lg-12">
-        <div id="container" class="myCanvas">
-        </div>
+        @{
+            await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("AnimationControl"),Model);
+        }
     </div>
     <div>
         <br />
@@ -49,56 +52,3 @@
     </div>
 </div>
 
-
-
-
-<style>
-    .myCanvas {
-        background-color: #F0F0F0;
-    }
-</style>
-
-<script>
-    var x2 = document.getElementById("container");
-    var width2 = x2.offsetWidth;
-    var height2 = 400;
-
-    var stage = new Konva.Stage({
-        container: 'container',
-        width: width2,
-        height: height2
-    });
-    var layer = new Konva.Layer();
-    stage.add(layer);
-
-    var StaticImage = new Konva.Image({
-        x: 5,
-    });
-    layer.add(StaticImage);
-
-    var image = new Image();
-    image.onload = function () {
-        StaticImage.image(image);
-        layer.draw();
-    };
-    image.src = '/images/1.bmp';
-
-    var AnimationImage = new Konva.Image({});
-    layer.add(AnimationImage);
-
-    var image = new Image();
-    image.onload = function () {
-        AnimationImage.image(image);
-        layer.draw();
-    };
-    image.src = '/images/2.bmp';
-    
-    var amplitude = 10;
-    var period = 20000;
-
-    var anim = new Konva.Animation(function (frame) {
-        AnimationImage.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period));
-    }, layer);
-
-    anim.start();
-</script>

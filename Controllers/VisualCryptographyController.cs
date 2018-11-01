@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Controllers
 {
@@ -22,7 +23,7 @@ namespace CryptoWebService.Controllers
 
         public IActionResult VisualCryptographyMain()
         {
-            return View();
+            return View(new AnimationDto("/images/1.bmp", "/images/2.bmp"));
         }
 
         public IActionResult VisualCryptographyUploadFiles()

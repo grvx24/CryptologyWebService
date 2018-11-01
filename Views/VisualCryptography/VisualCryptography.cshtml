@@ -6,7 +6,6 @@
     ViewData["Title"] = "Secret";
 }
 <script src="https://cdn.rawgit.com/konvajs/konva/2.4.0/konva.min.js"></script>
-<script src="~/js/visualCryptography/VisualCryptography.js"></script>
 
 <h2 class="page-header">Kryptografia Wizualna</h2>
 
@@ -50,6 +49,7 @@
 </div>
 <div class="col-lg-12">
     <div class=" col-lg-6">
+
         <div id="container" class="myCanvas">
 
         </div>
@@ -57,17 +57,10 @@
             await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"));
         }
     </div>
-    <div class="col-lg-4">
-        <div class="col-lg-6">
-            <button class="btn btn-primary" style="margin:10px" id="sendCanvasToDivide" type="submit">Sekret !</button>
-        </div>
+    <div class="col-lg-6">
+        <button class="btn btn-primary" style="margin:10px" id="sendCanvasToDivide">Podziel na sekrety !</button>
     </div>
-    <div class="col-lg-12" style="height:100px"></div>
 </div>
-
-
-
-
 <div id="Secret" class=" col-lg-12">
     <div id="container2" class="myCanvas">
     </div>
@@ -81,8 +74,6 @@
 </style>
 
 <script>
-
-
     $('#encryptButton').click(function () {
         var file = document.getElementById('fileUploader').files[0];
 

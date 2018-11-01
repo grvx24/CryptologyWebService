@@ -1,0 +1,60 @@
+﻿<div id="visualCryptographyAnimationControl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="AnimationContainer" class="myCanvas" />
+        </div>
+    </div>
+</div>
+
+<style>
+    .myCanvas {
+        background-color: #F0F0F0;
+    }
+</style>
+
+<script>
+    var width = '@Model.Width';
+    var height = '@Model.Height';
+
+    var mainLayer = new Konva.Layer();
+
+    var StaticKonvaImage    = InitImage('@Model.StaticImage', mainLayer);
+    var AnimationKonvaImage = InitImage('@Model.MovingImage', mainLayer);
+
+    mainLayer.add(StaticKonvaImage);
+    mainLayer.add(AnimationKonvaImage);
+
+    var stage = new Konva.Stage({
+        container: 'AnimationContainer',
+        width: width + 50,
+        height: height
+    });
+
+    stage.add(mainLayer);
+
+    var amplitude = 50;
+    var period = 20000;
+
+    var anim = new Konva.Animation(function (frame) {
+        AnimationKonvaImage.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period));
+    }, mainLayer);
+
+    anim.start();
+
+    function InitImage(imageSrc, layer) {
+        var KonvaImage = new Konva.Image({
+            width: width,
+            height: height
+        });
+        var imageToInit = new Image();
+
+        imageToInit.src = imageSrc;
+
+        imageToInit.onload = function () {
+            KonvaImage.image(imageToInit);
+            layer.draw();
+        };
+        return KonvaImage;
+    }
+
+</script>

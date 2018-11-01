@@ -13,5 +13,10 @@ namespace CryptoWebService.Helpers
         {
             return path + "/" + controlName + ".cshtml";
         }
+
+        public static String GetVisualCryptographyControlPath(String controlName)
+        {
+            return path + "/VisualCryptography/" + controlName + ".cshtml";
+        }
     }
 }
