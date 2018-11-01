@@ -4,6 +4,10 @@ using System;
 using System.Drawing;
 using System.IO;
 using CryptoWebService.Backend.VisualCryptography;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CryptoWebService.Controllers
 {
@@ -14,6 +18,37 @@ namespace CryptoWebService.Controllers
         public IActionResult VisualCryptography()
         {
             return View();
+        }
+
+        public IActionResult VisualCryptographyMain()
+        {
+            return View();
+        }
+
+        public IActionResult VisualCryptographyUploadFiles()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            var filePath = Path.GetTempFileName();
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            return Ok(new { count = files.Count, size, filePath });
         }
 
         [HttpPost]
