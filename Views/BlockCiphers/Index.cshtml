@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<script src="~/js/ciphers/BlockCiphers.js"></script>
+<script src="~/js/ciphers/AesCipher.js"></script>
  
 <div class="container">
     <div class="tab">
@@ -17,12 +17,12 @@
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 
-        @await Html.PartialAsync("_BlockCiphersPartial")
+        @await Html.PartialAsync("_AesPartial")
 
     </div>
 
     <div id="Visualization" class="tabcontent col-lg-12">
-        MAKAPAKA aciapacia
+        @await Html.PartialAsync("_AesVisualization")
     </div>
 
 

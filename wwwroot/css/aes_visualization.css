@@ -1,0 +1,55 @@
+﻿.background {
+    fill: blue;
+}
+
+.cell-rect-data {
+    fill: #87cefa;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-data:hover {
+        z-index: 1;
+        fill: red;
+}
+
+.cell-rect-result {
+    fill: #98fb98;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-sbox {
+    fill: #8fbc8f;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-selected {
+    fill: red;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-selected-2 {
+    fill: orange;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-index {
+    fill: #b0c4de;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-text-data {
+    font-size: 40px;
+    font-weight: bold;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.cell-text-sbox {
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: middle;
+}
