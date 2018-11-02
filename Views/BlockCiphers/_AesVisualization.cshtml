@@ -1,27 +1,196 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/css/aes_visualization.css">
 <script src="~/lib/custom/d3.min.js"></script>
 
-<svg id="dataBlock" transform="scale(0.5)">
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="text-center">
+            Wizualizacja została przygotowana dla klucza o długości 128 bitów. 
+            Animacja pokazuje działanie rundy wstępnej, rundy cyklicznej oraz przydział klucza dla każdej rundy.
+        </h3>
+        <br/>
+    </div>
+</div>
 
-</svg>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="input-group">
+            <label for="inputViz">@Text.VizBlockContent</label>
+            <input class="form-control" id="inputViz" type="text" />
+        </div>
+        <fieldset>
+            <input type="radio" name="inputVizFormat" value=0>
+            <text>ASCII</text>
+            <input type="radio" name="inputVizFormat" value=1 checked>
+            <text>Hex</text>
+        </fieldset>
+    </div>
+    <div class="col-lg-4">
+        <div class="input-group">
+            <label for="inputVizKey">@Text.Key (16 bajtów)</label>
+            <input maxlength="32" class="form-control" id="inputVizKey" type="text" />
+        </div>
+        <fieldset>
+            <input type="radio" name="inputVizKeyFormat" value=0>
+            <text>ASCII</text>
+            <input type="radio" name="inputVizKeyFormat" value=1 checked>
+            <text>Hex</text>
+        </fieldset>
+    </div>
+    <div class="col-lg-4">
+        <br>     
+        <button id="startVizButton" class="btn btn-lg btn-primary">@Text.StartVisualization</button>
+
+    </div>
+
+    </div>
+<br/>
+<div class="row">
+    <div class="text-center">
+        <h2>Runda wstępna</h2>
+        <br/>
+        <h3>
+            Wykonanie operacji XOR na bloku danych i kluczu.
+        </h3>
+    </div>
+    <div class="col-lg-4">
+        <svg id="rawDataBlock" transform="scale(0.5)">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="rawKeyBlock" transform="scale(0.5)">
+
+        </svg>
+    </div>
+    <div class="col-lg-4" transform="scale(0.5)">
+        <svg id="rawResult" transform="scale(0.5)">
+
+        </svg>
+    </div>
+</div>
+
+<div class="row">
+    <div class="text-center">
+        <h2>Runda cykliczna (10 powtórzeń dla klucza 128-bitowego)</h2>
+        <br/>
+    </div>
+    <div class="text-center">
+        <h3>
+            1. Podstawienie
+        </h3>
+    </div>
+    <div class="col-lg-12">
+        <svg style="display: block;margin: auto" id="sboxBlock">
+
+        </svg>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display: block;margin: auto" id="dataBlock" transform="translate(0,0)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 text-center">
+        <div align="center">
+            <span style="font-size: 200px" class="glyphicon glyphicon-arrow-right">
+
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display:block;margin: auto" id="subBytesBlock" transform="translate(0,0)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 text-left">
+        <h4>
+            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+<div class="row">
+    <div class="text-center">
+        <h3>
+            2. Przesunięcie
+        </h3>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display: block;margin: auto" id="shiftBlockBefore" transform="translate(0,0)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 text-center">
+        <div align="center">
+            <span style="font-size: 200px" class="glyphicon glyphicon-arrow-right">
+
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display:block;margin: auto" id="shiftBlockAfter" transform="translate(0,0)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 text-left">
+        <h4>
+            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+
+<div class="row">
+    <div class="text-center">
+        <h3>
+            3. Mieszanie kolumn
+        </h3>
+        <br/>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display:block;margin: auto" id="mixColumnsHelperMatrix" transform="scale(1)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display:block;margin: auto" id="mixColumnsBlockBefore" transform="scale(1)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg style="display:block;margin: auto" id="mixColumnsBlockAfter" transform="scale(1)">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 col-lg-offset-8 text-left">
+        <h4>
+            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+    </div>
+</div>
 
 
-<svg id="subBytesBlock" transform="scale(0.5)">
-
-</svg>
-
-<svg id="shiftRowsBlock" transform="scale(0.5)">
-
-</svg>
-
-<svg id="mixColumnsBlock" transform="scale(0.5)">
-
-</svg>
 
 
-<svg id="sboxBlock">
-
-</svg>
 
 
 
@@ -48,6 +217,13 @@
     sBox[14] = [0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf];
     sBox[15] = [0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16];
 
+    var mixColumnsBox = new Array(4);
+    mixColumnsBox[0]=[0x02,0x03,0x01,0x01];
+    mixColumnsBox[1]=[0x01,0x02,0x03,0x01];
+    mixColumnsBox[2]=[0x01,0x01,0x02,0x03];
+    mixColumnsBox[3]=[0x03,0x01,0x01,0x02];
+
+
 
     var numrows = 4;
     var numcols = 4;
@@ -67,9 +243,18 @@
     VisualizeDataBlock(matrix, 'dataBlock', 'cell-rect-data');
     VisualizeSBox(sBox);
     VisualizeDataBlock(subBytesMatrix, 'subBytesBlock', 'cell-rect-result');
-    VisualizeDataBlock(shiftRowsMatrix, 'shiftRowsBlock', 'cell-rect-result');
-    VisualizeDataBlock(mixColumnsMatrix, 'mixColumnsBlock', 'cell-rect-result');
+
+    VisualizeDataBlock(subBytesMatrix, 'shiftBlockBefore', 'cell-rect-data-nohover');
+    VisualizeDataBlock(shiftRowsMatrix, 'shiftBlockAfter', 'cell-rect-result');
+
+    VisualizeDataBlock(shiftRowsMatrix, 'mixColumnsBlockBefore', 'cell-rect-data-nohover');
+    VisualizeDataBlock(mixColumnsBox, 'mixColumnsHelperMatrix', 'cell-rect-helpers');
+    VisualizeDataBlock(mixColumnsMatrix, 'mixColumnsBlockAfter', 'cell-rect-result');
+
+
     SetMouseEventOnDataBlock();
+    SetMouseEventOnShiftBlock();
+    SetMouseEventOnMixColumns();
 
 
     function IntToHexString(d) {
@@ -84,8 +269,8 @@
         var numcols = 16;
 
         var margin = { top: 100, right: 100, bottom: 100, left: 100 },
-            width = 500,
-            height = 500;
+            width = 400,
+            height = 400;
 
         var textOffsetX = (width / numcols) / 2;
         var textOffsetY = (height / numrows) / 2;
@@ -197,8 +382,8 @@
         var numcols = 4;
 
         var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-            width = 500,
-            height = 500;
+            width = 250,
+            height = 250;
 
         var textOffsetX = (width / numcols) / 2;
         var textOffsetY = (height / numrows) / 2;
@@ -244,7 +429,7 @@
             });
     }
 
-    function handleMouseOver(d, i) {
+    function handleMouseOverOnDataBlock(d, i) {
 
         var row = d >> 4;
         var column = d & 15;
@@ -267,9 +452,15 @@
             .select("rect")
             .attr("class", "cell-rect-selected-2");
 
+        d3.select("#subBytesBlock").selectAll(".cell")
+            .filter(function (d, index) {
+                return index === i;
+            }).select("rect")
+            .attr("class", "cell-rect-selected");
+
     }
 
-    function handleMouseOut(d, i) {
+    function handleMouseOutOnDataBlock(d, i) {
 
         var row = d >> 4;
         var column = d & 15;
@@ -291,14 +482,304 @@
             })
             .select("rect")
             .attr("class", "cell-rect-index");
+
+        d3.select("#subBytesBlock").selectAll(".cell")
+            .filter(function (d, index) {
+                return index === i;
+            }).select("rect")
+            .attr("class", "cell-rect-result");
     }
 
-    function SetMouseEventOnDataBlock() {
+    function SetMouseEventOnDataBlock(d,i) {
 
         d3.select('#dataBlock')
             .selectAll('.cell')
-            .on('mouseover', handleMouseOver)
-            .on('mouseout', handleMouseOut);
+            .on('mouseover', handleMouseOverOnDataBlock)
+            .on('mouseout', handleMouseOutOnDataBlock);
+    }
+
+    function handleMouseOverOnShiftBlock(d,i) {
+
+        if (i < 4) {
+            d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index < 4;
+                })
+                .select('rect')
+                .attr("class", "cell-rect-selected-2");
+
+            d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index < 4;
+                })
+                .select('rect')
+                .attr("class", "cell-rect-selected-2");
+        }
+        else if (i >= 4 && i < 8) {
+
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 4 && index < 8;
+                });
+
+
+            cellsBefore.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 0) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 4 && index < 8;
+                });
+
+            cellsAfter.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 3) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+        } else if (i >= 8 && i < 12) {
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 8 && index < 12;
+                });
+
+
+            cellsBefore.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 0 || index == 1) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 8 && index < 12;
+                });
+
+            cellsAfter.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 3 || index == 2) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+        } else if (i >= 12 && i < 16) {
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 12 && index < 16;
+                });
+
+
+            cellsBefore.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 0 || index == 1||index==2) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 12 && index < 16;
+                });
+
+            cellsAfter.select('rect')
+                .attr("class", function (d, index) {
+                    //local index, so value starts from 0
+                    if (index == 3 || index == 2||index===1) {
+                        return "cell-rect-selected";
+                    } else {
+                        return "cell-rect-selected-2";
+                    }
+                });
+        }
+    }
+
+    function handleMouseOutOnShiftBlock(d,i) {
+
+        if (i < 4) {
+            d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index < 4;
+                })
+                .select('rect')
+                .attr("class", "cell-rect-data-nohover");
+
+            d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index < 4;
+                })
+                .select('rect')
+                .attr("class", "cell-rect-result");
+        }
+        else if (i >= 4 && i < 8) {
+
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 4 && index < 8;
+                });
+
+            cellsBefore.select('rect')
+                .attr("class", "cell-rect-data-nohover");
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 4 && index < 8;
+                });
+
+            cellsAfter.select('rect')
+                .attr("class", "cell-rect-result");
+        }
+        else if (i >= 8 && i < 12) {
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 8 && index < 12;
+                });
+
+            cellsBefore.select('rect')
+                .attr("class", "cell-rect-data-nohover");
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 8 && index < 12;
+                });
+
+            cellsAfter.select('rect')
+                .attr("class", "cell-rect-result");
+        }
+        else if (i >= 12 && i < 16) {
+            var cellsBefore = d3.select('#shiftBlockBefore')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 12 && index < 16;
+                });
+
+            cellsBefore.select('rect')
+                .attr("class", "cell-rect-data-nohover");
+
+            var cellsAfter = d3.select('#shiftBlockAfter')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return index >= 12 && index < 16;
+                });
+            cellsAfter.select('rect')
+                .attr("class", "cell-rect-result");
+        }
+    }
+
+    function SetMouseEventOnShiftBlock() {
+        d3.select('#shiftBlockBefore')
+            .selectAll('.cell')
+            .on('mouseover', handleMouseOverOnShiftBlock)
+            .on('mouseout', handleMouseOutOnShiftBlock);
+    }
+
+
+    function handleMouseOverOnMixColumns(d, i) {
+        d3.select(this).select("rect")
+            .attr("class", "cell-rect-selected");
+
+        var cellsBefore = d3.select('#mixColumnsBlockBefore')
+            .selectAll(".cell")
+            .filter(function (d, index) {
+                var imod = i % 4;
+                return (index % 4) == imod;
+            });
+
+        cellsBefore.select("rect")
+            .attr("class", function(d, index) {
+                switch (index) {
+                    case 0: { return "maroon-cell";}
+                    case 1: { return "red-cell";}
+                    case 2: { return "orange-cell";}
+                    case 3: { return "yellow-cell";}
+
+                }
+            });
+
+        var helperMatrix = d3.select('#mixColumnsHelperMatrix')
+            .selectAll(".cell")
+            .filter(function (d, index) {
+
+                var row = Math.floor(i / 4);
+                console.log(row);
+                return index >= row * 4 && index < row * 4 + 4;
+            });
+
+        helperMatrix.select("rect")
+            .attr("class", function (d, index) {
+                switch (index) {
+                case 0: { return "maroon-cell";}
+                case 1: { return "red-cell";}
+                case 2: { return "orange-cell";}
+                case 3: { return "yellow-cell";}
+                }
+            });
+
+    }
+    function handleMouseOutOnMixColumns(d, i) {
+        d3.select(this).select("rect")
+            .attr("class", "cell-rect-result");
+
+        var cellsBefore = d3.select('#mixColumnsBlockBefore')
+            .selectAll(".cell")
+            .filter(function (d, index) {
+                var imod = i % 4;
+                return index % 4 == imod;
+            });
+
+        cellsBefore.select("rect")
+            .attr("class", "cell-rect-data-nohover");
+
+        var helperMatrix = d3.select('#mixColumnsHelperMatrix')
+            .selectAll(".cell")
+            .filter(function (d, index) {
+
+                var row = Math.floor(i / 4);
+                console.log(row);
+                return index >= row * 4 && index < row * 4 + 4;
+            });
+
+        helperMatrix.select("rect")
+            .attr("class", "cell-rect-helpers");
+
+    }
+    function SetMouseEventOnMixColumns() {
+        d3.select('#mixColumnsBlockAfter')
+            .selectAll('.cell')
+            .on('mouseover', handleMouseOverOnMixColumns)
+            .on('mouseout', handleMouseOutOnMixColumns);
     }
 
 
@@ -439,6 +920,32 @@
 
         return result;
     }
+
+    function KeySchedule_Rotation(oldKey) {
+        var newKey = new Array(4);
+        for (var i = 0; i < 4; i++) {
+            newKey[i] = new Array(4);
+        }
+
+        //rotation
+        var tempColumn = new Array(4);
+        tempColumn[0] = oldKey[0][3];
+
+        for (var i = 1; i < 4; i++) {
+            tempColumn[i] = oldKey[i][3];
+        }
+
+        //subbytes
+        for (var i = 0; i < 4; i++) {
+            var row = tempColumn[i] >> 4;
+            var column = tempColumn[i] & 15;
+
+            tempColumn[i] = sBox[row][column];
+        }
+
+        console.log(tempColumn);
+    }
+    
 
 
 

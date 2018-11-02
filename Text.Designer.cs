@@ -376,6 +376,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rozpocznij wizualizację.
+        /// </summary>
+        public static string StartVisualization {
+            get {
+                return ResourceManager.GetString("StartVisualization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szyfrowanie tekstu.
         /// </summary>
         public static string TextEncryption {
@@ -390,6 +399,15 @@ namespace CryptoWebService {
         public static string Visualization {
             get {
                 return ResourceManager.GetString("Visualization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zawartość bloku (16 bajtów).
+        /// </summary>
+        public static string VizBlockContent {
+            get {
+                return ResourceManager.GetString("VizBlockContent", resourceCulture);
             }
         }
         
