@@ -1,0 +1,21 @@
+﻿<div id="uploadControl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Wczytaj plik&hellip; <input id="fileUploader" type="file" style="display: none;">
+                    </span>
+                </label>
+                <input id="uploadedFileName" type="text" class="form-control" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#fileUploader').change(function () {
+        var filename = $(this).val().split('\\').pop();
+        $('#uploadedFileName').val(filename);
+    });
+</script>

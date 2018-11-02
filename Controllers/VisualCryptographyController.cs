@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using CryptoWebService.Backend.VisualCryptography;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Linq;
+using CryptoWebService.Models.VisualCryptography;
+using CryptoWebService.Models;
 
 namespace CryptoWebService.Controllers
 {
@@ -17,19 +22,88 @@ namespace CryptoWebService.Controllers
             return View();
         }
 
-        [HttpPost]
-        public HttpResponseMessage Secrets([FromBody] string imageDataWithoutHeader)
+        public IActionResult VisualCryptographyMain()
         {
-            byte[] imageBytes = Convert.FromBase64String(imageDataWithoutHeader);
-            MemoryStream ms = new MemoryStream(imageBytes, 0,imageBytes.Length);
+            return View(PrepareVisualCryptoraphyView());
+        }
 
-            Bitmap bitmap = new Bitmap(ms);
+        private ViewModelDto PrepareVisualCryptoraphyView()
+        {
+            ViewModelDto VieModelDto = new ViewModelDto();
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(imageBytes);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            List<AnimationDto> Animations = new List<AnimationDto>
+            {
+                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                {
+                    Amplitude = 100
+                },
+                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                {
+                    Amplitude = 150
+                }
+            };
 
-            return result;
+            List<ImageDto> Images = new List<ImageDto>
+            {
+                new ImageDto("/images/SimpleMethodBlackPixel.png")
+                {
+                    Width = 991,
+                    Height = 250
+                },
+                new ImageDto("/images/SimpleMethodWhitePixel.png")
+                {
+                    Width = 991,
+                    Height = 250
+                }
+            };
+            VieModelDto.AnimationList = Animations;
+            VieModelDto.ImageList = Images;
+
+            return VieModelDto;
+        }
+
+        public IActionResult VisualCryptographyUploadFiles()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            var filePath = Path.GetTempFileName();
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            return Ok(new { count = files.Count, size, filePath });
+        }
+
+        [HttpPost]
+        public IActionResult Secrets([FromBody] string imageDataWithoutHeader)
+        {
+            string[] lista = VisualCryptographyService.DivideStringImageToSecrets(imageDataWithoutHeader);
+
+            JArray secretList = new JArray();
+            for (int i = 0; i < lista.Length; i++)
+            {
+                secretList.Add(new JObject(
+                    new JProperty ("value", lista[i])
+                    ));
+            }
+           
+            Object rss =new JObject(new JProperty("secrets", secretList));
+
+            return Json(rss);
         }
 
 

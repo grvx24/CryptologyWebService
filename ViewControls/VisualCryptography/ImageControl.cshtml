@@ -1,0 +1,12 @@
+﻿
+<div class="col-lg-12">
+    <img id="Image@(Model.UnicNumber)" src="@(Model.ImagePath)"/>
+</div>
+
+<script>
+    var image = document.getElementById("Image@(Model.UnicNumber)");
+    image.style.background = "#F0F0F0";
+    image.style.width = '@Model.Width' + "px";
+    image.style.height = '@Model.Height' + "px";
+    image.style.border = '2px solid black';
+</script>

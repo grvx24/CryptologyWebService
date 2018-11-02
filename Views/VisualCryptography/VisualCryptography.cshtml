@@ -1,10 +1,14 @@
-﻿
+﻿@using CryptoWebService.Helpers;
+@model int;
+
+
 @{
     ViewData["Title"] = "Secret";
 }
 <script src="https://cdn.rawgit.com/konvajs/konva/2.4.0/konva.min.js"></script>
 
 <h2 class="page-header">Kryptografia Wizualna</h2>
+
 <div class=" col-lg-12">
     <div class="body-content">
         Koncepcja kryptografii wizualnej narodziła się około 10 lat temu na konferencji Eurocrypt
@@ -42,53 +46,21 @@
         będą teraz widoczne jako szare). Można oczywiście dzielić piksele na więcej części,
         tworząc tym samym więcej udziałów.
     </div>
-    <div>
-        <br />
-        <div class="body-content">
-            Schemat progowy
-            </div>
-            <br />
-            <br />
-        </div>
-        <div class="body-content">
-            Opisaną powyżej technikę wykorzystuje się do tworzenia tzw. schematów progowych.
-            Jest to sposób dzielenia sekretów polegający na rozbiciu tajnej wiadomości na n udziałów.
-            Odczytanie wiadomości jest możliwe przy użyciu określonej części z nich. Prosty
-            schemat progowy dla dwóch udziałów przedstawiony został na rysunku 3.8. Schemat
-            taki opisywany jest za pomocą macierzy. Każdy wiersz reprezentuje jeden udział
-            składający się z m subpikseli. Poniżej znajdują się macierze reprezentujące schemat
-            progowy z dwoma udziałami składającymi się z dwóch subpikseli:
-        </div>
-
-    </div>
+</div>
 <div class="col-lg-12">
-    <div class=" col-lg-8">
+    <div class=" col-lg-6">
+
         <div id="container" class="myCanvas">
 
         </div>
+        @{
+            await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"));
+        }
     </div>
-    <div class="col-lg-4">
-        <div class="col-lg-12">
-            <label for="tool2">Kolor:</label>
-            <select class="form-control selcls" id="tool2">
-                <option value="black">Czarny</option>
-                <option value="white">Biały</option>
-            </select>
-        </div>
-        <div class="col-lg-12">
-            <label for="tool">Narzędzie:</label>
-            <select class="form-control selcls" id="tool">
-                <option value="brush">Pisak</option>
-                <option value="eraser">Gumka</option>
-            </select>
-        </div>
+    <div class="col-lg-6">
+        <button class="btn btn-primary" style="margin:10px" id="sendCanvasToDivide">Podziel na sekrety !</button>
     </div>
 </div>
-<div class="col-lg-12" style="height:100px">
-    <button class="btn btn-primary" id="secretButton" type="submit">Sekret !</button>
-
-</div>
-
 <div id="Secret" class=" col-lg-12">
     <div id="container2" class="myCanvas">
     </div>
@@ -102,101 +74,133 @@
 </style>
 
 <script>
+    $('#encryptButton').click(function () {
+        var file = document.getElementById('fileUploader').files[0];
+
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+
+            var fileData = reader.result.split(',')[1];
+
+            var model = {
+                Message: fileData
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.encryptUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Zaszyfrowany plik</a>';
+                    $('#encryptedFile').html(downloadLink);
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        };
+    });
+
     var x = document.getElementById("container");
     var width = x.offsetWidth;
     var height = 300;/* window.innerHeight - 25;*/
 
-    var stage = new Konva.Stage({
-        container: 'container',
-        width: width,
-        height: height
+
+    $('#sendCanvasToDivide').click(function () {
+    var canvas = document.querySelector('#container canvas');
+        var dataURL = canvas.toDataURL("image/png");
+        console.log(dataURL);
+    dataURL = dataURL.replace('data:image/png;base64,', '');
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Secrets", "VisualCryptography")',
+        data: JSON.stringify(dataURL),
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            for (var i = 0; i < response.secrets.length; i++) {
+                var secret = response.secrets[i];
+                LoadImageToLayerFromData(layer2, secret.value);
+            }
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
     });
 
-    var layer = new Konva.Layer();
-    stage.add(layer);
-
-
-    var canvas = document.createElement('canvas');
-    canvas.width = stage.width();
-    canvas.height = stage.height();
-
-    // created canvas we can add to layer as "Konva.Image" element
-    var image = new Konva.Image({
-        image: canvas
-    });
-    layer.add(image);
-    stage.draw();
-
-    // Good. Now we need to get access to context element
-    var context = canvas.getContext('2d');
-    context.strokeStyle = "black";
-    context.lineJoin = "round";
-    context.lineWidth = 5;
-
+    InitDrawingKonvoControl('container', width, height);
 
     var isPaint = false;
     var lastPointerPosition;
-    var mode = 'brush';
-    var mode2 = 'black';
 
+    function InitDrawingKonvoControl(stageName, stageWidth, stageHeight) {
 
-    image.on('mousedown touchstart', function () {
-        isPaint = true;
-        lastPointerPosition = stage.getPointerPosition();
-    });
+        var stage = new Konva.Stage({
+            container: stageName,
+            width: stageWidth,
+            height: stageHeight,
+        });
 
-    stage.addEventListener('mouseup touchend', function () {
-        isPaint = false;
-    });
+        var layer = new Konva.Layer();
+        stage.add(layer);
 
-    stage.addEventListener('mousemove touchmove', function () {
-        if (!isPaint) {
-            return;
-        }
-        if (mode === 'brush') {
+        var canvas = document.createElement('canvas');
+        canvas.width = stage.width();
+        canvas.height = stage.height();
+
+        var image = new Konva.Image({
+            image: canvas
+        });
+
+        layer.add(image);
+        stage.draw();
+
+        var context = canvas.getContext('2d');
+        context.strokeStyle = "black";
+        //context.lineJoin = "round";
+        context.lineWidth = 5;
+
+        image.on('mousedown touchstart', function () {
+            isPaint = true;
+            lastPointerPosition = stage.getPointerPosition();
+        });
+
+        stage.addEventListener('mouseup touchend', function () {
+            isPaint = false;
+        });
+
+        stage.addEventListener('mousemove touchmove', function () {
+            if (!isPaint) {
+                return;
+            }
             context.globalCompositeOperation = 'source-over';
-        }
-        if (mode === 'eraser') {
-            context.globalCompositeOperation = 'destination-out';
-        }
-        if (mode2 === 'black') {
-            context.strokeStyle = "black";      
-        }
-        if (mode2 === 'white') {
-            context.strokeStyle = "white";
-        }
+            context.strokeStyle = "black";
+            context.beginPath();
 
-        context.beginPath();
+            var localPos = {
+                x: lastPointerPosition.x - image.x(),
+                y: lastPointerPosition.y - image.y()
+            };
+            context.moveTo(localPos.x, localPos.y);
+            var pos = stage.getPointerPosition();
+            localPos = {
+                x: pos.x - image.x(),
+                y: pos.y - image.y()
+            };
+            context.lineTo(localPos.x, localPos.y);
+            context.closePath();
+            context.stroke();
 
-        var localPos = {
-            x: lastPointerPosition.x - image.x(),
-            y: lastPointerPosition.y - image.y()
-        };
-        context.moveTo(localPos.x, localPos.y);
-        var pos = stage.getPointerPosition();
-        localPos = {
-            x: pos.x - image.x(),
-            y: pos.y - image.y()
-        };
-        context.lineTo(localPos.x, localPos.y);
-        context.closePath();
-        context.stroke();
-
-        lastPointerPosition = pos;
-        layer.batchDraw();
-    });
-
-
-
-    var select = document.getElementById('tool');
-    select.addEventListener('change', function () {
-        mode = select.value;
-    });
-
-    var select2 = document.getElementById('tool2');
-    select2.addEventListener('change', function () {
-        mode2 = select2.value;
-    });
+            lastPointerPosition = pos;
+            layer.batchDraw();
+        });
+    }
 
     var x2 = document.getElementById("container2");
     var width2 = x2.offsetWidth;
@@ -211,8 +215,6 @@
     var layer2 = new Konva.Layer();
     stage2.add(layer2);
 
-    LoadImageToLayer(layer2, '/images/1.bmp');
-    LoadImageToLayer(layer2, '/images/2.bmp');
 
     layer2.on('mouseover', function (evt) {
         var shape = evt.target;
@@ -228,10 +230,9 @@
         layer2.draw();
     });
 
-    function LoadImageToLayer(layer, path) {
+    function LoadImageToLayerFromData(layer, data) {
         var KonvoImage = new Konva.Image({
             draggable: true,
-            opacity: 0.6
         });
         layer.add(KonvoImage);
 
@@ -240,49 +241,8 @@
             KonvoImage.image(image);
             layer.draw();
         };
-        image.src = path;
+
+        image.src = 'data:image/png;base64,' + data;
     }
 
-    $('#secretButton').click(function () {
-
-        var canvas = document.querySelector('#container canvas');
-        //var canvas = $("myCanvas").find('canvas');
-        var dataURL = canvas.toDataURL("image/png");
-        dataURL = dataURL.replace('data:image/png;base64,', '');
-
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Secrets", "VisualCryptography")',
-            data: JSON.stringify(dataURL),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        });
-    });
-
-    function openCity(evt, cityName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
-
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
 </script>
