@@ -3,69 +3,70 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="text-center">
+        <h1 class="text-center">
             Wizualizacja została przygotowana dla klucza o długości 128 bitów. 
-            Animacja pokazuje działanie rundy wstępnej, rundy cyklicznej oraz przydział klucza dla każdej rundy.
-        </h3>
+            Prezentacja pokazuje działanie rundy wstępnej, rundy cyklicznej oraz przydział klucza dla każdej rundy. Dane wejściowe są losowane.
+        </h1>
         <br/>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-4">
-        <div class="input-group">
-            <label for="inputViz">@Text.VizBlockContent</label>
-            <input class="form-control" id="inputViz" type="text" />
-        </div>
-        <fieldset>
-            <input type="radio" name="inputVizFormat" value=0>
-            <text>ASCII</text>
-            <input type="radio" name="inputVizFormat" value=1 checked>
-            <text>Hex</text>
-        </fieldset>
-    </div>
-    <div class="col-lg-4">
-        <div class="input-group">
-            <label for="inputVizKey">@Text.Key (16 bajtów)</label>
-            <input maxlength="32" class="form-control" id="inputVizKey" type="text" />
-        </div>
-        <fieldset>
-            <input type="radio" name="inputVizKeyFormat" value=0>
-            <text>ASCII</text>
-            <input type="radio" name="inputVizKeyFormat" value=1 checked>
-            <text>Hex</text>
-        </fieldset>
-    </div>
-    <div class="col-lg-4">
-        <br>     
-        <button id="startVizButton" class="btn btn-lg btn-primary">@Text.StartVisualization</button>
-
-    </div>
-
-    </div>
 <br/>
 <div class="row">
     <div class="text-center">
         <h2>Runda wstępna</h2>
-        <br/>
         <h3>
             Wykonanie operacji XOR na bloku danych i kluczu.
         </h3>
+        <br/>
     </div>
     <div class="col-lg-4">
-        <svg id="rawDataBlock" transform="scale(0.5)">
+        <div align="center">
+            <svg id="roundZeroData">
 
-        </svg>
+            </svg>
+        </div>
     </div>
     <div class="col-lg-4">
-        <svg id="rawKeyBlock" transform="scale(0.5)">
+        <div align="center">
+            <svg id="roundZeroKey">
 
-        </svg>
+            </svg>
+        </div>
     </div>
-    <div class="col-lg-4" transform="scale(0.5)">
-        <svg id="rawResult" transform="scale(0.5)">
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="roundZeroResult">
 
-        </svg>
+            </svg>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="rawDataBlock">
+
+            </svg>
+        </div>
+
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="rawKeyBlock">
+
+            </svg>
+        </div>
+
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="rawResult">
+
+            </svg>
+        </div>
     </div>
 </div>
 
@@ -80,15 +81,17 @@
         </h3>
     </div>
     <div class="col-lg-12">
-        <svg style="display: block;margin: auto" id="sboxBlock">
+        <div align="center">
+            <svg id="sboxBlock">
 
-        </svg>
+            </svg>
+        </div>
     </div>
 </div>
 <div class="row">
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display: block;margin: auto" id="dataBlock" transform="translate(0,0)">
+            <svg id="dataBlock">
 
             </svg>
         </div>
@@ -102,15 +105,15 @@
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display:block;margin: auto" id="subBytesBlock" transform="translate(0,0)">
+            <svg id="subBytesBlock">
 
             </svg>
         </div>
     </div>
     <div class="col-lg-4 text-left">
-        <h4>
-            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
-        </h4>   
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>
     </div>
 </div>
 <div class="row">
@@ -121,7 +124,7 @@
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display: block;margin: auto" id="shiftBlockBefore" transform="translate(0,0)">
+            <svg id="shiftBlockBefore">
 
             </svg>
         </div>
@@ -135,14 +138,14 @@
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display:block;margin: auto" id="shiftBlockAfter" transform="translate(0,0)">
+            <svg id="shiftBlockAfter">
 
             </svg>
         </div>
     </div>
     <div class="col-lg-4 text-left">
-        <h4>
-            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
         </h4>   
     </div>
 </div>
@@ -156,35 +159,91 @@
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display:block;margin: auto" id="mixColumnsHelperMatrix" transform="scale(1)">
+            <svg id="mixColumnsHelperMatrix">
 
             </svg>
         </div>
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display:block;margin: auto" id="mixColumnsBlockBefore" transform="scale(1)">
+            <svg id="mixColumnsBlockBefore">
 
             </svg>
         </div>
     </div>
     <div class="col-lg-4">
         <div align="center">
-            <svg style="display:block;margin: auto" id="mixColumnsBlockAfter" transform="scale(1)">
+            <svg id="mixColumnsBlockAfter">
 
             </svg>
         </div>
     </div>
     <div class="col-lg-4 col-lg-offset-8 text-left">
-        <h4>
-            Najedź myszką aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>
+    </div>
+</div>
+<div class="row"></div>
+<div class="row">
+    <div class="text-center">
+        <h3>
+            4. Dodawanie klucza rundy
+        </h3>
+        <br/>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="roundKeyData">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="roundKeyKey">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div align="center">
+            <svg id="roundKeyResult">
+
+            </svg>
+        </div>
+    </div>
+    <div class="col-lg-4 text-left">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
         </h4>   
     </div>
-
 </div>
 <div class="row">
     <div class="col-lg-12">
+        <div align="center">
+            <h1 id="XOR-viz">
 
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="text-center">
+        <h2>
+            Runda finałowa
+        </h2>
+        <br />
+    </div>
+</div>
+
+<div class="row">
+    <div class="text-center">
+        <h2>
+            Schemat przydzielania klucza rundy
+        </h2>
+        <br/>
     </div>
 </div>
 
@@ -240,6 +299,11 @@
     var shiftRowsMatrix = ShiftRows(subBytesMatrix);
     var mixColumnsMatrix = MixColumns(shiftRowsMatrix);
 
+    VisualizeDataBlock(subBytesMatrix, 'roundZeroData', 'cell-rect-data-nohover');
+    VisualizeDataBlock(subBytesMatrix, 'roundZeroKey', 'cell-rect-key');
+    VisualizeDataBlock(subBytesMatrix, 'roundZeroResult', 'cell-rect-result');
+
+
     VisualizeDataBlock(matrix, 'dataBlock', 'cell-rect-data');
     VisualizeSBox(sBox);
     VisualizeDataBlock(subBytesMatrix, 'subBytesBlock', 'cell-rect-result');
@@ -251,10 +315,14 @@
     VisualizeDataBlock(mixColumnsBox, 'mixColumnsHelperMatrix', 'cell-rect-helpers');
     VisualizeDataBlock(mixColumnsMatrix, 'mixColumnsBlockAfter', 'cell-rect-result');
 
+    VisualizeDataBlock(mixColumnsBox, 'roundKeyData', 'cell-rect-data-nohover');
+    VisualizeDataBlock(mixColumnsMatrix, 'roundKeyKey', 'cell-rect-key');
+    VisualizeDataBlock(mixColumnsMatrix, 'roundKeyResult', 'cell-rect-result');
 
     SetMouseEventOnDataBlock();
     SetMouseEventOnShiftBlock();
     SetMouseEventOnMixColumns();
+    SetMouseEventOnKeySchedule();
 
 
     function IntToHexString(d) {
@@ -733,7 +801,6 @@
             .filter(function (d, index) {
 
                 var row = Math.floor(i / 4);
-                console.log(row);
                 return index >= row * 4 && index < row * 4 + 4;
             });
 
@@ -767,7 +834,6 @@
             .filter(function (d, index) {
 
                 var row = Math.floor(i / 4);
-                console.log(row);
                 return index >= row * 4 && index < row * 4 + 4;
             });
 
@@ -780,6 +846,83 @@
             .selectAll('.cell')
             .on('mouseover', handleMouseOverOnMixColumns)
             .on('mouseout', handleMouseOutOnMixColumns);
+    }
+
+    function handleMouseOverOnKeySchedule(d,i) {
+        d3.select(this)
+            .select("rect")
+            .attr("class", "cell-rect-selected");
+
+        var keyBlock=d3.select('#roundKeyKey')
+            .selectAll('.cell')
+            .filter(function(d, index) {
+                return index == i;
+            });
+
+        var keyData = '';
+        keyBlock.select("rect")
+            .attr("class", "cell-rect-selected")
+            .each(function (d, i) {      
+                keyData=d;
+            });
+
+        var resultBlock = d3.select('#roundKeyResult')
+            .selectAll('.cell')
+            .filter(function(d, index) {
+                return index == i;
+            });
+
+        var resultData = '';
+        resultBlock.select("rect")
+            .attr("class", "cell-rect-selected")
+            .each(function (d, i) {      
+                resultData=d;
+            });
+
+        var bin = Hex2Bin(d);
+        bin = "00000000".substr(bin.length) + bin;
+
+        var bin2 = dec2bin(keyData);
+        bin2 = "00000000".substr(bin2.length) + bin2;
+
+        var bin3 = dec2bin(resultData);
+        bin3= "00000000".substr(bin3.length) + bin3;
+
+        var div = document.getElementById('XOR-viz');
+        div.innerHTML = bin + '<br>' + bin2+'<br>'+'___________'+'<br>'+bin3;
+    }
+
+    function handleMouseOutOnKeySchedule(d,i) {
+        d3.select(this)
+            .select("rect")
+            .attr("class", "cell-rect-data-nohover");
+
+        var keyBlock=d3.select('#roundKeyKey')
+            .selectAll('.cell')
+            .filter(function(d, index) {
+                return index == i;
+            });
+
+        keyBlock.select("rect")
+            .attr("class", "cell-rect-key");
+
+        var result=d3.select('#roundKeyResult')
+            .selectAll('.cell')
+            .filter(function(d, index) {
+                return index == i;
+            });
+
+        result.select("rect")
+            .attr("class", "cell-rect-result");
+
+        document.getElementById('XOR-viz').innerHTML='';
+    }
+
+    function SetMouseEventOnKeySchedule() {
+        d3.select('#roundKeyData')
+            .selectAll('.cell')
+            .on('mouseover', handleMouseOverOnKeySchedule)
+            .on('mouseout', handleMouseOutOnKeySchedule);
     }
 
 
@@ -841,6 +984,12 @@
         }
         
         return p&255;
+    }
+
+    function checkHex(n) { return /^[0-9A-Fa-f]{1,64}$/.test(n) }
+    function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
+    function dec2bin(dec){
+        return (dec >>> 0).toString(2);
     }
 
     function MixColumns(s) {
@@ -920,6 +1069,8 @@
 
         return result;
     }
+
+    var keySteps = [];
 
     function KeySchedule_Rotation(oldKey) {
         var newKey = new Array(4);

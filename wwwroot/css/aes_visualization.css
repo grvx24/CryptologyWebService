@@ -34,6 +34,12 @@
     stroke-width: 2px;
 }
 
+.cell-rect-key {
+    fill: #ee82ee;
+    stroke: black;
+    stroke-width: 2px;
+}
+
 .cell-rect-sbox {
     fill: #8fbc8f;
     stroke: black;
