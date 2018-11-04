@@ -4,15 +4,16 @@ namespace CryptoWebService.Models.VisualCryptography
 {
     public class ImageDto 
     {
-        public ImageDto(string imagePath)
+        public ImageDto(string imagePath,string name)
         {
+            this.Name = name;
             this.ImagePath = imagePath;
             this.Width = 500;
             this.Height = 300;
             this.BorderWidth = 2;
             this.UnicNumber = Guid.NewGuid().ToString().Replace("-", string.Empty);
         }
-
+        public string Name { get; }
         public string UnicNumber { get; }
 
         public string ImagePath { get; set; }

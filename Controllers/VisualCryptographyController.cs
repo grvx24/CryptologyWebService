@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoWebService.Models.VisualCryptography;
 using CryptoWebService.Models;
+using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Controllers
 {
@@ -17,12 +18,19 @@ namespace CryptoWebService.Controllers
     {
         #region VisualCryptography
 
-        public IActionResult VisualCryptography()
+        public IActionResult VisualCryptography23554545()
         {
             return View();
         }
 
-        public IActionResult VisualCryptographyMain()
+
+        public IActionResult VisualCryptographyAction()
+        {
+            return View();
+        }
+        
+
+        public IActionResult VisualCryptography()
         {
             return View(PrepareVisualCryptoraphyView());
         }
@@ -35,7 +43,10 @@ namespace CryptoWebService.Controllers
             {
                 new AnimationDto("/images/1.bmp", "/images/2.bmp")
                 {
-                    Amplitude = 100
+                    Width = 300,
+                    Height = 200,
+                    Amplitude = 2,
+                    Period = 20000
                 },
                 new AnimationDto("/images/1.bmp", "/images/2.bmp")
                 {
@@ -45,12 +56,12 @@ namespace CryptoWebService.Controllers
 
             List<ImageDto> Images = new List<ImageDto>
             {
-                new ImageDto("/images/SimpleMethodBlackPixel.png")
+                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
                 {
-                    Width = 991,
-                    Height = 250
+                    Width = 793,
+                    Height = 200
                 },
-                new ImageDto("/images/SimpleMethodWhitePixel.png")
+                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
                 {
                     Width = 991,
                     Height = 250
@@ -91,19 +102,18 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult Secrets([FromBody] string imageDataWithoutHeader)
         {
-            string[] lista = VisualCryptographyService.DivideStringImageToSecrets(imageDataWithoutHeader);
-
-            JArray secretList = new JArray();
-            for (int i = 0; i < lista.Length; i++)
+            if(imageDataWithoutHeader != null)
             {
-                secretList.Add(new JObject(
-                    new JProperty ("value", lista[i])
-                    ));
-            }
-           
-            Object rss =new JObject(new JProperty("secrets", secretList));
+                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(imageDataWithoutHeader);
 
-            return Json(rss);
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+            else
+            {
+                return Json(new { Result = false, Message = "The argument is empty." });
+            }
         }
 
 

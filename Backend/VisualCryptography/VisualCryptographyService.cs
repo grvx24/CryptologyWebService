@@ -55,7 +55,7 @@ namespace CryptoWebService.Backend.VisualCryptography
                             secret2.SetPixel(j * 2 + 1, i, Color.Black);
                         }
                     }
-                    else if (colorOfspecificPixel.R == 0 && colorOfspecificPixel.G == 0 && colorOfspecificPixel.B == 0)
+                    else if ((colorOfspecificPixel.R == 255 && colorOfspecificPixel.G == 255 && colorOfspecificPixel.B == 255 )|| colorOfspecificPixel.A == 0)
                     {
                         kolor2++;
                         if (randomValue >= 50)
