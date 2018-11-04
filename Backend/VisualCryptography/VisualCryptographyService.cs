@@ -37,7 +37,7 @@ namespace CryptoWebService.Backend.VisualCryptography
                     colorOfspecificPixel = bitmap.GetPixel(j, i);
                     int randomValue = random.Next(0, 100);
 
-                    if (colorOfspecificPixel.A == 255 && colorOfspecificPixel.R == 0 && colorOfspecificPixel.G == 0 && colorOfspecificPixel.B == 0)
+                    if (colorOfspecificPixel.A > 0 && colorOfspecificPixel.R == 0 && colorOfspecificPixel.G == 0 && colorOfspecificPixel.B == 0)
                     {
                         kolor++;
                         if (randomValue >= 50)

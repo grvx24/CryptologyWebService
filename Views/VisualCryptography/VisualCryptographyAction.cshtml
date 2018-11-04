@@ -34,7 +34,7 @@
 <hr />
 <div class="row">
     <div class=" col-lg-12">
-        <div id="fileUploadPanel"  style="display: none" >
+        <div id="fileUploadPanel" style="display: none">
             @{
                 await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"));
             }
@@ -49,6 +49,9 @@
     </div>
 </div>
 <hr />
+<div id="secretsDownload" class="text-center" >
+
+</div>
 <div id="Secret" class=" col-lg-12">
     <div id="container2" class="myCanvas">
     </div>
@@ -67,6 +70,14 @@
         margin-top: 10px;
         margin-bottom: 20px;
     }
+
+    .myDownload {
+        margin: 10px;
+        font-size: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
 </style>
 
 <script>
@@ -102,14 +113,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (response) {
-                    if (response.result === true) {
-                        for (var i = 0; i < response.secrets.length; i++) {
-                            var secret = response.secrets[i];
-                            LoadImageToLayerFromData(layer2, secret.value);
-                        }
-                    } else {
-                        console.log(response);
-                    }
+                    onSucces(response);
                 },
                 error: function (response) {
                     console.log(response);
@@ -134,16 +138,7 @@
                     dataType: 'json',
                     contentType: "application/json",
                     success: function (response) {
-                        if (response.result === true) {
-                            for (var i = 0; i < response.secrets.length; i++) {
-                                var secret = response.secrets[i];
-                                LoadImageToLayerFromData(layer2, secret.value);
-                            }
-                            var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Odszyfrowany plik</a>';
-                            $('#decryptedFile').html(downloadLink);
-                        } else {
-                            console.log(response);
-                        }
+                        onSucces(response);
                     },
                     error: function (response) {
                         console.log(response);
@@ -152,6 +147,23 @@
             };
         }
     });
+
+
+    function onSucces(response) {
+        if (response.result === true) {
+            var downloadLink = "";
+            layer2.destroyChildren()
+            for (var i = 0; i < response.secrets.length; i++) {
+                var secret = response.secrets[i];
+                LoadImageToLayerFromData(layer2, secret.value);
+                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-size:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '">Sekret ' + (i+1) +' </a>';
+            }
+
+            $('#secretsDownload').html(downloadLink);
+        } else {
+            console.log(response);
+        }
+    }
 
     var x = document.getElementById("container");
     var width = x.offsetWidth;
