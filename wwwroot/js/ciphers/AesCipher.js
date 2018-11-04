@@ -1,4 +1,4 @@
-﻿var BlockCiphersInit = function(config) {
+﻿var AesCipherInit = function(config) {
 
     //for output encoding
     var outputDecryptASCII = '';

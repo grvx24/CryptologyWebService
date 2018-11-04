@@ -240,4 +240,10 @@
   <data name="Visualization" xml:space="preserve">
     <value>Wizualizacja</value>
   </data>
+  <data name="StartVisualization" xml:space="preserve">
+    <value>Rozpocznij wizualizację</value>
+  </data>
+  <data name="VizBlockContent" xml:space="preserve">
+    <value>Zawartość bloku (16 bajtów)</value>
+  </data>
 </root>
