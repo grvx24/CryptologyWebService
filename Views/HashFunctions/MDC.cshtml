@@ -1,0 +1,53 @@
+﻿@model CryptoWebService.Models.HashFunctions.MD5ViewModel
+@using CryptoWebService.Backend.HashFunctions
+@{
+    ViewData["Title"] = "MDC";
+}
+<script src="~/js/hash/HashFunctions.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
+
+<div class="container">
+
+    <h2 align="center">@Text.WithoutKey</h2>
+    <p>
+        Dupa
+    </p>
+    <div class="container">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="boxed">
+                <h4 style="margin:0px;"> KOMPRESJA</h4>
+                h przekształca wejście x o dowolnej długości na wyjście h(x) o ustalonej długości
+            </div>
+            <div class="boxed">
+                <h4 style="margin:0px;">ŁATWOŚĆ OBLICZEŃ</h4>
+                dla danej funkcji h i wejścia x wartość h(x) jest łatwo obliczalna, w czasie wielomoianowym
+            </div>
+            <div class="boxed">
+                <h4 style="margin:0px;">JEDNOKIERUNKOWOŚĆ</h4>
+                dla prawie wszystkich wartości jest obliczeniowo trudne znalezienie argumentu dającego jako skrót tę wartość
+            </div>
+        </div>
+    </div>
+    <p>Ogólny schemat działania funkcji skrótu:</p>
+    <div class="col-md-12">
+        <div align="center">
+            <img src="~/images/HashFunctionSchema.png">
+        </div>
+    </div>
+    <p>Ze względów funkcjonalnych wyróżnia się dwie klasy funkcji skrótu (kliknij w wybraną, aby dowiedzieć się więcej).</p>
+    <div class="col-md-12">
+        <div align="center">
+            <span>
+                <button class="button" style="" id="checkHashClass" type="submit">
+                    <h4 style="margin:0px;">MDC</h4>
+                    Podklasa funkcji skrótu bez klucza
+                </button>
+                <button class="button" id="checkHashClass" type="submit">
+                    <h4 style="margin:0px;">MAC</h4>
+                    Podklasa funkcji skrótu z kluczem
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

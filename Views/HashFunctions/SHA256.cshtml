@@ -1,0 +1,121 @@
+﻿@model CryptoWebService.Models.HashFunctions.SHA1ViewModel
+@using CryptoWebService.Backend.HashFunctions
+@{
+    ViewData["Title"] = "SHA256";
+}
+<script src="~/js/hash/HashFunctions.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
+
+<div class="container">
+    <div class="tab">
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+    </div>
+
+    <div id="Description" class="tabcontent">
+        <h2 align="center">@Text.SHA256Hash</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
+
+            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
+
+            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
+
+            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
+
+        </p>
+    </div>
+
+    <div id="Working" class="tabcontent col-lg-12">
+        <h2>Działanie algorytmu krok po kroku</h2>
+    </div>
+
+    <div id="Calculator" class="tabcontent col-lg-12">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 align="center">@Text.SHA256Hash</h2>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
+                        <label for="inputEncrypt">@Text.WriteTextToHash</label>
+                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <div class="column">
+                    <span class="col-md-8">
+                        <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
+                        <button style="margin-top: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
+                        <label for="outputEncrypt">@Text.Hash</label>
+                        <textarea class="form-control" rows="1" id="outputEncrypt" disabled></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <span class="col-md-8">
+                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+<script>
+
+    document.getElementById("defaultPageButton").click();
+
+    function openTab(evt, tabName) {
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+
+
+    //Ajax
+    var sha256Init = SHA256FunctionInit({
+        urls: {
+            encryptUrl: '@Url.Action("SHA256Encrypt", "HashFunctions")'
+        }
+    });
+
+    sha256Init.init();
+</script>

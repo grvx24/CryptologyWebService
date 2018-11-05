@@ -51,7 +51,6 @@
 
         <nav class="navbar navbar-default">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -65,31 +64,55 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Generatory</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Szyfry</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Funkcje skrótu</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfrowanie obrazów <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfry<span class="caret"></span></a>
                             <div class="dropdown-menu">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a class="dropdown-item" href="#">Rodzinka</a>
-                                            <a class="dropdown-item" href="#">Janusz</a>
-                                            <a class="dropdown-item" href="#">Grażyna</a>
-                                            <a class="dropdown-item" href="#">Jessica</a>
-                                            <a class="dropdown-item" href="#">Brajan</a>
+                                            <h5>Klasyczne</h5>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Affine">Afiniczny</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Bacon">Bacona</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Caesar">Cezara</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="ColumnarTransposition">Przestawieniowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Fence">Płotkowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Playfair">Playfair</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Route">Ścieżkowy</a>
+                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Vigenere">Vigenere'a</a>
                                         </div>
                                         <div class="col-xs-6">
-                                            <a class="dropdown-item" href="#">Ekypa</a>
-                                            <a class="dropdown-item" href="#">Hubert</a>
-                                            <a class="dropdown-item" href="#">Kamil</a>
-                                            <a class="dropdown-item" href="#">Paula</a>
+                                            <h5>Blokowe</h5>
+                                            <a class="dropdown-item" href="#">DES</a>
+                                            <a class="dropdown-item" href="#">AES</a>
+                                            <a class="dropdown-item" href="#">Blowfish</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funkcje skrótu<span class="caret"></span></a>
+                            <div class="dropdown-menu">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MDC">Bez klucza:</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a>
+                                            <a class="dropdown-item" href="#">SHA-3 (Keccak)</a>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a class="dropdown-item" href="#">Kamil</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MAC">Z kluczem:</a>
+                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kryptografia Wizualna<span class="caret"></span></a>
                             <div class="dropdown-menu">
