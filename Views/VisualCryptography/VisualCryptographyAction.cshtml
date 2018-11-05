@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Secret";
 }
-<script src="~/lib/konva/konva.min.js"></script>
+<script src="~/lib/custom/konva.min.js"></script>
 
 <h2 class="page-header">Kryptografia Wizualna</h2>
 
@@ -156,7 +156,7 @@
             for (var i = 0; i < response.secrets.length; i++) {
                 var secret = response.secrets[i];
                 LoadImageToLayerFromData(layer2, secret.value);
-                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-size:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '">Sekret ' + (i+1) +' </a>';
+                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'" >Sekret ' + (i+1) +' </a>';
             }
 
             $('#secretsDownload').html(downloadLink);
