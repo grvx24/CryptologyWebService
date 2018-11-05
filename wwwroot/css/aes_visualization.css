@@ -7,6 +7,12 @@
     stroke: black;
     stroke-width: 2px;
 }
+
+.cell-rect-data-2 {
+    fill: #4169e1;
+    stroke: black;
+    stroke-width: 2px;
+}
 .cell-rect-data-nohover {
     fill: #87cefa;
     stroke: black;

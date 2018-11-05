@@ -21,7 +21,7 @@ namespace CryptoWebService.Controllers.Ciphers
 
     public class BlockCiphersController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Aes()
         {
             return View();
         }
