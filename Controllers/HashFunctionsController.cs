@@ -8,6 +8,7 @@ using CryptoWebService.Models.HashFunctions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Newtonsoft.Json;
+using static CryptoWebService.Backend.HashFunctions.HMAC;
 
 namespace CryptoWebService.Controllers
 {
@@ -138,7 +139,7 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult HMACEncrypt([FromBody]HMACViewModel viewModel)
         {
-            HMAC hmac = new HMAC(viewModel.HashType);
+            HMAC hmac = new HMAC((HMAC.HashFunctionType)viewModel.HashType);
 
             string encrypted = "";
 

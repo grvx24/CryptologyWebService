@@ -428,5 +428,138 @@ namespace CryptoWebService {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu z kluczem.
+        /// </summary>
+        public static string WithKey
+        {
+            get
+            {
+                return ResourceManager.GetString("WithKey", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu bez klucza.
+        /// </summary>
+        public static string WithoutKey
+        {
+            get
+            {
+                return ResourceManager.GetString("WithoutKey", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Kalkulator.
+        /// </summary>
+        public static string Calculator
+        {
+            get
+            {
+                return ResourceManager.GetString("Calculator", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Skrót.
+        /// </summary>
+        public static string Hash
+        {
+            get
+            {
+                return ResourceManager.GetString("Hash", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu.
+        /// </summary>
+        public static string HashFunction
+        {
+            get
+            {
+                return ResourceManager.GetString("HashFunction", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu MD5.
+        /// </summary>
+        public static string MD5Hash
+        {
+            get
+            {
+                return ResourceManager.GetString("MD5Hash", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-1.
+        /// </summary>
+        public static string SHA1Hash
+        {
+            get
+            {
+                return ResourceManager.GetString("SHA1Hash", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-256.
+        /// </summary>
+        public static string SHA256Hash
+        {
+            get
+            {
+                return ResourceManager.GetString("SHA256Hash", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-512.
+        /// </summary>
+        public static string SHA512Hash
+        {
+            get
+            {
+                return ResourceManager.GetString("SHA512Hash", resourceCulture);
+            }
+        }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to Wpisz tekst do obliczenia skrótu.
+        /// </summary>
+        public static string WriteTextToHash
+        {
+            get
+            {
+                return ResourceManager.GetString("WriteTextToHash", resourceCulture);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
