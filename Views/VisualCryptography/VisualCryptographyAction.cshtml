@@ -45,7 +45,12 @@
             </div>
             <div class="text-center mySignature">Pole do rysowania</div>
         </div>
-        <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
+        <div class="input-group">
+            <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
+            <div class="loader" id="loading" style="display:none;">
+
+            </div>
+        </div>
     </div>
 </div>
 <hr />
@@ -59,6 +64,21 @@
 
 
 <style>
+    .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-left: 16px solid #F0F0F0;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
     .myCanvas {
         background-color: #F0F0F0;
         border: 1px solid black;
@@ -112,6 +132,12 @@
                 data: JSON.stringify(dataURL),
                 dataType: 'json',
                 contentType: "application/json",
+                beforeSend: function () {
+                    showLoading();
+                },
+                complete: function () {
+                    hideLoading();
+                },
                 success: function (response) {
                     onSucces(response);
                 },
@@ -137,6 +163,12 @@
                     data: JSON.stringify(fileData),
                     dataType: 'json',
                     contentType: "application/json",
+                    beforeSend: function () {
+                        showLoading();
+                    },
+                    complete: function () {
+                        hideLoading();
+                    },
                     success: function (response) {
                         onSucces(response);
                     },
@@ -148,6 +180,13 @@
         }
     });
 
+    function showLoading() {
+        $('#loading').show();
+    }
+
+    function hideLoading() {
+        $('#loading').hide();
+    }
 
     function onSucces(response) {
         if (response.result === true) {
