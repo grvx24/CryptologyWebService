@@ -11,20 +11,22 @@
 <div class="row">
     <div class="col-lg-4">
         <div>
-            <label for="metod">Metoda</label>
-            <select id="metod" class="form-control">
-                <option value="text" selected>czarno biała</option>
+            <label for="MethodSelect">Metoda</label>
+            <select id="MethodSelect" class="form-control">
+                <option value="1" selected>Szerokaaaaaaaaa</option>
+                <option value="2" >Kwadratowa</option>
             </select>
         </div>
         <div>
-            <label for="secrets">Ilość  sekretów</label>
-            <select id="secrets" class="form-control">
-                <option value="text" selected>2</option>
+            <label for="AmountOfSecretsSelect">Ilość  sekretów</label>
+            <select id="AmountOfSecretsSelect" class="form-control">
+                <option value="2" selected>2</option>
+                <option value="4" >4</option>
             </select>
         </div>
         <div>
-            <label for="inputModeEncrypt">Format wejściowy</label>
-            <select id="inputModeEncrypt" class="form-control">
+            <label for="inputModeSelect">Format wejściowy</label>
+            <select id="inputModeSelect" class="form-control">
                 <option value="drawing" selected>Rysowanie</option>
                 <option value="file">Plik</option>
             </select>
@@ -101,7 +103,7 @@
 </style>
 
 <script>
-    $('#inputModeEncrypt').on('change', function () {
+    $('#inputModeSelect').on('change', function () {
 
         if (this.value === 'drawing') {
             $('#fileUploadPanel').hide();
@@ -119,32 +121,11 @@
     });
 
     $('#sendCanvasToDivide').click(function () {
-        var inputModeEncrypt = $('#inputModeEncrypt option:selected').val();
+        var inputModeEncrypt = $('#inputModeSelect option:selected').val();
 
         if (inputModeEncrypt === 'drawing') {
             var canvas = document.querySelector('#container canvas');
-            var dataURL = canvas.toDataURL("image/png");
-            dataURL = dataURL.replace('data:image/png;base64,', '');
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Secrets", "VisualCryptography")',
-                data: JSON.stringify(dataURL),
-                dataType: 'json',
-                contentType: "application/json",
-                beforeSend: function () {
-                    showLoading();
-                },
-                complete: function () {
-                    hideLoading();
-                },
-                success: function (response) {
-                    onSucces(response);
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
+            sendDataToServer(canvas.toDataURL("image/png"));
         }
         else if (inputModeEncrypt === 'file') {
             var file = document.getElementById('fileUploader').files[0];
@@ -152,33 +133,41 @@
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
-
-                var fileData = reader.result.split(',')[1];
-
-                fileData = fileData.replace('data:image/png;base64,', '');
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("Secrets", "VisualCryptography")',
-                    data: JSON.stringify(fileData),
-                    dataType: 'json',
-                    contentType: "application/json",
-                    beforeSend: function () {
-                        showLoading();
-                    },
-                    complete: function () {
-                        hideLoading();
-                    },
-                    success: function (response) {
-                        onSucces(response);
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
-                });
+                sendDataToServer(reader.result.split(',')[1]);
             };
         }
     });
+
+    function sendDataToServer(imageData) {
+
+        imageData = imageData.replace('data:image/png;base64,', '');
+
+        var model = {
+            MethodId: $('#MethodSelect').val(),
+            AmountOfSecrets: $('#AmountOfSecretsSelect').val(),
+            Image: imageData,
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Secrets", "VisualCryptography")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                showLoading();
+            },
+            complete: function () {
+                hideLoading();
+            },
+            success: function (response) {
+                onSucces(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
 
     function showLoading() {
         $('#loading').show();
