@@ -99,11 +99,26 @@
 </div>
 <div class="row">
     <div align="center">
-        <svg id="keyViz2" height="500" width="1000">
+        <svg id="keyViz" height="450" width="1000">
 
         </svg>
+        <div id="rconMath">
+            <div  class="img-responsive" style="display: none;">
+                <img style="margin-bottom: 20px" runat="server" width="50%" height="50%" src="~/images/rcon1.png"/>
+                <img runat="server" width="50%" height="50%" src="~/images/rcon2.png"/>
+            </div>
+        </div>
+
     </div>
 
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="text-center">
+
+        </h2>
+    </div>
 </div>
 <div class="row">
     <div class="text-center">
@@ -218,6 +233,11 @@
             Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
         </h4>
     </div>
+    <div class="col-lg-12" align="center" >
+        <svg width="1000" height="200" id="mixColumnsFormula">
+
+        </svg>
+    </div>
 </div>
 <div class="row"></div>
 <div class="row">
@@ -273,6 +293,10 @@
             Runda finałowa
         </h2>
         <br />
+        <h3>
+            Ostania runda wygląda tak samo jak poprzednie z tą różnicą, że nie wykonuje się mieszania kolumn.
+        </h3>
+        <img src="~/images/aesFinalRound.png"/>
     </div>
 </div>
 
@@ -339,7 +363,7 @@
     VisualizeDataBlock(mainKey, 'oldKey', 'cell-rect-data-nohover');
     VisualizeDataBlock(newKeyDictionary.result, 'newKey', 'cell-rect-result');
 
-    VisualizeKeyFirstColumn(mainKey, newKeyDictionary, 'keyViz2');
+    
 
     VisualizeDataBlock(matrix, 'roundZeroData', 'cell-rect-data-nohover');
     VisualizeDataBlock(mainKey, 'roundZeroKey', 'cell-rect-key');
@@ -367,6 +391,7 @@
     SetMouseEventOnKeySchedule();
     SetMouseEventOnRoundZero();
     SetMouseEventOnKeyViz();
+    SetMouseEventOnKeyVizFirstColumn();
 
 
     function IntToHexString(d) {
@@ -393,6 +418,13 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        svg.append("g")
+            .attr("class", "description")
+            .append("text")
+            .attr("class", "description-text")
+            .attr("x", 200)
+            .attr("y", 450)
+            .text("Tabela podstawień (SBOX).");
 
         var x = d3.scale.ordinal()
             .domain(d3.range(numcols))
@@ -553,34 +585,34 @@
         svg = d3.select('#' + svgId);
         var group1 = svg
             .append("g")
-            .attr("transform", "translate(0,100)")
+            .attr("transform", "translate(100,5)")
             .attr("class", "g1");
 
         var group2 = svg
             .append("g")
-            .attr("transform", "translate(100,100)")
+            .attr("transform", "translate(200,5)")
             .attr("class", "g2");
 
         var group3 = svg
             .append("g")
-            .attr("transform", "translate(200,100)")
+            .attr("transform", "translate(300,5)")
             .attr("class", "g3");
 
         var group4 = svg
             .append("g")
-            .attr("transform", "translate(300,100)")
+            .attr("transform", "translate(450,5)")
             .attr("class", "g4");
         var group5 = svg
             .append("g")
-            .attr("transform", "translate(400,100)")
+            .attr("transform", "translate(550,5)")
             .attr("class", "g5");
         var group6 = svg
             .append("g")
-            .attr("transform", "translate(500,100)")
+            .attr("transform", "translate(650,5)")
             .attr("class", "g6");
         var group7 = svg
             .append("g")
-            .attr("transform", "translate(600,100)")
+            .attr("transform", "translate(800,5)")
             .attr("class", "g7");
 
 
@@ -616,6 +648,60 @@
             .data(resultDictionary.firstNewColumn).enter()
             .append("g")
             .attr("class", "cell");
+
+        var textGroup = svg.append("g")
+            .attr("class", "description-text")
+            .attr("transform", "translate(0,350)");
+
+        textGroup.append("text")
+            .attr("class","description-text-simple")
+            .attr("x", 500)
+            .attr("y", 0)
+            .text("Przesunięcie (1,2), podstawienie zgodnie z tabelą podstawień (3),");
+        textGroup.append("text")
+            .attr("class","description-text-simple")
+            .attr("x", 500)
+            .attr("y", 50)
+            .text("XOR na blokach 4,5,6. Wartość bloku 6 zależy od numeru rundy i wyraża się wzorem:");
+        group1.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("1");
+
+        group2.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("2");
+
+        group3.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("3");
+
+        group4.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("4");
+        group5.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("5");
+        group6.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("6");
+        group7.append("text")
+            .attr("class","cell-text-data")
+            .attr("x", 30)
+            .attr("y", 300)
+            .text("7");
+
 
         var numrows = oldKeyLastColumn.length;
 
@@ -677,7 +763,7 @@
 
         group3.selectAll(".cell")
             .append("rect")
-            .attr("class", "cell-rect-result")
+            .attr("class", "cell-rect-selected-2")
             .attr("x", function (d, i) { return x(0); })
             .attr("y", function (d, i) { return x(i); })
             .attr("width", x.rangeBand())
@@ -693,7 +779,7 @@
 
         group4.selectAll(".cell")
             .append("rect")
-            .attr("class", "cell-rect-result")
+            .attr("class", "cell-rect-data-nohover")
             .attr("x", function (d, i) { return x(0); })
             .attr("y", function (d, i) { return x(i); })
             .attr("width", x.rangeBand())
@@ -709,7 +795,7 @@
 
         group5.selectAll(".cell")
             .append("rect")
-            .attr("class", "cell-rect-result")
+            .attr("class", "cell-rect-data-nohover")
             .attr("x", function (d, i) { return x(0); })
             .attr("y", function (d, i) { return x(i); })
             .attr("width", x.rangeBand())
@@ -725,7 +811,7 @@
 
         group6.selectAll(".cell")
             .append("rect")
-            .attr("class", "cell-rect-result")
+            .attr("class", "cell-rect-helpers")
             .attr("x", function (d, i) { return x(0); })
             .attr("y", function (d, i) { return x(i); })
             .attr("width", x.rangeBand())
@@ -762,7 +848,7 @@
         svg = d3.select('#' + svgId);
         var group1 = svg
             .append("g")
-            .attr("transform", "translate(100,100)")
+            .attr("transform", "translate(200,100)")
             .attr("class","g1");
 
         var cells = group1.selectAll(".cell")
@@ -770,7 +856,7 @@
             .append("g")
             .attr("class", "cell");
 
-        var width = 75
+        var width = 75;
         var height = 75;
         var offsetX = width/2;
         var offsetY = height/2;
@@ -778,7 +864,7 @@
 
         var xor = svg.append("g")
             .attr("class","textGroup")
-            .attr("transform", "translate(200,100)")
+            .attr("transform", "translate(300,100)")
             .append("text")
             .attr("class","cell-text-data")
             .attr("x", width/2)
@@ -787,7 +873,7 @@
 
         var arrow = svg.append("g")
             .attr("class","textGroup")
-            .attr("transform", "translate(400,100)")
+            .attr("transform", "translate(500,100)")
             .append("text")
             .attr("class","cell-text-data")
             .attr("x", width/2)
@@ -811,7 +897,7 @@
 
         var group2 = svg.append("g")
             .attr("class", "g2")
-            .attr("transform", "translate(300,100)");
+            .attr("transform", "translate(400,100)");
 
         var cells = group2.selectAll(".cell")
             .data(key2).enter()
@@ -836,7 +922,7 @@
 
         var group3 = svg.append("g")
             .attr("class", "g3")
-            .attr("transform", "translate(500,100)");
+            .attr("transform", "translate(600,100)");
 
         var cells = group3.selectAll(".cell")
             .data(key3).enter()
@@ -1189,11 +1275,17 @@
         d3.select(this).select("rect")
             .attr("class", "cell-rect-selected");
 
+        var valuesFromCellsBefore = [];
+        var valuesFromHelperMatrix = [];
+
         var cellsBefore = d3.select('#mixColumnsBlockBefore')
             .selectAll(".cell")
             .filter(function (d, index) {
                 var imod = i % 4;
                 return (index % 4) == imod;
+            })
+            .each(function(d, i) {
+                valuesFromCellsBefore.push(IntToHexString(d));
             });
 
         cellsBefore.select("rect")
@@ -1213,6 +1305,9 @@
 
                 var row = Math.floor(i / 4);
                 return index >= row * 4 && index < row * 4 + 4;
+            })
+            .each(function(d, i) {
+                valuesFromHelperMatrix.push(IntToHexString(d));
             });
 
         helperMatrix.select("rect")
@@ -1223,6 +1318,30 @@
                 case 2: { return "orange-cell";}
                 case 3: { return "yellow-cell";}
                 }
+            });
+
+
+        var formulaSvg=d3.select("#mixColumnsFormula")
+            .append("g")
+            .attr("transform", "translate(300,100)");
+
+        formulaSvg.append("text")
+            .attr("class", "description-text-simple")
+            .attr("x", 0)
+            .attr("y", 0)
+            .text(function (d, i) {
+                var result = '';
+                for (var i = 0; i < valuesFromCellsBefore.length; i++) {
+                    if (i < valuesFromCellsBefore.length - 1) {
+                        result += ('('+valuesFromCellsBefore[i] + ' x '
+                            + valuesFromHelperMatrix[i]+')' + ' + ');
+                    } else {
+                        result += ('(' +valuesFromCellsBefore[i] + ' x '
+                            + valuesFromHelperMatrix[i] + ')');
+                    }
+
+                }
+                return result;
             });
 
     }
@@ -1250,6 +1369,8 @@
 
         helperMatrix.select("rect")
             .attr("class", "cell-rect-helpers");
+
+        document.getElementById("mixColumnsFormula").innerHTML = '';
 
     }
     function SetMouseEventOnMixColumns() {
@@ -1494,6 +1615,65 @@
             .selectAll('.cell')
             .on('mouseover', handleMouseOverOnKeyViz)
             .on('mouseout', handleMouseOutOnKeyViz);
+    }
+
+    function handleMouseOverOnKeyViKeyVizFirstColumn(d, i) {
+
+        d3.select("#newKey")
+            .selectAll(".cell")
+            .filter(function(d, i) {
+                return i % 4 === 0;
+            })
+            .select("rect")
+            .attr("class", "cell-rect-selected");
+
+        d3.select("#oldKey")
+            .selectAll(".cell")
+            .filter(function(d, i) {
+                return i % 4 === 3;
+            })
+            .select("rect")
+            .attr("class", "cell-rect-selected-2");
+        
+        VisualizeKeyFirstColumn(mainKey, newKeyDictionary, 'keyViz');
+        d3.select("#rconMath")
+            .select(".img-responsive")
+            .attr("style", "display: inline;")
+    }
+    function handleMouseOutKeyViKeyVizFirstColumn(d, i) {
+
+        d3.select("#newKey")
+            .selectAll(".cell")
+            .filter(function(d, i) {
+                return i % 4 === 0;
+            })
+            .select("rect")
+            .attr("class", "cell-rect-result");
+
+        d3.select("#oldKey")
+            .selectAll(".cell")
+            .filter(function(d, i) {
+                return i % 4 === 3;
+            })
+            .select("rect")
+            .attr("class", "cell-rect-data-nohover");
+
+
+        var div = document.getElementById('keyViz');
+        div.innerHTML = '';
+        d3.select("#rconMath")
+            .select(".img-responsive")
+            .attr("style","display: none;")
+    }
+
+    function SetMouseEventOnKeyVizFirstColumn() {
+        d3.select('#newKey')
+            .selectAll('.cell')
+            .filter(function(d, i) {
+                return i % 4 === 0;
+            })
+            .on('mouseover', handleMouseOverOnKeyViKeyVizFirstColumn)
+            .on('mouseout', handleMouseOutKeyViKeyVizFirstColumn);
     }
 
 

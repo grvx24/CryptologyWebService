@@ -76,6 +76,18 @@
     pointer-events: none;
 }
 
+.description-text {
+    font-size: 22px;
+    font-style: italic;
+    text-anchor: middle;
+    pointer-events: none;
+}
+.description-text-simple {
+    font-size: 22px;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
 .cell-text-sbox {
     font-size: 12px;
     font-weight: bold;
