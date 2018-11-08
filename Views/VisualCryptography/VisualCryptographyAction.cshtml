@@ -1,0 +1,322 @@
+﻿@using CryptoWebService.Helpers;
+@model int;
+
+@{
+    ViewData["Title"] = "Secret";
+}
+<script src="~/lib/custom/konva.min.js"></script>
+
+<h2 class="page-header">Kryptografia Wizualna</h2>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div>
+            <label for="metod">Metoda</label>
+            <select id="metod" class="form-control">
+                <option value="text" selected>czarno biała</option>
+            </select>
+        </div>
+        <div>
+            <label for="secrets">Ilość  sekretów</label>
+            <select id="secrets" class="form-control">
+                <option value="text" selected>2</option>
+            </select>
+        </div>
+        <div>
+            <label for="inputModeEncrypt">Format wejściowy</label>
+            <select id="inputModeEncrypt" class="form-control">
+                <option value="drawing" selected>Rysowanie</option>
+                <option value="file">Plik</option>
+            </select>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class=" col-lg-12">
+        <div id="fileUploadPanel" style="display: none">
+            @{
+                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"));
+            }
+        </div>
+        <div id="drawingPanel">
+            <div id="container" class="myCanvas">
+
+            </div>
+            <div class="text-center mySignature">Pole do rysowania</div>
+        </div>
+        <div class="input-group">
+            <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
+            <div class="loader" id="loading" style="display:none;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div id="secretsDownload" class="text-center" >
+
+</div>
+<div id="Secret" class=" col-lg-12">
+    <div id="container2" class="myCanvas">
+    </div>
+</div>
+
+
+<style>
+    .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-left: 16px solid #F0F0F0;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .myCanvas {
+        background-color: #F0F0F0;
+        border: 1px solid black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .mySignature {
+        font-style: italic;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .myDownload {
+        margin: 10px;
+        font-size: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+</style>
+
+<script>
+    $('#inputModeEncrypt').on('change', function () {
+
+        if (this.value === 'drawing') {
+            $('#fileUploadPanel').hide();
+            $('#drawingPanel').show();
+
+        } else if (this.value === 'file') {
+            $('#fileUploadPanel').show();
+            $('#drawingPanel').hide();
+        }
+        else if (this.value === 'text') {
+            $('#fileUploadPanel').show();
+            $('#drawingPanel').show();
+        }
+
+    });
+
+    $('#sendCanvasToDivide').click(function () {
+        var inputModeEncrypt = $('#inputModeEncrypt option:selected').val();
+
+        if (inputModeEncrypt === 'drawing') {
+            var canvas = document.querySelector('#container canvas');
+            var dataURL = canvas.toDataURL("image/png");
+            dataURL = dataURL.replace('data:image/png;base64,', '');
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Secrets", "VisualCryptography")',
+                data: JSON.stringify(dataURL),
+                dataType: 'json',
+                contentType: "application/json",
+                beforeSend: function () {
+                    showLoading();
+                },
+                complete: function () {
+                    hideLoading();
+                },
+                success: function (response) {
+                    onSucces(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        else if (inputModeEncrypt === 'file') {
+            var file = document.getElementById('fileUploader').files[0];
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+
+                var fileData = reader.result.split(',')[1];
+
+                fileData = fileData.replace('data:image/png;base64,', '');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Secrets", "VisualCryptography")',
+                    data: JSON.stringify(fileData),
+                    dataType: 'json',
+                    contentType: "application/json",
+                    beforeSend: function () {
+                        showLoading();
+                    },
+                    complete: function () {
+                        hideLoading();
+                    },
+                    success: function (response) {
+                        onSucces(response);
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            };
+        }
+    });
+
+    function showLoading() {
+        $('#loading').show();
+    }
+
+    function hideLoading() {
+        $('#loading').hide();
+    }
+
+    function onSucces(response) {
+        if (response.result === true) {
+            var downloadLink = "";
+            layer2.destroyChildren()
+            for (var i = 0; i < response.secrets.length; i++) {
+                var secret = response.secrets[i];
+                LoadImageToLayerFromData(layer2, secret.value);
+                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'" >Sekret ' + (i+1) +' </a>';
+            }
+
+            $('#secretsDownload').html(downloadLink);
+        } else {
+            console.log(response);
+        }
+    }
+
+    var x = document.getElementById("container");
+    var width = x.offsetWidth;
+    var height = 300;/* window.innerHeight - 25;*/
+
+    InitDrawingKonvoControl('container', width, height);
+
+    var isPaint = false;
+    var lastPointerPosition;
+
+    function InitDrawingKonvoControl(stageName, stageWidth, stageHeight) {
+
+        var stage = new Konva.Stage({
+            container: stageName,
+            width: stageWidth,
+            height: stageHeight,
+        });
+
+        var layer = new Konva.Layer();
+        stage.add(layer);
+
+        var canvas = document.createElement('canvas');
+        canvas.width = stage.width();
+        canvas.height = stage.height();
+
+        var image = new Konva.Image({
+            image: canvas
+        });
+
+        layer.add(image);
+        stage.draw();
+
+        var context = canvas.getContext('2d');
+        context.strokeStyle = "black";
+        //context.lineJoin = "round";
+        context.lineWidth = 5;
+
+        image.on('mousedown touchstart', function () {
+            isPaint = true;
+            lastPointerPosition = stage.getPointerPosition();
+        });
+
+        stage.addEventListener('mouseup touchend', function () {
+            isPaint = false;
+        });
+
+        stage.addEventListener('mousemove touchmove', function () {
+            if (!isPaint) {
+                return;
+            }
+            context.globalCompositeOperation = 'source-over';
+            context.strokeStyle = "black";
+            context.beginPath();
+
+            var localPos = {
+                x: lastPointerPosition.x - image.x(),
+                y: lastPointerPosition.y - image.y()
+            };
+            context.moveTo(localPos.x, localPos.y);
+            var pos = stage.getPointerPosition();
+            localPos = {
+                x: pos.x - image.x(),
+                y: pos.y - image.y()
+            };
+            context.lineTo(localPos.x, localPos.y);
+            context.closePath();
+            context.stroke();
+
+            lastPointerPosition = pos;
+            layer.batchDraw();
+        });
+    }
+
+    var x2 = document.getElementById("container2");
+    var width2 = x2.offsetWidth;
+    var height2 = 400;
+
+    var stage2 = new Konva.Stage({
+        container: 'container2',
+        width: width2,
+        height: height2
+
+    });
+    var layer2 = new Konva.Layer();
+    stage2.add(layer2);
+
+
+    layer2.on('mouseover', function (evt) {
+        var shape = evt.target;
+        document.body.style.cursor = 'pointer';
+        layer2.draw();
+    });
+
+    layer2.on('mouseout', function (evt) {
+        var shape = evt.target;
+        document.body.style.cursor = 'default';
+        shape.scaleX(1);
+        shape.scaleY(1);
+        layer2.draw();
+    });
+
+    function LoadImageToLayerFromData(layer, data) {
+        var KonvoImage = new Konva.Image({
+            draggable: true,
+        });
+        layer.add(KonvoImage);
+
+        var image = new Image();
+        image.onload = function () {
+            KonvoImage.image(image);
+            layer.draw();
+        };
+
+        image.src = 'data:image/png;base64,' + data;
+    }
+
+</script>

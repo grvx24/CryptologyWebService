@@ -3,26 +3,26 @@
     ViewData["Title"] = "Index";
 }
 
-<script src="~/js/ciphers/BlockCiphers.js"></script>
- 
+<script src="~/js/ciphers/DesCipher.js"></script>
+
 <div class="container">
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        Aes to fajny szyfr używany w wielu miejscach gdzie bezpieczeństwo to podstawa!
+        Des to fajny szyfr używany w wielu miejscach gdzie bezpieczeństwo to podstawa!
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 
-        @await Html.PartialAsync("_BlockCiphersPartial")
+        @await Html.PartialAsync("_DesPartial")
 
     </div>
 
     <div id="Visualization" class="tabcontent col-lg-12">
-        MAKAPAKA aciapacia
+        @await Html.PartialAsync("_DesVisualization")
     </div>
 
 

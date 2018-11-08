@@ -254,14 +254,14 @@
 
     $(document).ready(function() {
 
-        var blockCiphersInit = BlockCiphersInit({
+        var aesCipherInit = AesCipherInit({
             urls: {
                 encryptUrl: '@Url.Action("AesEncrypt", "BlockCiphers")',
                 decryptUrl: '@Url.Action("AesDecrypt", "BlockCiphers")'
             }
         });
 
-        blockCiphersInit.init();
+        aesCipherInit.init();
 
 
     });

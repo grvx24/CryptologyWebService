@@ -21,7 +21,7 @@ namespace CryptoWebService.Controllers.Ciphers
 
     public class BlockCiphersController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Aes()
         {
             return View();
         }
@@ -67,38 +67,46 @@ namespace CryptoWebService.Controllers.Ciphers
                     throw new ArgumentOutOfRangeException();
             }
 
-
+            byte[] message = null;
 
             switch (encoding)
             {
                 case EncodingInformation.ASCII:
                 {
-                    byte[] message = Encoding.ASCII.GetBytes(viewModel.Message);
-                    var encrypted = aes.Encrypt(message, key, iv);
-                    return Json(encrypted);
-                    }
+                    message = Encoding.ASCII.GetBytes(viewModel.Message);
+                    break;
+                }
 
                 case EncodingInformation.HEX:
                 {
-                    byte[] message = StringHelper.StringHexToByteArray(viewModel.Message);
-                    var encrypted = aes.Encrypt(message, key, iv);
-                    return Json(encrypted);
+                    message = StringHelper.StringHexToByteArray(viewModel.Message);
+                    break;
                 }
                 case EncodingInformation.BINARY_STRING:
                 {
-                    byte[] message = StringHelper.BinaryStringToBytes(viewModel.Message);
-                    var encrypted = aes.Encrypt(message, key, iv);
-                    return Json(encrypted);
+                    message = StringHelper.BinaryStringToBytes(viewModel.Message);
+                    break;
                 }
                 case EncodingInformation.BASE64:
                 {
-                    byte[] message = Convert.FromBase64String(viewModel.Message);
-                    var encrypted = aes.Encrypt(message, key, iv);
-                    return Json(encrypted);
+                    message = Convert.FromBase64String(viewModel.Message);
+                    break;
+
                 }
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            byte[] encrypted = null;
+            try
+            {
+                encrypted = aes.Encrypt(message, key, iv);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+            return Json(encrypted);
         }
         [HttpPost]
         public IActionResult AesDecrypt([FromBody]AesViewModel viewModel)
@@ -141,8 +149,17 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 CipherMode = (BlockCipherMode)mode
             };
+            byte[] decrypted = null;
+            try
+            {
+                decrypted = aes.Decrypt(message, key, iv);
+            }
+            catch (Exception e)
+            {
 
-            var decrypted = aes.Decrypt(message, key, iv);
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+            
             
             return Json(decrypted);
         }

@@ -57,7 +57,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="ViewControls\VisualCryptography\ImageControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="ViewControls\VisualCryptography\AnimationControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_CustomLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="ViewControls\UploadControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\VisualCryptography.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\VisualCryptographyAction.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\WaterMarks.cshtml">

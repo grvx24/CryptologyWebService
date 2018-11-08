@@ -1,0 +1,106 @@
+﻿.background {
+    fill: blue;
+}
+
+.cell-rect-data {
+    fill: #87cefa;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-data-2 {
+    fill: #4169e1;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-data-nohover {
+    fill: #87cefa;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-data:hover {
+        z-index: 1;
+        fill: red;
+}
+
+.cell-rect-helpers{
+    fill: #f0e68c;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-result {
+    fill: #98fb98;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-result {
+    fill: #98fb98;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-key {
+    fill: #ee82ee;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-sbox {
+    fill: #8fbc8f;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-selected {
+    fill: red;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-selected-2 {
+    fill: orange;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-rect-index {
+    fill: #b0c4de;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.cell-text-data {
+    font-size: 32px;
+    font-weight: bold;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.cell-text-sbox {
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.maroon-cell {
+    fill: maroon;
+    stroke: black;
+    stroke-width: 2px;
+}
+.red-cell{
+    fill: red;
+    stroke: black;
+    stroke-width: 2px;
+}
+.orange-cell{
+    fill: orange;
+    stroke: black;
+    stroke-width: 2px;
+}
+.yellow-cell
+{
+    fill: yellow;
+    stroke: black;
+    stroke-width: 2px;
+}
+

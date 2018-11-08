@@ -1,0 +1,64 @@
+﻿
+<div class="col-lg-12">
+    <div id="Animation@(Model.UnicNumber)"
+         class="myCanvas"
+         style="
+         width:@(Model.TotalWidthWithBorders + "px" );
+         height:@(Model.TotalHeightWithBorders + "px")" />
+</div>
+</div>
+
+<style>
+    .myCanvas {
+        background-color: #F0F0F0;
+        border: 2px solid black;
+    }
+</style>
+
+<script>
+    var width = '@Model.Width';
+    var period = '@Model.Period';
+    var height = '@Model.Height';
+    var amplitude = '@Model.Amplitude';
+    var totalWidth = '@Model.TotalWidth';
+
+    var mainLayer = new Konva.Layer();
+
+    var StaticKonvaImage = InitImage('@Model.StaticImage', mainLayer, amplitude);
+    var AnimationKonvaImage@(Model.UnicNumber) = InitImage('@Model.MovingImage', mainLayer);
+
+    mainLayer.add(StaticKonvaImage);
+    mainLayer.add(AnimationKonvaImage@(Model.UnicNumber));
+
+    var stage = new Konva.Stage({
+        container: 'Animation@(Model.UnicNumber)',
+        width: totalWidth,
+        height: height
+    });
+
+    stage.add(mainLayer);
+
+    var anim = new Konva.Animation(function (frame) {
+        AnimationKonvaImage@(Model.UnicNumber).setX((@(Model.Amplitude) * Math.sin(frame.time * 2 * Math.PI / @(Model.Period))) + @(Model.Amplitude));
+    }, mainLayer);
+
+    anim.start();
+
+    function InitImage(imageSrc, layer,XPosition) {
+        var KonvaImage = new Konva.Image({
+            x: XPosition,
+            width: width,
+            height: height
+        });
+        var imageToInit = new Image();
+
+        imageToInit.src = imageSrc;
+
+        imageToInit.onload = function () {
+            KonvaImage.image(imageToInit);
+            layer.draw();
+        };
+        return KonvaImage;
+    }
+
+</script>
