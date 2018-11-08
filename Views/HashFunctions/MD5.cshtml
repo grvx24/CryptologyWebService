@@ -15,20 +15,317 @@
 
     <div id="Description" class="tabcontent">
         <h2 align="center">@Text.MD5Hash</h2>
-        <p>
-            MD5(Messsage Digest 5) jest funkcją skrótu zaprojektowaną przez współautora RSA- R.Rivesta. MD5 przeekształca ciągi 512-bitowe w ciągi 128-bitowe będące skrótem wiadomości. Funkcja była najbardziej
+        <h4>
+            MD5 (Messsage Digest 5) jest funkcją skrótu zaprojektowaną przez współautora RSA- R.Rivesta. MD5 przeekształca ciągi 512-bitowe w ciągi 128-bitowe będące skrótem wiadomości. Funkcja była najbardziej
             popularną funkcją skrótu od roku 1992 do roku 2005, kiedy została złamana przez zespół chińskich kryptoanalityków.
-        </p>
-        <p>
+        </h4>
+        <h4>
              W obecnych czasach znalezienie kolizji MD5 zajmuje kilka sekund, mimo to
             wiele systemów ciągle obsługuje MD5, ze względu na kompatybilnosć wsteczną. Funkcja jest łatwa do zaimplementowania, w trakcie obliczeń dokonywane są jedynie pewne podstawowe operacje na
             blokach 32-bitowych.
-        </p>
+        </h4>
     </div>
 
     <div id="Working" class="tabcontent col-lg-12">
-        <h2>Działanie algorytmu krok po kroku</h2>                                                                                                                         
+        <h2 align="center">Działanie algorytmu MD5 krok po kroku</h2>
+        <h4>Algorytm MD5 składa się z 4 kroków:</h4>
+        <h3>1. Dołączenie bitów dopełniających.</h3>
+        <h4>- oryginalną wiadomości uzupełniamy na końcu bitem o wartości "1",</h4>
+        <h4>- uzupełniamy wiadomość bitami o wartości "0" tak, aby długość komunikatu była o 64 bity krótsza niż wielokrotność 512,</h4>
+        <h4>- następnie na końcu wiadomości dodajemy 64 bity wskazujące długość oryginalnej wiadomości.</h4>
+        <div class="col-md-12">
+            <span class="col-md-8">
+                <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="margin-bottom:10px;" rows="1" id="#"></textarea>
+            </span>
+            <button class="btn btn-primary" id="#" type="submit">Uzupełnij wiadomość</button>
+        </div>
+        <h4>Wiadomość w postaci bitów.</h4>
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <textarea class="form-control" placeholder="Wiadomość w  bitach" style="margin-bottom:10px;" rows="2" id="#" disabled></textarea>
+            </div>
+        </div>
+        <h4>
+            Wiadomość zawiera
+            <input type="text" name="MessageLength" size="4" disabled />
+            bitów. Aby długość wiadomości wynosiła 448 mod 512, musimy uzupełnić ją o
+            <input type="text" name="PaddedBits" size="4" disabled />
+            bity, ponieważ
+            <input type="text" name="MessageLength2" size="4" disabled />
+            mod 512=
+            <input type="text" name="ModResult" size="4" disabled />
+            Zatem dodajemy jedną '1' oraz
+            <input type="text" name="PadValue" size="2" disabled />
+            zera.
+        </h4>
 
+        <h4> Następnie  dodajemy 64 bity wskazujące długość wiadomości:</h4>
+        <div class="col-md-12">
+            <div class="col-lg-1"></div>
+            <div class="col-md-8">
+                <input type="text" name="PadMessageLength" size="92" style="margin-bottom:15px;" disabled />
+            </div>
+        </div>
+
+        <h4> Wiadomość po uzupełnieniu:</h4>
+        <div class="col-md-12">
+            <div class="col-lg-1"></div>
+            <div class="col-md-8">
+                <textarea class="form-control" style="margin-bottom:10px;" rows="10" cols="100" id="#" disabled></textarea>
+            </div>
+        </div>
+        <h3 style="margin-top:15px;">2. Incjowanie bufora.</h3>
+        <h4>
+            Algorytm MD5 wymaga 128-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na
+            cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D:
+        </h4>
+        <h5>Słowo A: 1732584193</h5>
+        <h5>Słowo B: 4023233417</h5>
+        <h5>Słowo C: 2562383102</h5>
+        <h5>Słowo D: 271733878</h5>
+        <h3 style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
+        <h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
+        <h4>Zdefiniowane stałe:</h4>
+        <h4> - słowa A, B, C, D,</h4>
+        <h4> - 64-elementowa tablica T powstała z funkcji sinus:</h4>
+        <table id="table_T" class="display" style="width:100%">
+            <tbody>
+                <tr>
+                    <td>T[0]=3614090360</td>
+                    <td>T[1]=3905402710</td>
+                    <td>T[2]=606105819</td>
+                    <td>T[3]=3250441966</td>
+                    <td>T[4]=4118548399</td>
+                    <td>T[5]=1200080426</td>
+                    <td>T[6]=2821735955</td>
+                    <td>T[7]=4249261313</td>
+                </tr>
+                <tr>
+                    <td>T[8]=1770035416</td>
+                    <td>T[9]=2336552879</td>
+                    <td>T[10]=4294925233</td>
+                    <td>T[11]=2304563134</td>
+                    <td>T[12]=1804603682</td>
+                    <td>T[13]=4254626195</td>
+                    <td>T[14]=2792965006</td>
+                    <td>T[15]=1236535329</td>
+                </tr>
+                <tr>
+                    <td>T[16]=4129170786</td>
+                    <td>T[17]=3225465664</td>
+                    <td>T[18]=643717713</td>
+                    <td>T[19]=3921069994</td>
+                    <td>T[20]=3593408605</td>
+                    <td>T[21]=38016083</td>
+                    <td>T[22]=3634488961</td>
+                    <td>T[23]=3889429448</td>
+                </tr>
+                <tr>
+                    <td>T[24]=568446438</td>
+                    <td>T[25]=3275163606</td>
+                    <td>T[26]=4107603335</td>
+                    <td>T[27]=1163531501</td>
+                    <td>T[28]=2850285829</td>
+                    <td>T[29]=4243563512</td>
+                    <td>T[30]=1735328473</td>
+                    <td>T[31]=2368359562</td>
+                </tr>
+                <tr>
+                    <td>T[32]=4294588738</td>
+                    <td>T[33]=2272392833</td>
+                    <td>T[34]=1839030562</td>
+                    <td>T[35]=4259657740</td>
+                    <td>T[36]=2763975236</td>
+                    <td>T[37]=1272893353</td>
+                    <td>T[38]=4139469664</td>
+                    <td>T[39]=3200236656</td>
+                </tr>
+                <tr>
+                    <td>T[40]=681279174</td>
+                    <td>T[41]=3936430074</td>
+                    <td>T[42]=3572445317</td>
+                    <td>T[43]=76029189</td>
+                    <td>T[44]=3654602809</td>
+                    <td>T[45]=3873151461</td>
+                    <td>T[46]=530742520</td>
+                    <td>T[47]=3299628645</td>
+                </tr>
+                <tr>
+                    <td>T[48]=4096336452</td>
+                    <td>T[49]=1126891415</td>
+                    <td>T[50]=2878612391</td>
+                    <td>T[51]=4237533241</td>
+                    <td>T[52]=1700485571</td>
+                    <td>T[53]=2399980690</td>
+                    <td>T[54]=4293915773</td>
+                    <td>T[55]=2240044497</td>
+                </tr>
+                <tr>
+                    <td>T[56]=1873313359</td>
+                    <td>T[57]=4264355552</td>
+                    <td>T[58]=2734768916</td>
+                    <td>T[59]=1309151649</td>
+                    <td>T[60]=4149444226</td>
+                    <td>T[61]=3174756917</td>
+                    <td>T[62]=718787259</td>
+                    <td>T[63]=3951481745</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4> - cztery funkcje pomocnicze, które na wejściu mają trzy 32-bitowe słowa, a na wyjściu produkują jedno słowo 32-bitowe:</h4>
+        <h5>F(X,Y,Z)= XY v not(X)Z </h5>
+        <h5>G(X,Y,Z)= XZ v Y not(Z) </h5>
+        <h5>H(X,Y,Z)= X xor Y xor Z </h5>
+        <h5>I(X,Y,Z)= Y xor (X v not(Z)) </h5>
+        <h3>Runda 1</h3>
+        <h4>
+            Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ F(b,c,d)+ X[k]+ T[i]) <<< s)
+        </h4>
+        <h5>
+            Każdorazowo porządek rejestrów ulega przesunięciu cyklicznemu o jedną pozycję. Ponadto przedostatnie argumenty (ilość pozycji o jaką dokonujemy cyklicznego przesunięcia)
+            tworzy cią okresowy 7, 12, 17, 22, 7, 12, ....
+        </h5>
+        <table id="table_T" class="display" style="width:60%">
+            <tbody>
+                <tr>
+                    <td>[ABCD  0  7  1]</td>
+                    <td>[DABC  1 12  2]</td>
+                    <td>[CDAB  2 17  3]</td>
+                    <td>[BCDA  3 22  4]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  4  7  5]</td>
+                    <td>[DABC  5 12  6]</td>
+                    <td>[CDAB  6 17  7]</td>
+                    <td>[BCDA  7 22  8]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  8  7  9]</td>
+                    <td>[DABC  9 12 10]</td>
+                    <td>[CDAB 10 17 11]</td>
+                    <td>[BCDA 11 22 12]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD 12  7 13]</td>
+                    <td>[DABC 13 12 14]</td>
+                    <td>[CDAB 14 17 15]</td>
+                    <td>[BCDA 15 22 16]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Runda 2</h3>
+        <h4>
+            Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ G(b,c,d)+ X[k]+ T[i]) <<< s)
+        </h4>
+        <h5>
+            Przebiega podobnie jak runda 1. Zamiast procedury F, stosowana jest procedura G. Przesunięcie tworzy ciąg okresowy 5, 9, 14, 20.
+        </h5>
+        <table id="table_T" class="display" style="width:60%">
+            <tbody>
+                <tr>
+                    <td>[ABCD  1  5 17]</td>
+                    <td>[DABC  6  9 18]</td>
+                    <td>[CDAB 11 14 19]</td>
+                    <td>[BCDA  0 20 20]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  5  5 21]</td>
+                    <td>[DABC 10  9 22]</td>
+                    <td>[CDAB 15 14 23]</td>
+                    <td>[BCDA  4 20 24]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  9  5 25]</td>
+                    <td>[DABC 14  9 26]</td>
+                    <td>[CDAB  3 14 27]</td>
+                    <td>[BCDA  8 20 28]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD 13  5 29]</td>
+                    <td>[DABC  2  9 30]</td>
+                    <td>[CDAB  7 14 31]</td>
+                    <td>[BCDA 12 20 32]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Runda 3</h3>
+        <h4>
+            Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ H(b,c,d)+ X[k]+ T[i]) <<< s)
+        </h4>
+        <h5>
+            Przebiega z analogicznymi zmianami. Używana jest procedura H. Przesunięcie tworzy ciąg okresowy 4, 11, 16, 23.
+        </h5>
+        <table id="table_T" class="display" style="width:60%">
+            <tbody>
+                <tr>
+                    <td>[ABCD  5  4 33]</td>
+                    <td>[DABC  8 11 34]</td>
+                    <td>[CDAB 11 16 35]</td>
+                    <td>[BCDA 14 23 36]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  1  4 37]</td>
+                    <td>[DABC  4 11 38]</td>
+                    <td>[CDAB  7 16 39]</td>
+                    <td>[BCDA 10 23 40]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD 13  4 41]</td>
+                    <td>[DABC  0 11 42]</td>
+                    <td>[CDAB  3 16 43]</td>
+                    <td>[BCDA  6 23 44]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  9  4 45]</td>
+                    <td>[DABC 12 11 46]</td>
+                    <td>[CDAB 15 16 47]</td>
+                    <td>[BCDA  2 23 48]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Runda 4</h3>
+        <h4>
+            Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ I(b,c,d)+ X[k]+ T[i]) <<< s)
+        </h4>
+        <h5>
+             Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
+        </h5>
+        <table id="table_T" class="display" style="width:60%">
+            <tbody>
+                <tr>
+                    <td>[ABCD  0  6 49]</td>
+                    <td>[DABC  7 10 50]</td>
+                    <td>[CDAB 14 15 51]</td>
+                    <td>[BCDA  5 21 52]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD 12  6 53]</td>
+                    <td>[DABC  3 10 54]</td>
+                    <td>[CDAB 10 15 55]</td>
+                    <td>[BCDA  1 21 56]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  8  6 57]</td>
+                    <td>[DABC 15 10 58]</td>
+                    <td>[CDAB  6 15 59]</td>
+                    <td>[BCDA 13 21 60]</td>
+                </tr>
+                <tr>
+                    <td>[ABCD  4  6 61]</td>
+                    <td>[DABC 11 10 62]</td>
+                    <td>[CDAB  2 15 63]</td>
+                    <td>[BCDA  9 21 64]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Przebieg poczczegolnych rund przedstawia poniższa tabela.</h4>
+
+
+        <h3 style="margin-top:15px;">4. Wyjście.</h3>
+        <h4>Zawartość bufora w postaci słów A, B, C, D jest zwracana w kolejności od najmniej znaczącego bajtu.</h4>
 
 
     </div>
