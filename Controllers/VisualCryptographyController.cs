@@ -18,17 +18,33 @@ namespace CryptoWebService.Controllers
     {
         #region VisualCryptography
 
-        public IActionResult VisualCryptography23554545()
-        {
-            return View();
-        }
-
-
         public IActionResult VisualCryptographyAction()
         {
             return View();
         }
-        
+
+        [HttpPost]
+        public IActionResult Secrets([FromBody] SecretsDto secretsDto)
+        {
+            if (secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The argument is empty." });
+            }
+            else
+            {
+                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(secretsDto);
+
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+        }
+
+
+        public IActionResult VisualCryptography23554545()
+        {
+            return View();
+        }
 
         public IActionResult VisualCryptography()
         {
@@ -73,48 +89,7 @@ namespace CryptoWebService.Controllers
             return VieModelDto;
         }
 
-        public IActionResult VisualCryptographyUploadFiles()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(List<IFormFile> files)
-        {
-            long size = files.Sum(f => f.Length);
-
-            var filePath = Path.GetTempFileName();
-
-            foreach (var formFile in files)
-            {
-                if (formFile.Length > 0)
-                {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
-                }
-            }
-
-            return Ok(new { count = files.Count, size, filePath });
-        }
-
-        [HttpPost]
-        public IActionResult Secrets([FromBody] string imageDataWithoutHeader)
-        {
-            if(imageDataWithoutHeader != null)
-            {
-                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(imageDataWithoutHeader);
-
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
-            }
-            else
-            {
-                return Json(new { Result = false, Message = "The argument is empty." });
-            }
-        }
 
 
         #endregion
