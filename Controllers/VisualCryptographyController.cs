@@ -14,41 +14,14 @@ using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Controllers
 {
+    [Route("[action]")]
     public class VisualCryptographyController : Controller
     {
         #region VisualCryptography
 
-        public IActionResult VisualCryptographyAction()
+        public IActionResult sekret()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Secrets([FromBody] SecretsDto secretsDto)
-        {
-            if (secretsDto.Image == null)
-            {
-                return Json(new { Result = false, Message = "The argument is empty." });
-            }
-            else
-            {
-                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(secretsDto);
-
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
-            }
-        }
-
-
-        public IActionResult VisualCryptography23554545()
-        {
-            return View();
-        }
-
-        public IActionResult VisualCryptography()
-        {
-            return View(PrepareVisualCryptoraphyView());
+            return View("Secret", PrepareVisualCryptoraphyView());
         }
 
         private ViewModelDto PrepareVisualCryptoraphyView()
@@ -89,23 +62,45 @@ namespace CryptoWebService.Controllers
             return VieModelDto;
         }
 
+        [HttpPost]
+        public IActionResult Secrets([FromBody] SecretsDto secretsDto)
+        {
+            if (secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The argument is empty." });
+            }
+            else
+            {
+                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(secretsDto);
+
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+        }
 
 
+        public IActionResult VisualCryptographyAction() => View();
+
+        public IActionResult VisualCryptography23554545() => View();
+
+        #endregion
+
+        #region Steganography
+
+        public IActionResult steganografia() => View("Steganography");
+
+        [HttpPost]
+        public IActionResult Steganography(int result) => View();
 
         #endregion
 
         #region WaterMarks
 
-        public IActionResult WaterMarks()
-        {
-            return View();
-        }
+        public IActionResult znakiwodne() => View("WaterMarks");
 
         [HttpPost]
-        public IActionResult WaterMarks(int result)
-        {
-            return View();
-        }
+        public IActionResult WaterMarks(int result) => View();
 
         #endregion
     }

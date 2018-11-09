@@ -69,10 +69,16 @@
     <Content Update="ViewControls\UploadControl.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\VisualCryptography\VisualCryptography.cshtml">
+    <Content Update="Views\VisualCryptography\Steganography.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\VisualCryptography\VisualCryptographyAction.cshtml">
+    <Content Update="Views\VisualCryptography\Secret.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\Secret_Description.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\Secret_Action.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\WaterMarks.cshtml">

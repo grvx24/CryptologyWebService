@@ -16,11 +16,11 @@
 </style>
 
 <script>
-    var width = '@Model.Width';
-    var period = '@Model.Period';
-    var height = '@Model.Height';
-    var amplitude = '@Model.Amplitude';
-    var totalWidth = '@Model.TotalWidth';
+    var width = parseInt('@Model.Width');
+    var period = parseInt('@Model.Period');
+    var height = parseInt('@Model.Height') ;
+    var amplitude = parseInt('@Model.Amplitude');
+    var totalWidth = parseInt('@Model.TotalWidth');
 
     var mainLayer = new Konva.Layer();
 

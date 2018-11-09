@@ -1,0 +1,48 @@
+﻿@using CryptoWebService.Helpers;
+@model ViewModelDto;
+@{
+    ViewData["Title"] = "Secret";
+}
+<script src="~/lib/custom/konva.min.js"></script>
+<div class="container">
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+    </div>
+
+    <div id="Description" class="tabcontent col-lg-12">
+        @{
+            await Html.RenderPartialAsync("Description", Model);
+        }
+    </div>
+    <div id="Tools" class="tabcontent col-lg-12">
+
+
+    </div>
+
+    <div id="Visualization" class="tabcontent col-lg-12">
+
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById("defaultPageButton").click();
+
+    function openTab(evt, tabName) {
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
