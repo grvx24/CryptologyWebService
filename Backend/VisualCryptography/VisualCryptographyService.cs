@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using CryptoWebService.Models;
 using CryptoWebService.Models.VisualCryptography;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -135,6 +136,44 @@ namespace CryptoWebService.Backend.VisualCryptography
             return listaString.ToArray();
         }
 
+        public static ViewModelDto PrepareVisualCryptoraphyView()
+        {
+            ViewModelDto VieModelDto = new ViewModelDto();
+
+            List<AnimationDto> Animations = new List<AnimationDto>
+            {
+                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                {
+                    Width = 300,
+                    Height = 200,
+                    Amplitude = 2,
+                    Period = 20000
+                },
+                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                {
+                    Amplitude = 150
+                }
+            };
+
+            List<ImageDto> Images = new List<ImageDto>
+            {
+                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                {
+                    Width = 793,
+                    Height = 200
+                },
+                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                {
+                    Width = 991,
+                    Height = 250
+                }
+            };
+            VieModelDto.AnimationList = Animations;
+            VieModelDto.ImageList = Images;
+
+            return VieModelDto;
+        }
+
         #region ColorHelpers
 
         private static bool IsItBlackColor(Color IsItBlack)
@@ -187,6 +226,26 @@ namespace CryptoWebService.Backend.VisualCryptography
             new SubElement("0110"),
             new SubElement("1001")
         };
+
+        //private static SubElement[] SubElements_DoublesResolutionMethod = new SubElement[]
+        //{
+        //    new SubElement("1010"),
+        //    new SubElement("0101"),
+        //    new SubElement("1100"),
+        //    new SubElement("0011"),
+        //    new SubElement("1001"),
+        //    new SubElement("0110")
+        //};
+
+        //private static SubElement[] SubElements_DoublesResolutionMethod_Opposite = new SubElement[]
+        //{
+        //    new SubElement("0101"),
+        //    new SubElement("1010"),
+        //    new SubElement("0011"),
+        //    new SubElement("1100"),
+        //    new SubElement("0110"),
+        //    new SubElement("1001")
+        //};
         #endregion
     }
 }

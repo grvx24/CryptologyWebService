@@ -69,6 +69,12 @@
     <Content Update="ViewControls\UploadControl.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\VisualCryptography\Steganography_Action.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\Steganography_Description.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\VisualCryptography\Steganography.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -79,6 +85,12 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\Secret_Action.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\WaterMarks_Action.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VisualCryptography\WaterMarks_Description.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\WaterMarks.cshtml">

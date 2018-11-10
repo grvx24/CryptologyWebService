@@ -6,23 +6,26 @@
 <script src="~/lib/custom/konva.min.js"></script>
 <div class="container">
     <div class="tab">
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
         <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
     </div>
+
     <div id="Description" class="tabcontent col-lg-12">
         @{
-            await Html.RenderPartialAsync("Secret_Description", Model);
+            await Html.RenderPartialAsync("Description", Model);
         }
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
-        @{
-            await Html.RenderPartialAsync("Secret_Action");
-        }
+
+
     </div>
+
     <div id="Visualization" class="tabcontent col-lg-12">
 
     </div>
+
+
 </div>
 
 
