@@ -35,49 +35,47 @@
         <h4>- następnie na końcu wiadomości dodajemy 64 bity wskazujące długość oryginalnej wiadomości.</h4>
         <div class="col-md-12">
             <span class="col-md-8">
-                <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="margin-bottom:10px;" rows="1" id="#"></textarea>
+                <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="margin-bottom:10px; border-color:dodgerblue" rows="1" id="exampleMessage"></textarea>
             </span>
-            <button class="btn btn-primary" id="#" type="submit">Uzupełnij wiadomość</button>
+            <button class="btn btn-primary" id="paddingButton" type="submit">Uzupełnij wiadomość</button>
         </div>
         <h4>Wiadomość w postaci bitów.</h4>
         <div class="col-md-12">
             <div class="col-md-8">
-                <textarea class="form-control" placeholder="Wiadomość w  bitach" style="margin-bottom:10px;" rows="2" id="#" disabled></textarea>
+                <textarea class="form-control" placeholder="Wiadomość w  bitach" style="margin-bottom:10px;border-color:dodgerblue;background-color:white; text-align:justify" rows="3" id="messageBits" disabled></textarea>
             </div>
         </div>
         <h4>
             Wiadomość zawiera
-            <input type="text" name="MessageLength" size="4" disabled />
+            <input type="text" style="text-align:center" name="messageLength" id="messageLength" class="disabledInput" size="4" disabled />
             bitów. Aby długość wiadomości wynosiła 448 mod 512, musimy uzupełnić ją o
-            <input type="text" name="PaddedBits" size="4" disabled />
+            <input type="text" style="text-align:center" name="paddedBits" id="paddedBits" class="disabledInput" size="4" disabled />
             bity, ponieważ
-            <input type="text" name="MessageLength2" size="4" disabled />
-            mod 512=
-            <input type="text" name="ModResult" size="4" disabled />
-            Zatem dodajemy jedną '1' oraz
-            <input type="text" name="PadValue" size="2" disabled />
+            <input type="text" style="text-align:center" name="messageLength2" id="messageLength2" class="disabledInput" size="4" disabled />
+            mod 512 =
+            <input type="text" style="text-align:center" name="modResult" id="modResult" class="disabledInput" size="4" disabled />
+            . Zatem dodajemy jedną '1' oraz
+            <input type="text" style="text-align:center" name="padValue" id="padValue" class="disabledInput" size="2" disabled />
             zera.
         </h4>
 
         <h4> Następnie  dodajemy 64 bity wskazujące długość wiadomości:</h4>
         <div class="col-md-12">
-            <div class="col-lg-1"></div>
             <div class="col-md-8">
-                <input type="text" name="PadMessageLength" size="92" style="margin-bottom:15px;" disabled />
+                <input type="text" name="padMessageLength" size="92" id="padMessageLength" class="disabledInput" style="margin-bottom:15px;" disabled />
             </div>
         </div>
 
         <h4> Wiadomość po uzupełnieniu:</h4>
         <div class="col-md-12">
-            <div class="col-lg-1"></div>
             <div class="col-md-8">
-                <textarea class="form-control" style="margin-bottom:10px;" rows="10" cols="100" id="#" disabled></textarea>
+                <textarea class="form-control" style="margin-bottom:10px;border-color:dodgerblue; background-color:white; text-align:justify" rows="7" cols="100" id="allPadding" disabled></textarea>
             </div>
         </div>
         <h3 style="margin-top:15px;">2. Incjowanie bufora.</h3>
         <h4>
             Algorytm MD5 wymaga 128-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na
-            cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D:
+            cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D (decymalnie):
         </h4>
         <h5>Słowo A: 1732584193</h5>
         <h5>Słowo B: 4023233417</h5>
@@ -87,7 +85,7 @@
         <h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
         <h4>Zdefiniowane stałe:</h4>
         <h4> - słowa A, B, C, D,</h4>
-        <h4> - 64-elementowa tablica T powstała z funkcji sinus:</h4>
+        <h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie T[i] = 4294967296 · |sin(i)|.</h4>
         <table id="table_T" class="display" style="width:100%">
             <tbody>
                 <tr>
@@ -290,7 +288,7 @@
             Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ I(b,c,d)+ X[k]+ T[i]) <<< s)
         </h4>
         <h5>
-             Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
+            Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
         </h5>
         <table id="table_T" class="display" style="width:60%">
             <tbody>
@@ -321,11 +319,31 @@
             </tbody>
         </table>
 
-        <h4>Przebieg poczczegolnych rund przedstawia poniższa tabela.</h4>
-
-
-        <h3 style="margin-top:15px;">4. Wyjście.</h3>
-        <h4>Zawartość bufora w postaci słów A, B, C, D jest zwracana w kolejności od najmniej znaczącego bajtu.</h4>
+        <h4 style="margin-top:10px;">
+            MD5 przetwarza dane w 512-bitowych blokach. Jeżeli twoja przykładowa wiadomość nie była dłuższa niż 448 bitów (czyli 512 bitów po wykonaniu uzupelnienia)
+            możesz zobaczyć przebieg poczczegolnych rund w tabeli.
+        </h4>
+        <div class="col-md-12">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <button class="btn btn-primary" id="#showRoundsButton" type="submit" disabled>Podgląd prztwarzania</button>
+            </div>
+        </div>
+        <h4 style="margin-top:10px;">
+            Ostateczna wartość rejestrów otrzymywane jest poprzez dodanie zainicjowanej na początku wartości do wartości rejestru po przetwarzaniu:
+        </h4>
+        <table id="table_T" class="display" style="width:40%">
+            <tbody>
+                <tr>
+                    <td> A = A + AA,</td>
+                    <td> B = B + BB,</td>
+                    <td> C = C + CC,</td>
+                    <td> D = D + DD.</td>
+                </tr>
+                </tbody>
+            </table>
+        <h3 style="margin-top:15px;">4. Wyjście.</h3>                
+        <h4>Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.</h4>
 
 
     </div>
@@ -407,7 +425,9 @@
     //Ajax
     var md5Init = MD5FunctionInit({
         urls: {
+            paddingUrl: '@Url.Action("MD5_Padding", "HashFunctions")',
             encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
+            
         }
     });
 

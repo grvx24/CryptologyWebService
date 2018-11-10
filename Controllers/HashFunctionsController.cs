@@ -14,6 +14,8 @@ namespace CryptoWebService.Controllers
 {
     public class HashFunctionsController : Controller
     {
+        public MD5_Visualization MD5_Visualization { get; private set; }
+
         [HttpGet]
         public IActionResult MD5()
         {
@@ -139,7 +141,7 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult HMACEncrypt([FromBody]HMACViewModel viewModel)
         {
-            HMAC hmac = new HMAC((HMAC.HashFunctionType)viewModel.HashType);
+            HMAC hmac = new HMAC(viewModel.HashType);
 
             string encrypted = "";
 
@@ -167,6 +169,52 @@ namespace CryptoWebService.Controllers
         { 
             return View();
         }
+
+
+
+        [HttpPost]
+        public IActionResult MD5_Padding([FromBody]MD5ViewModel viewModel)
+        {
+
+            MD5_Visualization md5_viso = new MD5_Visualization();
+            string[] results = new string[8] { "nie_działa", "nie_działa ", "nie_działa ", "nie_działa", "nie działa", "nie działa", "nie działa" , "nie działa"};
+
+            try
+            {
+                //string message = viewModel.Message_visualization;
+                string message = viewModel.Message;
+                //string message = "Hello World!";
+                if (message.Length * 8 < 448)
+                {
+                    md5_viso = new MD5_Visualization(message);
+
+                    //BUTTON SHOW ROUNDS ->enable
+                }
+
+                int messageLength = md5_viso.Get_MessageLength(message);
+                int paddedBits = md5_viso.Get_PaddedBits(message);
+                int messageLength2 = messageLength + paddedBits;
+                int modResult = messageLength2 % 512;
+
+                // results[1] = "Dupa blada.";
+                results[0] = messageLength.ToString();
+                results[1] = paddedBits.ToString();
+                results[2] = messageLength2.ToString();
+                results[3] = modResult.ToString();
+                results[4] = (paddedBits - 1).ToString();
+                results[5] = md5_viso.Get_binary_length(message);
+                results[6] = md5_viso.Get_binary(message);
+                results[7] = md5_viso.StringToBinary(message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(results);
+        }
+
+
+
 
     }
 }

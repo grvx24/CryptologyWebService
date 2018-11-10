@@ -11,6 +11,6 @@ namespace CryptoWebService.Models.HashFunctions
     {
         public string Message { get; set; }
         public string Key { get; set; }
-        public int HashType { get; set; }
+        public HMAC.HashFunctionType HashType { get; set; }
     }
 }
