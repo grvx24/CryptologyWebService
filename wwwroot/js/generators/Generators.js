@@ -161,12 +161,23 @@
 
     }
 
+    var feedbackFunctionInit = function() {
+        $("#feedbackFunctionBtn").click(function() {
+            $("#feedbackFunctionTable").slideToggle("slow");
+            console.log("wtf2");
+
+        });
+    }
+
+
     var init = function() {
         lfsrListInit();
         setRegistersInit();
         generateBtnInit();
         tooltipInit();
         charsCounterInit();
+        feedbackFunctionInit();
+
     }
 
 

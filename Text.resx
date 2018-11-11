@@ -285,4 +285,7 @@
   <data name="GeneratorsSaveToFileInfo" xml:space="preserve">
     <value>Format Base64 jest zapisywany jako plik binarny, pozostałe jako plik tekstowy</value>
   </data>
+  <data name="ShowHideFeedbackFunctions" xml:space="preserve">
+    <value>Pokaż/ukryj funkcje sprzężenia zwrotnego</value>
+  </data>
 </root>

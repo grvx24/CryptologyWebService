@@ -466,6 +466,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pokaż/ukryj funkcje sprzężenia zwrotnego.
+        /// </summary>
+        public static string ShowHideFeedbackFunctions {
+            get {
+                return ResourceManager.GetString("ShowHideFeedbackFunctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rozpocznij wizualizację.
         /// </summary>
         public static string StartVisualization {

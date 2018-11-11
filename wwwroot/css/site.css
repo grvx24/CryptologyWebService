@@ -129,3 +129,23 @@ textarea {
      95% {left: 120%;}
      to {left: 100%;}
  }
+
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #5c9def;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #5c9def;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1c5aa6;
+}
