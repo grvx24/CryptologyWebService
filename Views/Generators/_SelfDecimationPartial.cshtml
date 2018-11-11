@@ -27,7 +27,10 @@
             <form class="form-group text-center">
                 <div id="lfsrBox" class="lfsrBox">
                     <label for="register1">@Text.Register nr 1</label>
-                    <input maxlength="20" id="register1" class="form-control" type="text" />
+                    <div class="form-inline">
+                        <input maxlength="20" id="register1" class="lfsr-registers form-control" type="text" />
+                        <label id="registerCounter1" class="btn btn-success">0</label>
+                    </div>
                     <label id="register1-content" class="registers-font">01</label>
                 </div>
             </form>

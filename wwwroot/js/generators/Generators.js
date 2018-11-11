@@ -16,13 +16,17 @@
                         (i + 1) +
                         '">' + 'Rejestr nr ' +
                         (i + 1) +
-                        '</label>' +
+                        '</label>' + '<div class="form-inline">' +
+
                         '<input maxlength = "20" id = "register' +
                         (i + 1) +
-                        '" class="form-control" type = "text" />' +
+                        '" class="lfsr-registers form-control" type = "text" />' +
+                        '<label id="registerCounter'+(i+1)+'" class="btn btn-success">0</label>'+'<br>'+
                         '<label id="register'+(i+1)+'-content" class="registers-font">01</label>'+'<br>');
 
                 }
+
+                charsCounterInit();
 
             });
 
@@ -145,11 +149,24 @@
         });
     }
 
+    var charsCounterInit = function () {
+        console.log("wtf");
+        $(".lfsr-registers").on('keyup', function () {
+            
+            var id = $(this).attr("id");
+            var length = $(this).val().length;
+
+            $('#registerCounter'+id.slice(-1)).html(length);
+        });
+
+    }
+
     var init = function() {
         lfsrListInit();
         setRegistersInit();
         generateBtnInit();
         tooltipInit();
+        charsCounterInit();
     }
 
 
