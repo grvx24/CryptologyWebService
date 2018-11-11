@@ -1,0 +1,76 @@
+﻿<div class="text-center">
+    <h2>Generator Stop and Go</h2>
+    <br />
+</div>
+
+<div class="row">
+    <div id="settings" class="col-lg-4">
+        <div id="registers">
+            <form class="form-inline text-center">
+                <label for="numOfLfsr">Liczba rejestrów LFSR: &nbsp;</label>
+                <select style="display: none" id="numOfLfsr" class="form-control">
+                    <option value="3">3</option>
+                </select>
+            </form>
+            <form class="form-group text-center">
+                <div id="lfsrBox" class="lfsrBox">
+                    <label for="register1">@Text.Register nr 1</label>
+                    <input maxlength="20" id="register1" class="form-control" type="text" />
+                    <label id="register1-content" class="registers-font">01</label>
+                    <br />
+                    <label for="register2">@Text.Register nr 2</label>
+                    <input maxlength="20" id="register2" class="form-control" type="text" />
+                    <label id="register2-content" class="registers-font">01</label>
+                    <br />
+                    <label for="register3">@Text.Register nr 3</label>
+                    <input maxlength="20" id="register3" class="form-control" type="text" />
+                    <label id="register3-content" class="registers-font">01</label>
+                </div>
+            </form>
+            <button id="setRegistersBtn" class="btn btn-primary center-block">Ustaw rejestry</button>
+        </div>
+    </div>
+    <div id="console" class="col-lg-8">
+        <div class="form-group">
+            <div class="form-inline">
+                <fieldset>
+                    <label for="outputConsole">Wygenerowany ciąg:</label>
+                    <div class="pull-right">
+                        <input type="radio" name="outputFormat" value=0 checked>
+                        <text>BinaryString</text>
+                        <input type="radio" name="outputFormat" value=1>
+                        <text>Hex</text>
+                        <input type="radio" name="outputFormat" value=2>
+                        <text>Base64</text>
+                    </div>
+                </fieldset>
+            </div>
+            <textarea spellcheck="false" readonly class="form-control" id="outputConsole" rows="12"></textarea>
+        </div>
+        <div class="col-lg-12">
+
+            <div class="form-inline">
+                <label for="seriesLength">Długość ciągu (w bitach): &nbsp;</label>
+                <input maxlength="7" type="text" class="form-control" id="seriesLength" />
+                <button id="generateBtn" class="btn btn-primary">Generuj</button>
+                <a id="downloadBtn" href="#" data-toggle="tooltip" data-placement="top" title="@Text.GeneratorsSaveToFileInfo" class="btn btn-success">Pobierz plik</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function() {
+        var generatorsInit = GeneratorsInit({
+            urls: {
+                generateUrl: '@Url.Action("StopAndGoGenerate", "Generators")'
+            }
+        });
+
+        generatorsInit.init();
+    })
+
+
+</script>

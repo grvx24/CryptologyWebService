@@ -187,20 +187,20 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Liczba wpisanych znaków.
-        /// </summary>
-        public static string CharactersCount{
-            get{
-                return ResourceManager.GetString("CharactersCount", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Kalkulator.
         /// </summary>
         public static string Calculator {
             get {
                 return ResourceManager.GetString("Calculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liczba wpisanych znaków.
+        /// </summary>
+        public static string CharactersCount {
+            get {
+                return ResourceManager.GetString("CharactersCount", resourceCulture);
             }
         }
         
@@ -295,6 +295,15 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Format Base64 jest zapisywany jako plik binarny, pozostałe jako plik tekstowy.
+        /// </summary>
+        public static string GeneratorsSaveToFileInfo {
+            get {
+                return ResourceManager.GetString("GeneratorsSaveToFileInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skrót.
         /// </summary>
         public static string Hash {
@@ -358,15 +367,6 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nie.
-        /// </summary>
-        public static string No{
-            get{
-                return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Funkcja skrótu MD5.
         /// </summary>
         public static string MD5Hash {
@@ -376,38 +376,29 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usuwa ostatnie bity nie będące częścią wiadomości, działa tylko gdy wiadomość jest poprawnie odszyfrowana.
+        ///   Looks up a localized string similar to Nie.
         /// </summary>
-        public static string PaddingInfo{
-            get{
-                return ResourceManager.GetString("PaddingInfo", resourceCulture);
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Funkcja skrótu SHA-1.
+        ///   Looks up a localized string similar to Usuwa ostatnie bity nie będące częścią wiadomości, działa tylko gdy wiadomość jest poprawnie odszyfrowana.
         /// </summary>
-        public static string SHA1Hash {
+        public static string PaddingInfo {
             get {
-                return ResourceManager.GetString("SHA1Hash", resourceCulture);
+                return ResourceManager.GetString("PaddingInfo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Generuje wektor inicjalizacyjny o podanym formacie.
         /// </summary>
-        public static string RandomIVInfo{
-            get{
-                return ResourceManager.GetString("RandomIVInfo", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Funkcja skrótu SHA-256.
-        /// </summary>
-        public static string SHA256Hash {
+        public static string RandomIVInfo {
             get {
-                return ResourceManager.GetString("SHA256Hash", resourceCulture);
+                return ResourceManager.GetString("RandomIVInfo", resourceCulture);
             }
         }
         
@@ -421,6 +412,24 @@ namespace CryptoWebService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rejestr.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ustawienia rejestrów.
+        /// </summary>
+        public static string RegistersSettings {
+            get {
+                return ResourceManager.GetString("RegistersSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuń wypełnienie.
         /// </summary>
         public static string RemovePadding {
@@ -430,20 +439,38 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rozpocznij wizualizację.
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-1.
         /// </summary>
-        public static string StartVisualization{
-            get{
-                return ResourceManager.GetString("StartVisualization", resourceCulture);
+        public static string SHA1Hash {
+            get {
+                return ResourceManager.GetString("SHA1Hash", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Funkcja skrótu SHA-256.
+        /// </summary>
+        public static string SHA256Hash {
+            get {
+                return ResourceManager.GetString("SHA256Hash", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Funkcja skrótu SHA-512.
         /// </summary>
         public static string SHA512Hash {
             get {
                 return ResourceManager.GetString("SHA512Hash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rozpocznij wizualizację.
+        /// </summary>
+        public static string StartVisualization {
+            get {
+                return ResourceManager.GetString("StartVisualization", resourceCulture);
             }
         }
         
@@ -520,20 +547,20 @@ namespace CryptoWebService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tak.
-        /// </summary>
-        public static string Yes{
-            get{
-                return ResourceManager.GetString("Yes", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Wpisz tekst do obliczenia skrótu.
         /// </summary>
         public static string WriteTextToHash {
             get {
                 return ResourceManager.GetString("WriteTextToHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tak.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

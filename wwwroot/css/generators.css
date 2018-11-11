@@ -1,0 +1,42 @@
+﻿    /* Force scrollbars onto browser window */
+    body {
+        margin-bottom: 200%;
+    }
+
+    /* Box styles */
+    .lfsrBox {
+        border: none;
+        padding: 5px;
+        font-size: 18px;
+        width: 100%;
+        height: 300px;
+        overflow: scroll;
+    }
+
+    /* Scrollbar styles */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+::-webkit-scrollbar-track {
+    border: 1px solid #5c9def;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #5c9def;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1c5aa6;
+}
+
+.registers-font{
+    letter-spacing: 5px;
+    font-size: 20px
+}
+
+#seriesLength{
+    max-width: 100px;
+}

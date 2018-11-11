@@ -276,4 +276,13 @@
   <data name="WithoutKey" xml:space="preserve">
     <value>Funkcja skrótu bez klucza</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Rejestr</value>
+  </data>
+  <data name="RegistersSettings" xml:space="preserve">
+    <value>Ustawienia rejestrów</value>
+  </data>
+  <data name="GeneratorsSaveToFileInfo" xml:space="preserve">
+    <value>Format Base64 jest zapisywany jako plik binarny, pozostałe jako plik tekstowy</value>
+  </data>
 </root>

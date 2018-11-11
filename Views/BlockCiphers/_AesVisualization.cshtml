@@ -103,7 +103,7 @@
 
         </svg>
         <div id="rconMath">
-            <div  class="img-responsive" style="display: none;">
+            <div class="img-responsive" style="display: none;">
                 <img style="margin-bottom: 20px" runat="server" width="50%" height="50%" src="~/images/rcon1.png"/>
                 <img runat="server" width="50%" height="50%" src="~/images/rcon2.png"/>
             </div>
@@ -156,7 +156,7 @@
     <div class="col-lg-4">
         <div align="center">
             <svg id="subBytesBlock">
-
+                
             </svg>
         </div>
     </div>
@@ -1285,7 +1285,7 @@
                 return (index % 4) == imod;
             })
             .each(function(d, i) {
-                valuesFromCellsBefore.push(IntToHexString(d));
+                valuesFromCellsBefore.push(d);
             });
 
         cellsBefore.select("rect")
@@ -1333,6 +1333,7 @@
                 var result = '';
                 for (var i = 0; i < valuesFromCellsBefore.length; i++) {
                     if (i < valuesFromCellsBefore.length - 1) {
+
                         result += ('('+valuesFromCellsBefore[i] + ' x '
                             + valuesFromHelperMatrix[i]+')' + ' + ');
                     } else {
