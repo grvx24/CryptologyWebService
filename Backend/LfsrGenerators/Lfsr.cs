@@ -84,6 +84,28 @@ namespace CryptoWebService.Backend.LfsrGenerators
         public int[] FeedbackFunction { get; set; }
         int length;
 
+        //polynomial string examples: 0,3,4,6; 1,3,6,7,8; 0,5;
+        public void SetFeedbackFunction(string polynomialString)
+        {
+            if (String.IsNullOrEmpty(polynomialString))
+            {
+                FeedbackFunction = new int[]{0};
+            }
+            else
+            {
+                var values = polynomialString.Split(',');
+
+                int[] function = new int[values.Length];
+                for (int i = 0; i < function.Length; i++)
+                {
+                    function[i] = int.Parse(values[i]);
+                }
+
+                FeedbackFunction = function;
+            }
+
+        }
+
         public override string ToString()
         {
             char[] result = new char[Register.Length];

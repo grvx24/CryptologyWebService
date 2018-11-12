@@ -73,11 +73,14 @@
             } else {
 
                 var registers = [];
+                var feedbackFunctions = [];
 
                 var numOfLfsr = parseInt($("#numOfLfsr option:selected").val());
                 for (var i = 1; i <= numOfLfsr; i++) {
                     let register = $("#register" + i + "-content").text();
                     registers.push(register);
+                    feedbackFunctions.push(GetFeedbackFunctionInfo(register.length));
+
                 }
 
                 var mode = parseInt($('input[name=outputFormat]:checked').val());
@@ -92,6 +95,7 @@
                         Registers: registers,
                         Length: seriesLength,
                         Mode: mode,
+                        FeedbackFunctions : feedbackFunctions,
                         K_value: k,
                         D_value: d
                     }
@@ -101,7 +105,8 @@
                     model = {
                         Registers: registers,
                         Length: seriesLength,
-                        Mode: mode
+                        Mode: mode,
+                        FeedbackFunctions: feedbackFunctions
                     }
                 }
 
@@ -150,7 +155,7 @@
     }
 
     var charsCounterInit = function () {
-        console.log("wtf");
+
         $(".lfsr-registers").on('keyup', function () {
             
             var id = $(this).attr("id");
@@ -163,8 +168,7 @@
 
     var feedbackFunctionInit = function() {
         $("#feedbackFunctionBtn").click(function() {
-            $("#feedbackFunctionTable").slideToggle("slow");
-            console.log("wtf2");
+            $("#feedbackFunction").slideToggle("slow");
 
         });
     }
@@ -177,7 +181,6 @@
         tooltipInit();
         charsCounterInit();
         feedbackFunctionInit();
-
     }
 
 
@@ -185,6 +188,23 @@
          init:init
         }
 
+
+    function GetFeedbackFunctionInfo(lfsrLength) {
+        var correctRow = $(".lfsr-len" + lfsrLength);
+
+        let counter = 0;
+        var array = [];
+
+        correctRow.each(function() {
+            if ($(this).prop("checked")) {
+                array.push(counter.toString());
+            }
+            counter++;
+        });
+
+        return array.join(",");
+
+    }
 
 
     //helpers

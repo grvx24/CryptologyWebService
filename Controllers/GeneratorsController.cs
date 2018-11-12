@@ -23,6 +23,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             CascadeGenerator generator = new CascadeGenerator(registers);
@@ -64,6 +65,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             GeffesGenerator generator = new GeffesGenerator(registers);
@@ -106,6 +108,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             SelfDecimationGenerator generator = new SelfDecimationGenerator(registers);
@@ -149,6 +152,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             SelfShrinkingGenerator generator = new SelfShrinkingGenerator(registers);
@@ -191,6 +195,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             ShrinkingGenerator generator = new ShrinkingGenerator(registers);
@@ -232,6 +237,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             StopAndGoGenerator generator = new StopAndGoGenerator(registers);
@@ -274,6 +280,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             ThresholdGenerator generator = new ThresholdGenerator(registers);
@@ -316,6 +323,7 @@ namespace CryptoWebService.Controllers
             for (int i = 0; i < numOfRegisters; i++)
             {
                 registers[i] = new Lfsr(viewModel.Registers[i]);
+                registers[i].SetFeedbackFunction(viewModel.FeedbackFunctions[i]);
             }
 
             LfsrGenerator generator = new LfsrGenerator(registers);
