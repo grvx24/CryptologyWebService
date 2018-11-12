@@ -53,6 +53,45 @@ namespace CryptoWebService.Controllers
 
         #endregion
 
+        #region VisualSteganography
+
+        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualCryptoraphyView());
+
+        [HttpPost]
+        public IActionResult VisualSteganography([FromBody] SecretsDto secretsDto)
+        {
+            if (secretsDto == null || secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The ScretDto is empty." });
+
+            }
+            else if (secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The Image Data is empty." });
+            }
+            else
+            {
+                string[] lista;
+
+                try
+                {
+                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                }
+                catch (ImageIsNotInGrayScaleException e)
+                {
+
+                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                }
+
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+        }
+
+
+        #endregion
+
         #region Steganography
 
         public IActionResult steganografia() => View("Steganography");
