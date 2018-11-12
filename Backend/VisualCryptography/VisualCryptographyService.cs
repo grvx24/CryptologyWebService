@@ -13,7 +13,7 @@ namespace CryptoWebService.Backend.VisualCryptography
     {
         public static string[] DivideStringImagesToSecrets(SecretsDto secretsDto)
         {
-            byte[] imageBytes = Convert.FromBase64String(secretsDto.Images[0]);
+            byte[] imageBytes = Convert.FromBase64String(secretsDto.Image);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
 
             string[] secrets ;
@@ -28,7 +28,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             }
             else if (secretsDto.MethodId == 3)
             {
-                imageBytes = Convert.FromBase64String(secretsDto.Images[1]);
+                imageBytes = Convert.FromBase64String(secretsDto.Image);
                 MemoryStream ms2 = new MemoryStream(imageBytes, 0, imageBytes.Length);
                 secrets = HideImageInShares(new Bitmap(ms), new Bitmap(ms), new Bitmap(ms2));
             }
