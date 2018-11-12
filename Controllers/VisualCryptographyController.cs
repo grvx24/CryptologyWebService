@@ -23,9 +23,13 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
         {
-            if (secretsDto == null || secretsDto.Images == null || secretsDto.Images[0] == null)
+            if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The argument is empty." });
+                return Json(new { Result = false, Message = "The ScretDto is empty." });
+
+            }else if (secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The Image Data is empty." });
             }
             else
             {
