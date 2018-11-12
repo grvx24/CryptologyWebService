@@ -72,7 +72,7 @@
     <Content Update="Views\VisualCryptography\VisualSteganography_Action.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\VisualCryptography\VisualSteganography_Description - Copy.cshtml">
+    <Content Update="Views\VisualCryptography\VisualSteganography_Description.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VisualCryptography\Steganography_Action.cshtml">
