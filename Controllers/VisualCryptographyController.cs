@@ -23,14 +23,24 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
         {
-            if (secretsDto.Image == null)
+            if (secretsDto == null || secretsDto.Images == null || secretsDto.Images[0] == null)
             {
                 return Json(new { Result = false, Message = "The argument is empty." });
             }
             else
             {
-                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(secretsDto);
+                string[] lista;
 
+                try
+                {
+                     lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                }
+                catch (ImageIsNotInGrayScaleException e)
+                {
+
+                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                }
+             
                 Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
                 return Json(new { Result = true, secrets });
