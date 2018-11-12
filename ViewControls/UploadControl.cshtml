@@ -1,21 +1,24 @@
-﻿<div id="uploadControl">
-    <div class="row" style="margin-top:10px;margin-bottom:10px;">
+﻿@model string;
+
+<div name="@(Model)_UploadControl">
+    <div class="row">
         <div class="col-lg-12">
             <div class="input-group">
                 <label class="input-group-btn">
                     <span class="btn btn-primary">
-                        Wczytaj plik&hellip; <input id="fileUploader" type="file" style="display: none;" accept="image/png">
+                        Wczytaj plik&hellip; <input id="@(Model)Uploader" type="file" style="display: none;" accept="image/png">
                     </span>
                 </label>
-                <input id="uploadedFileName" type="text" class="form-control" readonly>
+                <input id="@(Model)Text" type="text" class="form-control" readonly>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
-    $('#fileUploader').change(function () {
+    $('#@(Model)Uploader').change(function () {
         var filename = $(this).val().split('\\').pop();
-        $('#uploadedFileName').val(filename);
+        $('#@(Model)Text').val(filename);
     });
 </script>
