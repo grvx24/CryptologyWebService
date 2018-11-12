@@ -67,15 +67,20 @@
         $("#generateBtn").click(function() {
 
             var seriesLength = parseInt($("#seriesLength").val());
+            if (seriesLength < 0) {
+                alert('Długość ciągu musi być liczbą dodatnią!');
+                return;
+            }
             if (isNaN(seriesLength)) {
 
                 alert('Długość ciągu musi być liczbą!');
             } else {
-
+                
                 var registers = [];
                 var feedbackFunctions = [];
 
                 var numOfLfsr = parseInt($("#numOfLfsr option:selected").val());
+
                 for (var i = 1; i <= numOfLfsr; i++) {
                     let register = $("#register" + i + "-content").text();
                     registers.push(register);
