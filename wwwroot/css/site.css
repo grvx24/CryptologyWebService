@@ -149,3 +149,13 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
     background: #1c5aa6;
 }
+
+input[type=radio] {
+    border: 0px;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.radio-text{
+    font-size: 16px;
+}
