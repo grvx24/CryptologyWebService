@@ -207,6 +207,7 @@
             counter++;
         });
 
+        console.log(array);
         return array.join(",");
 
     }

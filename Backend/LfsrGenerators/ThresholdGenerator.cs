@@ -22,11 +22,11 @@ namespace CryptoWebService.Backend.LfsrGenerators
         {
             int threshold = Registers.Length / 2;
             int sum = 0;
+            NextStep();
             foreach (var r in Registers)
             {
                 sum += Convert.ToInt32(r.GetOutputBit());
             }
-            NextStep();
 
             if (sum > threshold)
                 return true;

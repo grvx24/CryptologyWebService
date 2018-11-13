@@ -34,8 +34,8 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         protected virtual bool GenerateOneBit()
         {
+            NextStep();
             bool bit = Registers[0].GetOutputBit();
-            Registers[0].NextStep();
             return bit;
         }
         protected virtual void NextStep()
@@ -53,7 +53,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = GenerateOneBit();
-                NextStep();
             }
 
             return result;
@@ -66,7 +65,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = GenerateOneBit();
-                NextStep();
             }
 
             return SeriesConverter.BoolToByteArray(result);
@@ -79,7 +77,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = GenerateOneBit();
-                NextStep();
             }
 
             return SeriesConverter.BoolToInt32(result);
@@ -91,7 +88,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
             for (int i = 0; i < length; i++)
             {
                 result[i] = SeriesConverter.BoolToChar(GenerateOneBit());
-                NextStep();
             }
 
             return result;

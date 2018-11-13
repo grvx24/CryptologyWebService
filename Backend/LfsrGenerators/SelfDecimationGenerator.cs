@@ -28,6 +28,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         protected override bool GenerateOneBit()
         {
+            Registers[0].NextStep();
             bool output = Registers[0].GetOutputBit();
 
             if (output)

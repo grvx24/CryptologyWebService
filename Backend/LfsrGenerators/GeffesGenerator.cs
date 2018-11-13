@@ -33,6 +33,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         protected override bool GenerateOneBit()
         {
+            NextStep();
             bool[] a = { Registers[0].GetOutputBit(), Registers[1].GetOutputBit(), Registers[2].GetOutputBit() };
             bool result = (a[2] & a[0]) | ((!a[0]) & a[1]);
 

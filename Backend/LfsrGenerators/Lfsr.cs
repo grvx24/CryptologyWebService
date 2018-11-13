@@ -176,7 +176,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         public void NextStep()
         {
-            bool temp = true;
+            bool temp = false;
 
 
             for (int i = 0; i < FeedbackFunction.Length; i++)
@@ -184,20 +184,21 @@ namespace CryptoWebService.Backend.LfsrGenerators
                 temp ^= Register[FeedbackFunction[i]];
             }
 
+            temp &= true;
 
-            for (int i = 1; i < Register.Count; i++)
+            for (int i = Register.Length - 1; i > 0; i--)
             {
-                Register[i - 1] = Register[i];
+                Register[i] = Register[i - 1];
             }
 
 
-            Register[Register.Count - 1] = temp;
+            Register[0] = temp;
 
 
         }
         public bool GetOutputBit()
         {
-            return Register[Register.Length - 1];
+            return Register[0];
         }
 
         private void FeedbackFunctionInit()

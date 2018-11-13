@@ -41,17 +41,18 @@ namespace CryptoWebService.Backend.LfsrGenerators
             bool output1 = false;
             bool output2 = false;
 
+            Registers[0].NextStep();
+
             if (Registers[0].GetOutputBit() == true)
             {
-                output1 = Registers[1].GetOutputBit();
                 Registers[1].NextStep();
+                output1 = Registers[1].GetOutputBit();
             }
             else
             {
-                output2 = Registers[2].GetOutputBit();
                 Registers[2].NextStep();
+                output2 = Registers[2].GetOutputBit();
             }
-            Registers[0].NextStep();
             bool mainOutput = output1 ^ output2;
             return mainOutput;
         }

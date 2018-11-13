@@ -28,17 +28,18 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         protected override bool GenerateOneBit()
         {
+            Registers[0].NextStep();
             var value1 = Registers[0].GetOutputBit();
             Registers[0].NextStep();
             var value2 = Registers[0].GetOutputBit();
-            Registers[0].NextStep();
 
             while (!value1)
             {
+                Registers[0].NextStep();
                 value1 = Registers[0].GetOutputBit();
                 Registers[0].NextStep();
                 value2 = Registers[0].GetOutputBit();
-                Registers[0].NextStep();
+
             }
 
             return value2;
