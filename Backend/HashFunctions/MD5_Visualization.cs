@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace CryptoWebService.Backend.HashFunctions
 {
+    public class Registers
+    {
+        public uint Iteration { get; set; }
+        public uint A { get; set; }
+        public uint B { get; set; }
+        public uint C { get; set; }
+        public uint D { get; set; }
+
+    }
     public class MD5_Visualization
     {
-        uint A = 1732584193;
-        uint B = 4023233417;
-        uint C = 2562383102;
-        uint D = 271733878;
-        string message;
-        uint[] X = new uint[16];
+        public uint A = 1732584193;
+        public uint B = 4023233417;
+        public uint C = 2562383102;
+        public uint D = 271733878;
+        public string message;
+        public uint[] X = new uint[16];
 
         public void set_X(int position, uint value)
         {
@@ -60,36 +69,69 @@ namespace CryptoWebService.Backend.HashFunctions
             return (((x) << (n)) | ((x) >> (32 - (n))));
         }
 
-        static private void FF(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X)
+        static public void FF(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X, List<Registers> registers)
         {
             uint pom = a + F(b, c, d) + X[k] + T[i - 1];
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            registers.Add(new Registers()
+            {
+                A = a,
+                B = b,
+                C = c,
+                D = d,
+                Iteration = i
+            });
+
         }
 
-        static private void GG(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X)
+        static public void GG(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X, List<Registers> registers)
         {
             uint pom = a + G(b, c, d) + X[k] + T[i - 1];
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            registers.Add(new Registers()
+            {
+                A = a,
+                B = b,
+                C = c,
+                D = d,
+                Iteration = i
+            });
         }
 
-        static private void HH(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X)
+        static public void HH(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X, List<Registers> registers)
         {
             uint pom = a + H(b, c, d) + X[k] + T[i - 1];
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            registers.Add(new Registers()
+            {
+                A = a,
+                B = b,
+                C = c,
+                D = d,
+                Iteration = i
+            });
         }
 
-        static private void II(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X)
+        static public void II(ref uint a, uint b, uint c, uint d, uint k, byte s, uint i, uint[] X, List<Registers> registers)
         {
             uint pom = a + I(b, c, d) + X[k] + T[i - 1];
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            registers.Add(new Registers()
+            {
+                A = a,
+                B = b,
+                C = c,
+                D = d,
+                Iteration = i
+            });
         }
 
         protected byte[] CreatePaddedBuffer(byte[] _byteInput)

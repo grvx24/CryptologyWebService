@@ -42,7 +42,6 @@
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    //$('#dupa').val(data);
                     $('#messageLength').val(data[0]);
                     $('#paddedBits').val(data[1]);
                     $('#messageLength2').val(data[2]);
@@ -60,11 +59,124 @@
         });
     }
 
+    //var tableInit = function () {
+
+    //    $('#showRoundsButton').click(function () {
+
+    //        var model = {
+    //            message: $('#exampleMessage').val(),
+    //        }
+
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: config.urls.tableUrl,
+    //            dataType: 'json',
+    //            contentType: "application/json",
+    //            data: JSON.stringify(model),
+    //            success: function (data) {
+    //                $(data).each(
+    //                    function () {
+    //                        $('#table_iteration').append(
+    //                            '<tr><td>' + this.Iteration
+    //                            + '</td><td>'
+    //                            + this.A
+    //                            + '</td><td>'
+    //                            + this.B
+    //                            + '</td><td>'
+    //                            + this.C
+    //                            + '</td><td>'
+    //                            + this.D
+    //                            + '</td></tr>')
+    //                    });
+    //            },
+
+    //            error: function (msg) {
+
+    //                alert(msg.responseText);
+    //            }
+    //        });
+    //    })
+    //}
+
+    //var tableInit = function () {
+    //        $("#example").DataTable();
+
+    //        // Premade test data, you can also use your own
+    //    var model = {
+    //            message: $('#exampleMessage').val(),
+    //        }
+
+    //        $("#showRoundsButton").click(function () {
+    //            loadData();
+    //        });
+
+    //        function loadData() {
+    //            $.ajax({
+    //                type: 'GET',
+    //                url: config.urls.tableUrl,
+    //                contentType: "text/plain",
+    //                dataType: 'json',
+    //                data: JSON.stringify(model),
+    //                success: function (data) {
+    //                    myJsonData = data;
+    //                    populateDataTable(myJsonData);
+    //                },
+    //                error: function (e) {
+    //                    console.log("There was an error with your request...");
+    //                    console.log("error: " + JSON.stringify(e));
+    //                }
+    //            });
+    //        }
+
+    //        // populate the data table with JSON data
+    //        function populateDataTable(data) {
+    //            console.log("populating data table...");
+    //            // clear the table before populating it with more data
+    //            $("#example").DataTable().clear();
+    //            var length = data.length;
+    //            for (var i = 1; i < length + 1; i++) {
+    //                var customer = data[i];
+
+    //                // You could also use an ajax property on the data table initialization
+    //                $('#example').dataTable().fnAddData([
+    //                    customer.Iteration,
+    //                    customer.A,
+    //                    customer.B,
+    //                    customer.C,
+    //                    customer.D
+    //                ]);
+    //            }
+    //        }
+        
+    //}
+
+    var tableInit = function () {
+
+        $('#showRoundsButton').click(function () {
+
+            var model = {
+                message: $('#exampleMessage').val(),
+            }
+            $('#example').DataTable({
+                "ajax": "test.json",
+                "columns": [
+                    { "data": "Iteration" },
+                    { "data": "A" },
+                    { "data": "B" },
+                    { "data": "C" },
+                    { "data": "D" }
+                ]
+            });
+            
+        })
+    }
+
+
 
     var init = function () {
         visualInit();
         encryptInit();
-        
+        tableInit();
     }
 
     return {
@@ -253,6 +365,12 @@ $(document).ready(function () {
         $('#outputEncrypt').val('');
     });
 });
+
+
+
+
+
+
 
 
 

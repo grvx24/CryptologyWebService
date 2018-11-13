@@ -3,8 +3,17 @@
 @{
     ViewData["Title"] = "MD5";
 }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/css/dataTables.css">
+<script type="text/javascript" charset="utf8" src="~/js/DataTables.js"></script>
+
 <script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
+
+
+
 
 <div class="container">
     <div class="tab">
@@ -16,11 +25,11 @@
     <div id="Description" class="tabcontent">
         <h2 align="center">@Text.MD5Hash</h2>
         <h4>
-            MD5 (Messsage Digest 5) jest funkcją skrótu zaprojektowaną przez współautora RSA- R.Rivesta. MD5 przeekształca ciągi 512-bitowe w ciągi 128-bitowe będące skrótem wiadomości. Funkcja była najbardziej
+            MD5 (Messsage Digest 5) jest funkcją skrótu zaprojektowaną przez współautora RSA- R.Rivesta. MD5 przekształca ciągi 512-bitowe w ciągi 128-bitowe będące skrótem wiadomości. Funkcja była najbardziej
             popularną funkcją skrótu od roku 1992 do roku 2005, kiedy została złamana przez zespół chińskich kryptoanalityków.
         </h4>
         <h4>
-             W obecnych czasach znalezienie kolizji MD5 zajmuje kilka sekund, mimo to
+            W obecnych czasach znalezienie kolizji MD5 zajmuje kilka sekund, mimo to
             wiele systemów ciągle obsługuje MD5, ze względu na kompatybilnosć wsteczną. Funkcja jest łatwa do zaimplementowania, w trakcie obliczeń dokonywane są jedynie pewne podstawowe operacje na
             blokach 32-bitowych.
         </h4>
@@ -182,7 +191,7 @@
         </h4>
         <h5>
             Każdorazowo porządek rejestrów ulega przesunięciu cyklicznemu o jedną pozycję. Ponadto przedostatnie argumenty (ilość pozycji o jaką dokonujemy cyklicznego przesunięcia)
-            tworzy cią okresowy 7, 12, 17, 22, 7, 12, ....
+            tworzy ciąg okresowy 7, 12, 17, 22, 7, 12, ....
         </h5>
         <table id="table_T" class="display" style="width:60%">
             <tbody>
@@ -326,9 +335,33 @@
         <div class="col-md-12">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <button class="btn btn-primary" id="#showRoundsButton" type="submit" disabled>Podgląd prztwarzania</button>
+                <button class="btn btn-primary" id="showRoundsButton" type="submit">Podgląd prztwarzania</button>
             </div>
         </div>
+        <!--Table test-->
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Iteration</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Iteration</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </tfoot>
+        </table>
+
+
+
         <h4 style="margin-top:10px;">
             Ostateczna wartość rejestrów otrzymywane jest poprzez dodanie zainicjowanej na początku wartości do wartości rejestru po przetwarzaniu:
         </h4>
@@ -340,9 +373,15 @@
                     <td> C = C + CC,</td>
                     <td> D = D + DD.</td>
                 </tr>
-                </tbody>
-            </table>
-        <h3 style="margin-top:15px;">4. Wyjście.</h3>                
+            </tbody>
+        </table>
+        <h4>
+            A = 1732584193 +
+            <input type="text" style="text-align:center" name="endA" id="messageLength" class="disabledInput" size="6" disabled />
+            =
+            <input type="text" style="text-align:center" name="AA" id="messageLength" class="disabledInput" size="6" disabled />
+        </h4>
+        <h3 style="margin-top:15px;">4. Wyjście.</h3>
         <h4>Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.</h4>
 
 
@@ -402,7 +441,8 @@
 </div>
 
 
-        <script>
+
+<script>
 
     document.getElementById("defaultPageButton").click();
 
@@ -426,10 +466,16 @@
     var md5Init = MD5FunctionInit({
         urls: {
             paddingUrl: '@Url.Action("MD5_Padding", "HashFunctions")',
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
-            
+            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")',
+            tableUrl: '@Url.Action("MD5_Table", "HashFunctions")'
+
         }
     });
 
     md5Init.init();
-        </script>
+
+</script>
+
+
+
+
