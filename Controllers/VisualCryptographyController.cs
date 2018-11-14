@@ -58,24 +58,24 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualCryptoraphyView());
 
         [HttpPost]
-        public IActionResult VisualSteganography([FromBody] SecretsDto secretsDto)
+        public IActionResult VisualSteganography([FromBody] string[] Images)
         {
-            if (secretsDto == null || secretsDto.Image == null)
+            if (Images == null )
             {
-                return Json(new { Result = false, Message = "The ScretDto is empty." });
-
-            }
-            else if (secretsDto.Image == null)
-            {
-                return Json(new { Result = false, Message = "The Image Data is empty." });
+                return Json(new { Result = false, Message = "The Images is null"});
             }
             else
             {
+                if (Images[0] == null|| Images[1] == null|| Images[2] == null)
+                {
+                    return Json(new { Result = false, Message = "The one or more Image is null" });
+                }
+
                 string[] lista;
 
                 try
                 {
-                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    lista = VisualCryptographyService.VisualSteganography(Images);
                 }
                 catch (ImageIsNotInGrayScaleException e)
                 {

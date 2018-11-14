@@ -11,42 +11,42 @@
     </div>
 </div>
 <hr />
-<div class="col-lg-6">
-    <label>Jawny Obraz #1 </label>
-    <div class="row">
-        <div class=" col-lg-12">
-            <div class="col-lg-4">
-                <label for="inputModeSelect">Źródło obrazu</label>
-                <select id="inputModeSelect" class="form-control" style="margin-bottom: 20px">
-                    <option value="drawing" selected>Rysunek</option>
-                    <option value="file">Plik</option>
-                </select>
-            </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-4">
+            <label for="inputModeSelect0">Źródło obrazu</label>
+            <select id="inputModeSelect0" class="form-control" style="margin-bottom: 20px">
+                <option value="drawing" selected>Rysunek</option>
+                <option value="file">Plik</option>
+            </select>
         </div>
     </div>
-    <div class="row">
-        <div class=" col-lg-12">
-            <div id="FileUploadPanel" style="display: none">
-                @{
-                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image");
-                }
-            </div>
-            <div id="drawingPanel">
-                <div id="DrawingContainer" class="myCanvas">
+    <div class=" col-lg-12">
+        <div id="FileUploadPanel0" class="col-lg-4" style="display: none">
+            @{
+                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image0");
+            }
+        </div>
+        <div id="drawingPanel0">
+            <div id="DrawingContainer0" class="myCanvas">
 
-                </div>
-                <div class="text-center mySignature">Pole do rysowania</div>
             </div>
+            <div class="text-center mySignature">Pole do rysowania</div>
         </div>
     </div>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-12">
+    <hr />
+</div>
+<div class="col-lg-12">
     <label>Jawny Obraz #2 </label>
     <div class="row">
-        <div class=" col-lg-12">
-            <div class="col-lg-4">
-                <label for="inputModeSelect2">Źródło obrazu</label>
-                <select id="inputModeSelect2" class="form-control" style="margin-bottom: 20px">
+        <div class="col-lg-12">
+            <div class="col-lg-2">
+                <label>Źródło obrazu</label>
+            </div>
+            <div class="col-lg-10">
+                <select id="inputModeSelect1" class="form-control" style="margin-bottom: 20px">
                     <option value="drawing" selected>Rysunek</option>
                     <option value="file">Plik</option>
                 </select>
@@ -55,13 +55,13 @@
     </div>
     <div class="row">
         <div class=" col-lg-12">
-            <div id="FileUploadPanel2" style="display: none">
+            <div id="FileUploadPanel1" style="display: none">
                 @{
-                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image2");
+                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image1");
                 }
             </div>
-            <div id="drawingPanel2">
-                <div id="DrawingContainer2" class="myCanvas">
+            <div id="drawingPanel1">
+                <div id="DrawingContainer1" class="myCanvas">
 
                 </div>
                 <div class="text-center mySignature">Pole do rysowania</div>
@@ -71,16 +71,14 @@
 </div>
 <div class="col-lg-12">
     <hr />
-    <hr />
-    <hr />
 </div>
 
 
 <div class="row">
     <div class=" col-lg-12">
         <div class="col-lg-4">
-            <label for="inputModeSelect3">Źródło obrazu</label>
-            <select id="inputModeSelect3" class="form-control" style="margin-bottom: 20px">
+            <label for="inputModeSelect2">Źródło obrazu</label>
+            <select id="inputModeSelect2" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
             </select>
@@ -89,22 +87,19 @@
 </div>
 <div class="row">
     <div class=" col-lg-12">
-        <div id="FileUploadPanel3" style="display: none">
+        <div id="FileUploadPanel2" style="display: none">
             @{
-                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image3");
+                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image2");
             }
         </div>
-        <div id="drawingPanel3">
-            <div id="DrawingContainer3" class="myCanvas">
+        <div id="drawingPanel2">
+            <div id="DrawingContainer2" class="myCanvas">
 
             </div>
             <div class="text-center mySignature">Pole do rysowania</div>
         </div>
     </div>
 </div>
-
-
-
 
 <div class="row">
     <div class=" col-lg-12">
@@ -163,16 +158,6 @@
 </style>
 
 <script>
-    var AmountOfSecretsSelect = [];
-    AmountOfSecretsSelect["1"] = ["2"];
-    AmountOfSecretsSelect["2"] = ["2", "4"];
-    AmountOfSecretsSelect["3"] = ["2",];
-
-    var MethodsDescriptions = [];
-    MethodsDescriptions["1"] = ["To jest prostokąt"];
-    MethodsDescriptions["2"] = ["A to je kwadrato"];
-    MethodsDescriptions["3"] = ["Najpierw dwa sekrety a potem w nich ukryty obrazek dodatkowy"];
-
     var isPaint = false;
     var lastPointerPosition;
     var DisplayLayer = new Konva.Layer();
@@ -180,25 +165,41 @@
     $(document).ready(function () {
         $("#MethodSelect").val("1").change();
 
-        InitDrawingKonvoControl('DrawingContainer', 300);
+        InitDrawingKonvoControl('DrawingContainer0', 300);
+        InitDrawingKonvoControl('DrawingContainer1', 300);
         InitDrawingKonvoControl('DrawingContainer2', 300);
-        InitDrawingKonvoControl('DrawingContainer3', 300);
-
+        InitInputSelect(0);
+        InitInputSelect(1);
+        InitInputSelect(2);
         InitDisplayKonvoControl('DisplayContainer', 600);
     });
+
+    function InitInputSelect(number) {
+        $('#inputModeSelect' + number).on('change', function () {
+            if (this.value === 'drawing') {
+                $('#FileUploadPanel' + number).hide();
+                $('#drawingPanel' + number).show();
+
+            } else if (this.value === 'file') {
+                $('#FileUploadPanel' + number).show();
+                $('#drawingPanel' + number).hide();
+            }
+            else {
+                Console.log("InputModeSelect" + number + " value is unknow.")
+            }
+        });
+    }
 
     function GetWidth() {
         var width = document.getElementById('Description').offsetWidth;
         if (width === 0) {
 
             width = document.getElementById('Tools').offsetWidth;
+
             if (width === 0) {
 
-                width = document.getElementById('Visualization').offsetWidth;
-                if (width === 0) {
+                width = 400;
 
-                    width = 400;
-                }
             }
         }
         return width - 28;
@@ -347,30 +348,6 @@
         });
     }
 
-    function fillSelect(nValue) {
-        var nList = document.getElementById("AmountOfSecretsSelect");
-
-        removeOptions(nList);
-
-        var curr = AmountOfSecretsSelect[nValue];
-        for (each in curr)
-        {
-            var nOption = document.createElement('option');
-            nOption.appendChild(document.createTextNode(curr[each]));
-            nOption.setAttribute("value",curr[each]);
-            nList.appendChild(nOption);
-        }
-
-        if (nValue === '3') {
-            $('#HidingImageUploadPanel').show();
-        } else {
-            $('#HidingImageUploadPanel').hide();
-        }
-
-        var label = document.getElementById("MethodDescription");
-        label.innerHTML = MethodsDescriptions[nValue];
-    }
-
     function LoadImageToLayerFromData(layer, data) {
         var KonvoImage = new Konva.Image({
             draggable: true,
@@ -386,81 +363,43 @@
         image.src = 'data:image/png;base64,' + data;
     }
 
-    function removeOptions(selectbox)
-    {
-        var i;
-        for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-        {
-            selectbox.remove(i);
-        }
-    }
-
-    $('#inputModeSelect').on('change', function () {
-        if (this.value === 'drawing') {
-            $('#FileUploadPanel').hide();
-            $('#drawingPanel').show();
-
-        } else if (this.value === 'file') {
-            $('#FileUploadPanel').show();
-            $('#drawingPanel').hide();
-        }
-        else {
-            Console.log("InputModeSelect value is unknow.")
-            //if (this.value === 'text') {
-            //    $('#FileUploadPanel').show();
-            //    $('#drawingPanel').show();
-        }
-    });
-
     $('#sendCanvasToDivide').click(function () {
-        var inputMode = $('#inputModeSelect option:selected').val();
+        var ImagesData = [];
+        var alerts = [];
+        
+        for (i = 0; i < 3; i++) {
+            var inputMode = $('#inputModeSelect' + i + ' option:selected').val();
 
-        if (inputMode === 'drawing') {
-            var canvas = document.querySelector('#DrawingContainer canvas');
-
-            if ($('#MethodSelect option:selected').val() === '3') {
-                var hidingImageFile = document.getElementById('HidingImageUploader').files[0]
-                if (hidingImageFile == null) {
-                    alert('Nie wybrane pliku do ukrycia w podziałach');
-                    return;
-                }
-                var reader2 = new FileReader();
-                reader2.readAsDataURL(hidingImageFile);
-                reader2.onload = function() {
-                    sendDataToServer(canvas.toDataURL("image/png"), reader2.result.split(',')[1]);
-                }
-            } else {
-                sendDataToServer(canvas.toDataURL("image/png"));
+            if (inputMode === 'drawing')
+            {
+                var canvas = document.querySelector('#DrawingContainer' + i + ' canvas');
+                ImagesData[i] = canvas.toDataURL("image/png").replace('data:image/png;base64,', '');
             }
-        }
-        else if (inputMode === 'file') {
-            var file = document.getElementById('ImageUploader').files[0];
+            else if (inputMode === 'file') {
+                var file = document.getElementById('Image' + i + 'Uploader').files[0];
 
-            if (file == null) {
-                alert('Nie wybrano pliku')
-                return;
-            }
-
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                if ($('#MethodSelect option:selected').val() === '3') {
-                    var hidingImageFile = document.getElementById('HidingImageUploader').files[0]
-                    if (hidingImageFile == null) {
-                        alert('Nie wybrane pliku do ukrycia w podziałach');
-                        return;
-                    }
-                    var reader2 = new FileReader();
-                    reader2.readAsDataURL(hidingImageFile);
-                    reader2.onload = function() {
-                        sendDataToServer(reader.result.split(',')[1], reader2.result.split(',')[1]);
-                    }
-                } else
+                if (file == null) {
+                    alerts.push('Nie wybrane pliku.');
+                }
+                else
                 {
-                    sendDataToServer(reader.result.split(',')[1]);
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    ImagesData[i] = reader.result.split(',')[1].replace('data:image/png;base64,', '')
                 }
-            };
+            }
+            else {
+                alert("Błąd q.q");
+            }
+
         }
+        if (alerts.length > 0 ) {
+            alert(alerts.join('\n'));
+        } else {
+            sendDataToServer(ImagesData);
+        }
+
     });
 
     function showLoading() {
@@ -486,25 +425,12 @@
         }
     }
 
-    function sendDataToServer(imageData, HidingImageData) {
-        var images = [];
-        images[0] = imageData.replace('data:image/png;base64,', '');
-        if (HidingImageData != null) {
-            images[1] = HidingImageData.replace('data:image/png;base64,', '');
-        }
-
-
-
-        var model = {
-            MethodId: $('#MethodSelect').val(),
-            AmountOfSecrets: $('#AmountOfSecretsSelect').val(),
-            Images: images,
-        }
+    function sendDataToServer(imageData) {
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Secrets", "VisualCryptography")',
-            data: JSON.stringify(model),
+            url: '@Url.Action("VisualSteganography", "VisualCryptography")',
+            data: JSON.stringify(imageData),
             dataType: 'json',
             contentType: "application/json",
             beforeSend: function () {
