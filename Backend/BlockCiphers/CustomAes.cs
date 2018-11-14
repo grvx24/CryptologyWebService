@@ -102,6 +102,7 @@ namespace CryptoWebService.Backend.BlockCiphers
                     aes.Mode = System.Security.Cryptography.CipherMode.ECB;
                     break;
             }
+            
         }
     }
 }

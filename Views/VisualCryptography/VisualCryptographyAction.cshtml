@@ -8,27 +8,33 @@
 
 <h2 class="page-header">Kryptografia Wizualna</h2>
 
-<div class="row">
+<div class="row row-eq-height">
     <div class="col-lg-4">
         <div>
-            <label for="metod">Metoda</label>
-            <select id="metod" class="form-control">
-                <option value="text" selected>czarno biała</option>
+            <label for="MethodSelect">Metoda</label>
+            <select id="MethodSelect" class="form-control" onchange="fillSelect(this.value)">
+                <option value="1">Szerokaaaaaaaaa</option>
+                <option value="2" selected >Kwadratowa</option>
             </select>
         </div>
         <div>
-            <label for="secrets">Ilość  sekretów</label>
-            <select id="secrets" class="form-control">
-                <option value="text" selected>2</option>
+            <label  for="AmountOfSecretsSelect">Ilość  sekretów</label>
+            <select  id="AmountOfSecretsSelect" class="form-control">
+                <option value="2" selected>2</option>
+                <option value="4" >4</option>
             </select>
         </div>
         <div>
-            <label for="inputModeEncrypt">Format wejściowy</label>
-            <select id="inputModeEncrypt" class="form-control">
+            <label for="inputModeSelect">Format wejściowy</label>
+            <select id="inputModeSelect" class="form-control">
                 <option value="drawing" selected>Rysowanie</option>
                 <option value="file">Plik</option>
             </select>
         </div>
+    </div>
+    <div class="col-lg-8" style="display: flex;flex-direction: column;">
+        <label for="inputEncrypt">Opis wybranej metody</label>
+        <label class="form-control" style="height: 100%" id="MethodDescription"></label>
     </div>
 </div>
 <hr />
@@ -45,11 +51,10 @@
             </div>
             <div class="text-center mySignature">Pole do rysowania</div>
         </div>
-        <div class="input-group">
+        <div class="text-center">
             <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
-            <div class="loader" id="loading" style="display:none;">
-
-            </div>
+            
+            <div id="loading" class="loader" style="display:none"></div>
         </div>
     </div>
 </div>
@@ -64,21 +69,12 @@
 
 
 <style>
-    .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-left: 16px solid #F0F0F0;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
     }
-
-    @@keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
     .myCanvas {
         background-color: #F0F0F0;
         border: 1px solid black;
@@ -98,10 +94,54 @@
         margin-bottom: 20px;
     }
 
+
+
 </style>
 
 <script>
-    $('#inputModeEncrypt').on('change', function () {
+    $(document).ready(function () {
+
+        $("#MethodSelect").val("1").change();
+
+    });
+
+    var AmountOfSecretsSelect = []; 
+    AmountOfSecretsSelect["1"] = ["2"];
+    AmountOfSecretsSelect["2"] = ["2", "4"];
+
+    var MethodsDescriptions = [];
+    MethodsDescriptions["1"] = ["To jest prostokąt"];
+    MethodsDescriptions["2"] = ["A to je kwadrato"];
+	
+    function fillSelect(nValue) {
+        var nList = document.getElementById("AmountOfSecretsSelect");
+
+        removeOptions(nList);
+
+        var curr = AmountOfSecretsSelect[nValue];
+        for (each in curr)
+        {
+            var nOption = document.createElement('option'); 
+            nOption.appendChild(document.createTextNode(curr[each])); 
+            nOption.setAttribute("value",curr[each]); 			 
+            nList.appendChild(nOption); 
+        }
+
+        var label = document.getElementById("MethodDescription");
+        label.innerHTML = MethodsDescriptions[nValue];
+
+    }
+
+    function removeOptions(selectbox)
+    {
+        var i;
+        for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+        {
+            selectbox.remove(i);
+        }
+    }
+
+    $('#inputModeSelect').on('change', function () {
 
         if (this.value === 'drawing') {
             $('#fileUploadPanel').hide();
@@ -119,32 +159,11 @@
     });
 
     $('#sendCanvasToDivide').click(function () {
-        var inputModeEncrypt = $('#inputModeEncrypt option:selected').val();
+        var inputModeEncrypt = $('#inputModeSelect option:selected').val();
 
         if (inputModeEncrypt === 'drawing') {
             var canvas = document.querySelector('#container canvas');
-            var dataURL = canvas.toDataURL("image/png");
-            dataURL = dataURL.replace('data:image/png;base64,', '');
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Secrets", "VisualCryptography")',
-                data: JSON.stringify(dataURL),
-                dataType: 'json',
-                contentType: "application/json",
-                beforeSend: function () {
-                    showLoading();
-                },
-                complete: function () {
-                    hideLoading();
-                },
-                success: function (response) {
-                    onSucces(response);
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
+            sendDataToServer(canvas.toDataURL("image/png"));
         }
         else if (inputModeEncrypt === 'file') {
             var file = document.getElementById('fileUploader').files[0];
@@ -152,33 +171,41 @@
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
-
-                var fileData = reader.result.split(',')[1];
-
-                fileData = fileData.replace('data:image/png;base64,', '');
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("Secrets", "VisualCryptography")',
-                    data: JSON.stringify(fileData),
-                    dataType: 'json',
-                    contentType: "application/json",
-                    beforeSend: function () {
-                        showLoading();
-                    },
-                    complete: function () {
-                        hideLoading();
-                    },
-                    success: function (response) {
-                        onSucces(response);
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
-                });
+                sendDataToServer(reader.result.split(',')[1]);
             };
         }
     });
+
+    function sendDataToServer(imageData) {
+
+        imageData = imageData.replace('data:image/png;base64,', '');
+
+        var model = {
+            MethodId: $('#MethodSelect').val(),
+            AmountOfSecrets: $('#AmountOfSecretsSelect').val(),
+            Image: imageData,
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Secrets", "VisualCryptography")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                showLoading();
+            },
+            complete: function () {
+                hideLoading();
+            },
+            success: function (response) {
+                onSucces(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
 
     function showLoading() {
         $('#loading').show();
@@ -195,7 +222,7 @@
             for (var i = 0; i < response.secrets.length; i++) {
                 var secret = response.secrets[i];
                 LoadImageToLayerFromData(layer2, secret.value);
-                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'" >Sekret ' + (i+1) +' </a>';
+                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'.png">Sekret ' + (i+1) +'</a>';
             }
 
             $('#secretsDownload').html(downloadLink);

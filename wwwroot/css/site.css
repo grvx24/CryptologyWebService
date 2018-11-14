@@ -61,40 +61,101 @@ body {
 /* Style the tab */
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    border: 1px solid transparent;
+    background-color: transparent;
 }
 
 /* Style the buttons inside the tab */
 .tab button {
-    background-color: inherit;
+    background-color: #5c9def;
+    color: white;
     float: left;
     border: none;
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-    font-size: 14px;
+    font-size: 17px;
+    border-radius: 14px;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #ddd;
+    background-color: #a9c0dc;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: #ccc;
+    background-color: #1c5aa6;
 }
 
 /* Style the tab content */
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid transparent;
     border-top: none;
 }
 
 textarea {
     resize: none;
+}
+
+.loader {
+    margin-top: 20px;
+    height: 8px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.loader:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -200px;
+    width: 200px;
+    height: 8px;
+    background-color: #2980b9;
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+     from {left: -200px; width: 30%;}
+     50% {width: 30%;}
+     70% {width: 70%;}
+     80% { left: 50%;}
+     95% {left: 120%;}
+     to {left: 100%;}
+ }
+
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #5c9def;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #5c9def;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1c5aa6;
+}
+
+input[type=radio] {
+    border: 0px;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.radio-text{
+    font-size: 16px;
 }
