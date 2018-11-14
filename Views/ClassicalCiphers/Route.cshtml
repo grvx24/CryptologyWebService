@@ -1,8 +1,8 @@
-﻿@using CryptoWebService.Backend.ClassicalCiphers
+﻿@*@using CryptoWebService.Backend.ClassicalCiphers
 
 @{
     ViewData["Title"] = "Route";
-}
+}*@
 
 <script src="~/js/ciphers/ClassicalCiphers.js"></script>
 
@@ -10,6 +10,7 @@
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
     </div>
 
     <div id="Description" class="tabcontent">
@@ -26,117 +27,10 @@
         </p>
     </div>
     <div id="Working" class="tabcontent col-lg-12">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">@Text.Encryptor</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="keyEncryptA">@Text.Key</label>
-                    <select id="keyEncryptA" class="form-control">
-                        @{
-                            for (int i = 1; i <= 50; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="encryptMode">@Text.EncryptMode</label>
-                    <select id="encryptMode" class="form-control">
-                        @{
-                            for (int i = 1; i <= 2; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + (i == 1 ? Text.WidthMode : Text.HeightMode) + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
-                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="outputEncrypt">@Text.EncryptedText</label>
-                        <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <span class="col-md-6">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
-                </span>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">@Text.Decryptor</h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="keyDecryptA">@Text.Key</label>
-                    <select id="keyDecryptA" class="form-control">
-                        @{
-                            for (int i = 1; i <= 50; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="decryptMode">@Text.EncryptMode</label>
-                    <select id="decryptMode" class="form-control">
-                        @{
-                            for (int i = 1; i <= 2; i++)
-                            {
-                                @Html.Raw("<option value=" + i + ">" + (i==1? Text.WidthMode : Text.HeightMode) + "</option>")
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="inputDecrypt">@Text.WriteTextToDecrypt</label>
-                        <textarea class="form-control" rows="5" id="inputDecrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="outputDecrypt">@Text.DecryptedText</label>
-                        <textarea readonly class="form-control" rows="5" id="outputDecrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <span class="col-md-6">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
-                </span>
-            </div>
-        </div>
+        @await Html.PartialAsync("_RouteVisualization")
+    </div>
+    <div id="Calculator" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_RoutePartial")
     </div>
 </div>
 
@@ -158,18 +52,5 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    
-    //Ajax
-    var routeInit = RouteCipherInit({
-        urls: {
-            encryptUrl: '@Url.Action("RouteEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("RouteDecrypt", "ClassicalCiphers")'
-        }
-    });
-
-    routeInit.init();
-
-
-
 
 </script>

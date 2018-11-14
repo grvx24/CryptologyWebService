@@ -187,8 +187,6 @@ namespace CryptoWebService.Controllers
                 if (message.Length * 8 < 448)
                 {
                     md5_viso = new MD5_Visualization(message);
-
-                    //BUTTON SHOW ROUNDS ->enable
                 }
 
                 int messageLength = md5_viso.Get_MessageLength(message);
@@ -196,7 +194,6 @@ namespace CryptoWebService.Controllers
                 int messageLength2 = messageLength + paddedBits;
                 int modResult = messageLength2 % 512;
 
-                // results[1] = "Dupa blada.";
                 results[0] = messageLength.ToString();
                 results[1] = paddedBits.ToString();
                 results[2] = messageLength2.ToString();

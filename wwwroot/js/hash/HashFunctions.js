@@ -34,6 +34,11 @@
             var model = {
                 message: $('#exampleMessage').val(),
             }
+            //not working :(
+            //if ($('#exampleMessage').val().length() < 57) {
+            //    $('#showRoundsButton').prop('enabled', true);
+            //}
+           
 
             $.ajax({
                 type: 'POST',
@@ -59,44 +64,35 @@
         });
     }
 
-    //var tableInit = function () {
+    var tableInit = function () {
 
-    //    $('#showRoundsButton').click(function () {
+        $('#showRoundsButton').click(function () {
 
-    //        var model = {
-    //            message: $('#exampleMessage').val(),
-    //        }
+            var model = {
+                message: $('#exampleMessage').val(),
+            }
+      
+            $.ajax({
+                type: 'POST',
+                url: config.urls.tableUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var register = data[i].A;
+                        //$('#AA').val(register);  
+                    }
 
-    //        $.ajax({
-    //            type: 'POST',
-    //            url: config.urls.tableUrl,
-    //            dataType: 'json',
-    //            contentType: "application/json",
-    //            data: JSON.stringify(model),
-    //            success: function (data) {
-    //                $(data).each(
-    //                    function () {
-    //                        $('#table_iteration').append(
-    //                            '<tr><td>' + this.Iteration
-    //                            + '</td><td>'
-    //                            + this.A
-    //                            + '</td><td>'
-    //                            + this.B
-    //                            + '</td><td>'
-    //                            + this.C
-    //                            + '</td><td>'
-    //                            + this.D
-    //                            + '</td></tr>')
-    //                    });
-    //            },
-
-    //            error: function (msg) {
-
-    //                alert(msg.responseText);
-    //            }
-    //        });
-    //    })
-    //}
+                    $('#AA').val(2344);
+                    $('#endA').val(1234);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        })
+    }
 
     //var tableInit = function () {
     //        $("#example").DataTable();
@@ -149,27 +145,6 @@
     //        }
         
     //}
-
-    var tableInit = function () {
-
-        $('#showRoundsButton').click(function () {
-
-            var model = {
-                message: $('#exampleMessage').val(),
-            }
-            $('#example').DataTable({
-                "ajax": "test.json",
-                "columns": [
-                    { "data": "Iteration" },
-                    { "data": "A" },
-                    { "data": "B" },
-                    { "data": "C" },
-                    { "data": "D" }
-                ]
-            });
-            
-        })
-    }
 
 
 
