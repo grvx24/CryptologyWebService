@@ -6,8 +6,8 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <label for="keyEncryptA">@Text.Key</label>
-            <select id="keyEncryptA" class="form-control">
+            <label for="keyEncrypt">@Text.Key</label>
+            <select id="keyEncrypt" class="form-control">
                 @{
                     for (int i = 1; i <= 50; i++)
                     {
@@ -20,9 +20,9 @@
             <label for="encryptMode">@Text.EncryptMode</label>
             <select id="encryptMode" class="form-control">
                 @{
-                    for (int i = 1; i <= 2; i++)
+                    for (int i = 0; i <= 1; i++)
                     {
-                        @Html.Raw("<option value=" + i + ">" + (i == 1 ? Text.WidthMode : Text.HeightMode) + "</option>")
+                        @Html.Raw("<option value=" + i + ">" + (i == 0 ? Text.WidthMode : Text.HeightMode) + "</option>")
                     }
                 }
             </select>
@@ -63,8 +63,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <label for="keyDecryptA">@Text.Key</label>
-            <select id="keyDecryptA" class="form-control">
+            <label for="keyDecrypt">@Text.Key</label>
+            <select id="keyDecrypt" class="form-control">
                 @{
                     for (int i = 1; i <= 50; i++)
                     {
@@ -77,9 +77,9 @@
             <label for="decryptMode">@Text.EncryptMode</label>
             <select id="decryptMode" class="form-control">
                 @{
-                    for (int i = 1; i <= 2; i++)
+                    for (int i = 0; i <= 1; i++)
                     {
-                        @Html.Raw("<option value=" + i + ">" + (i == 1 ? Text.WidthMode : Text.HeightMode) + "</option>")
+                        @Html.Raw("<option value=" + i + ">" + (i == 0 ? Text.WidthMode : Text.HeightMode) + "</option>")
                     }
                 }
             </select>

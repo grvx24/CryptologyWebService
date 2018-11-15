@@ -193,6 +193,7 @@ var BaconCipherInit = function (config) {
     }
 }
 
+
 var ColumnarTranspositionCipherInit = function (config) {
 
     var encryptInit = function () {
@@ -510,3 +511,4 @@ var VigenereCipherInit = function (config) {
         init: init
     }
 }
+

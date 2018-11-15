@@ -1,1 +1,86 @@
 ﻿<script src="~/lib/custom/d3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/aes_visualization.css">
+
+<h2 align="center">Szyfr Bacon'a wizualizacja</h2>
+<div class="col-md-8">
+    <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+</div>
+<div class="col-md-4">
+    <button id="startButton" class="btn btn-primary">Rozpocznij wizualizację</button>
+</div>
+<div class="col-md-12" style="margin-top: 30px">
+    <button id="previousButton" style="float: left;" class="btn btn-danger" disabled>Poprzedni krok</button>
+    <button id="nextButton" style="float: right;" class="btn btn-success">Następny krok</button>
+</div>
+
+<div class="col-lg-4">
+    <div align="center">
+        <svg id="roundZeroData">
+
+        </svg>
+    </div>
+</div>
+<script>
+
+    function VisualizeDataBlock(matrix, svgId, cellRectClass) {
+
+        var numrows = matrix.length;
+        var numcols = matrix[0].length;
+
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
+            width = 250,
+            height = 250;
+
+        var textOffsetX = (width / numcols) / 2;
+        var textOffsetY = (height / numrows) / 2;
+
+        var svg = d3.select("#" + svgId)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .style("margin-left", -margin.left + "px")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scale.ordinal()
+            .domain(d3.range(numcols))
+            .rangeBands([0, width]);
+
+        var y = d3.scale.ordinal()
+            .domain(d3.range(numrows))
+            .rangeBands([0, height]);
+
+        var row = svg.selectAll(".row")
+            .data(matrix)
+            .enter().append("g")
+            .attr("class", "row")
+            .attr("transform", function (d, i) { return "translate(0," + y(i) + ")"; });
+
+        row.selectAll(".cell")
+            .data(function (d) { return d; })
+            .enter().append("g")
+            .attr("class", "cell")
+            .append("rect")
+            .attr("class", cellRectClass)
+            .attr("x", function (d, i) { return x(i); })
+            .attr("width", x.rangeBand())
+            .attr("height", y.rangeBand());
+
+
+        row.selectAll(".cell").append("text")
+            .attr("class", "cell-text-data")
+            .attr("x", function (d, i) { return x(i) + textOffsetX; })
+            .attr("y", textOffsetY)
+            .text(function (d) {
+                return IntToHexString(d);
+            });
+    }
+
+
+    var numrows = 3;
+    var matrix = new Array(numrows);
+    metrix[0] = [0x2b, 0x28, 0xab];
+    matrix[1] = [0xb, 0xabb, 0xab];
+    matrix[2] = [0xc, 0xbba, 0xab];
+
+    VisualizeDataBlock(matrix, 'roundZeroData', 'cell-rect-data-nohover');
+</script>
