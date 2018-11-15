@@ -62,13 +62,13 @@ namespace CryptoWebService.Controllers
         {
             if (Images == null )
             {
-                return Json(new { Result = false, Message = "The Images is null"});
+                return Json(new { Result = false, Message = "Dane nie zostały przesłane."});
             }
             else
             {
-                if (Images[0] == null|| Images[1] == null|| Images[2] == null)
+                if (Images.Length != 3 || Images[0] == null|| Images[1] == null|| Images[2] == null)
                 {
-                    return Json(new { Result = false, Message = "The one or more Image is null" });
+                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
                 }
 
                 string[] lista;
@@ -80,7 +80,7 @@ namespace CryptoWebService.Controllers
                 catch (ImageIsNotInGrayScaleException e)
                 {
 
-                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
                 }
 
                 Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
