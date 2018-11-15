@@ -1,102 +1,124 @@
 ﻿@using CryptoWebService.Helpers;
 
-<div class="row row-eq-height" style="min-height: 200px">
-    <div class="col-lg-12" style="display: flex;flex-direction: column;">
-        <label for="inputEncrypt">Steganografia wizualna</label>
-        <label class="form-control" style="height: 100%" id="MethodDescription">
-            Steganografia wizualna polega na zaszyciu informacji ( obrazu ) w dóch osobnych obrazach,
-            jest ona na pierwszy rzut oka nie widoczna. Widoczna dopiero staje się po dokładnym nałożeniu dwóch obrazów na siebie.
+<div class="row ">
+    <div class="col-lg-12" style="margin-bottom: 15px">
+        <div class="col-lg-12">
+            <label style="font-size: 30px; ">steganografia wizualna &nbsp</label>
+            <div class="glyphicon glyphicon-search" style="font-size:30px;transform: scaleX(-1);color: #1c5aa6;"></div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-8">
+            <label class="form-control" style="height: 100%" id="MethodDescription">
+                Poniżej możesz sprawdzić w praktyce jak działa steganografia wizualna.
+                Steganografia wizualna polega na zaszyciu informacji ( obrazu ) w dóch osobnych obrazach,
+                jest ona na pierwszy rzut oka nie widoczna. Widoczna dopiero staje się po dokładnym nałożeniu dwóch obrazów na siebie.
 
-        </label>
+            </label>
+        </div>
+        <div class="col-lg-4" style="background: aliceblue; height: 300px;">
+
+        </div>
     </div>
 </div>
-<hr />
+
+<div class="col-lg-12">
+    <hr />
+</div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label for="inputModeSelect0">Źródło obrazu</label>
+            <label class="ImageHeader">Udział #1</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+        </div>
+        <div class="col-lg-8">
             <select id="inputModeSelect0" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
             </select>
         </div>
     </div>
-    <div class=" col-lg-12">
-        <div id="FileUploadPanel0" class="col-lg-4" style="display: none">
-            @{
-                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image0");
-            }
+    <div class="col-lg-12">
+        <div id="FileUploadPanel0" style="display: none">
+            <div class="col-lg-12">
+                @{
+                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image0");
+                }
+            </div>
         </div>
         <div id="drawingPanel0">
             <div id="DrawingContainer0" class="myCanvas">
 
             </div>
-            <div class="text-center mySignature">Pole do rysowania</div>
+            <div class="text-center mySignature">Pole do rysowania (Udział #1)</div>
         </div>
     </div>
 </div>
+
+
+
 <div class="col-lg-12">
     <hr />
 </div>
-<div class="col-lg-12">
-    <label>Jawny Obraz #2 </label>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="col-lg-2">
-                <label>Źródło obrazu</label>
-            </div>
-            <div class="col-lg-10">
-                <select id="inputModeSelect1" class="form-control" style="margin-bottom: 20px">
-                    <option value="drawing" selected>Rysunek</option>
-                    <option value="file">Plik</option>
-                </select>
-            </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-4">
+            <label class="ImageHeader">Udział #2</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+        </div>
+        <div class="col-lg-8">
+            <select id="inputModeSelect1" class="form-control" style="margin-bottom: 20px">
+                <option value="drawing" selected>Rysunek</option>
+                <option value="file">Plik</option>
+            </select>
         </div>
     </div>
-    <div class="row">
-        <div class=" col-lg-12">
-            <div id="FileUploadPanel1" style="display: none">
+    <div class=" col-lg-12">
+        <div id="FileUploadPanel1" style="display: none">
+            <div class="col-lg-12">
                 @{
                     await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image1");
                 }
             </div>
-            <div id="drawingPanel1">
-                <div id="DrawingContainer1" class="myCanvas">
+        </div>
+        <div id="drawingPanel1">
+            <div id="DrawingContainer1" class="myCanvas">
 
-                </div>
-                <div class="text-center mySignature">Pole do rysowania</div>
             </div>
+            <div class="text-center mySignature">Pole do rysowania (Udział #2)</div>
         </div>
     </div>
 </div>
+
 <div class="col-lg-12">
     <hr />
 </div>
 
-
 <div class="row">
-    <div class=" col-lg-12">
+    <div class="col-lg-12">
         <div class="col-lg-4">
-            <label for="inputModeSelect2">Źródło obrazu</label>
+            <label class="ImageHeader">Ukrywany obraz</label><label class="ImageDescription">&nbsp- wybierz źródło obrazu:</label>
+        </div>
+        <div class="col-lg-8">
             <select id="inputModeSelect2" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
             </select>
         </div>
     </div>
-</div>
-<div class="row">
     <div class=" col-lg-12">
         <div id="FileUploadPanel2" style="display: none">
-            @{
-                await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image2");
-            }
+            <div class="col-lg-12">
+                @{
+                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image2");
+                }
+            </div>
         </div>
         <div id="drawingPanel2">
             <div id="DrawingContainer2" class="myCanvas">
 
             </div>
-            <div class="text-center mySignature">Pole do rysowania</div>
+            <div class="text-center mySignature">Pole do rysowania (Ukrywany obraz)</div>
         </div>
     </div>
 </div>
@@ -110,7 +132,11 @@
         </div>
     </div>
 </div>
-<hr />
+
+<div class="col-lg-12">
+    <hr />
+</div>
+
 <div id="secretsDownload" class="text-center">
 
 </div>
@@ -120,6 +146,7 @@
             <div id="DisplayContainer" class="myCanvas">
 
             </div>
+            <div class="text-center mySignature">Podgląd sekretów</div>
         </div>
     </div>
 </div>
@@ -128,6 +155,15 @@
 <style>
     label {
         margin-top: 5px;
+        font-size: 18px;
+    }
+
+    .ImageHeader {
+        color: #1c5aa6;
+    }
+
+    .ImageDescription{
+        font-size:16px;
     }
 
     .row-eq-height {
@@ -146,7 +182,7 @@
     .mySignature {
         font-style: italic;
         margin-top: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .myDownload {
@@ -366,16 +402,23 @@
     $('#sendCanvasToDivide').click(function () {
         var ImagesData = [];
         var alerts = [];
-        
-        for (i = 0; i < 3; i++) {
-            var inputMode = $('#inputModeSelect' + i + ' option:selected').val();
+        var inputsMode = [];
+        var IndexOfLastFileInput = -1;
 
-            if (inputMode === 'drawing')
+        for (i = 0; i < 3; i++) {
+            inputsMode[i] = $('#inputModeSelect' + i + ' option:selected').val();
+            if (inputsMode[i] === 'file') {
+                IndexOfLastFileInput = i;
+            }
+        }
+
+        for (i = 0; i < 3; i++) {
+            if (inputsMode[i] === 'drawing')
             {
                 var canvas = document.querySelector('#DrawingContainer' + i + ' canvas');
                 ImagesData[i] = canvas.toDataURL("image/png").replace('data:image/png;base64,', '');
             }
-            else if (inputMode === 'file') {
+            else if (inputsMode[i] === 'file') {
                 var file = document.getElementById('Image' + i + 'Uploader').files[0];
 
                 if (file == null) {
@@ -386,18 +429,26 @@
                     var reader = new FileReader();
                     reader.readAsDataURL(file);
 
-                    ImagesData[i] = reader.result.split(',')[1].replace('data:image/png;base64,', '')
+                    reader.onload = (function(f,index) {
+                        return function (e) {
+                            ImagesData[index] = e.target.result.split(',')[1];
+                            if (index == IndexOfLastFileInput) {
+                                sendDataToServer(ImagesData);
+                            }
+                        };
+                    })(file,i);
                 }
             }
             else {
                 alert("Błąd q.q");
             }
-
         }
         if (alerts.length > 0 ) {
             alert(alerts.join('\n'));
         } else {
-            sendDataToServer(ImagesData);
+            if (IndexOfLastFileInput == -1) {
+                sendDataToServer(ImagesData);
+            }
         }
 
     });
@@ -421,6 +472,7 @@
             }
             $('#secretsDownload').html(downloadLink);
         } else {
+            alert(response.message);
             console.log(response);
         }
     }
