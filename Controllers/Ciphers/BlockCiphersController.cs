@@ -163,5 +163,11 @@ namespace CryptoWebService.Controllers.Ciphers
             
             return Json(decrypted);
         }
+
+
+        public IActionResult Des()
+        {
+            return View();
+        }
     }
 }

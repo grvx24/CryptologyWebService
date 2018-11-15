@@ -17,8 +17,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public int Key { get; set; }
         public char[,] MessageMatrix { get; private set; }
         public CipherMode Mode { get; set; }
-        
-        public RouteCipher(int key,CipherMode mode)
+
+        public RouteCipher(int key, CipherMode mode)
         {
             Key = key;
             Mode = mode;
@@ -48,7 +48,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
             for (int i = row; i < MessageMatrix.GetLength(0); i++)
             {
-                for (int j = column; j < MessageMatrix.GetLength(1); j++)
+                for (int j = column + 1; j < MessageMatrix.GetLength(1); j++)
                 {
                     MessageMatrix[i, j] = 'X';
                 }
@@ -61,29 +61,77 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             {
                 char[] encrypted = new char[MessageMatrix.Length];
                 int encryptedCounter = 0;
-                bool up = false;
+                int direction = 0;//0-down, 1-left, 2-up, 3-right
 
-                for (int j = MessageMatrix.GetLength(1)-1; j >=0 ; j--)
+                int columnRangeMin = 0;
+                int columnRangeMax = MessageMatrix.GetLength(1) - 1;
+
+                int rowRangeMin = 0;
+                int rowRangeMax = MessageMatrix.GetLength(0) - 1;
+
+                while (rowRangeMax != rowRangeMin || columnRangeMin != columnRangeMax)
                 {
 
-                    if(!up)
+                    if (direction == 0)
                     {
-                        for (int i = 0; i < MessageMatrix.GetLength(0); i++)
+                        if (encryptedCounter >= MessageMatrix.Length)
+                            break;
+                        for (int i = rowRangeMin; i <= rowRangeMax; i++)
                         {
-                            encrypted[encryptedCounter] = MessageMatrix[i, j];
+                            encrypted[encryptedCounter] = MessageMatrix[i, columnRangeMax];
+                            encryptedCounter++;
                         }
 
-                        up = !up;
+
+
+                        direction = 1;
+                        columnRangeMax--;
                     }
-                    else
+
+                    if (direction == 1)
                     {
-                        for (int i = MessageMatrix.GetLength(0); i >=0 ; i--)
+                        if (encryptedCounter >= MessageMatrix.Length)
+                            break;
+                        for (int i = columnRangeMax; i >= columnRangeMin; i--)
                         {
-                            encrypted[encryptedCounter] = MessageMatrix[i, j];
+                            encrypted[encryptedCounter] = MessageMatrix[rowRangeMax, i];
+                            encryptedCounter++;
                         }
 
-                        up = !up;
+
+                        direction = 2;
+                        rowRangeMax--;
                     }
+
+                    if (direction == 2)
+                    {
+                        if (encryptedCounter >= MessageMatrix.Length)
+                            break;
+                        for (int i = rowRangeMax; i >= columnRangeMin; i--)
+                        {
+                            encrypted[encryptedCounter] = MessageMatrix[i, columnRangeMin];
+                            encryptedCounter++;
+                        }
+
+
+                        direction = 3;
+                        columnRangeMin++;
+                    }
+                    if (direction == 3)
+                    {
+                        if (encryptedCounter >= MessageMatrix.Length)
+                            break;
+                        for (int i = columnRangeMin; i <= columnRangeMax; i++)
+                        {
+                            encrypted[encryptedCounter] = MessageMatrix[rowRangeMin, i];
+                            encryptedCounter++;
+                        }
+
+
+                        direction = 0;
+                        rowRangeMin++;
+                    }
+
                 }
 
                 return new string(encrypted);
@@ -98,7 +146,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
 
-            int dimensionSize=0;
+            int dimensionSize = 0;
             string encrypted = "";
 
             if (message.Length % Key != 0)
@@ -113,19 +161,19 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             switch (Mode)
             {
                 case CipherMode.Key_As_Width:
-                {
-                    MessageMatrix = new char[dimensionSize, Key];
-                    FillMatrix(message);
-                    encrypted = ReadEncryptedFromMatrix();
-                    break;
-                }
-                case CipherMode.Key_As_Height:
-                {
-                    MessageMatrix = new char[Key, dimensionSize];
-                    FillMatrix(message);
-                    encrypted = ReadEncryptedFromMatrix();
+                    {
+                        MessageMatrix = new char[dimensionSize, Key];
+                        FillMatrix(message);
+                        encrypted = ReadEncryptedFromMatrix();
                         break;
-                }
+                    }
+                case CipherMode.Key_As_Height:
+                    {
+                        MessageMatrix = new char[Key, dimensionSize];
+                        FillMatrix(message);
+                        encrypted = ReadEncryptedFromMatrix();
+                        break;
+                    }
 
 
             }
@@ -135,42 +183,91 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         private void WriteDecryptedToMatrix(ref string message)
         {
-            int messageCounter = 0;
-            bool up = false;
+            int counter = 0;
+            int direction = 0;
 
-            for (int j = MessageMatrix.GetLength(1) - 1; j >= 0; j--)
+            int columnRangeMin = 0;
+            int columnRangeMax = MessageMatrix.GetLength(1) - 1;
+
+            int rowRangeMin = 0;
+            int rowRangeMax = MessageMatrix.GetLength(0) - 1;
+
+            while (rowRangeMax != rowRangeMin || columnRangeMin != columnRangeMax)
             {
-                if (up)
+
+                if (direction == 0)
                 {
-                    for (int i = 0; i < MessageMatrix.GetLength(0); i++)
+                    if (counter >= MessageMatrix.Length)
+                        break;
+                    for (int i = rowRangeMin; i <= rowRangeMax; i++)
                     {
-                        MessageMatrix[i, j] = message[messageCounter];
-                        messageCounter++;
+                        MessageMatrix[i, columnRangeMax] = message[counter];
+                        counter++;
                     }
 
-                    up = !up;
+                    direction = 1;
+                    columnRangeMax--;
                 }
-                else
+
+                if (direction == 1)
                 {
-                    for (int i = MessageMatrix.GetLength(0) - 1; i >= 0; i--)
+                    if (counter >= MessageMatrix.Length)
+                        break;
+                    for (int i = columnRangeMax; i >= columnRangeMin; i--)
                     {
-                        MessageMatrix[i, j] = message[messageCounter];
-                        messageCounter++;
+                        MessageMatrix[rowRangeMax, i] = message[counter];
+                        counter++;
                     }
 
-                    up = !up;
+
+                    direction = 2;
+                    rowRangeMax--;
                 }
+
+                if (direction == 2)
+                {
+                    if (counter >= MessageMatrix.Length)
+                        break;
+                    for (int i = rowRangeMax; i >= columnRangeMin; i--)
+                    {
+                        MessageMatrix[i, columnRangeMin] = message[counter];
+                        counter++;
+                    }
+
+
+                    direction = 3;
+                    columnRangeMin++;
+                }
+                if (direction == 3)
+                {
+                    if (counter >= MessageMatrix.Length)
+                        break;
+                    for (int i = columnRangeMin; i <= columnRangeMax; i++)
+                    {
+                        MessageMatrix[rowRangeMin, i] = message[counter];
+                        counter++;
+                    }
+
+
+                    direction = 0;
+                    rowRangeMin++;
+                }
+
             }
+
+
         }
 
         private string ReadDecryptedFromMatrix()
         {
             char[] decrypted = new char[MessageMatrix.Length];
+            int counter = 0;
             for (int i = 0; i < MessageMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < MessageMatrix.GetLength(1); j++)
                 {
-                    decrypted[i * MessageMatrix.GetLength(0) + j] = MessageMatrix[i, j];
+                    decrypted[counter] = MessageMatrix[i, j];
+                    counter++;
                 }
             }
 
@@ -189,24 +286,24 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             switch (Mode)
             {
                 case CipherMode.Key_As_Width:
-                {
-                    MessageMatrix = new char[dimensionSize, Key];
-                    WriteDecryptedToMatrix(ref message);
-                    result = ReadDecryptedFromMatrix();
+                    {
+                        MessageMatrix = new char[dimensionSize, Key];
+                        WriteDecryptedToMatrix(ref message);
+                        result = ReadDecryptedFromMatrix();
 
                         break;
-                }
+                    }
 
                 case CipherMode.Key_As_Height:
-                {
-                    MessageMatrix = new char[Key, dimensionSize];
-                    WriteDecryptedToMatrix(ref message);
-                    result = ReadDecryptedFromMatrix();
+                    {
+                        MessageMatrix = new char[Key, dimensionSize];
+                        WriteDecryptedToMatrix(ref message);
+                        result = ReadDecryptedFromMatrix();
 
                         break;
-                }
+                    }
             }
-            
+
             return result;
         }
     }

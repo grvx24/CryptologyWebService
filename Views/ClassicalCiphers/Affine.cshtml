@@ -256,14 +256,14 @@
         });
 
     //Ajax
-    var routeInit = RouteCipherInit({
+    var affineInit = AffineCipherInit({
         urls: {
-            encryptUrl: '@Url.Action("RouteEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("RouteDecrypt", "ClassicalCiphers")'
+            encryptUrl: '@Url.Action("AffineEncrypt", "ClassicalCiphers")',
+            decryptUrl: '@Url.Action("AffineDecrypt", "ClassicalCiphers")'
         }
     });
 
-    routeInit.init();
+    affineInit.init();
 
 
 
