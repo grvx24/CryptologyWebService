@@ -1,23 +1,24 @@
-﻿<script src="~/js/ciphers/DesCipher.js"></script>
+﻿<script src="~/js/generators/Generators.js"></script>
+<link rel="stylesheet" href="~/css/generators.css" />
 
 <div class="container">
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        Des to fajny szyfr.
+        Opis generatora kaskadowego :)
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 
-        @await Html.PartialAsync("_DesPartial")
+        @await Html.PartialAsync("_ThresholdPartial")
 
     </div>
 
     <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_DesVisualization")
+        @await Html.PartialAsync("_ThresholdVisualization")
     </div>
 
 

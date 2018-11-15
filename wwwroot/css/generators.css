@@ -1,0 +1,75 @@
+﻿    /* Force scrollbars onto browser window */
+    body {
+        margin-bottom: 200%;
+    }
+
+    /* Box styles */
+    .lfsrBox {
+        border: none;
+        padding: 5px;
+        font-size: 18px;
+        width: 100%;
+        height: 300px;
+        overflow: scroll;
+    }
+
+
+.registers-font{
+    letter-spacing: 5px;
+    font-size: 20px
+}
+
+#seriesLength{
+    max-width: 100px;
+}
+
+table {
+    overflow: hidden;
+}
+
+tr:hover {
+    background-color: #ffa;
+}
+
+td, th {
+    position: relative;
+}
+
+    td:hover::after,
+    th:hover::after {
+        content: "";
+        position: absolute;
+        background-color: #ffa;
+        left: 0;
+        top: -5000px;
+        height: 10000px;
+        width: 100%;
+        z-index: -1;
+    }
+
+th.lfsr-function-column {
+    background: #87cefa;
+    overflow-wrap: break-word;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    max-width: 150px;
+}
+
+td.lfsr-function-column {
+    background: #5c9def;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+td.lfsr-function-cell {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.lfsr-function-cell:hover{
+    background-color:#ffa500;
+}
+

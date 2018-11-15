@@ -1,5 +1,4 @@
-﻿<div class="col-lg-12">
-<div class="col-lg-6">
+﻿<div class="col-lg-6">
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
@@ -29,12 +28,11 @@
             <label for="KeyLengthEncrypt">@Text.KeyLength</label>
             <fieldset id="KeyLengthEncrypt">
                 <input type="radio" name="keyLengthEncrypt" value="128" checked>
-                <text>128</text>
+                <text class="radio-text">128</text>
                 <input type="radio" name="keyLengthEncrypt" value="192">
-                <text>192</text>
+                <text class="radio-text">192</text>
                 <input type="radio" name="keyLengthEncrypt" value="256">
-                <text>256</text>
-
+                <text class="radio-text">256</text>
             </fieldset>
 
             <div class="input-group">
@@ -42,14 +40,13 @@
                 <span class="input-group-btn">
                     <button data-toggle="tooltip" data-placement="top" title="@Text.RandomKeyInfo" id="btnRandomKeyEncrypt" class="btn btn-success">Losuj</button>
                     <button data-toggle="tooltip" data-placement="top" title="@Text.CharactersCount" id="keyCounterEncrypt" class="btn btn-danger">0</button>
-
                 </span>
             </div>
             <fieldset>
                 <input type="radio" name="keyFormatEncrypt" value=1 checked>
-                <text>Hex</text>
+                <text class="radio-text">Hex</text>
                 <input type="radio" name="keyFormatEncrypt" value=2>
-                <text>Binary string</text>
+                <text class="radio-text">Binary string</text>
             </fieldset>
 
         </div>
@@ -65,9 +62,9 @@
             </div>
             <fieldset>
                 <input type="radio" name="IVFormatEncrypt" value=1 checked>
-                <text>Hex</text>
+                <text class="radio-text">Hex</text>
                 <input type="radio" name="IVFormatEncrypt" value=2>
-                <text>Binary string</text>
+                <text class="radio-text">Binary string</text>
             </fieldset>
         </div>
     </div>
@@ -80,11 +77,11 @@
 
                     <fieldset>
                         <input type="radio" name="inputFormatEncrypt" value=0 checked>
-                        <text>ASCII</text>
+                        <text class="radio-text">ASCII</text>
                         <input type="radio" name="inputFormatEncrypt" value=1>
-                        <text>Hex</text>
+                        <text class="radio-text">Hex</text>
                         <input type="radio" name="inputFormatEncrypt" value=2>
-                        <text>BinaryString</text>
+                        <text class="radio-text">BinaryString</text>
                     </fieldset>
                 </div>
             </div>
@@ -117,7 +114,7 @@
             <textarea readonly placeholder="@Text.EncryptedText" class="form-control" rows="5" id="outputEncrypt"></textarea>
             <fieldset>
                 <input type="radio" name="outputFormatEncrypt" value=3 checked>
-                <text>Base64</text>
+                <text class="radio-text">Base64</text>
             </fieldset>
         </div>
 
@@ -159,11 +156,11 @@
             <label for="KeyLengthDecrypt">@Text.KeyLength</label>
             <fieldset id="KeyLengthDecrypt">
                 <input type="radio" name="keyLengthDecrypt" value="128" checked>
-                <text>128</text>
+                <text class="radio-text">128</text>
                 <input type="radio" name="keyLengthDecrypt" value="192">
-                <text>192</text>
+                <text class="radio-text">192</text>
                 <input type="radio" name="keyLengthDecrypt" value="256">
-                <text>256</text>
+                <text class="radio-text">256</text>
             </fieldset>
             <div class="input-group">
                 <input placeholder="Klucz" id="keyDecrypt" class="form-control" type="text"/>
@@ -175,9 +172,9 @@
 
             <fieldset>
                 <input type="radio" name="keyFormatDecrypt" value=1 checked>
-                <text>Hex</text>
+                <text class="radio-text">Hex</text>
                 <input type="radio" name="keyFormatDecrypt" value=2>
-                <text>Binary string</text>
+                <text class="radio-text">Binary string</text>
             </fieldset>
         </div>
     </div>
@@ -193,9 +190,9 @@
             </div>
             <fieldset>
                 <input type="radio" name="IVFormatDecrypt" value=1 checked>
-                <text>Hex</text>
+                <text class="radio-text">Hex</text>
                 <input type="radio" name="IVFormatDecrypt" value=2>
-                <text>Binary string</text>
+                <text class="radio-text">Binary string</text>
             </fieldset>
         </div>
     </div>
@@ -207,7 +204,7 @@
                     <textarea maxlength="50000" placeholder="@Text.WriteTextToDecrypt" class="form-control" rows="5" id="inputDecrypt"></textarea>
                     <fieldset>
                         <input type="radio" name="inputFormatDecrypt" value=3 checked>
-                        <text>Base64</text>
+                        <text class="radio-text">Base64</text>
                     </fieldset>
                 </div>
             </div>
@@ -241,13 +238,12 @@
             <textarea readonly placeholder="@Text.DecryptedText" class="form-control" rows="5" id="outputDecrypt"></textarea>
             <fieldset>
                 <input type="radio" name="outputFormatDecrypt" value=0 checked>
-                <text>ASCII</text>
+                <text class="radio-text">ASCII</text>
                 <input type="radio" name="outputFormatDecrypt" value=1>
-                <text>HEX</text>
+                <text class="radio-text">HEX</text>
             </fieldset>
         </div>
     </div>
-</div>
 </div>
 
 <script>

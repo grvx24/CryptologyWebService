@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\classical_ciphers.css" />
+    <None Include="wwwroot\images\rcon1.png" />
     <None Include="wwwroot\js\ciphers\ClassicalCiphers.js" />
   </ItemGroup>
 

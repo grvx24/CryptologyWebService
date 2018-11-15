@@ -22,7 +22,7 @@
         return HEX.toUpperCase();
 
     }
-    
+
     var encryptInit = function() {
 
         $('#encryptButton').click(function() {
@@ -70,8 +70,6 @@
                 reader.onload = function () {
                     
                     var fileData = reader.result.split(',')[1];
-
-                    console.log(fileData);
 
                     var model = {
                         Message: fileData,
@@ -171,8 +169,6 @@ var decryptInit = function () {
                 reader.onload = function () {
                     
                     var fileData = reader.result.split(',')[1];
-
-                    console.log(fileData);
 
                     var model = {
                         Message: fileData,
@@ -708,7 +704,6 @@ var decryptInit = function () {
             var mode = $("input[name='outputFormatDecrypt']:checked").val();
             var output = $('#outputDecrypt');
 
-            console.log(mode);
             switch (mode) {
             case "0":
             {
