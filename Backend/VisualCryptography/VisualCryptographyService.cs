@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -54,11 +55,34 @@ namespace CryptoWebService.Backend.VisualCryptography
             Color colorOfspecificPixel;
             Color share1Color;
             Color share2Color;
-            int randomValue = 0;
+            BitArray subElements_1;
+            BitArray subElements_2;
+            int randomIndex = 0;
+
+            BitArray[] SubElements_White = new BitArray[]
+            {
+                new BitArray(new bool[] { false, true, true, false }),
+                new BitArray(new bool[] { false, false, true, true }),
+                new BitArray(new bool[] { false, false, true, true }),
+                new BitArray(new bool[] { true, false, true, true }),
+                new BitArray(new bool[] { true, false, true, true }),
+                new BitArray(new bool[] { true, false, true, true }),
+            };
+
+            BitArray[] SubElements_Black = new BitArray[]
+            {
+                new BitArray(new bool[] { false, false, true, true }),
+                new BitArray(new bool[] { true, true, false, false }),
+                new BitArray(new bool[] { false, false, true, true }),
+                new BitArray(new bool[] { true, true, true, false }),
+                new BitArray(new bool[] { false, true, true, true }),
+                new BitArray(new bool[] { true, true, true, false })
+            };
+
             List<Bitmap> Secrets = new List<Bitmap>()
             {
-                new Bitmap((share1.Width * 2), (share1.Height*2)),
-                new Bitmap((share2.Width * 2), (share2.Height*2))
+                    new Bitmap((share1.Width * 2), (share1.Height*2)),
+                    new Bitmap((share2.Width * 2), (share2.Height*2))
             };
 
             for (int i = 0; i < share1.Height; i++)
@@ -69,47 +93,38 @@ namespace CryptoWebService.Backend.VisualCryptography
                     share1Color = share1.GetPixel(j, i);
                     share2Color = share2.GetPixel(j, i);
 
-                    randomValue = random.Next(0, 2);
+                    randomIndex =  random.Next(0, 4);
 
                     if (IsItBlackColor(colorOfspecificPixel))
                     {
                         if (IsItWhiteOrTransparent(share1Color) && IsItWhiteOrTransparent(share2Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_Black[0 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[0 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[0 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[0 + randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_Black[0];
+                            subElements_2 = SubElements_Black[1];
 
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_Black[1 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[1 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[1 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[1 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
                         }
-                        else if ((IsItWhiteOrTransparent(share1Color) && IsItBlackColor(share2Color)) ||
-                                 (IsItWhiteOrTransparent(share2Color) && IsItBlackColor(share1Color)))
+                        else if (IsItWhiteOrTransparent(share1Color) && IsItBlackColor(share2Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_Black[2 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[2 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[2 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[2 + randomValue, 3] ? Color.Black : Color.Transparent);
 
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_Black[3 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[3 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[3 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[3 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_Black[2];
+                            subElements_2 = SubElements_Black[3];
 
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
+                        }
+                        else if (IsItWhiteOrTransparent(share2Color) && IsItBlackColor(share1Color))
+                        {
+
+                            subElements_1 = SubElements_Black[2];
+                            subElements_2 = SubElements_Black[3];
+
+                            setPixels(Secrets, i, j, subElements_2, subElements_1, randomIndex);
                         }
                         else if (IsItBlackColor(share2Color) && IsItBlackColor(share1Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_Black[4 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[4 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[4 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[4 + randomValue, 3] ? Color.Black : Color.Transparent);
-
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_Black[5 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_Black[5 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_Black[5 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_Black[5 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_Black[4];
+                            subElements_2 = SubElements_Black[5];
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
                         }
                         else
                         {
@@ -120,41 +135,31 @@ namespace CryptoWebService.Backend.VisualCryptography
                     {
                         if (IsItWhiteOrTransparent(share1Color) && IsItWhiteOrTransparent(share2Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_White[0 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_White[0 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_White[0 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[0 + randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_White[0];
+                            subElements_2 = SubElements_White[1];
 
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_White[1 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_White[1 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_White[1 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[1 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
                         }
-                        else if ((IsItWhiteOrTransparent(share1Color) && IsItBlackColor(share2Color)) ||
-                                 (IsItWhiteOrTransparent(share2Color) && IsItBlackColor(share1Color)))
+                        else if (IsItWhiteOrTransparent(share1Color) && IsItBlackColor(share2Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_White[2 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_White[2 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_White[2 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[2 + randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_White[2];
+                            subElements_2 = SubElements_White[3];
 
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_White[3 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_White[3 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_White[3 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[3 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
+                        }
+                        else if (IsItWhiteOrTransparent(share2Color) && IsItBlackColor(share1Color))
+                        {
+                            subElements_1 = SubElements_White[2];
+                            subElements_2 = SubElements_White[3];
 
+                            setPixels(Secrets, i, j, subElements_2, subElements_1, randomIndex);
                         }
                         else if (IsItBlackColor(share2Color) && IsItBlackColor(share1Color))
                         {
-                            Secrets[0].SetPixel((j * 2), (i * 2), SubElements_White[4 + randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2), (i * 2) + 1, SubElements_White[4 + randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2), SubElements_White[4 + randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[4 + randomValue, 3] ? Color.Black : Color.Transparent);
+                            subElements_1 = SubElements_White[4];
+                            subElements_2 = SubElements_White[5];
 
-                            Secrets[1].SetPixel((j * 2), (i * 2), SubElements_White[5 - randomValue, 0] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2), (i * 2) + 1, SubElements_White[5 - randomValue, 1] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2), SubElements_White[5 - randomValue, 2] ? Color.Black : Color.Transparent);
-                            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, SubElements_White[5 - randomValue, 3] ? Color.Black : Color.Transparent);
+                            setPixels(Secrets, i, j, subElements_1, subElements_2, randomIndex);
                         }
                         else
                         {
@@ -169,6 +174,20 @@ namespace CryptoWebService.Backend.VisualCryptography
             }
             return ConvertBitmapToStrings(Secrets);
         }
+
+        private static void setPixels(List<Bitmap> Secrets,int i, int j , BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
+        {
+            Secrets[0].SetPixel((j * 2), (i * 2)        , subElements_1[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2), (i * 2) + 1    , subElements_1[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2)    , subElements_1[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_1[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
+
+            Secrets[1].SetPixel((j * 2), (i * 2)        , subElements_2[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2), (i * 2) + 1    , subElements_2[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2)    , subElements_2[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
+        }
+
 
         private static string[] SecretsAlgorithm1(Bitmap bitmap)
         {
@@ -373,46 +392,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             { false, true, true, false },
             { true, false, false, true }
         };
-
-        private static bool[,] SubElements_White = new bool[,]
-        {
-            { false, false, true, true },
-            { true, false, true, false },
-            { false, false, true, true },
-            { true, false, true, true },
-            { true, false, true, true },
-            { true, false, true, true }
-        };
-
-        private static bool[,] SubElements_Black = new bool[,]
-        {
-            { false, false, true, true },
-            { true, true, false, false },
-            { false, false, true, true },
-            { true, true, false, true },
-            { false, true, true, true },
-            { true, true, false, true }
-        };
-
-        //private static SubElement[] SubElements_Method = new SubElement[]
-        //{
-        //    new SubElement("1010"),
-        //    new SubElement("0101"),
-        //    new SubElement("1100"),
-        //    new SubElement("0011"),
-        //    new SubElement("1001"),
-        //    new SubElement("0110")
-        //};
-
-        //private static SubElement[] SubElements_DoublesResolutionMethod_Opposite = new SubElement[]
-        //{
-        //    new SubElement("0101"),
-        //    new SubElement("1010"),
-        //    new SubElement("0011"),
-        //    new SubElement("1100"),
-        //    new SubElement("0110"),
-        //    new SubElement("1001")
-        //};
         #endregion
     }
 }
