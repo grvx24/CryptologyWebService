@@ -333,6 +333,40 @@ namespace CryptoWebService.Backend.VisualCryptography
             return VieModelDto;
         }
 
+        public static ViewModelDto PrepareVisualSteganographyView()
+        {
+            ViewModelDto VieModelDto = new ViewModelDto();
+
+            List<AnimationDto> Animations = new List<AnimationDto>
+            {
+                new AnimationDto("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
+                {
+                    Width = 600,
+                    Height = 300,
+                    Amplitude = 3,
+                    Period = 40000
+                },
+            };
+
+            List<ImageDto> Images = new List<ImageDto>
+            {
+                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                {
+                    Width = 793,
+                    Height = 200
+                },
+                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                {
+                    Width = 991,
+                    Height = 250
+                }
+            };
+            VieModelDto.AnimationList = Animations;
+            VieModelDto.ImageList = Images;
+
+            return VieModelDto;
+        }
+
         #endregion
 
         #region ColorHelpers

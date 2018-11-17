@@ -1,14 +1,14 @@
 ﻿@using CryptoWebService.Helpers;
+@model ViewModelDto;
 
 <div class="row ">
     <div class="col-lg-12" style="margin-bottom: 15px">
         <div class="col-lg-12">
-            <label style="font-size: 30px; ">steganografia wizualna &nbsp</label>
-            <div class="glyphicon glyphicon-search" style="font-size:30px;transform: scaleX(-1);color: #1c5aa6;"></div>
+            <label style="font-size: 30px; ">steganografia wizualna</label>
         </div>
     </div>
     <div class="col-lg-12">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <label class="form-control" style="height: 100%" id="MethodDescription">
                 Poniżej możesz sprawdzić w praktyce jak działa steganografia wizualna.
                 Steganografia wizualna polega na zaszyciu informacji ( obrazu ) w dóch osobnych obrazach,
@@ -16,8 +16,8 @@
 
             </label>
         </div>
-        <div class="col-lg-4" style="background: aliceblue; height: 300px;">
-
+        <div class="col-lg-2 myBackground">
+            <div class="glyphicon glyphicon-search" style="font-size:150px;"></div>
         </div>
     </div>
 </div>
@@ -153,6 +153,7 @@
 
 
 <style>
+
     label {
         margin-top: 5px;
         font-size: 18px;
@@ -162,8 +163,12 @@
         color: #1c5aa6;
     }
 
-    .ImageDescription{
-        font-size:16px;
+    .myBackground {
+        background-image: url("/images/black_and_white.png");
+        background-repeat: no-repeat;
+    }
+    .ImageDescription {
+        font-size: 16px;
     }
 
     .row-eq-height {
@@ -191,6 +196,7 @@
         margin-top: 10px;
         margin-bottom: 20px;
     }
+
 </style>
 
 <script>

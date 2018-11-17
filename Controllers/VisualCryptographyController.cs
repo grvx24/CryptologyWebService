@@ -55,7 +55,7 @@ namespace CryptoWebService.Controllers
 
         #region VisualSteganography
 
-        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualCryptoraphyView());
+        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualSteganographyView());
 
         [HttpPost]
         public IActionResult VisualSteganography([FromBody] string[] Images)
