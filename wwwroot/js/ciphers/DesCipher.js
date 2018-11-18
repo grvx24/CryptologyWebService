@@ -1,4 +1,4 @@
-﻿var AesCipherInit = function (config) {
+﻿var DesCipherInit = function (config) {
 
     //for output encoding
     var outputDecryptASCII = '';
@@ -32,6 +32,7 @@
             if (validateEncryptionForm() == false) {
                 return;
             }
+
 
             if (inputModeEncrypt === 'text') {
 
@@ -277,7 +278,7 @@
 
             var format = $("input[name='keyFormatEncrypt']:checked").val();
 
-            var keyLength = $("input[name='keyLengthEncrypt']:checked").val();
+            var keyLength = 64;
 
             var keyEncryptInput = $('#keyEncrypt');
 
@@ -305,7 +306,7 @@
             var format = $("input[name='IVFormatEncrypt']:checked").val();
 
             var IVEncryptInput = $('#IVEncrypt');
-            var keyLength = parseInt($("input[name='keyLengthEncrypt']:checked").val());;
+            var keyLength = 64;
 
             switch (format) {
                 case "1":
@@ -334,7 +335,7 @@
 
             var format = $("input[name='keyFormatDecrypt']:checked").val();
 
-            var keyLength = $("input[name='keyLengthDecrypt']:checked").val();
+            var keyLength = 64;
 
             var keyDecryptInput = $('#keyDecrypt');
 
@@ -363,7 +364,7 @@
             var format = $("input[name='IVFormatDecrypt']:checked").val();
 
             var IVDecryptInput = $('#IVDecrypt');
-            var keyLength = 128;
+            var keyLength = 64;
 
             switch (format) {
                 case "1":
@@ -446,8 +447,8 @@
 
         var key = $('#keyEncrypt').val();
         var iv = $('#IVEncrypt').val();
-        var keyLength = parseInt($("input[name='keyLengthEncrypt']:checked").val());
-        var ivLength = 128;
+        var keyLength = 64;
+        var ivLength = 64;
         var inputTextarea = $('#inputEncrypt').val();
 
 
@@ -551,12 +552,12 @@
 
         var key = $('#keyDecrypt').val();
         var iv = $('#IVDecrypt').val();
-        var keyLength = parseInt($("input[name='keyLengthDecrypt']:checked").val());
-        var ivLength = 128;
+        var keyLength = 64;
+        var ivLength = 64;
         var inputTextarea = $('#inputDecrypt').val();
 
 
-        //0 - CBC 2 - ECB
+        //0 - CBC 1 - ECB
         var mode = $('#algorithmSelectModeDecrypt option:selected').val();
 
         keyFormat = $("input[name='keyFormatDecrypt']:checked").val();
@@ -595,7 +596,7 @@
                 }
         }
 
-        if (mode != "2") {
+        if (mode != "1") {
             switch (ivFormat) {
                 case "1":
                     {
@@ -660,7 +661,7 @@
             function () {
                 var mode = $('#algorithmSelectModeEncrypt option:selected').val();
 
-                if (mode === "2") {
+                if (mode === "1") {
                     ivTextEncrypt.attr('readonly', true);
                     btnRandomEncrypt.attr('disabled', true);
                 } else {
@@ -679,7 +680,7 @@
             function () {
                 var mode = $('#algorithmSelectModeDecrypt option:selected').val();
 
-                if (mode === "2") {
+                if (mode === "1") {
                     ivTextDecrypt.attr('readonly', true);
                     btnRandomDecrypt.attr('disabled', true);
                 } else {

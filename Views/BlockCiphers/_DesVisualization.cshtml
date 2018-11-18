@@ -1,4 +1,452 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿<link rel="stylesheet" type="text/css" href="~/css/des_visualization.css">
+<script src="~/lib/custom/d3.min.js"></script>
+<script src="~/js/ciphers/DesVisualization.js"></script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="text-center">
+            Lorem ipsum
+        </h1>
+        <br />
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <svg id="binaryMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationMatrixResult">
+
+        </svg>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <svg id="binaryKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationKeyMatrixResult">
+
+        </svg>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <svg id="leftKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-6">
+        <svg id="leftKeyResult">
+
+        </svg>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <svg id="rightKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-6">
+        <svg id="rightKeyResult">
+
+        </svg>
+    </div>
+</div>
+
+
+<script>
+
+    var blockVizResult = BlockPermutationVisualize();
+    var keyVizResult = KeyPermutationVisualize();
+
+    var keyAfterRotation=RoundKeyVisualize(keyVizResult.resultMatrix);
+    console.log(keyAfterRotation);
+
+    function BlockPermutationVisualize() {
+
+        var permutationMatrix = new Array(8);
+        permutationMatrix[0] = [58,50,42,34,26,18,10,2];
+        permutationMatrix[1] = [60,52,44,36,28,20,12,4];
+        permutationMatrix[2] = [62,54,46,38,30,22,14,6];
+        permutationMatrix[3] = [64,56,48,40,32,24,16,8];
+        permutationMatrix[4] = [57,49,41,33,25,17,9,1];
+        permutationMatrix[5] = [59,51,43,35,27,19,11,3];
+        permutationMatrix[6] = [61,53,45,37,29,21,13,5];
+        permutationMatrix[7] = [63,55,47,39,31,23,15,7];
+
+        var inputData = [];
+
+        var binaryMatrix = new Array(8);
+        for (var i = 0; i < binaryMatrix.length; i++) {
+            binaryMatrix[i] = new Array(8);
+        }
+
+        var bytesMatrix = new Array(2);
+        for (var i = 0; i < bytesMatrix.length; i++) {
+            bytesMatrix[i] = new Array(4);
+        }
+
+        var currentByte = 0;
+        for (var i = 0; i < bytesMatrix.length; i++) {
+            for (var j = 0; j < bytesMatrix[0].length; j++) {
+                let rand = Math.floor(Math.random() * 256);
+
+                bytesMatrix[i][j] = rand;
+                inputData.push(bytesMatrix[i][j]);
+
+                var bin = rand.toString(2);
+                bin = "00000000".substring(bin.length) + bin;
+                for (var k = 0; k < bin.length; k++) {
+                    binaryMatrix[currentByte][k] = bin[k];
+                }          
+                currentByte++;
+            }
+        }
+
+        var permutationJson = Permutation(binaryMatrix, permutationMatrix);
+
+        VisualizeDataBlock(binaryMatrix, 'binaryMatrix', 'cell-rect-data',false);
+        VisualizeDataBlock(permutationMatrix, 'permutationMatrix', 'cell-rect-data',false);
+        VisualizeDataBlock(permutationJson.resultBinMatrix, 'permutationMatrixResult', 'cell-rect-data', false);
+
+        return {
+            binMatrix: binaryMatrix,
+            permutationMatrix: permutationMatrix,
+            resultBinMatrix: permutationJson.resultBinMatrix
+        }
+
+    }
+
+    function KeyPermutationVisualize() {
+
+        var permutationMatrix = new Array(8);
+        permutationMatrix[0] = [57,49,41,33,25,17,9];
+        permutationMatrix[1] = [1,58,50,42,34,26,18];
+        permutationMatrix[2] = [10,2,59,51,43,35,27];
+        permutationMatrix[3] = [19,11,3,60,52,44,36];
+        permutationMatrix[4] = [63,55,47,39,31,23,15];
+        permutationMatrix[5] = [7,62,54,46,38,30,22];
+        permutationMatrix[6] = [14,6,61,53,45,37,29];
+        permutationMatrix[7] = [21, 13, 5, 28, 20, 12, 4];
+
+        inputData = [];
+
+        var binaryKeyMatrix = new Array(8);
+        for (var i = 0; i < binaryKeyMatrix.length; i++) {
+            binaryKeyMatrix[i] = new Array(8);
+        }
+
+
+        var bytesKeyMatrix = new Array(1);
+        for (var i = 0; i < bytesKeyMatrix.length; i++) {
+            bytesKeyMatrix[i] = new Array(8);
+        }
+
+        var currentByte = 0;
+        for (var i = 0; i < bytesKeyMatrix.length; i++) {
+            for (var j = 0; j < bytesKeyMatrix[0].length; j++) {
+
+                let rand = Math.floor(Math.random() * 256);
+
+                bytesKeyMatrix[i][j] = rand;
+                inputData.push(bytesKeyMatrix[i][j]);
+
+                var bin = rand.toString(2);
+                bin = "00000000".substring(bin.length) + bin;
+                for (var k = 0; k < 8; k++) {
+                    binaryKeyMatrix[currentByte][k] = bin[k];
+                }
+                currentByte++;
+            }
+        }
+
+        var permutationJson = PermutationKey(binaryKeyMatrix, permutationMatrix);
+
+        VisualizeDataBlock(binaryKeyMatrix, 'binaryKeyMatrix', 'cell-rect-data', false);
+        VisualizeDataBlock(permutationMatrix, 'permutationKeyMatrix', 'cell-rect-data', false);
+        VisualizeDataBlock(permutationJson.resultBinMatrix, 'permutationKeyMatrixResult', 'cell-rect-data', false);
+
+        return {
+            binMatrix: binaryKeyMatrix,
+            permutationMatrix: permutationMatrix,
+            resultMatrix: permutationJson.resultBinMatrix
+        }
+    }
+
+    function RoundKeyVisualize(keyMatrix) {
+
+        var leftMatrix = new Array(4); 
+        var rightMatrix = new Array(4); 
+
+        for (var i = 0; i < leftMatrix.length; i++) {
+            leftMatrix[i] = new Array(7);
+        }
+
+        for (var i = 0; i < rightMatrix.length; i++) {
+            rightMatrix[i] = new Array(7);
+        }
+
+        for (var i = 0; i < leftMatrix.length; i++) {
+            for (var j = 0; j < leftMatrix[0].length; j++) {
+                leftMatrix[i][j] = keyMatrix[i][j];
+            }
+        }
+
+        for (var i = 0; i < rightMatrix.length; i++) {
+            for (var j = 0; j < rightMatrix[0].length; j++) {
+                rightMatrix[i][j] = keyMatrix[i+4][j];
+            }
+        }
+
+        var leftMResult = RotateLeft(leftMatrix, 1);
+        var rightMResult = RotateLeft(rightMatrix, 1);
+
+        VisualizeDataBlock(leftMatrix, 'leftKeyMatrix', 'cell-rect-data', false);
+        VisualizeDataBlock(leftMResult, 'leftKeyResult', 'cell-rect-data', false);
+        VisualizeDataBlock(rightMatrix, 'rightKeyMatrix', 'cell-rect-data', false);
+        VisualizeDataBlock(rightMResult, 'rightKeyResult', 'cell-rect-data', false);
+
+
+        return MergeMatrix(leftMResult, rightMResult);
+    }
+
+    function PermutationKey2(keyMatrix) {
+
+    }
+
+    function RotateLeft(matrix, shiftNumber) {
+        var result = new Array(matrix.length);
+        for (var i = 0; i < result.length; i++) {
+            result[i] = new Array(matrix[0].length);
+        }
+
+        for (var i = 0; i < result.length; i++) {
+            for (var j = 0; j < result[0].length-shiftNumber; j++) {
+                result[i][j] = matrix[i][j + shiftNumber];
+            }
+        }
+
+        for (var i = 0; i < result.length; i++) {
+            for (var j = result[0].length - shiftNumber; j < result[0].length; j++) {
+                result[i][j] = matrix[i][j - result[0].length + shiftNumber];
+            }
+        }
+
+        return result;
+    }
+
+    function MergeMatrix(m1, m2) {
+        if (m1[0].length === m2[0].length) {
+
+            var newMatrix = new Array(m1.length+m2.length);
+            for (var i = 0; i < newMatrix.length; i++) {
+                newMatrix[i] = new Array(m1[0].length);
+            }
+
+            for (var i = 0; i < m1.length; i++) {
+                for (var j = 0; j < newMatrix[0].length; j++) {
+                    newMatrix[i][j] = m1[i][j];
+                }
+            }
+
+            for (var i = m1.length; i < m1.length + m2.length; i++) {
+                for (var j = 0; j < newMatrix[0].length; j++) {
+                    newMatrix[i][j] = m2[i - m2.length][j];
+                }
+            }
+            return newMatrix;
+        }
+        return undefined;
+    }
+
+
+    function IntToHexString(d) {
+        var result = d.toString(16).toUpperCase();
+        return result.length < 2 ? "0" + result : result;
+    }
+
+    function VisualizeDataBlock(matrix, svgId, cellRectClass,hexValue=true) {
+
+        var numrows = matrix.length;
+        var numcols = matrix[0].length;
+
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
+            width = 300,
+            height = 300;
+
+        var textOffsetX = (width / numcols) / 2;
+        var textOffsetY = (height / numrows) / 2;
+
+        var svg = d3.select("#" + svgId)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .style("margin-left", -margin.left + "px")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scale.ordinal()
+            .domain(d3.range(numcols))
+            .rangeBands([0, width]);
+
+        var y = d3.scale.ordinal()
+            .domain(d3.range(numrows))
+            .rangeBands([0, height]);
+
+        var row = svg.selectAll(".row")
+            .data(matrix)
+            .enter().append("g")
+            .attr("class", "row")
+            .attr("transform", function (d, i) { return "translate(0," + y(i) + ")"; });
+
+        row.selectAll(".cell")
+            .data(function (d) { return d; })
+            .enter().append("g")
+            .attr("class", "cell")
+            .append("rect")
+            .attr("class", cellRectClass)
+            .attr("x", function (d, i) { return x(i); })
+            .attr("width", x.rangeBand())
+            .attr("height", y.rangeBand());
+
+
+        row.selectAll(".cell").append("text")
+            .attr("class", "cell-text-data")
+            .attr("x", function (d, i) { return x(i) + textOffsetX; })
+            .attr("y", textOffsetY)
+            .text(function (d) {
+                if (hexValue) {
+                    return IntToHexString(d);
+                } else {
+                    return d;
+                }
+            });
+    }
+
+
+
+    //backend
+    function Permutation(binaryDataMatrix, permutationMatrix) {
+
+        var resultMatrix = new Array(8);
+        for (var i = 0; i < resultMatrix.length; i++) {
+            resultMatrix[i] = new Array(8);
+        }
+
+        
+        var len = binaryDataMatrix.length;
+        var len2 = binaryDataMatrix[0].length;
+        data = new Array(len2);
+
+        for (var i = 0; i < len2; i++) {
+            data[i] = '';
+        }
+
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len2; j++) {
+
+                var newPosition = permutationMatrix[i][j]-1;
+                var firstIndex = Math.floor(newPosition / len);
+                var secondIndex = newPosition % len2;
+
+                resultMatrix[firstIndex][secondIndex] = binaryDataMatrix[i][j];
+            }
+        }
+
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len2; j++) {
+
+                data[i] += resultMatrix[i][j];
+            }
+        }
+
+        var resultData = [];
+        for (var i = 0; i < data.length; i++) {
+            resultData[i] = parseInt(data[i], 2);
+        }
+
+        var resultDataMatrix = new Array(2);
+        for (var i = 0; i < resultDataMatrix.length; i++) {
+            resultDataMatrix[i] = new Array(4);
+        }
+
+        var resultDataCounter = 0;
+        for (var i = 0; i < resultDataMatrix.length; i++) {
+            for (var j = 0; j < resultDataMatrix[0].length; j++) {
+
+                resultDataMatrix[i][j] = resultData[resultDataCounter];
+                resultDataCounter++;
+            }
+        }
+            
+        return {
+            resultDataMatrix: resultDataMatrix,
+            resultBinMatrix: resultMatrix
+        }
+    }
+
+
+    function PermutationKey(binaryDataMatrix, permutationMatrix) {
+
+        var resultMatrix = new Array(8);
+        for (var i = 0; i < resultMatrix.length; i++) {
+            resultMatrix[i] = new Array(8);
+        }
+
+        var len = binaryDataMatrix.length;
+        var len2 = binaryDataMatrix[0].length;
+        data = new Array(len2);
+        for (var i = 0; i < len2; i++) {
+            data[i] = '';
+        }
+
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len2-1; j++) {
+
+                var newPosition = permutationMatrix[i][j] - 1;
+                var firstIndex = Math.floor(newPosition / len);
+                var secondIndex = newPosition % len2;
+
+                resultMatrix[firstIndex][secondIndex] = binaryDataMatrix[i][j];
+            }
+        }
+
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len2; j++) {
+
+                data[i] += resultMatrix[i][j];
+            }
+        }
+
+        var resultData = [];
+        for (var i = 0; i < data.length; i++) {
+            resultData[i] = parseInt(data[i], 2);
+        }
+
+
+        return {
+            resultBinMatrix: resultMatrix
+        }
+    }
+
+
+</script>
