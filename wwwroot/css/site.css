@@ -77,6 +77,7 @@ body {
     transition: 0.3s;
     font-size: 17px;
     border-radius: 14px;
+    margin-right:5px;
 }
 
 /* Change background color of buttons on hover */
