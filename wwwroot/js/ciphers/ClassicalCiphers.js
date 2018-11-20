@@ -8,7 +8,7 @@
             var model = {
                 message: $('#inputEncrypt').val(),
                 key: $('#keyEncrypt').val(),
-                alphabetType: $('#alphabetEncrypt option:selected').val()
+                alphabetType: $('#alphabetEncrypt').val()
             }
 
             $.ajax({
@@ -33,7 +33,7 @@
                 var model = {
                     message: $('#inputDecrypt').val(),
                     key: $('#keyDecrypt').val(),
-                    alphabetType: $('#alphabetDecrypt option:selected').val()
+                    alphabetType: $('#alphabetDecrypt').val()
                 }
 
                 $.ajax({
@@ -73,10 +73,12 @@ var AffineCipherInit = function (config) {
 
             var model = {
                 message: $('#inputEncrypt').val(),
-                keyA: $('#keyEncryptA').val(),
-                keyB: $('#keyEncryptB').val(),
+                keyA: $('#keyEncryptA option:selected').val(),
+                keyB: $('#keyEncryptB option:selected').val(),
                 alphabetType: $('#alphabetEncrypt option:selected').val()
             }
+
+            console.log(model);
 
             $.ajax({
                 type: 'POST',
@@ -99,8 +101,8 @@ var AffineCipherInit = function (config) {
 
             var model = {
                 message: $('#inputDecrypt').val(),
-                keyA: $('#keyDecryptA').val(),
-                keyB: $('#keyDecryptB').val(),
+                keyA: $('#keyDecryptA option:selected').val(),
+                keyB: $('#keyDecryptB option:selected').val(),
                 alphabetType: $('#alphabetDecrypt option:selected').val()
             }
 
@@ -388,10 +390,13 @@ var RouteCipherInit = function (config) {
 
         $('#encryptButton').click(function () {
 
+            var key = parseInt($("#keyEncrypt option:selected").val());
+            var mode = parseInt($("#encryptMode option:selected").val());
+
             var model = {
                 message: $('#inputEncrypt').val(),
-                key: $("#encryptMode").val(),
-                mode: $("#encryptMode").val()
+                key: key,
+                mode: mode
             }
 
             $.ajax({
@@ -413,10 +418,13 @@ var RouteCipherInit = function (config) {
     var decryptInit = function () {
         $('#decryptButton').click(function () {
 
+            var key = parseInt($("#keyDecrypt option:selected").val());
+            var mode = parseInt($("#decryptMode option:selected").val());
+            console.log(key);
             var model = {
                 message: $('#inputDecrypt').val(),
-                key: $("#decryptMode").val(),
-                mode: $("#decryptMode").val()
+                key: key,
+                mode: mode
             }
 
             $.ajax({

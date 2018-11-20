@@ -19,23 +19,13 @@
                 <label for="algorithmSelectModeEncrypt">@Text.EncryptMode</label>
                 <select id="algorithmSelectModeEncrypt" class="form-control">
                     <option value=0>CBC</option>
-                    <option value=2>ECB</option>
+                    <option value=1>ECB</option>
                 </select>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
-                <label for="KeyLengthEncrypt">@Text.KeyLength</label>
-                <fieldset id="KeyLengthEncrypt">
-                    <input type="radio" name="keyLengthEncrypt" value="128" checked>
-                    <text>128</text>
-                    <input type="radio" name="keyLengthEncrypt" value="192">
-                    <text>192</text>
-                    <input type="radio" name="keyLengthEncrypt" value="256">
-                    <text>256</text>
-
-                </fieldset>
 
                 <div class="input-group">
                     <input maxlength="256" placeholder="Klucz" id="keyEncrypt" class="form-control" type="text" />
@@ -143,7 +133,7 @@
                 <label for="algorithmSelectModeDecrypt">@Text.EncryptMode</label>
                 <select id="algorithmSelectModeDecrypt" class="form-control">
                     <option value=0>CBC</option>
-                    <option value=2>ECB</option>
+                    <option value=1>ECB</option>
                 </select>
             </div>
             <div class="col-lg-4">

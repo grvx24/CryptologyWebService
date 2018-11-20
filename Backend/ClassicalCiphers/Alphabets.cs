@@ -12,7 +12,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public static readonly string ALPHABET_PL = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUWYZŹŻ";
         public static readonly string DIGITS = "0123456789";
         public static readonly string PUNCTUATION = "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
-        public static readonly string WHITESPACE = "\t\n\r\x0b\x0c";
+        public static readonly string WHITESPACE = " \t\n";
         public static readonly string ALPHABET_EN_DIGITS = ALPHABET_EN + DIGITS;
         public static readonly string ALPHABET_PL_DIGITS = ALPHABET_PL + DIGITS;
         public static readonly string ALPHABET_EN_EXTENDED = ALPHABET_EN + DIGITS+ PUNCTUATION;
