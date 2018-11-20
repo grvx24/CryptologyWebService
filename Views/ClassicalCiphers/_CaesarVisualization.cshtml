@@ -1,0 +1,63 @@
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+<h2 align="center">Szyfr Cezara wizualizacja </h2>
+<div class="col-md-12" style="margin-top:30px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="keyVisualization">@Text.Key</label>
+                <select id="keyVisualization" class="form-control">
+                    @{
+                        for (int i = 1; i <= 50; i++)
+                        {
+                            @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="alphabetVisualization">@Text.ChooseAlphabet</label>
+                <select id="alphabetVisualization" class="form-control">
+                    @{
+                        for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
+                        {
+                            @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top:30px; margin-bottom:40px;">
+    <row>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="2" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary">Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+
+<div id="alphabetsTable"></div>
+
+<div class="col-md-12">
+    <div class="col-md-8" style="margin-top:40px;">
+        <textarea maxlength="50000" placeholder="Zakodowany tekst" class="form-control" rows="2" id="outputCipher"></textarea>
+    </div>
+</div>
+
+<script>
+      //Ajax
+    var caesarInit = CaesarVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("CaesarVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    caesarInit.init();
+</script>

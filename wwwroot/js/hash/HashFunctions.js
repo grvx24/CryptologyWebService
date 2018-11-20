@@ -55,6 +55,13 @@
                     $('#padMessageLength').val(data[5]);
                     $('#allPadding').val(data[6]);
                     $('#messageBits').val(data[7]);
+
+                    var message = $('#exampleMessage').val();
+
+                    if (message.length*8 < 448)
+                    {
+                        $('#showRoundsButton').attr('disabled', false);                 
+                    }
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -62,6 +69,20 @@
                 }
             });
         });
+
+        $("#exampleMessage").on('input', function () {
+            $('#messageLength').val('');
+            $('#paddedBits').val('');
+            $('#messageLength2').val('');
+            $('#modResult').val('');
+            $('#padValue').val('');
+            $('#padMessageLength').val('');
+            $('#allPadding').val('');
+            $('#messageBits').val('');
+            $('#showRoundsButton').attr('disabled', true); 
+            $('#AA').val('');
+            $('#endA').val('');
+       });
     }
 
     var tableInit = function () {
@@ -79,12 +100,18 @@
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        var register = data[i].A;
-                        //$('#AA').val(register);  
-                    }
+                    console.log(data);
 
-                    $('#AA').val(2344);
+                    //for (var i = 0; i < data.length; i++) {
+                       
+
+                    //    $('#AA').val(data[data.length - 1]);  
+                    //}
+                    var iteration = Object(data[63]).A;
+                    console.log(iteration);
+
+                    $('#AA').val(data[data.length - 1]);  
+                   // $('#AA').val(2344);
                     $('#endA').val(1234);
                 },
                 error: function (response) {

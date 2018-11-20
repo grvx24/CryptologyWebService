@@ -1,28 +1,19 @@
-﻿<div class="col-md-6">
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+<h2 align="center">Szyfr Płotkowy</h2>
+<div class="col-md-6">
     <div class="row">
         <div class="col-md-12">
             <h2 align="center">@Text.Encryptor</h2>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <label for="keyEncrypt">@Text.Key</label>
             <select id="keyEncrypt" class="form-control">
                 @{
-                    for (int i = 1; i <= 50; i++)
+                    for (int i = 2; i <= 32; i++)
                     {
                         @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                    }
-                }
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="encryptMode">@Text.EncryptMode</label>
-            <select id="encryptMode" class="form-control">
-                @{
-                    for (int i = 0; i <= 1; i++)
-                    {
-                        @Html.Raw("<option value=" + i + ">" + (i == 0 ? Text.WidthMode : Text.HeightMode) + "</option>")
                     }
                 }
             </select>
@@ -34,7 +25,6 @@
             <div class="col-md-12">
                 <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
                 <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -62,24 +52,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <label for="keyDecrypt">@Text.Key</label>
             <select id="keyDecrypt" class="form-control">
                 @{
-                    for (int i = 1; i <= 50; i++)
+                    for (int i = 2; i <= 32; i++)
                     {
                         @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                    }
-                }
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="decryptMode">@Text.EncryptMode</label>
-            <select id="decryptMode" class="form-control">
-                @{
-                    for (int i = 0; i <= 1; i++)
-                    {
-                        @Html.Raw("<option value=" + i + ">" + (i == 0 ? Text.WidthMode : Text.HeightMode) + "</option>")
                     }
                 }
             </select>
@@ -110,16 +89,14 @@
     </div>
 </div>
 
-
-
 <script>
-//Ajax
-    var routeInit = RouteCipherInit({
+        //Ajax
+    var fenceInit = FenceCipherInit({
         urls: {
-            encryptUrl: '@Url.Action("RouteEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("RouteDecrypt", "ClassicalCiphers")'
-            }
-            });
+            encryptUrl: '@Url.Action("FenceEncrypt", "ClassicalCiphers")',
+            decryptUrl: '@Url.Action("FenceDecrypt", "ClassicalCiphers")'
+        }
+    });
 
-    routeInit.init();
+    fenceInit.init();
 </script>

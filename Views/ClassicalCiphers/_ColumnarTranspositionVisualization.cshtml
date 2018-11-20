@@ -1,0 +1,52 @@
+﻿<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+<h2 align="center">Szyfr transpozycji kolumn wizualizacja</h2>
+<div class="col-md-12" style="margin-top:30px">
+    <row>
+        <div class="col-md-8" style="margin-bottom:30px;margin-top:30px;">
+            <label for="keyVisualization">@Text.Key</label>
+            <textarea class="form-control" rows="1" id="keyVisualization"></textarea>
+        </div>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="2" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary">Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="sortedKey" style="margin-top:30px"></div>
+        </div class="col-md-6">
+        <div>
+            <div id="numeredKey" style="margin-top:30px"></div>
+        </div>
+
+    </div>
+       
+
+
+<div id="encryptMatrix"></div>
+
+
+<div class="col-md-12">
+    <div class="col-md-8" style="margin-top:40px;">
+        <textarea maxlength="50000" placeholder="Zakodowany tekst" class="form-control" rows="2" id="outputCipher"></textarea>
+    </div>
+</div>
+
+
+
+<script>
+      //Ajax
+    var columnarTranspositionInit = ColumnarTranspositionVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("ColumnarTranspositionVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    columnarTranspositionInit.init();
+</script>

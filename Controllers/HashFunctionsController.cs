@@ -227,7 +227,7 @@ namespace CryptoWebService.Controllers
                 {
                     md5 = new MD5_Visualization(message);
 
-                    //BUTTON SHOW ROUNDS ->enable
+                    
                 }
 
 
@@ -309,7 +309,7 @@ namespace CryptoWebService.Controllers
                 MD5_Visualization.II(ref md5.B, md5.C, md5.D, md5.A, 9, 21, 64, md5.X, _registers);
 
                 // serialize JSON to a string and then write string to a file
-              json = JsonConvert.SerializeObject(_registers, Formatting.Indented);
+              //json = JsonConvert.SerializeObject(_registers, Formatting.Indented);
 
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace CryptoWebService.Controllers
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
             //return Json(_registers);
-            return Json(_registers);
+            return Json(_registers.ToArray());
         }
 
 
