@@ -594,12 +594,22 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    console.log(data[0]);
-                    console.log(data[1]);
-                    console.log(data[2]);
-                    console.log(data[3]);
-                    console.log(data[4]);
 
+                    $('#sortedKey td').remove();
+                    $('#sortedKey tr').remove();
+                    $('#sortedKey tbody').remove();
+
+                    $('#numeredKey td').remove();
+                    $('#numeredKey tr').remove();
+                    $('#numeredKey tbody').remove();
+
+                    $('#encryptMatrix td').remove();
+                    $('#encryptMatrix tr').remove();
+                    $('#encryptMatrix tbody').remove();
+
+                    $('#outputCipher').val("");
+                    $('#stepNumber').val("1");
+                
                     _sortedKey = data[0];
                     _numeredKeyString = data[1];
                     _output = data[2];
@@ -615,57 +625,71 @@ var ColumnarTranspositionVisualizationInit = function (config) {
 
                     $table_sortedKey.append($tbody_sortedKey);
 
+                    var $tr = $('<tr />');
+                    for (i = 0; i < _sortedKey.length; i++) {
+                        $tr.append($('<td style="width:30px"/>').html(_sortedKey[i]));
+                    }
+                    $tbody_sortedKey.append($tr);
+
                     $tr = $('<tr />');
                     for (i = 1; i < _sortedKey.length + 1; i++) {
-                        $tr.append($('<td />').html(i));
+                        $tr.append($('<td style="width:30px"/>').html(i));
                     }
                     $tbody_sortedKey.append($tr);
 
-
-                    var $tr = $('<tr />');
-                    for (i = 0; i < _sortedKey.length; i++)
-                    {
-                        $tr.append($('<td />').html(_sortedKey[i]));
-                    }
-                    $tbody_sortedKey.append($tr);
-
-                
                     var $table_numeredKey = $('#numeredKey');
                     var $tbody_numeredKey = $('<tbody></tbody>');
 
                     $table_numeredKey.append($tbody_numeredKey);
 
-                    var $tr = $('<tr />');
-                    for (i = 0; i < _numeredKey.length; i++) {
-                        $tr.append($('<td />').html(_numeredKey[i]));
+                    $tr = $('<tr />');
+                    for (i = 0; i < _key.length; i++) {
+                        $tr.append($('<td style="width:30px"/>').html(_key[i]));
                     }
                     $tbody_numeredKey.append($tr);
 
                     $tr = $('<tr />');
-                    for (i = 0; i < _key.length; i++) {
-                        $tr.append($('<td />').html(_key[i]));
+                    for (i = 0; i < _numeredKey.length; i++) {
+                        $tr.append($('<td style="width:30px"/>').html(_numeredKey[i]));
                     }
                     $tbody_numeredKey.append($tr);
 
 
-                    var rowsMatrix = _input.length % 5;
-                    console.log(rows);
+                    ////matrix tests
+                    var rowsMatrix = Math.ceil(_input.length / _key.length);
 
-                    var $table_encryptMatrix = $('#numeredKey');
+                    var $table_encryptMatrix = $('#encryptMatrix');
                     var $tbody_encryptMatrix = $('<tbody></tbody>');
 
                     $table_encryptMatrix.append($tbody_encryptMatrix);       
 
-                    //for (i = 0; i < rowsMatrix; i++) {
-                    //    var $tr = $('<tr />');
-                    //    for (j = 0; j < _key.length; j++) {
-                    //        $tr.append($('<td />').html(_input[(i+1)+j]));
-                    //    }
-                    //    $tbody_encryptMatrix.append($tr);
-                    //}
+                    var messageCounter = 0;
+                    for (i = 0; i < rowsMatrix; i++)
+                    {
+                        var $tr = $('<tr />');
+                        for (j = 0; j < _key.length; j++)
+                        {
+                            if (messageCounter < _input.length) {
+                                $tr.append($('<td style="width:30px"/>').html(_input[messageCounter]));
+                            }
+                              messageCounter++;
+                            if (messageCounter > _input.length)
+                                    {
+                                $tr.append($('<td style="width:30px" />').html("X"));
+                                    }
+                        }
+                        $tbody_encryptMatrix.append($tr);
+                    }
 
+                    if (_input != "") {
+                        $('#labelEncryptMatrix').attr('hidden', false);
+                        $('#nextButton').attr('disabled', false);
+                    }
+                    $('#labelSortedKey').attr('hidden', false);
+                   
 
-
+                    
+                    $('#startButton').attr('disabled', true);
 
 
                 },
@@ -675,7 +699,126 @@ var ColumnarTranspositionVisualizationInit = function (config) {
             });
         });
 
+        $('#nextButton').click(function () {
 
+            var model = {
+                message: $('#inputCipher').val(),
+                key: $('#keyVisualization').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.visualizationUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    _sortedKey = data[0];
+                    _numeredKeyString = data[1];
+                    _output = data[2];
+                    _input = data[3];
+                    _key = data[4];
+              
+
+                    var currentStep = parseInt($('#stepNumber').val());
+                    var columnNumber;
+                    var tableKey = document.getElementById("numeredKey");
+                    var rowsKey = tableKey.getElementsByTagName("tr");
+
+            
+                    for (var z = 0; z < _key.length; z++) {
+                        if (rowsKey[1].cells[z].innerHTML == currentStep) {
+                            columnNumber = z;
+                            rowsKey[1].cells[z].style.backgroundColor = 'white';
+                        }
+                    }
+
+                        var tableMatrix = document.getElementById("encryptMatrix");
+                        var rowsMatrix = tableMatrix.getElementsByTagName("tr");  
+                        
+         
+                    var columnValue="";
+                    for (i = 0; i < rowsMatrix.length; i++) {
+                            for (j = 0; j < _key.length; j++) {
+                                if (j == columnNumber) {
+                                    columnValue += rowsMatrix[i].cells[columnNumber].innerHTML;
+                                    rowsMatrix[i].cells[columnNumber].style.backgroundColor = '#33b5e5';
+                                    rowsKey[1].cells[columnNumber].style.backgroundColor = '#8fd1ea';
+                                } else {
+                                    rowsMatrix[i].cells[j].style.backgroundColor = 'white';
+                                }                              
+                            }
+                            
+                            }
+                    var currentOutput = $('#outputCipher').val();
+                    var newOutput = currentOutput + columnValue;
+                    $('#outputCipher').val(newOutput);                  
+                    currentStep += 1;
+                    $('#stepNumber').val(currentStep);
+
+                    console.log(currentStep);
+                    if (currentStep > _key.length) {
+                        $('#nextButton').attr('disabled', true);
+                        $('#startButton').attr('disabled', false);
+                    }
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+
+        $("#keyVisualization").on('input',
+            function () {
+                $('#outputCipher').val("");
+                $('#startButton').attr('disabled', false);
+                $('#nextButton').attr('disabled', true);
+
+                $('#sortedKey td').remove();
+                $('#sortedKey tr').remove();
+                $('#sortedKey tbody').remove();
+
+                $('#numeredKey td').remove();
+                $('#numeredKey tr').remove();
+                $('#numeredKey tbody').remove();
+
+                $('#encryptMatrix td').remove();
+                $('#encryptMatrix tr').remove();
+                $('#encryptMatrix tbody').remove();
+
+                $('#labelSortedKey').attr('hidden', true);
+                $('#labelEncryptMatrix').attr('hidden', true);
+                if ($('#keyVisualization').val() == "") {
+                    $('#startButton').attr('disabled', true);
+                }
+
+            });
+
+        $("#inputCipher").on('input', function () {
+            $('#outputCipher').val("");
+            $('#startButton').attr('disabled', false);
+            $('#nextButton').attr('disabled', true);
+
+            $('#sortedKey td').remove();
+            $('#sortedKey tr').remove();
+            $('#sortedKey tbody').remove();
+
+            $('#numeredKey td').remove();
+            $('#numeredKey tr').remove();
+            $('#numeredKey tbody').remove();
+
+            $('#encryptMatrix td').remove();
+            $('#encryptMatrix tr').remove();
+            $('#encryptMatrix tbody').remove();
+
+            $('#labelSortedKey').attr('hidden', true);
+            $('#labelEncryptMatrix').attr('hidden', true);
+
+            if ($('#keyVisualization').val() == "") {
+                $('#startButton').attr('disabled', true);
+            }
+        });
     }
 
     var init = function () {
