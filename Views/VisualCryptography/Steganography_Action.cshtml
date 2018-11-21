@@ -1,48 +1,372 @@
 ﻿@using CryptoWebService.Helpers;
-@model ViewModelDto;
-@{
-    ViewData["Title"] = "Secret";
-}
-<script src="~/lib/custom/konva.min.js"></script>
-<div class="container">
-    <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+
+<div class="row ">
+    <div class="col-lg-12" style="margin-bottom: 15px">
+        <div class="col-lg-12">
+            <label style="font-size: 30px; ">steganografia</label>
+        </div>
     </div>
-
-    <div id="Description" class="tabcontent col-lg-12">
-        @{
-            await Html.RenderPartialAsync("Description", Model);
-        }
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <label class="form-control" style="height: 100%" id="MethodDescription">
+                STEGANOGRAFIA
+            </label>
+        </div>
     </div>
-    <div id="Tools" class="tabcontent col-lg-12">
+</div>
 
+<div class="col-lg-12">
+    <hr />
+</div>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-4">
+            <label class="ImageHeader">Obraz w którym będą ukrywane dane</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+        </div>
+        <div class="col-lg-8">
+            <select id="inputModeSelect" class="form-control" style="margin-bottom: 20px">
+                <option value="file" selected>Plik</option>
+                <option value="drawing">Rysunek</option>
+            </select>
+        </div>
     </div>
+    <div class="col-lg-12">
+        <div id="FileUploadPanel" >
+            <div class="col-lg-12">
+                @{
+                    await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image");
+                }
+            </div>
+        </div>
+        <div id="drawingPanel" style="display: none">
+            <div id="DrawingContainer" class="myCanvas">
 
-    <div id="Visualization" class="tabcontent col-lg-12">
-
+            </div>
+            <div class="text-center mySignature">Pole do rysowania</div>
+        </div>
     </div>
+</div>
 
+<div class="col-lg-12">
+    <hr />
+</div>
 
+<div id="secretsDownload" class="text-center">
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div id="Secret">
+            <div id="DisplayContainer" class="myCanvas">
+
+            </div>
+            <div class="text-center mySignature">Podgląd sekretów</div>
+        </div>
+    </div>
 </div>
 
 
-<script>
-    document.getElementById("defaultPageButton").click();
+<style>
 
-    function openTab(evt, tabName) {
-        var i;
-        var tabContent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
+    label {
+        margin-top: 5px;
+        font-size: 18px;
+    }
+
+    .ImageHeader {
+        color: #1c5aa6;
+    }
+
+
+    .ImageDescription {
+        font-size: 16px;
+    }
+
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .myCanvas {
+        background-color: #F0F0F0;
+        border: 1px solid black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .mySignature {
+        font-style: italic;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .myDownload {
+        margin: 10px;
+        font-size: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+    var isPaint = false;
+    var lastPointerPosition;
+    var DisplayLayer = new Konva.Layer();
+
+    $(document).ready(function () {
+        InitDrawingKonvoControl('DrawingContainer', 300);
+        InitDisplayKonvoControl('DisplayContainer', 600);
+    });
+
+
+    $('#inputModeSelect').on('change', function () {
+        if (this.value === 'drawing') {
+            $('#FileUploadPanel').hide();
+            $('#drawingPanel').show();
+
+        } else if (this.value === 'file') {
+            $('#FileUploadPanel').show();
+            $('#drawingPanel').hide();
         }
-        var tabLinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        else {
+            Console.log("InputModeSelect value is unknow.")
         }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
+    });
+    
+    function GetWidth() {
+        var width = document.getElementById('Description').offsetWidth;
+        if (width === 0) {
+            width = document.getElementById('Tools').offsetWidth;
+            if (width === 0) {
+                width = 400;
+            }
+        }
+        return width - 28;
+    }
+
+    function InitDisplayKonvoControl(stageName, stageHeight)
+    {
+        var stage = new Konva.Stage({
+            container: stageName,
+            width: GetWidth(),
+            height: stageHeight
+        });
+
+        stage.add(DisplayLayer);
+
+        DisplayLayer.on('mouseover', function (evt) {
+            var shape = evt.target;
+            document.body.style.cursor = 'pointer';
+            DisplayLayer.draw();
+        });
+
+        DisplayLayer.on('mouseout', function (evt) {
+            var shape = evt.target;
+            document.body.style.cursor = 'default';
+            shape.scaleX(1);
+            shape.scaleY(1);
+            DisplayLayer.draw();
+        });
+
+        var scrollLayers = new Konva.Layer();
+        stage.add(scrollLayers);
+
+        const PADDING = 5;
+
+        var verticalBar = new Konva.Rect({
+            width: 10,
+            height: 100,
+            fill: 'grey',
+            opacity: 0.8,
+            x: stage.width() - PADDING - 10,
+            y: PADDING,
+            draggable: true,
+            dragBoundFunc: function (pos) {
+                pos.x = stage.width() - PADDING - 10;
+                pos.y = Math.max(Math.min(pos.y, stage.height() - this.height() - PADDING), PADDING);
+                return pos;
+            }
+        });
+        scrollLayers.add(verticalBar);
+        scrollLayers.draw();
+
+        verticalBar.on('dragmove', function () {
+            const availableHeight = stage.height() - PADDING * 2 - verticalBar.height();
+            var delta = (verticalBar.y() - PADDING) / availableHeight;
+
+            DisplayLayer.y(-stage.height() * delta);
+            DisplayLayer.batchDraw();
+        });
+
+        var horizontalBar = new Konva.Rect({
+            width: 100,
+            height: 10,
+            fill: 'grey',
+            opacity: 0.8,
+            x: PADDING,
+            y: stage.height() - PADDING - 10,
+            draggable: true,
+            dragBoundFunc: function (pos) {
+                pos.x = Math.max(Math.min(pos.x, stage.width() - this.width() - PADDING), PADDING);
+                pos.y = stage.height() - PADDING - 10;
+
+                return pos;
+            }
+        });
+        scrollLayers.add(horizontalBar);
+        scrollLayers.draw();
+
+        horizontalBar.on('dragmove', function () {
+            const availableWidth = stage.width() - PADDING * 2 - horizontalBar.width();
+            var delta = (horizontalBar.x() - PADDING) / availableWidth;
+
+            DisplayLayer.x(-stage.width() * delta);
+            DisplayLayer.batchDraw();
+        });
+    }
+
+    function InitDrawingKonvoControl(stageName, stageHeight)
+    {
+        var stage = new Konva.Stage({
+            container: stageName,
+            width: GetWidth(),
+            height: stageHeight,
+        });
+
+        var layer = new Konva.Layer();
+        stage.add(layer);
+
+        var canvas = document.createElement('canvas');
+        canvas.width = stage.width();
+        canvas.height = stage.height();
+
+        var image = new Konva.Image({
+            image: canvas
+        });
+
+        layer.add(image);
+        stage.draw();
+
+        var context = canvas.getContext('2d');
+        context.strokeStyle = "black";
+        context.lineWidth = 5;
+
+        image.on('mousedown touchstart', function () {
+            isPaint = true;
+            lastPointerPosition = stage.getPointerPosition();
+        });
+
+        stage.addEventListener('mouseup touchend', function () {
+            isPaint = false;
+        });
+
+        stage.addEventListener('mousemove touchmove', function () {
+            if (!isPaint) {
+                return;
+            }
+            context.globalCompositeOperation = 'source-over';
+            context.strokeStyle = "black";
+            context.beginPath();
+
+            var localPos = {
+                x: lastPointerPosition.x - image.x(),
+                y: lastPointerPosition.y - image.y()
+            };
+            context.moveTo(localPos.x, localPos.y);
+            var pos = stage.getPointerPosition();
+            localPos = {
+                x: pos.x - image.x(),
+                y: pos.y - image.y()
+            };
+            context.lineTo(localPos.x, localPos.y);
+            context.closePath();
+            context.stroke();
+
+            lastPointerPosition = pos;
+            layer.batchDraw();
+        });
+    }
+
+    function LoadImageToLayerFromData(layer, data) {
+        var KonvoImage = new Konva.Image({
+            draggable: true,
+        });
+        layer.add(KonvoImage);
+
+        var image = new Image();
+        image.onload = function () {
+            KonvoImage.image(image);
+            layer.draw();
+        };
+
+        image.src = 'data:image/png;base64,' + data;
+    }
+
+    $('#sendCanvasToDivide').click(function () {
+        var inputModeEncrypt = $('#inputModeSelect option:selected').val();
+
+        if (inputModeEncrypt === 'drawing') {
+            var canvas = document.querySelector('#DrawingContainer canvas');
+            sendDataToServer(canvas.toDataURL("image/png"));
+        }
+        else if (inputModeEncrypt === 'file') {
+            var file = document.getElementById('ImageUploader').files[0];
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                sendDataToServer(reader.result.split(',')[1]);
+            };
+        }
+    });
+
+    function showLoading() {
+        $('#loading').show();
+    }
+
+    function hideLoading() {
+        $('#loading').hide();
+    }
+
+    function onSucces(response) {
+        if (response.result === true) {
+            var downloadLink = "";
+            DisplayLayer.destroyChildren()
+            for (var i = 0; i < response.secrets.length; i++) {
+                var secret = response.secrets[i];
+                LoadImageToLayerFromData(DisplayLayer, secret.value);
+                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'.png">Sekret ' + (i+1) +'</a>';
+            }
+            $('#secretsDownload').html(downloadLink);
+        } else {
+            alert(response.message);
+            console.log(response);
+        }
+    }
+
+    function sendDataToServer(imageData) {
+        imageData = imageData.replace('data:image/png;base64,', '');
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("VisualSteganography", "Steganography")',
+            data: JSON.stringify(imageData),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                showLoading();
+            },
+            complete: function () {
+                hideLoading();
+            },
+            success: function (response) {
+                onSucces(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
     }
 </script>

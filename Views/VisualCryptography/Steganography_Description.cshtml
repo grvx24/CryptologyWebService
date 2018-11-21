@@ -1,48 +1,44 @@
 ﻿@using CryptoWebService.Helpers;
-@model ViewModelDto;
-@{
-    ViewData["Title"] = "Secret";
-}
-<script src="~/lib/custom/konva.min.js"></script>
-<div class="container">
-    <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+
+<h2 class="page-header"></h2>
+<div class="col-lg-12">
+    <div class="body-content">
+        Koncepcja kryptografii wizualnej narodziła się około 10 lat temu na konferencji Eurocrypt
+        94. Podczas swojej prelekcji Shamir i Naor zaproponowali nowy sposób graficznego
+        kodowania informacji. Jego podstawą było wykorzystanie określonej liczby
+        podobrazów zwanych udziałami. Ich nałożenie na siebie dawało obraz zawierający
+        tajną wiadomość. W efekcie odszyfrowanie informacji byłoby możliwe jedynie przy
+        użyciu wzroku — stąd nazwa metody. Ale po kolei.
+    </div>
+    <h3 class="panel-group">Przykład: </h3>
+    <div class="body-content">
+        Każdy obraz cyfrowy składa się z tzw. pikseli (ang. pixels). Są to malutkie kwadraty
+        wypełnione jednolitym kolorem. Położone obok siebie w rzędach i kolumnach tworzą
+        obraz, który widzimy na ekranie komputera. Koncepcja udziałów (ang. shares) zakłada
+        podział pikseli na jeszcze mniejsze części, tzw. subpiksele. Piksele oryginalnego
+        obrazu zawierającego tajną wiadomość są dzielone na subpiksele. Ich liczba zależy od
+        liczby udziałów, które chcemy uzyskać. Na rysunku 3.8 znajduje się najprostszy możliwy
+        schemat podziału oparty na obrazie czarno-białym.
+    </div>
+    <div>
+        <br />
+        <br />
     </div>
 
-    <div id="Description" class="tabcontent col-lg-12">
-        @{
-            await Html.RenderPartialAsync("Description", Model);
-        }
+    <div>
+        <br />
+        <br />
     </div>
-    <div id="Tools" class="tabcontent col-lg-12">
-
-
+    <div class="body-content">
+        Jak widać, każdy udział składa się z dwóch subpikseli. W wyniku nałożenia na siebie
+        udziałów piksela białego otrzymamy obraz składający się z białego i czarnego subpiksela,
+        co da w efekcie wrażenie koloru szarego. Udziały piksela czarnego po nałożeniu
+        dają obraz pierwotny. Obrazy składające się z udziałów nie dają żadnych informacji o zaszyfrowanej
+        wiadomości, ponieważ każda kombinacja subpikseli pojawia się z prawdopodobieństwem
+        50%, co jest równoważne z rozkładem losowym. Kiedy oba obrazy
+        zostaną na siebie nałożone, ukaże się obraz pierwotny (z tą różnicą, iż jego białe obszary
+        będą teraz widoczne jako szare). Można oczywiście dzielić piksele na więcej części,
+        tworząc tym samym więcej udziałów.
     </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-
-    </div>
-
-
 </div>
 
-
-<script>
-    document.getElementById("defaultPageButton").click();
-
-    function openTab(evt, tabName) {
-        var i;
-        var tabContent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
-        }
-        var tabLinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
