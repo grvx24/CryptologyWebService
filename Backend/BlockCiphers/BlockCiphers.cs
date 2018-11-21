@@ -8,9 +8,7 @@ namespace CryptoWebService.Backend.BlockCiphers
     public enum BlockCipherMode
     {
         CBC,
-        CFB,
-        ECB,
-        OFB
+        ECB
     }
 
     public abstract class BlockCiphers

@@ -12,9 +12,10 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public string Alphabet { get; set; }
         public string Key { get; set; }
 
-        public VigenereCipher(string key)
+        public VigenereCipher(string key,string alphabet)
         {
-            this.Key = key;
+            this.Key = key.ToUpper();
+            this.Alphabet = alphabet;
             if (key.Length < 1)
             {
                 throw new ArgumentException("Invalid key length!");
@@ -39,7 +40,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 int keyIndex = 0;
                 for (int i = 0; i < message.Length; i++)
                 {
-                    int msgCharPosition = Alphabet[message[i]];
+                    int msgCharPosition = _positionDictionary[message[i]];
                     int keyCharPosition = _positionDictionary[Key[keyIndex]];
                     int newPosition = (msgCharPosition + keyCharPosition) % (Alphabet.Length);
 
@@ -81,7 +82,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 int keyIndex = 0;
                 for (int i = 0; i < message.Length; i++)
                 {
-                    int msgCharPosition = Alphabet[message[i]];
+                    int msgCharPosition = _positionDictionary[message[i]];
                     int keyCharPosition = _positionDictionary[inversedKey[keyIndex]];
                     int newPosition = (msgCharPosition + keyCharPosition) % (Alphabet.Length);
 

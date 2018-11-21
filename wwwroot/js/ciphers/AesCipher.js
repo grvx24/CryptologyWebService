@@ -306,7 +306,7 @@ var decryptInit = function () {
             var format = $("input[name='IVFormatEncrypt']:checked").val();
 
             var IVEncryptInput = $('#IVEncrypt');
-            var keyLength = parseInt($("input[name='keyLengthEncrypt']:checked").val());;
+            var keyLength = 128;
 
             switch (format) {
             case "1":
@@ -452,7 +452,7 @@ var decryptInit = function () {
         var inputTextarea = $('#inputEncrypt').val();
 
 
-        //0 - CBC 2 - ECB
+        //0 - CBC 1 - ECB
         var mode = $('#algorithmSelectModeEncrypt option:selected').val();
         
         keyFormat = $("input[name='keyFormatEncrypt']:checked").val();
@@ -491,7 +491,7 @@ var decryptInit = function () {
                 }
         }
 
-        if (mode != "2") {
+        if (mode != "1") {
             switch (ivFormat) {
             case "1":
             {
@@ -557,7 +557,7 @@ var decryptInit = function () {
         var inputTextarea = $('#inputDecrypt').val();
 
 
-        //0 - CBC 2 - ECB
+        //0 - CBC 1 - ECB
         var mode = $('#algorithmSelectModeDecrypt option:selected').val();
 
         keyFormat = $("input[name='keyFormatDecrypt']:checked").val();
@@ -596,7 +596,7 @@ var decryptInit = function () {
                 }
         }
 
-        if (mode != "2") {
+        if (mode != "1") {
             switch (ivFormat) {
                 case "1":
                     {
@@ -654,14 +654,12 @@ var decryptInit = function () {
         var selectEncrypt = $('#algorithmSelectModeEncrypt');
 
         ivTextEncrypt = $('#IVEncrypt');
-
         btnRandomEncrypt = $('#btnRandomIVEncrypt');
 
         selectEncrypt.on('change',
             function () {
                 var mode = $('#algorithmSelectModeEncrypt option:selected').val();
-
-                if (mode === "2") {
+                if (mode === "1") {
                     ivTextEncrypt.attr('readonly', true);
                     btnRandomEncrypt.attr('disabled', true);
                 } else {
@@ -680,7 +678,7 @@ var decryptInit = function () {
             function () {
                 var mode = $('#algorithmSelectModeDecrypt option:selected').val();
 
-                if (mode === "2") {
+                if (mode === "1") {
                     ivTextDecrypt.attr('readonly', true);
                     btnRandomDecrypt.attr('disabled', true);
                 } else {

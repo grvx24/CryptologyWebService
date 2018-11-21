@@ -53,7 +53,20 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
                 for (int i = 0; i < message.Length; i++)
                 {
-                    encrypted.Append(_charDictionary[message[i]]);
+                    if (message[i] == 'J')
+                    {
+                        encrypted.Append(_charDictionary['I']);
+                    }
+                    else if (message[i] == 'V')
+                    {
+                        encrypted.Append(_charDictionary['U']);
+                    }
+                    else
+                    {
+                        encrypted.Append(_charDictionary[message[i]]);
+                    }
+
+
                 }
 
                 return encrypted.ToString();
@@ -70,6 +83,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
+            message.Replace('J', 'I');
 
             try
             {

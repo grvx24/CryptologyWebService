@@ -343,10 +343,8 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult VigenereEncrypt([FromBody]VigenereCipherViewModel viewModel)
         {
-            VigenereCipher cipher = new VigenereCipher(viewModel.Key)
-            {
-                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType)
-            };
+            VigenereCipher cipher = new VigenereCipher
+                (viewModel.Key, Alphabets.GetAlphabet((Alphabets.AlphabetType) viewModel.AlphabetType));
 
             string encrypted = "";
 
@@ -365,10 +363,8 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult VigenereDecrypt([FromBody]VigenereCipherViewModel viewModel)
         {
-            VigenereCipher cipher = new VigenereCipher(viewModel.Key)
-            {
-                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType)
-            };
+            VigenereCipher cipher = new VigenereCipher
+                (viewModel.Key, Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType));
 
             string decrypted = "";
 

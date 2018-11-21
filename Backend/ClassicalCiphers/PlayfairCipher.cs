@@ -7,7 +7,7 @@ using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Backend.ClassicalCiphers
 {
-    public class PlayfairCipher:IClassicalCiphers
+    public class PlayfairCipher : IClassicalCiphers
     {
 
         private readonly string _alphabet = Alphabets.ALPHABET_EN;
@@ -16,7 +16,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         private class CharPosition
         {
-            private int _matrixSize =5;
+            private int _matrixSize = 5;
             public int X { get; }
             public int Y { get; }
 
@@ -28,21 +28,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
             public CharPosition NextRightChar()
             {
-                int newXPosition=X+1;
-                
-                if (X == _matrixSize)
-                {
-                    newXPosition = 0;
-                }
-
-                return new CharPosition(newXPosition,Y);
-            }
-
-            public CharPosition NextBottomChar()
-            {
                 int newYPosition = Y + 1;
 
-                if (Y == _matrixSize)
+                if (Y >= _matrixSize - 1)
                 {
                     newYPosition = 0;
                 }
@@ -50,32 +38,44 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 return new CharPosition(X, newYPosition);
             }
 
-            public CharPosition NextLeftChar()
+            public CharPosition NextBottomChar()
             {
-                int newXPosition = X - 1;
+                int newXPosition = X + 1;
 
-                if (X == -1)
+                if (X >= _matrixSize - 1)
                 {
-                    newXPosition = _matrixSize-1;
+                    newXPosition = 0;
                 }
 
                 return new CharPosition(newXPosition, Y);
             }
 
-            public CharPosition NextTopChar()
+            public CharPosition NextLeftChar()
             {
                 int newYPosition = Y - 1;
 
-                if (Y == -1)
+                if (Y == 0)
                 {
-                    newYPosition = _matrixSize;
+                    newYPosition = _matrixSize - 1;
                 }
 
                 return new CharPosition(X, newYPosition);
             }
+
+            public CharPosition NextTopChar()
+            {
+                int newXPosition = X - 1;
+
+                if (X == 0)
+                {
+                    newXPosition = _matrixSize - 1;
+                }
+
+                return new CharPosition(newXPosition, Y);
+            }
         }
         private Dictionary<char, CharPosition> _charPositionInMatrix;
-        
+
         public PlayfairCipher(string key)
         {
             key = StringHelper.ReplaceWhitespace(key, "");
@@ -85,11 +85,11 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             this.Key = new string(keyDistinct.ToArray());
             var otherCharacters = new string(_alphabet.Where(c => !Key.Contains(c)).ToArray());
 
-            var matrixString = key + otherCharacters;
+            var matrixString = this.Key + otherCharacters;
             int matrixStringCounter = 0;
 
-            KeyMatrix = new char[5,5];
-            _charPositionInMatrix=new Dictionary<char, CharPosition>();
+            KeyMatrix = new char[5, 5];
+            _charPositionInMatrix = new Dictionary<char, CharPosition>();
 
             for (int i = 0; i < 5; i++)
             {
@@ -112,7 +112,6 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                             }
                             j = 5;
                         }
-                        matrixStringCounter++;
                     }
                     else
                     {
@@ -129,7 +128,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         private bool IsTheSameRows(char a, char b)
         {
-            int row=-1;
+            int row = -1;
 
             for (int i = 0; i < KeyMatrix.GetLength(0); i++)
             {
@@ -196,19 +195,22 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
         public string Encrypt(string message)
         {
-            message= StringHelper.ReplaceWhitespace(message, "");
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+            if (message.Length % 2 != 0)
+            {
+                message += "X";
+            }
+
+            char[] encrypted = new char[message.Length];
+
 
             var splitMessage = StringHelper.SplitInParts(message, 2).ToArray();
 
-            char[] encrypted = new char[message.Length];
             int encryptedMessageCounter = 0;
 
             for (int i = 0; i < splitMessage.Length; i++)
             {
-                if (splitMessage[i].Length == 1)
-                {
-                    splitMessage[i] += "X";
-                }
 
                 var char1 = splitMessage[i][0];
                 var char2 = splitMessage[i][1];
@@ -245,15 +247,15 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                     var char1Position = _charPositionInMatrix[char1];
                     var char2Position = _charPositionInMatrix[char2];
 
-                    var newCharacter1 = new CharPosition(char2Position.X,char1Position.Y);
+                    var newCharacter1 = new CharPosition(char1Position.X, char2Position.Y);
                     encrypted[encryptedMessageCounter] = KeyMatrix[newCharacter1.X, newCharacter1.Y];
                     encryptedMessageCounter++;
 
 
-                    var newCharacter2 = new CharPosition(char1Position.X,char2Position.Y);
+                    var newCharacter2 = new CharPosition(char2Position.X, char1Position.Y);
                     encrypted[encryptedMessageCounter] = KeyMatrix[newCharacter2.X, newCharacter2.Y];
                     encryptedMessageCounter++;
-                } 
+                }
 
             }
 
@@ -263,6 +265,11 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public string Decrypt(string message)
         {
             message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+            if (message.Length % 2 != 0)
+            {
+                message += "X";
+            }
 
             var splitMessage = StringHelper.SplitInParts(message, 2).ToArray();
 
@@ -306,12 +313,12 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                     var char1Position = _charPositionInMatrix[char1];
                     var char2Position = _charPositionInMatrix[char2];
 
-                    var newCharacter1 = new CharPosition(char2Position.X, char1Position.Y);
+                    var newCharacter1 = new CharPosition(char1Position.X, char2Position.Y);
                     decrypted[decryptedMessageCounter] = KeyMatrix[newCharacter1.X, newCharacter1.Y];
                     decryptedMessageCounter++;
 
 
-                    var newCharacter2 = new CharPosition(char1Position.X, char2Position.Y);
+                    var newCharacter2 = new CharPosition(char2Position.X, char1Position.Y);
                     decrypted[decryptedMessageCounter] = KeyMatrix[newCharacter2.X, newCharacter2.Y];
                     decryptedMessageCounter++;
                 }

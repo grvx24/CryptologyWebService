@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace CryptoWebService.Backend.LfsrGenerators
 {
     public class Lfsr
     {
-
+        public bool OutputBit { get; set; }
         public static Dictionary<int, int[]> GenerateFeedbackFunctions()
         {
             Dictionary<int, int[]> dictionary = new Dictionary<int, int[]>();
@@ -176,8 +177,8 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         public void NextStep()
         {
+            OutputBit = Register[Register.Length - 1];
             bool temp = false;
-
 
             for (int i = 0; i < FeedbackFunction.Length; i++)
             {
@@ -198,7 +199,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
         }
         public bool GetOutputBit()
         {
-            return Register[0];
+            return OutputBit;
         }
 
         private void FeedbackFunctionInit()
