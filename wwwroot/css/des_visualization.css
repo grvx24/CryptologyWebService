@@ -41,6 +41,11 @@
     stroke: black;
     stroke-width: 2px;
 }
+.cell-text-sbox {
+    font-size: 14px;
+    font-weight: bold;
+    text-anchor: middle;
+}
 
 .cell-rect-selected {
     fill: red;
@@ -49,6 +54,11 @@
 }
 .cell-rect-selected-2 {
     fill: orange;
+    stroke: black;
+    stroke-width: 2px;
+}
+.cell-rect-selected-3 {
+    fill: yellow;
     stroke: black;
     stroke-width: 2px;
 }
@@ -66,9 +76,17 @@
     pointer-events: none;
 }
 
+
+
 .description-text {
     font-size: 22px;
     font-style: italic;
+    text-anchor: middle;
+    pointer-events: none;
+}
+.description-text2 {
+    font-size: 18px;
+    font-weight: bold;
     text-anchor: middle;
     pointer-events: none;
 }
@@ -99,4 +117,5 @@
     stroke: black;
     stroke-width: 2px;
 }
+
 

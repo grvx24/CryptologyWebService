@@ -159,3 +159,11 @@ input[type=radio] {
 .radio-text{
     font-size: 16px;
 }
+
+.btn-space {
+    margin-right: 5px;
+}
+
+.btn-space-lg {
+    margin-right: 10px;
+}
