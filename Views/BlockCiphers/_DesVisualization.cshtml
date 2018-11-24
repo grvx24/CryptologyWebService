@@ -28,6 +28,11 @@
 
         </svg>
     </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
 
 </div>
 
@@ -48,15 +53,21 @@
 
         </svg>
     </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
 </div>
 
+
 <div class="row">
-    <h2 align="center">3. Podział klucza na część lewą i prawą oraz przesunięcie bitów w zależności od numeru rundy.</h2>
+    <h2 align="center">3. Podział klucza na dwie części oraz przesunięcie bitów w zależności od numeru rundy.</h2>
     <br/>
     <div class="col-lg-12">
-        <img style="margin-bottom: 20px" runat="server" width="100%" height="100%" src="~/images/desShiftTable.png"/>
+        <img style="margin-bottom: 20px" runat="server" width="95% height="95%" src="~/images/desShiftTable.png"/>
     </div>
-    <h3 align="center">Lewa część</h3>
+    <h3 align="center">C1</h3>
     <div class="col-lg-4">
         <svg id="leftKeyMatrix">
 
@@ -74,10 +85,15 @@
 
         </svg>
     </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
 </div>
 
 <div class="row">
-    <h3 align="center">Prawa część</h3>
+    <h3 align="center">D1</h3>
     <br/>
     <div class="col-lg-4">
         <svg id="rightKeyMatrix">
@@ -95,6 +111,16 @@
         <svg id="rightKeyResult">
 
         </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+<div class="row">
+    <div class="row">
+        <h3 align="center">W przypadku następnych rund przesunięcia dokonuje się na podstawie tabel z poprzedniej rundy. Przykładowo dla rundy 2 przesuwa się o 1 miejsce w lewo tabele C1 i D1, dla 3 rundy o 2 miejsca tabele C2 i D2 i tak dalej...</h3>
     </div>
 </div>
 
@@ -116,6 +142,11 @@
 
         </svg>
     </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
 </div>
 <div class="row">
     <h2 align="center">5. Od tego momentu zaczynają się kolejne rundy. Blok danych jest dzielony na dwie części. Bloki są przekształcane zgodnie z siecią Feistela. Funkcja F jest właściwym algorytmem szyfrującym i została opisana poniżej. </h2>
@@ -135,7 +166,7 @@
         <svg id="leftBlockData">
 
         </svg>
-        <h3 >Lewa część</h3>
+        <h3>Lewa część</h3>
     </div>
     <div class="col-lg-6">
         <svg id="rightBlockData">
@@ -165,6 +196,11 @@
 
         </svg>
     </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
     
 </div>    
 <div class="row">
@@ -185,6 +221,11 @@
 
         </svg>
     </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
 </div>
 <div class="row">
     <h3 align="center">Podział bitów na 8 grup - zmiana bitów w każdej grupie zgodnie z odpowiadającą tabelą (S-BOX).</h3>
@@ -198,6 +239,11 @@
         <svg id="sbox">
 
         </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
     </div>
 </div>
 
@@ -276,6 +322,11 @@
     </div>
     <div class="col-lg-4">
         <svg id="finalResult"></svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
     </div>
 </div>
 
@@ -932,7 +983,7 @@
 
         //step9
         VisualizeDataBlock(dividedInput.LeftMatrix, 'xorLeft', 'cell-rect-data', false);
-        VisualizeDataBlock(rightBlockBeforeLastXor, 'xorRight', 'cell-rect-data', false);
+        VisualizeDataBlock(rightBlockBeforeLastXor, 'xorRight', 'cell-rect-key', false);
         VisualizeDataBlock(lastXor, 'xorRightLeftResult', 'cell-rect-result', false);
 
         //step10
@@ -944,7 +995,19 @@
         VisualizeDataBlock(finalResult.permutationMatrix, 'lastStepPermutation', 'cell-rect-helpers',false);
         VisualizeDataBlock(finalResult.result, 'finalResult', 'cell-rect-result',false);
 
+        //initialize events
         BitsGroupInputHover();
+        Point1Event();
+        Point2Event();
+        Point3Event();
+        Point3Event2();
+        Point4Event();
+        Point6Event();
+        Point6Event_2();
+        Point6Event_3();
+        Point7Event();
+        Point9Event();
+
 
         function BlockPermutationVisualize() {
 
@@ -1110,9 +1173,9 @@
             var numrows = matrix.length;
             var numcols = matrix[0].length;
 
-            var margin = { top: 100, right: 100, bottom: 100, left: 100 },
+            var margin = { top: 100, right: 100, bottom: 20, left: 100 },
                 width = 600,
-                height = 200;
+                height = 180;
 
             var textOffsetX = (width / numcols) / 2 - 10;
             var textOffsetY = (height / numrows) / 2;
@@ -1325,6 +1388,12 @@
                     return selectedValue.toString() + " ---> " + bin;
                 });
 
+            bitsAfterSbox = d3.select("#bitsAfterSbox");
+            bitsAfterSbox.selectAll(".cell")
+                .filter(function (d, index) {
+                    return Math.floor((index / 4)) == imod;
+                }).select("rect").attr("class","cell-rect-selected-3");
+
         }
         function handleMouseOutOnBitsGroup(d, i) {
             d3.select('#bitsGroupInput')
@@ -1348,6 +1417,11 @@
             d3.select('#sboxBinDescription')
                 .select("text")
                 .text('');
+
+            bitsAfterSbox = d3.select("#bitsAfterSbox");
+            bitsAfterSbox.selectAll(".cell")
+                .select("rect").attr("class","cell-rect-data")
+
         }
 
         function BitsGroupInputHover() {
@@ -1355,6 +1429,507 @@
                 .selectAll('.cell')
                 .on('mouseover', handleMouseOverOnBitsGroup)
                 .on('mouseout', handleMouseOutOnBitsGroup);
+        }
+
+
+        function handleMouseOverOnPoint1(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell=d3.select("#binaryMatrix")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === d-1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#permutationMatrixResult")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+        }
+
+        function handleMouseOutOnPoint1(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell=d3.select("#binaryMatrix")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === d-1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#permutationMatrixResult")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === i;
+                }).select("rect").attr("class","cell-rect-result");
+        }
+
+
+        function Point1Event() {
+            d3.select('#permutationMatrix')
+                .selectAll('.cell')
+                .on('mouseover', handleMouseOverOnPoint1)
+                .on('mouseout', handleMouseOutOnPoint1);
+        }
+
+        function handleMouseOverOnPoint2(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell = d3.select("#binaryKeyMatrix")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === d-1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#permutationKeyMatrixResult")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+        }
+
+        function handleMouseOutOnPoint2(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell = d3.select("#binaryKeyMatrix")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === d-1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#permutationKeyMatrixResult")
+                .selectAll(".cell")
+                .filter(function(data, index) {
+                    return index === i;
+                }).select("rect").attr("class","cell-rect-result");
+        }
+
+
+        function Point2Event() {
+            d3.select('#permutationKeyMatrix')
+                .selectAll('.cell')
+                .on('mouseover', handleMouseOverOnPoint2)
+                .on('mouseout', handleMouseOutOnPoint2);
+        }
+
+        function handleMouseOverOnPoint3(d, i) {
+            
+            row = Math.floor(i/7);
+
+            //left
+            var rowCells = d3.select('#leftKeyMatrix')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                });
+                rowCells.select("rect")
+                .attr("class", "cell-rect-selected");
+
+            rowCells.filter(function(d, i) {
+                return i === 0;
+            }).select("rect").attr("class", "cell-rect-selected-2");
+
+            var resultRowCells = d3.select('#leftKeyResult')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                });
+            resultRowCells.select("rect")
+                .attr("class", "cell-rect-selected");
+
+            resultRowCells.filter(function(d, i) {
+                return i % 7 === 6;
+            }).select("rect").attr("class", "cell-rect-selected-2");
+
+            
+
+        }
+
+        function handleMouseOutOnPoint3(d, i) {
+
+            row = Math.floor(i/7);
+
+            //left
+            d3.select('#leftKeyMatrix')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            d3.select('#leftKeyResult')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                }).select("rect")
+                .attr("class", "cell-rect-result");
+        }
+
+        function handleMouseOverOnPoint3_2(d, i) {
+
+            row = Math.floor(i / 7);
+            //right
+            var rowCells = d3.select('#rightKeyMatrix')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return Math.floor(index / 7) === row;
+                });
+            rowCells.select("rect")
+                .attr("class", "cell-rect-selected");
+
+            rowCells.filter(function (d, i) {
+                return i === 0;
+            }).select("rect").attr("class", "cell-rect-selected-2");
+
+            var resultRowCells = d3.select('#rightKeyResult')
+                .selectAll('.cell')
+                .filter(function (d, index) {
+                    return Math.floor(index / 7) === row;
+                });
+            resultRowCells.select("rect")
+                .attr("class", "cell-rect-selected");
+
+            resultRowCells.filter(function (d, i) {
+                return i % 7 === 6;
+            }).select("rect").attr("class", "cell-rect-selected-2");
+        }
+
+        function handleMouseOutOnPoint3_2(d, i) {
+
+            row = Math.floor(i / 7);
+            //right
+            d3.select('#rightKeyMatrix')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            d3.select('#rightKeyResult')
+                .selectAll('.cell')
+                .filter(function(d, index) {
+                    return Math.floor(index / 7) === row;
+                }).select("rect")
+                .attr("class", "cell-rect-result");
+        }
+
+        function Point3Event() {
+            d3.select('#leftKeyMatrix')
+                .selectAll('.cell')
+                .on('mouseover', handleMouseOverOnPoint3)
+                .on('mouseout', handleMouseOutOnPoint3);
+        }
+
+        function Point3Event2() {
+            d3.select('#rightKeyMatrix')
+                .selectAll('.cell')
+                .on('mouseover', handleMouseOverOnPoint3_2)
+                .on('mouseout', handleMouseOutOnPoint3_2);
+        }
+
+        function handleMouseOverOnPoint4(d, i) {
+
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell = d3.select("#permutationkey2Input")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#permutationkey2Result")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+        }
+        function handleMouseOutOnPoint4(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell = d3.select("#permutationkey2Input")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#permutationkey2Result")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+        }
+
+        function Point4Event() {
+            
+            d3.select('#permutationkey2Matrix')
+                .selectAll('.cell')
+                .on('mouseover', handleMouseOverOnPoint4)
+                .on('mouseout', handleMouseOutOnPoint4);
+        }
+
+        function handleMouseOverOnPoint6(d,i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell = d3.select("#blockBeforeExpansion")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#blockAfterExpansion")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+        }
+
+        function handleMouseOutOnPoint6(d,i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell = d3.select("#blockBeforeExpansion")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#blockAfterExpansion")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+        }
+
+        function Point6Event() {
+
+            d3.select("#expansionMatrix")
+                .selectAll(".cell")
+                .on('mouseover', handleMouseOverOnPoint6)
+                .on('mouseout', handleMouseOutOnPoint6);           
+        }
+
+        function handleMouseOverOnPoint6_2(d,i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            d3.select("#xorkey").selectAll(".cell")
+                .filter(function(d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-selected");
+
+            d3.select("#xorresult").selectAll(".cell")
+                .filter(function(d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-selected");
+
+        }
+
+        function handleMouseOutOnPoint6_2(d, i) {
+
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-data");
+
+            d3.select("#xorkey").selectAll(".cell")
+                .filter(function(d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-key");
+
+            d3.select("#xorresult").selectAll(".cell")
+                .filter(function(d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+
+        }
+
+        function Point6Event_2() {
+            d3.select("#xorinput")
+                .selectAll(".cell")
+                .on('mouseover', handleMouseOverOnPoint6_2)
+                .on('mouseout', handleMouseOutOnPoint6_2); 
+        }
+
+        function handleMouseOverOnPoint6_3(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell = d3.select("#bitsAfterSbox")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#permutationInFunctionResult")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+        }
+
+        function handleMouseOutOnPoint6_3(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell = d3.select("#bitsAfterSbox")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#permutationInFunctionResult")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+        }
+
+        function Point6Event_3() {
+            d3.select("#permutationInFunction")
+                .selectAll(".cell")
+                .on('mouseover', handleMouseOverOnPoint6_3)
+                .on('mouseout', handleMouseOutOnPoint6_3);
+        }
+
+        function handleMouseOverOnPoint7(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            d3.select("#xorRight").selectAll(".cell")
+                .filter(function (d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-selected");
+
+            d3.select("#xorRightLeftResult").selectAll(".cell")
+                .filter(function (d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-selected");
+
+        }
+
+        function handleMouseOutOnPoint7(d, i) {
+
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-data");
+
+            d3.select("#xorRight").selectAll(".cell")
+                .filter(function (d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-key");
+
+            d3.select("#xorRightLeftResult").selectAll(".cell")
+                .filter(function (d, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+
+        }
+
+        function Point7Event() {
+            d3.select("#xorLeft")
+                .selectAll(".cell")
+                .on('mouseover', handleMouseOverOnPoint7)
+                .on('mouseout', handleMouseOutOnPoint7);
+        }
+
+        function handleMouseOverOnPoint9(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var inputCell = d3.select("#lastStepInput")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                });
+
+            inputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+
+            var outputCell = d3.select("#finalResult")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                });
+
+            outputCell
+                .select("rect")
+                .attr("class", "cell-rect-selected");
+        }
+
+        function handleMouseOutOnPoint9(d, i) {
+            d3.select(this).select("rect")
+                .attr("class", "cell-rect-helpers");
+
+            var inputCell = d3.select("#lastStepInput")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === d - 1;
+                }).select("rect")
+                .attr("class", "cell-rect-data");
+
+            var outputCell = d3.select("#finalResult")
+                .selectAll(".cell")
+                .filter(function (data, index) {
+                    return index === i;
+                }).select("rect").attr("class", "cell-rect-result");
+        }
+
+        function Point9Event() {
+            d3.select("#lastStepPermutation")
+                .selectAll(".cell")
+                .on('mouseover', handleMouseOverOnPoint9)
+                .on('mouseout', handleMouseOutOnPoint9);
         }
 
 

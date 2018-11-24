@@ -167,3 +167,7 @@ input[type=radio] {
 .btn-space-lg {
     margin-right: 10px;
 }
+
+.alg-title {
+    font-family: "Lucida Console", Monaco, monospace;
+}

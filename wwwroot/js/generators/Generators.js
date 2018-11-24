@@ -21,7 +21,8 @@
                         '<input maxlength = "20" id = "register' +
                         (i + 1) +
                         '" class="lfsr-registers form-control" type = "text" />' +
-                        '<label id="registerCounter'+(i+1)+'" class="btn btn-success">0</label>'+'<br>'+
+                        '<label id="registerCounter' + (i + 1) + '" class="btn btn-success">0</label>' + '<br>' +
+                        '<label>Aktualny stan rejestru:</label>'+'<br/>'+
                         '<label id="register'+(i+1)+'-content" class="registers-font">01</label>'+'<br>');
 
                 }
@@ -174,6 +175,7 @@
     var feedbackFunctionInit = function() {
         $("#feedbackFunctionBtn").click(function() {
             $("#feedbackFunction").slideToggle("slow");
+            $(this).blur();
 
         });
     }
