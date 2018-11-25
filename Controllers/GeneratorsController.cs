@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CryptoWebService.Backend.LfsrGenerators;
+using CryptoWebService.Helpers;
 using CryptoWebService.Models.Generators;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,17 +36,20 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                        return Json(new {data = new string(data), registers=r});
                 }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                        return Json(new{ data = BitConverter.ToString(data), registers = r });
                 }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new{ data = data,registers =r });
                 }
 
             }
@@ -77,18 +81,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -122,18 +129,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -164,18 +174,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -207,18 +220,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -249,18 +265,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -292,18 +311,21 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
+                    }
 
             }
 
@@ -335,17 +357,20 @@ namespace CryptoWebService.Controllers
                 case SeriesMode.Binary:
                 {
                     var data = generator.GenerateBitsAsChars(viewModel.Length);
-                    return Json(new string(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = new string(data), registers = r });
+                    }
                 case SeriesMode.Hex:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(BitConverter.ToString(data));
-                }
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = BitConverter.ToString(data), registers = r });
+                    }
                 case SeriesMode.Base64:
                 {
                     var data = generator.GenerateBytes(viewModel.Length);
-                    return Json(data);
+                    var r = LfsrHelper.GetRegisterAsStringArray(generator.Registers);
+                    return Json(new { data = data, registers = r });
                 }
 
             }

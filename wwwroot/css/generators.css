@@ -73,3 +73,14 @@ td.lfsr-function-cell {
     background-color:#ffa500;
 }
 
+
+.register-rect{
+    fill: lightgreen;
+    stroke: black;
+    stroke-width: 4px;
+}
+
+.register-cell-text{
+    font-size: 30px;
+    font-weight: bold
+}
