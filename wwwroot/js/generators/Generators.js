@@ -226,14 +226,11 @@
         regexp = /^[01]+$/;
         if (regexp.test(str)) {
             return true;
-            } else {
-            return false;
-           }
         }
-
-
-
-
+        else {
+            return false;
+        }
+    }
 }
 
 
