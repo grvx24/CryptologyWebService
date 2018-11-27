@@ -1,4 +1,4 @@
-﻿//#region CaesarCipher
+﻿//#region Caesar cipher
 var CaesarCipherInit = function (config) {
 
 
@@ -242,6 +242,7 @@ var CaesarVisualizationInit = function (config) {
 }
 //#endregion
 
+//#region Affine cipher
 var AffineCipherInit = function (config) {
 
     var encryptInit = function () {
@@ -310,6 +311,7 @@ var AffineCipherInit = function (config) {
         init: init
     }
 }
+//#endregion
 
 //#region Beacon cipher
 var BaconCipherInit = function (config) {
@@ -489,13 +491,10 @@ var BaconVisualizationInit = function (config) {
         });
 
         $("#inputCipher").on('input', function () {
-            if ($("#startButton").attr('disabled')) {
                 $('#nextButton').attr('disabled', true);
                 $('#startButton').attr('disabled', false);
                 clearHighlightsCell();
                 $('#outputCipher').val('');
-            }
-
         });
     }
 
@@ -510,7 +509,7 @@ var BaconVisualizationInit = function (config) {
 
 //#endregion
 
-//#region ColumnarTrensposition
+//#region ColumnarTrensposition cipher
 var ColumnarTranspositionCipherInit = function (config) {
 
     var encryptInit = function () {
@@ -577,6 +576,20 @@ var ColumnarTranspositionCipherInit = function (config) {
 
 var ColumnarTranspositionVisualizationInit = function (config) {
 
+    function removeTables() {
+        $('#sortedKey td').remove();
+        $('#sortedKey tr').remove();
+        $('#sortedKey tbody').remove();
+
+        $('#numeredKey td').remove();
+        $('#numeredKey tr').remove();
+        $('#numeredKey tbody').remove();
+
+        $('#encryptMatrix td').remove();
+        $('#encryptMatrix tr').remove();
+        $('#encryptMatrix tbody').remove();
+    }
+
     var visualizationInit = function () {
 
         $('#startButton').click(function () {
@@ -595,17 +608,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                 data: JSON.stringify(model),
                 success: function (data) {
 
-                    $('#sortedKey td').remove();
-                    $('#sortedKey tr').remove();
-                    $('#sortedKey tbody').remove();
-
-                    $('#numeredKey td').remove();
-                    $('#numeredKey tr').remove();
-                    $('#numeredKey tbody').remove();
-
-                    $('#encryptMatrix td').remove();
-                    $('#encryptMatrix tr').remove();
-                    $('#encryptMatrix tbody').remove();
+                    removeTables();
 
                     $('#outputCipher').val("");
                     $('#stepNumber').val("1");
@@ -686,11 +689,8 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                         $('#nextButton').attr('disabled', false);
                     }
                     $('#labelSortedKey').attr('hidden', false);
-                   
-
-                    
+                                  
                     $('#startButton').attr('disabled', true);
-
 
                 },
                 error: function (response) {
@@ -757,7 +757,6 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                     currentStep += 1;
                     $('#stepNumber').val(currentStep);
 
-                    console.log(currentStep);
                     if (currentStep > _key.length) {
                         $('#nextButton').attr('disabled', true);
                         $('#startButton').attr('disabled', false);
@@ -775,17 +774,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                 $('#startButton').attr('disabled', false);
                 $('#nextButton').attr('disabled', true);
 
-                $('#sortedKey td').remove();
-                $('#sortedKey tr').remove();
-                $('#sortedKey tbody').remove();
-
-                $('#numeredKey td').remove();
-                $('#numeredKey tr').remove();
-                $('#numeredKey tbody').remove();
-
-                $('#encryptMatrix td').remove();
-                $('#encryptMatrix tr').remove();
-                $('#encryptMatrix tbody').remove();
+                removeTables();
 
                 $('#labelSortedKey').attr('hidden', true);
                 $('#labelEncryptMatrix').attr('hidden', true);
@@ -800,17 +789,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
             $('#startButton').attr('disabled', false);
             $('#nextButton').attr('disabled', true);
 
-            $('#sortedKey td').remove();
-            $('#sortedKey tr').remove();
-            $('#sortedKey tbody').remove();
-
-            $('#numeredKey td').remove();
-            $('#numeredKey tr').remove();
-            $('#numeredKey tbody').remove();
-
-            $('#encryptMatrix td').remove();
-            $('#encryptMatrix tr').remove();
-            $('#encryptMatrix tbody').remove();
+            removeTables();
 
             $('#labelSortedKey').attr('hidden', true);
             $('#labelEncryptMatrix').attr('hidden', true);
@@ -832,7 +811,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
 }
 //#endregion
 
-
+//#region Fence cipher
 var FenceCipherInit = function(config) {
     var encryptInit = function () {
 
@@ -895,6 +874,169 @@ var FenceCipherInit = function(config) {
     }
 }
 
+var FenceVisualizationInit = function (config) {
+
+    function removeTables() {
+        $('#fenceTable th').remove();
+        $('#fenceTable td').remove();
+        $('#fenceTable tr').remove();
+        $('#fenceTable tbody').remove();
+    }
+
+    var visualizationInit = function () {
+       
+        $('#startButton').click(function () {
+
+            var model = {
+                message: $('#inputCipher').val(),
+                key: $('#keyVisualization').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.visualizationUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    var _input = data[1];
+                    var _output = data[0];
+                    var _table = data[2];
+                    var _key = $('#keyVisualization').val();
+
+                    removeTables();
+                    $('#outputCipher').val("");
+                    $('#stepNumber').val("1");
+
+                    var $table = $('#fenceTable');
+                    var $tbody = $('<tbody></tbody>');
+
+                    $table.append($tbody);
+
+                    var index = 0;
+                    for (i = 0; i < _key; i++)
+                    {
+                        var $tr = $('<tr />');
+                        for (j = 0; j < _input.length; j++)
+                         {
+                            $tr.append($('<td style="width:30px;height:30px"/>').html(_table[index]));
+                            index++;
+                        }
+                        $tbody.append($tr);
+                    }
+
+
+                    if ($('#inputCipher').val() != "") {
+                        $('#nextButton').attr('disabled', false);
+                        $('#startButton').attr('disabled', true);
+                    }
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+
+
+        $('#nextButton').click(function () {
+
+            var model = {
+                message: $('#inputCipher').val(),
+                key: $('#keyVisualization').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.visualizationUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+                    var currentStep = parseInt($('#stepNumber').val());
+                    var _output = data[0];
+                    var table = document.getElementById("fenceTable");
+                    var rows = table.getElementsByTagName("tr");
+                    var columns = rows[0].getElementsByTagName("td");
+                    
+
+                    var counter = 0;
+                    for (i = 0; i < rows.length; i++)
+                    {
+                        for (z = 0; z < columns.length; z++) 
+                        {
+                            if (rows[i].cells[z].innerHTML != "")
+                            {    
+                                counter++;
+                                if (counter == currentStep) {
+                                    rows[i].cells[z].style.backgroundColor = '#33b5e5';
+                                }
+                                else {
+                                    rows[i].cells[z].style.backgroundColor = 'white';
+                                }
+                                
+                            }
+                        }
+                    }
+                 
+                    var currentOutput = $('#outputCipher').val();
+                    var newOutput = currentOutput + _output[currentStep-1];
+                    $('#outputCipher').val(newOutput);
+                    currentStep += 1;
+                    $('#stepNumber').val(currentStep);
+
+                    if (currentStep > _output.length) {
+                        $('#nextButton').attr('disabled', true);
+                        $('#startButton').attr('disabled', false);
+                    }
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+
+
+
+        $("#keyVisualization").on('change',
+            function () {
+                $('#outputCipher').val("");
+                $('#startButton').attr('disabled', false);
+                removeTables();
+                $('#nextButton').attr('disabled', true);
+                if ($('#inputCipher').val() == "") {
+                    $('#startButton').attr('disabled', true);
+                }
+            });
+
+        $("#inputCipher").on('input', function () {
+            $('#outputCipher').val("");
+            $('#startButton').attr('disabled', false);
+            removeTables();
+            $('#outputCipher').val("");
+            $('#nextButton').attr('disabled', true);
+            if ($('#inputCipher').val() == "") {
+                $('#startButton').attr('disabled', true);
+            }
+        });
+
+    }
+
+    var init = function () {
+        visualizationInit();
+    }
+
+    return {
+        init: init
+    }
+
+}
+
+
+
+//#endregion
+
+//#region Playfair cipher
 var PlayfairCipherInit = function (config) {
     var encryptInit = function () {
 
@@ -956,8 +1098,9 @@ var PlayfairCipherInit = function (config) {
         init: init
     }
 }
+//#endregion
 
-
+//#region Route cipher
 var RouteCipherInit = function (config) {
     var encryptInit = function () {
 
@@ -1027,8 +1170,9 @@ var RouteCipherInit = function (config) {
         init: init
     }
 }
+//#endregion
 
-
+//#region Vigenere cipher
 var VigenereCipherInit = function (config) {
     var encryptInit = function () {
 
@@ -1092,4 +1236,4 @@ var VigenereCipherInit = function (config) {
         init: init
     }
 }
-
+//#endregion

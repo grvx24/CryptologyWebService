@@ -305,6 +305,7 @@ namespace CryptoWebService.Controllers.Ciphers
 
         #endregion ColumnarTransposition
 
+#region Fence
         [HttpGet]
         public IActionResult Fence()
         {
@@ -348,6 +349,47 @@ namespace CryptoWebService.Controllers.Ciphers
 
             return Json(decrypted);
         }
+
+        [HttpPost]
+        public IActionResult FenceVisualization([FromBody]FenceCipherViewModel viewModel)
+        {
+            FenceCipher cipher = new FenceCipher(viewModel.Key);
+            
+            string encrypted = "";
+            string input = viewModel.Message;
+            string[] results = new string[3] { "encrypted", "input","table"};
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            results[1] = input;
+            char[][] table;
+            try
+            {
+                string message = viewModel.Message;
+                encrypted = cipher.Encrypt(message);
+                results[0] = encrypted;
+
+                table = cipher.getTable(encrypted);
+
+                var stringTable = new StringBuilder();
+                for (int i = 0; i < viewModel.Key; i++)
+                {
+                    for (int j = 0; j < encrypted.Length; j++)
+                    {
+                        stringTable.Append(table[i][j]);
+                    }
+                }
+
+                results[2] = stringTable.ToString();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+
+            return Json(results);
+        }
+#endregion
 
         [HttpGet]
         public IActionResult Playfair()
