@@ -2,26 +2,32 @@
 
 <div class="row row-eq-height">
     <div class="col-lg-4">
-        <div>
+        <div class="layer">
             <label for="MethodSelect">Metoda</label>
             <select id="MethodSelect" class="form-control" onchange="fillSelect(this.value)">
                 <option value="1">algorytm najmniej znaczącego bitu</option>
                 <option value="2" selected>patchwork</option>
             </select>
         </div>
-        <div>
-            <label for="AmountOfSecretsSelect">Ilość  sekretów</label>
-            <select id="AmountOfSecretsSelect" class="form-control">
-                <option value="2" selected>2</option>
-            </select>
+        <div class="layer" id="Method1">
+            <label style="margin-bottom:10px;">
+                Ilość bitów przeznaczona na kodowanie
+                <span data-toggle="tooltip" title="Jest to liczba bitów wykorzystana do kodowania z każdego piksela obrazu."
+                      style="color:#1c5aa6;font-size:24px;" class="glyphicon glyphicon-info-sign"></span>
+            </label>
+            <div class="slidecontainer" id="AmountOfBitsSlider">
+                <div class="col-lg-10">
+                    <input type="range" min="1" max="8" value="1" style="margin-top:5px;" class="slider" id="myRange">
+                </div>
+                <div class="col-lg-2">
+                    <span id="demo" style="font-size:18px;"> </span>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="inputModeSelect">Format wejściowy</label>
-            <select id="inputModeSelect" class="form-control">
-                <option value="drawing" selected>Rysowanie</option>
-                <option value="file">Plik</option>
-            </select>
+        <div class="layer">
+
         </div>
+
     </div>
     <div class="col-lg-8" style="display: flex;flex-direction: column;">
         <label for="inputEncrypt">Opis wybranej metody</label>
@@ -32,18 +38,6 @@
 <div class="col-lg-12">
     <hr />
 </div>
-
-<div class="row ">
-
-    <div class="col-lg-12">
-        <div class="col-lg-12">
-            <label class="form-control" style="height: 100%" id="MethodDescription">
-                STEGANOGRAFIA
-            </label>
-        </div>
-    </div>
-</div>
-
 
 <div class="row">
     <div class="col-lg-12">
@@ -93,11 +87,16 @@
 </div>
 
 
+
 <style>
+    .layer{
+        margin-top:5px;
+        margin-bottom: 10px;
+    }
+
     .ImageHeader {
         color: #1c5aa6;
     }
-
 
     .ImageDescription {
         font-size: 16px;
@@ -134,8 +133,28 @@
     var isPaint = false;
     var lastPointerPosition;
     var DisplayLayer = new Konva.Layer();
+    var AmountOfSecretsSelect = [];
+    AmountOfSecretsSelect["1"] = ["2"];
+    AmountOfSecretsSelect["2"] = ["2", "4"];
+
+    var MethodsDescriptions = [];
+    MethodsDescriptions["1"] = ["Opis najmniej znaczacego bitu"];
+    MethodsDescriptions["2"] = ["opis paptchwork"];
+
+
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    }
+
 
     $(document).ready(function () {
+        $("#MethodSelect").val("1").change();
+        $('[data-toggle="tooltip"]').tooltip();   
         InitDrawingKonvoControl('DrawingContainer', 300);
         InitDisplayKonvoControl('DisplayContainer', 600);
     });
@@ -155,6 +174,18 @@
         }
     });
 
+
+    function fillSelect(nValue) {
+        var label = document.getElementById("MethodDescription");
+        label.innerHTML = MethodsDescriptions[nValue];
+    }
+
+    function removeOptions(selectbox) {
+        var i;
+        for (i = selectbox.options.length - 1; i >= 0; i--) {
+            selectbox.remove(i);
+        }
+    }
     function GetWidth() {
         var width = document.getElementById('Description').offsetWidth;
         if (width === 0) {
