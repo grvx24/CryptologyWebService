@@ -21,7 +21,8 @@
                         '<input maxlength = "20" id = "register' +
                         (i + 1) +
                         '" class="lfsr-registers form-control" type = "text" />' +
-                        '<label id="registerCounter'+(i+1)+'" class="btn btn-success">0</label>'+'<br>'+
+                        '<label id="registerCounter' + (i + 1) + '" class="btn btn-success">0</label>' + '<br>' +
+                        '<label>Aktualny stan rejestru:</label>'+'<br/>'+
                         '<label id="register'+(i+1)+'-content" class="registers-font">01</label>'+'<br>');
 
                 }
@@ -123,8 +124,15 @@
                     data: JSON.stringify(model),
                     success: function (data) {
 
+                        var result = data.data;
+                        
                         lastUsedMode = mode;
-                        $('#outputConsole').val(data);
+                        $('#outputConsole').val(result);
+
+                        for (var i = 0; i < data.registers.length; i++) {
+                            console.log(data.registers[i]);
+                            $('#register' + (i + 1) + '-content').text(data.registers[i]);
+                        }
 
                         var downloadLink = $("#downloadBtn");
 
@@ -174,6 +182,7 @@
     var feedbackFunctionInit = function() {
         $("#feedbackFunctionBtn").click(function() {
             $("#feedbackFunction").slideToggle("slow");
+            $(this).blur();
 
         });
     }
@@ -207,7 +216,6 @@
             counter++;
         });
 
-        console.log(array);
         return array.join(",");
 
     }
@@ -218,14 +226,11 @@
         regexp = /^[01]+$/;
         if (regexp.test(str)) {
             return true;
-            } else {
-            return false;
-           }
         }
-
-
-
-
+        else {
+            return false;
+        }
+    }
 }
 
 
