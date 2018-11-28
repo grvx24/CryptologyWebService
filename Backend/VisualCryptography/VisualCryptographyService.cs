@@ -47,6 +47,8 @@ namespace CryptoWebService.Backend.VisualCryptography
             return VisualSteganographyAlgorithm(new Bitmap(ms0), new Bitmap(ms1), new Bitmap(ms2));
         }
 
+        //public static string 
+
         #region Algorithms
 
         private static string[] VisualSteganographyAlgorithm(Bitmap share1, Bitmap share2, Bitmap ImageToHide)
@@ -188,7 +190,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
         }
 
-
         private static string[] SecretsAlgorithm1(Bitmap bitmap)
         {
             Random random = new Random();
@@ -293,78 +294,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             }
 
             return listaString.ToArray();
-        }
-
-        public static ViewModelDto PrepareVisualCryptoraphyView()
-        {
-            ViewModelDto VieModelDto = new ViewModelDto();
-
-            List<AnimationDto> Animations = new List<AnimationDto>
-            {
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Width = 300,
-                    Height = 200,
-                    Amplitude = 2,
-                    Period = 20000
-                },
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Amplitude = 150
-                }
-            };
-
-            List<ImageDto> Images = new List<ImageDto>
-            {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
-                {
-                    Width = 793,
-                    Height = 200
-                },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
-                {
-                    Width = 991,
-                    Height = 250
-                }
-            };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
-
-            return VieModelDto;
-        }
-
-        public static ViewModelDto PrepareVisualSteganographyView()
-        {
-            ViewModelDto VieModelDto = new ViewModelDto();
-
-            List<AnimationDto> Animations = new List<AnimationDto>
-            {
-                new AnimationDto("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
-                {
-                    Width = 600,
-                    Height = 300,
-                    Amplitude = 3,
-                    Period = 40000
-                },
-            };
-
-            List<ImageDto> Images = new List<ImageDto>
-            {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
-                {
-                    Width = 793,
-                    Height = 200
-                },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
-                {
-                    Width = 991,
-                    Height = 250
-                }
-            };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
-
-            return VieModelDto;
         }
 
         #endregion

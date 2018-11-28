@@ -18,7 +18,7 @@ namespace CryptoWebService.Controllers
     public class VisualCryptographyController : Controller
     {
         #region Secrets
-        public IActionResult sekret() => View("Secret", VisualCryptographyService.PrepareVisualCryptoraphyView());
+        public IActionResult sekret() => View("Secret", PrepareViewMenager.PrepareVisualCryptoraphyView());
 
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
@@ -39,7 +39,7 @@ namespace CryptoWebService.Controllers
                 {
                      lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
                 }
-                catch (ImageIsNotInGrayScaleException e)
+                catch (ImageIsNotInGrayScaleException)
                 {
 
                     return Json(new { Result = false, Message = "Image is not in gray scale." });
@@ -55,7 +55,7 @@ namespace CryptoWebService.Controllers
 
         #region VisualSteganography
 
-        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualSteganographyView());
+        public IActionResult steganografiawizualna() => View("VisualSteganography", PrepareViewMenager.PrepareVisualSteganographyView());
 
         [HttpPost]
         public IActionResult VisualSteganography([FromBody] string[] Images)
@@ -97,7 +97,37 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult Steganography(int result) => View();
+        public IActionResult Steganography([FromBody] string[] Images)
+        {
+
+            if (Images == null)
+            {
+                return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
+            }
+            else
+            {
+                if (Images.Length != 3 || Images[0] == null || Images[1] == null || Images[2] == null)
+                {
+                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
+                }
+
+                string[] lista;
+
+                try
+                {
+                    lista = VisualCryptographyService.VisualSteganography(Images);
+                }
+                catch (ImageIsNotInGrayScaleException e)
+                {
+
+                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
+                }
+
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+        }
 
         #endregion
 
