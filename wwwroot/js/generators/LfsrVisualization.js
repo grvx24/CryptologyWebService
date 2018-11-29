@@ -53,7 +53,7 @@
 
             var feedbackFunction = $('#feedbackFunctionViz').val();
             var polynomial = feedbackFunction.split(',');
-            var polynomial = polynomial.unique();
+            polynomial = polynomial.unique();
             if (isCommaSeparatedNumber(polynomial)) {
 
                 registerContent = register.split('').map(Number);

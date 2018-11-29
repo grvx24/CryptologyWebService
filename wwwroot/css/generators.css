@@ -80,6 +80,14 @@ td.lfsr-function-cell {
     stroke-width: 4px;
 }
 
+    .register-rect-selected{
+        fill: #5c9def;
+        stroke: black;
+        stroke-width: 4px;
+    }
+
+
+
 .register-text {
     font-size: 20px;
     font-weight: bold

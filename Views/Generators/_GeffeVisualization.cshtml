@@ -11,31 +11,43 @@
     </div>
 </div>
 <div class="row">
-    <svg width="1000" height="700" id="lfsrContainters">
-        <g transform="translate(0,0)" id="lfsr1"></g>
-        <g transform="translate(0,200)" id="lfsr2"></g>
-        <g transform="translate(0,400)" id="lfsr3"></g>
+    <svg width="1000" height="650" id="lfsrContainters">
+        <g transform="translate(0,0)" id="lfsr2"></g>
+        <g transform="translate(0,200)" id="lfsr3"></g>
+        <g transform="translate(0,400)" id="lfsr1"></g>
         <g transform="translate(600,50)" id="multiPlexer"></g>
     </svg>
 </div>
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-2">
         <br />
         <button id="nextStepBtn" class="btn btn-lg btn-success center-block">Wygeneruj bit</button>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-2">
         <div class="form-group inline">
-            <label for="registerText">Stan rejestru</label>
-            <input id="registerText" class="form-control" type="text" />
+            <label for="registerText1">Stan rejestru 1</label>
+            <input value="10101" maxlength="10" id="registerText1" class="form-control" type="text" />
+            <label for="feedbackFunctionViz1">Wielomian (np. 2,4,5)</label>
+            <input value="1,2" maxlength="40" id="feedbackFunctionViz1" class="form-control" type="text" />
         </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-2">
         <div class="form-group inline">
-            <label for="registerText">Wielomian (np. 2,4,5)</label>
-            <input id="feedbackFunctionViz" class="form-control" type="text" />
+            <label for="registerText2">Stan rejestru 2</label>
+            <input value="10101" maxlength="10" id="registerText2" class="form-control" type="text" />
+            <label for="feedbackFunctionViz2">Wielomian (np. 2,4,5)</label>
+            <input value="1,4" maxlength="40" id="feedbackFunctionViz2" class="form-control" type="text" />
         </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-2">
+        <div class="form-group inline">
+            <label for="registerText3">Stan rejestru 3</label>
+            <input value="10101" maxlength="10" id="registerText3" class="form-control" type="text" />
+            <label for="feedbackFunctionViz3">Wielomian (np. 2,4,5)</label>
+            <input value="1,3" maxlength="40" id="feedbackFunctionViz3" class="form-control" type="text" />
+        </div>
+    </div>
+    <div class="col-lg-2">
         <br />
         <button id="createRegisterBtn" class="btn btn-lg btn-primary center-block">Stwórz rejestr</button>
     </div>
