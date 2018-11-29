@@ -1,21 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Znaki wodne";
+﻿@using CryptoWebService.Helpers;
+@model ViewModelDto;
+@{
+    ViewData["Title"] = "Steganografia wizualna";
 }
 <script src="~/lib/custom/konva.min.js"></script>
 <div class="container">
-    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Znaki wodne</label>
+    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Steganografia wizualna</label>
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
     <div id="Description" class="tabcontent col-lg-12">
         @{
-            await Html.RenderPartialAsync("WaterMarks_Description");
+            await Html.RenderPartialAsync("VisualSteganography_Description", Model);
         }
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
         @{
-            await Html.RenderPartialAsync("WaterMarks_Action");
+            await Html.RenderPartialAsync("VisualSteganography_Action", Model);
         }
     </div>
 </div>

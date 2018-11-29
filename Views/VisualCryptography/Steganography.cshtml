@@ -1,24 +1,26 @@
 ﻿@{
-    ViewData["Title"] = "Znaki wodne";
+    ViewData["Title"] = "Steganografia";
 }
+
 <script src="~/lib/custom/konva.min.js"></script>
 <div class="container">
-    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Znaki wodne</label>
+    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Steganografia</label>
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
     <div id="Description" class="tabcontent col-lg-12">
         @{
-            await Html.RenderPartialAsync("WaterMarks_Description");
+            await Html.RenderPartialAsync("Steganography_Description");
         }
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
         @{
-            await Html.RenderPartialAsync("WaterMarks_Action");
+            await Html.RenderPartialAsync("Steganography_Action");
         }
     </div>
 </div>
+
 
 <script>
     document.getElementById("defaultPageButton").click();

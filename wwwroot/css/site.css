@@ -73,11 +73,14 @@ body {
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
+    padding: 8px 16px;
     transition: 0.3s;
-    font-size: 17px;
+    font-size: 16px;
     border-radius: 14px;
+    margin-right: 5px;
+    margin-top:2px;
 }
+
 
 /* Change background color of buttons on hover */
 .tab button:hover {
@@ -87,6 +90,8 @@ body {
 /* Create an active/current tablink class */
 .tab button.active {
     background-color: #1c5aa6;
+    font-size: 18px;
+    margin-top: 0px
 }
 
 /* Style the tab content */
