@@ -97,25 +97,20 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult Steganography([FromBody] string[] Images)
+        public IActionResult Steganography([FromBody] string Image)
         {
-
-            if (Images == null)
+            if (Image == null)
             {
                 return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
             }
             else
             {
-                if (Images.Length != 3 || Images[0] == null || Images[1] == null || Images[2] == null)
-                {
-                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
-                }
 
                 string[] lista;
 
                 try
                 {
-                    lista = VisualCryptographyService.VisualSteganography(Images);
+                    lista = VisualCryptographyService.Steganography(Image,"eloszka");
                 }
                 catch (ImageIsNotInGrayScaleException e)
                 {
