@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using CryptoWebService.Models;
 using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
@@ -47,7 +46,14 @@ namespace CryptoWebService.Backend.VisualCryptography
             return VisualSteganographyAlgorithm(new Bitmap(ms0), new Bitmap(ms1), new Bitmap(ms2));
         }
 
-        //public static string 
+        public static string[] Steganography(string Image, string DataToDecode)
+        {
+            byte[] imageBytes0 = Convert.FromBase64String(Image);
+
+            MemoryStream ms0 = new MemoryStream(imageBytes0, 0, imageBytes0.Length);
+
+            return SteganographyAlgorithm(new Bitmap(ms0), DataToDecode);
+        } 
 
         #region Algorithms
 
@@ -177,19 +183,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
-        private static void setPixels(List<Bitmap> Secrets,int i, int j , BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
-        {
-            Secrets[0].SetPixel((j * 2), (i * 2)        , subElements_1[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2), (i * 2) + 1    , subElements_1[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2) + 1, (i * 2)    , subElements_1[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_1[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
-
-            Secrets[1].SetPixel((j * 2), (i * 2)        , subElements_2[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2), (i * 2) + 1    , subElements_2[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2) + 1, (i * 2)    , subElements_2[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
-        }
-
         private static string[] SecretsAlgorithm1(Bitmap bitmap)
         {
             Random random = new Random();
@@ -276,9 +269,43 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
+        private static string[] SteganographyAlgorithm(Bitmap bitmap,string DataToDecode,int amountOfBitsOnCoding = 1 )
+        {
+            int bitmapWidth = bitmap.Width;
+            int bitmapHeight = bitmap.Height;
+
+            var maxAmountOfBits = bitmapHeight * bitmapWidth * amountOfBitsOnCoding;
+
+            Color colorOfspecificPixel;
+            colorOfspecificPixel = bitmap.GetPixel(0, 0);
+
+            Random random = new Random();
+            List<Bitmap> Secrets = new List<Bitmap>()
+            {
+                new Bitmap(bitmapWidth, bitmapHeight),
+                new Bitmap(bitmapWidth, bitmapHeight)
+            };
+
+
+            return ConvertBitmapToStrings(Secrets);
+        }
+
         #endregion
 
         #region helpers 
+
+        private static void setPixels(List<Bitmap> Secrets, int i, int j, BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
+        {
+            Secrets[0].SetPixel((j * 2), (i * 2), subElements_1[(randomIndex + 0) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2), (i * 2) + 1, subElements_1[(randomIndex + 1) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2), subElements_1[(randomIndex + 2) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_1[(randomIndex + 3) % 4] ? Color.Black : Color.Transparent);
+
+            Secrets[1].SetPixel((j * 2), (i * 2), subElements_2[(randomIndex + 0) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2), (i * 2) + 1, subElements_2[(randomIndex + 1) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2), subElements_2[(randomIndex + 2) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3) % 4] ? Color.Black : Color.Transparent);
+        }
 
         private static string[] ConvertBitmapToStrings(List<Bitmap> bitmaps)
         {
