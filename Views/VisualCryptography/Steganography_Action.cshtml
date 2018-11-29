@@ -4,7 +4,7 @@
     <div class="col-lg-4">
         <div class="layer">
             <label>Metoda kodowania</label>
-            <select id="MethodSelect" class="form-control">
+            <select id="MethodSelect" class="form-control" onchange="OnChangeMethodSelect(this.value)">
                 <option value="1">algorytm najmniej znaczącego bitu</option>
                 <option value="2" selected>patchwork</option>
             </select>
@@ -23,15 +23,17 @@
             </div>
         </div>
         <div class="layer" id="Method2">
-
+            <label style="margin-bottom:10px;">
+                Metoda 2
+            </label>
         </div>
-
     </div>
     <div class="col-lg-8" style="display: flex;flex-direction: column;">
         <label for="inputEncrypt">Opis metody</label>
         <label class="form-control" style="height: 100%" id="MethodDescription"></label>
     </div>
 </div>
+
 
 <div class="col-lg-12">
     <hr />
@@ -40,9 +42,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label class="ImageHeader">Obraz w którym będą ukrywane dane</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+            <label class="ImageHeader">Obraz w którym będą ukrywane dane</label>
         </div>
         <div class="col-lg-8">
+            <label for="inputModeSelect">Wybierz źródło obrazu:</label>
             <select id="inputModeSelect" class="form-control" style="margin-bottom: 20px">
                 <option value="file" selected>Plik</option>
                 <option value="drawing">Rysunek</option>
@@ -66,14 +69,47 @@
     </div>
 </div>
 
-<div class="col-lg-12">
-    <hr />
+<div id="PanelAfterUploadImage" style="display:none">
+    <div class="col-lg-12">
+        <hr />
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <label class="ImageHeader">Dane ukrywane w obrazie</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+            </div>
+            <div class="col-lg-8">
+                <select id="inputModeSelectData" class="form-control" style="margin-bottom: 20px">
+                    <option value="file" selected>Plik</option>
+                    <option value="text">Tekst</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div id="FileUploadPanelData">
+                <div class="col-lg-12">
+                    @{
+                        await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Data");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 20px">
+        <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
+
+        <div id="loading" class="loader" style="display:none"></div>
+    </div>
 </div>
 
-<div id="secretsDownload" class="text-center">
 
-</div>
-<div class="row">
+<div class="row" id="PanelWithResult" style="display:none">
+    <div class="col-lg-12">
+        <hr />
+    </div>
+    <div id="secretsDownload" class="text-center">
+
+    </div>
     <div class="col-lg-12">
         <div id="Secret">
             <div id="DisplayContainer" class="myCanvas">
@@ -131,7 +167,7 @@
     var DisplayLayer = new Konva.Layer();
 
     var MethodsDescriptions = [];
-    MethodsDescriptions["1"] = [" Jedną z najprostrzych metod osadzania znaku wodnego jest moetoda polegajaca na zmianie najmniej znaczącego bitu słowa oposującego dany piksel.Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany, piksel, tym mniejsze znaczenie ma dla globalnegoodczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
+    MethodsDescriptions["1"] = ["Jedną z najprostrzych metod osadzania znaku wodnego jest moetoda polegajaca na zmianie najmniej znaczącego bitu słowa oposującego dany piksel.Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany, piksel, tym mniejsze znaczenie ma dla globalnegoodczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
     MethodsDescriptions["2"] = ["opis paptchwork"];
 
 
@@ -150,28 +186,28 @@
         InitDisplayKonvoControl('DisplayContainer', 600);
     });
 
-
     $('#inputModeSelect').on('change', function () {
         if (this.value === 'drawing') {
             $('#FileUploadPanel').hide();
             $('#drawingPanel').show();
-
+            $('#PanelAfterUploadImage').show();
         } else if (this.value === 'file') {
             $('#FileUploadPanel').show();
             $('#drawingPanel').hide();
+            $('#PanelAfterUploadImage').hide();
         }
         else {
             Console.log("InputModeSelect value is unknow.")
         }
     });
 
-    $('#MethodSelect').on('change', function () {
+    function OnChangeMethodSelect(methodNumber){
         var label = document.getElementById("MethodDescription");
 
-        if (this.value == 1) {
+        if (methodNumber == 1) {
             $('#Method1').show();
             $('#Method2').hide();
-        } else if (this.value == 2) {
+        } else if (methodNumber == 2) {
             $('#Method1').hide();
             $('#Method2').show();
         } else {
@@ -181,14 +217,8 @@
             label.innerHTML = "";
             return;
         }
-
-        label.innerHTML = MethodsDescriptions[this.value];
-    });
-
-
-
-
-
+        label.innerHTML = MethodsDescriptions[methodNumber];
+    }
 
     function GetWidth() {
         var width = document.getElementById('Description').offsetWidth;
@@ -406,7 +436,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("VisualSteganography", "Steganography")',
+            url: '@Url.Action("Steganography", "VisualCryptography")',
             data: JSON.stringify(imageData),
             dataType: 'json',
             contentType: "application/json",
