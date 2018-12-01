@@ -121,6 +121,7 @@ namespace CryptoWebService.Controllers.Ciphers
 
 #endregion
 
+ #region Affine
         [HttpGet]
         public IActionResult Affine()
         {
@@ -170,7 +171,45 @@ namespace CryptoWebService.Controllers.Ciphers
             return Json(decrypted);
         }
 
-#region Bacon
+        [HttpPost]
+        public IActionResult AffineVisualization([FromBody]AffineCipherViewModel viewModel)
+        {
+            AffineCipher cipher = new AffineCipher(viewModel.KeyA, viewModel.KeyB)
+            {
+                Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType)
+            };
+
+            cipher.Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType);
+
+            string[] results = new string[3] { "alphabet", "output", "input" };
+            string encrypted = "";
+            string input = viewModel.Message;
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            int alphabetLength = cipher.Alphabet.Length;
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            results[0] = cipher.Alphabet;
+            results[2] = input;
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+                results[1] = encrypted;
+
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(results);
+        }
+        #endregion
+
+ #region Bacon
         [HttpGet]
         public IActionResult Bacon()
         {
@@ -389,8 +428,9 @@ namespace CryptoWebService.Controllers.Ciphers
 
             return Json(results);
         }
-#endregion
+        #endregion
 
+#region Playfair
         [HttpGet]
         public IActionResult Playfair()
         {
@@ -433,7 +473,53 @@ namespace CryptoWebService.Controllers.Ciphers
 
             return Json(decrypted);
         }
+        [HttpPost]
+        public IActionResult PlayfairVisualization([FromBody]PlayfairCipherViewModel viewModel)
+        {
+            PlayfairCipher cipher = new PlayfairCipher(viewModel.Key);
 
+            string encrypted = "";
+            string input = viewModel.Message;
+            string[] results = new string[4] { "output", "input", "table","digrams"};
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            results[1] = input;
+            char[,] table;
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+                results[0] = encrypted;
+
+                table = cipher.KeyMatrix;
+
+                var stringTable = new StringBuilder();
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        stringTable.Append(table[i, j]);
+                    }
+                }
+                results[2] = stringTable.ToString();
+
+                if (input.Length % 2 != 0)
+                {
+                    input += "X";
+                }
+                
+                results[3] = input;
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+
+            return Json(results);
+        }
+        #endregion
+
+#region Route
         [HttpGet]
         public IActionResult Route()
         {
@@ -480,7 +566,9 @@ namespace CryptoWebService.Controllers.Ciphers
             return Json(decrypted);
 
         }
+        #endregion
 
+#region Vigenere
         [HttpGet]
         public IActionResult Vigenere()
         {
@@ -527,5 +615,53 @@ namespace CryptoWebService.Controllers.Ciphers
             return Json(decrypted);
         }
 
+        [HttpPost]
+        public IActionResult VigenereVisualization([FromBody]VigenereCipherViewModel viewModel)
+        {
+            VigenereCipher cipher = new VigenereCipher
+                       (viewModel.Key, Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType));
+
+            cipher.Alphabet = Alphabets.GetAlphabet((Alphabets.AlphabetType)viewModel.AlphabetType);
+
+            string[] results = new string[4] { "alphabet", "output", "input","key" };
+            string encrypted = "";
+            string input = viewModel.Message;
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            int alphabetLength = cipher.Alphabet.Length;
+            results[0] = cipher.Alphabet;
+            results[2] = input;
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+                results[1] = encrypted;
+                var key = new StringBuilder();
+                int keyIndex = 0;
+                for (int i = 0; i < input.Length; i++)
+                {
+                    key.Append(cipher.Key[keyIndex]);
+
+                    keyIndex++;
+                    if (keyIndex >= cipher.Key.Length)
+                    {
+                        keyIndex = 0;
+                    }
+                }
+                results[3] = key.ToString();
+
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(results);
+        }
+        #endregion
+
     }
 }
+

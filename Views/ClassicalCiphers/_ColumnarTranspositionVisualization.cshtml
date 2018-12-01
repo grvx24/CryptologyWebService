@@ -8,7 +8,7 @@
             <textarea class="form-control" rows="1" id="keyVisualization"></textarea>
         </div>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="2" id="inputCipher"></textarea>
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -17,14 +17,18 @@
     </row>
 </div>
 
-<div class="col-md-12" style="margin-left:16px">
+<div class="col-md-12" style="margin-left:12px;">
+    <div id="cipherOutput"></div>
+</div>
+
+<div class="col-md-12" style="margin-left:16px;margin-top:30px;">
     <row>
         <div>
             <div id="sortedKey"></div>
             <label id="labelSortedKey" hidden>Klucz posortowany alfabetycznie z nadanymi numerami</label>
         </div>
         <div>
-            <div id="numeredKey" style="margin-top:20px"></div>
+            <div id="numeredKey" style="margin-top:20px;"></div>
         </div>
         <div>
             <div id="encryptMatrix" style="margin-top:5px"></div>
@@ -33,13 +37,6 @@
     </row>
 </div>
        
-
-<div class="col-md-12">
-    <div class="col-md-8" style="margin-top:40px;">
-        <textarea maxlength="50000" placeholder="Zaszyfrowany tekst" class="form-control" rows="2" id="outputCipher"></textarea>
-    </div>
-</div>
-
 <div>
     <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
 </div>
