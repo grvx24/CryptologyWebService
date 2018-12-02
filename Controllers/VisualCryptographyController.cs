@@ -125,14 +125,5 @@ namespace CryptoWebService.Controllers
         }
 
         #endregion
-
-        #region WaterMarks
-
-        public IActionResult znakiwodne() => View("WaterMarks");
-
-        [HttpPost]
-        public IActionResult WaterMarks(int result) => View();
-
-        #endregion
     }
 }
