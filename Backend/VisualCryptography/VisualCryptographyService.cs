@@ -286,9 +286,6 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
 
-            int bitsOnCoding = amo
-
-            _TextToHide.Length
 
 
             return "elo";

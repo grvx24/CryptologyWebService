@@ -33,11 +33,11 @@ namespace CryptoWebService.Controllers
             {
                 encrypted = hash.Encrypt(viewModel.Message);
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -62,11 +62,11 @@ namespace CryptoWebService.Controllers
             {
                 encrypted = hash.Encrypt(viewModel.Message);
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -92,11 +92,11 @@ namespace CryptoWebService.Controllers
             {
                 encrypted = hash.Encrypt(viewModel.Message);
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -121,11 +121,11 @@ namespace CryptoWebService.Controllers
             {
                 encrypted = hash.Encrypt(viewModel.Message);
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -203,7 +203,7 @@ namespace CryptoWebService.Controllers
                 results[6] = md5_viso.Get_binary(message);
                 results[7] = md5_viso.StringToBinary(message);
             }   
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -312,7 +312,7 @@ namespace CryptoWebService.Controllers
               //json = JsonConvert.SerializeObject(_registers, Formatting.Indented);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }

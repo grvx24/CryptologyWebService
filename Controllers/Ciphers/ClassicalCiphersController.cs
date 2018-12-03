@@ -38,11 +38,11 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 encrypted = cipher.Encrypt(viewModel.Message);
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new {Result = false, Message = Text.InvalidCharacter});
             }
@@ -62,7 +62,7 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 decrypted = cipher.Decrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -106,11 +106,11 @@ namespace CryptoWebService.Controllers.Ciphers
                 results[2] = encrypted;
             
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -140,7 +140,7 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 encrypted = cipher.Encrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -161,7 +161,7 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 decrypted = cipher.Decrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -195,11 +195,11 @@ namespace CryptoWebService.Controllers.Ciphers
                 results[1] = encrypted;
 
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -224,7 +224,7 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 encrypted = cipher.Encrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -242,7 +242,7 @@ namespace CryptoWebService.Controllers.Ciphers
             {
                 decrypted = cipher.Decrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -267,7 +267,7 @@ namespace CryptoWebService.Controllers.Ciphers
                 results[1] = encrypted;
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
@@ -673,11 +673,11 @@ namespace CryptoWebService.Controllers.Ciphers
                 results[3] = key.ToString();
 
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException )
             {
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }

@@ -77,7 +77,7 @@ namespace CryptoWebService.Controllers
                 {
                     lista = VisualCryptographyService.VisualSteganography(Images);
                 }
-                catch (ImageIsNotInGrayScaleException e)
+                catch (ImageIsNotInGrayScaleException )
                 {
 
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
@@ -110,7 +110,7 @@ namespace CryptoWebService.Controllers
                     var image = VisualCryptographyService.Steganography(steganographyData);
                     return Json(new { Result = true, image });
                 }
-                catch (ImageIsNotInGrayScaleException e)
+                catch (ImageIsNotInGrayScaleException )
                 {
 
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
