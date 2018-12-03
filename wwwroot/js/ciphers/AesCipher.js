@@ -306,7 +306,7 @@ var decryptInit = function () {
             var format = $("input[name='IVFormatEncrypt']:checked").val();
 
             var IVEncryptInput = $('#IVEncrypt');
-            var keyLength = parseInt($("input[name='keyLengthEncrypt']:checked").val());;
+            var keyLength = 128;
 
             switch (format) {
             case "1":

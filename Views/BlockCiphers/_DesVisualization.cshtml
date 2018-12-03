@@ -1,4 +1,339 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿<link rel="stylesheet" type="text/css" href="~/css/des_visualization.css">
+<script src="~/lib/custom/d3.min.js"></script>
+<script src="~/js/ciphers/DesVisualization.js"></script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="text-center">
+            Prezentacja pokazuje działanie algorytmu DES. Poniżej przedstawiono operacje wykonywane przed rundami cyklicznymi, rundę pierwszą oraz permutację wykonywaną pod koniec. Dane wejściowe są losowane.
+        </h1>
+        <br />
+    </div>
+</div>
+<div class="row">
+    <h2 align="center">1. Wstępna permutacja bloku danych zgodnie z tabelą podstawień.</h2>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="binaryMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationMatrixResult">
+
+        </svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+
+</div>
+
+<div class="row">
+    <h2 align="center">2. Pierwsza permutacja klucza zgodnie z tabelą podstawień. Od teraz klucz jest skrócony do 56 bitów.</h2>
+    <div class="col-lg-4">
+        <svg id="binaryKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationKeyMatrixResult">
+
+        </svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+
+
+<div class="row">
+    <h2 align="center">3. Podział klucza na dwie części oraz przesunięcie bitów w zależności od numeru rundy.</h2>
+    <br/>
+    <div class="col-lg-12">
+        <img style="margin-bottom: 20px" runat="server" width="95% height="95%" src="~/images/desShiftTable.png"/>
+    </div>
+    <h3 align="center">C1</h3>
+    <div class="col-lg-4">
+        <svg id="leftKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4 text-center">
+        <div align="center">
+            <span style="font-size: 200px" class="glyphicon glyphicon-arrow-right">
+
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <svg id="leftKeyResult">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+
+<div class="row">
+    <h3 align="center">D1</h3>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="rightKeyMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4 text-center">
+        <div align="center">
+            <span style="font-size: 200px" class="glyphicon glyphicon-arrow-right">
+
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <svg id="rightKeyResult">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+<div class="row">
+    <div class="row">
+        <h3 align="center">W przypadku następnych rund przesunięcia dokonuje się na podstawie tabel z poprzedniej rundy. Przykładowo dla rundy 2 przesuwa się o 1 miejsce w lewo tabele C1 i D1, dla 3 rundy o 2 miejsca tabele C2 i D2 i tak dalej...</h3>
+    </div>
+</div>
+
+<div class="row">
+    <h2 align="center">4. Połączenie obu części klucza i wykonanie kolejnego podstawienia zgodnie z podaną tabelą.</h2>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="permutationkey2Input">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationkey2Matrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationkey2Result">
+
+        </svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+<div class="row">
+    <h2 align="center">5. Od tego momentu zaczynają się kolejne rundy. Blok danych jest dzielony na dwie części. Bloki są przekształcane zgodnie z siecią Feistela. Funkcja F jest właściwym algorytmem szyfrującym i została opisana poniżej. </h2>
+    <h3 align="center">Nowo utworzona lewa część powstaje przez przeniesienie prawej części, natomiast nowa prawa część jest tworzona za pomocą funkcji szyfrującej.</h3>
+    <br/>
+    <div class="col-lg-12">
+        <div class="img-responsive">
+            <img style="margin-bottom: 20px" runat="server" width="100%" height="100%" src="~/images/desViz.jpg"/>        
+        </div>
+    </div>
+    
+</div>
+<div class="row">
+    <h2 align="center">6. Opis funkcji szyfrującej dla pojedynczej rundy.</h2>
+    <br/>
+    <div class="col-lg-6">
+        <svg id="leftBlockData">
+
+        </svg>
+        <h3>Lewa część</h3>
+    </div>
+    <div class="col-lg-6">
+        <svg id="rightBlockData">
+
+        </svg>
+        <h3>Prawa część</h3>
+    </div>
+</div>
+
+<div class="row">
+    <h3 align="center">
+        Rozszerzenie prawej części do 48 bitów zgodnie z tabelą.    
+    </h3>
+    <br />
+    <div class="col-lg-4">
+        <svg id="blockBeforeExpansion">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="expansionMatrix">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="blockAfterExpansion">
+
+        </svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+    
+</div>    
+<div class="row">
+    <h3 align="center">Operacja XOR na rozszerzonym bloku i kluczu.</h3>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="xorinput">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="xorkey">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="xorresult">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+<div class="row">
+    <h3 align="center">Podział bitów na 8 grup - zmiana bitów w każdej grupie zgodnie z odpowiadającą tabelą (S-BOX).</h3>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="bitsGroupInput">
+
+        </svg>
+    </div>
+    <div class="col-lg-8">
+        <svg id="sbox">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+
+<div class="row">
+    <h3 align="center">W ten sposób otrzymujemy z powrotem 32-bitowy blok. Następnym krokiem jest wykonanie podstawienia zgodnie z poniższą tabelą.</h3>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="bitsAfterSbox">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationInFunction">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="permutationInFunctionResult">
+
+        </svg>
+    </div>
+</div>
+<div class="row">
+    <h2 align="center">7 .Operacja XOR lewej części oraz części prawej wychodzącej z funkcji szyfrującej.</h2>
+    <br/>
+    <div class="col-lg-4">
+        <svg id="xorLeft">
+
+        </svg>
+        <h3>Lewa część</h3>
+    </div>
+    <div class="col-lg-4">
+        <svg id="xorRight">
+
+        </svg>
+        <h3>Prawa część</h3>
+    </div>
+    <div class="col-lg-4">
+        <svg id="xorRightLeftResult">
+
+        </svg>
+        <h3>Nowa prawa część bloku.</h3>
+    </div>
+</div>
+
+<div class="row">
+    <h2 align="center">
+        8. Koniec rundy
+    </h2>
+    <h3 align="center">Na koniec rundy stan lewej i prawej części bloku wygląda następująco: </h3>
+    <br/>
+    <div class="col-lg-6">
+        <svg id="leftResult">
+
+        </svg>
+    </div>
+    <div class="col-lg-6">
+        <svg id="rightResult">
+
+        </svg>
+    </div>
+    <h3 align="center">Jak widać lewa strona to po prostu prawa część stanu
+        początkowego, natomiast na prawej stronie zostały wykonane bardziej skomplikowane operacje. Nowo powstałe podbloki przechodzą do następnej rundy i algorytm jest powtarzany. Całość składa się z 16 rund. </h3>
+</div>
+
+<div class="row">
+    <h2 align="center">9. Ostatni krok</h2>
+    <h3 align="center">Po wykonaniu 16 rund, wykonywana jest finałowa permutacja. Przedstawiona poniżej macierz podstawień jest macierzą odwrotną do tej z punktu 1.</h3>
+    <div class="col-lg-4">
+        <svg id ="lastStepInput">
+
+        </svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="lastStepPermutation"></svg>
+    </div>
+    <div class="col-lg-4">
+        <svg id="finalResult"></svg>
+    </div>
+    <div class="col-lg-pull-4">
+        <h4 align="center">
+            Najedź kursorem aby sprawdzić<span class="glyphicon glyphicon-hand-up"></span>
+        </h4>   
+    </div>
+</div>
+
+    <script>
+
+        $(document).ready(function() {
+            DesVisualizationInit();
+        });
+
+    </script>

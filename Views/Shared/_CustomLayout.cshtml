@@ -112,20 +112,14 @@
                             </div>
                         </li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kryptografia Wizualna<span class="caret"></span></a>
-                            <div class="dropdown-menu">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Kryptografia Wizualna</a>
-                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography23554545s">Podział na sekrety</a>
-                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Steganografia</a>
-                                            <a class="dropdown-item" asp-controller="VisualCryptography" asp-action="VisualCryptography">Znaki wodne</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true"> Kryptografia Wizualna<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="VisualCryptography" asp-action="Sekret">Podział na sekrety</a></li>
+                                <li><a class="dropdown-item" asp-controller="VisualCryptography" asp-action="ZnakiWodne">Znaki wodne</a></li>
+                                <li><a class="dropdown-item" asp-controller="VisualCryptography" asp-action="Steganografia">Steganografia</a></li>
+                                <li><a class="dropdown-item" asp-controller="VisualCryptography" asp-action="SteganografiaWizualna">Steganografia Wizualna</a></li>
+                            </ul>
                         </li>
                     </ul>
 

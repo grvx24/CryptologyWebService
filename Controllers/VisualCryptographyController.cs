@@ -14,25 +14,74 @@ using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Controllers
 {
+    [Route("[action]")]
     public class VisualCryptographyController : Controller
     {
-        #region VisualCryptography
-
-        public IActionResult VisualCryptographyAction()
-        {
-            return View();
-        }
+        #region Secrets
+        public IActionResult sekret() => View("Secret", VisualCryptographyService.PrepareVisualCryptoraphyView());
 
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
         {
-            if (secretsDto.Image == null)
+            if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The argument is empty." });
+                return Json(new { Result = false, Message = "The ScretDto is empty." });
+
+            }else if (secretsDto.Image == null)
+            {
+                return Json(new { Result = false, Message = "The Image Data is empty." });
             }
             else
             {
-                string[] lista = VisualCryptographyService.DivideStringImageToSecrets(secretsDto);
+                string[] lista;
+
+                try
+                {
+                     lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                }
+                catch (ImageIsNotInGrayScaleException e)
+                {
+
+                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                }
+             
+                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                return Json(new { Result = true, secrets });
+            }
+        }
+
+        #endregion
+
+        #region VisualSteganography
+
+        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualSteganographyView());
+
+        [HttpPost]
+        public IActionResult VisualSteganography([FromBody] string[] Images)
+        {
+            if (Images == null )
+            {
+                return Json(new { Result = false, Message = "Dane nie zostały przesłane."});
+            }
+            else
+            {
+                if (Images.Length != 3 || Images[0] == null|| Images[1] == null|| Images[2] == null)
+                {
+                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
+                }
+
+                string[] lista;
+
+                try
+                {
+                    lista = VisualCryptographyService.VisualSteganography(Images);
+                }
+                catch (ImageIsNotInGrayScaleException e)
+                {
+
+                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
+                }
 
                 Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
@@ -41,71 +90,23 @@ namespace CryptoWebService.Controllers
         }
 
 
-        public IActionResult VisualCryptography23554545()
-        {
-            return View();
-        }
+        #endregion
 
-        public IActionResult VisualCryptography()
-        {
-            return View(PrepareVisualCryptoraphyView());
-        }
+        #region Steganography
 
-        private ViewModelDto PrepareVisualCryptoraphyView()
-        {
-            ViewModelDto VieModelDto = new ViewModelDto();
+        public IActionResult steganografia() => View("Steganography");
 
-            List<AnimationDto> Animations = new List<AnimationDto>
-            {
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Width = 300,
-                    Height = 200,
-                    Amplitude = 2,
-                    Period = 20000
-                },
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Amplitude = 150
-                }
-            };
-
-            List<ImageDto> Images = new List<ImageDto>
-            {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
-                {
-                    Width = 793,
-                    Height = 200
-                },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
-                {
-                    Width = 991,
-                    Height = 250
-                }
-            };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
-
-            return VieModelDto;
-        }
-
-
-
+        [HttpPost]
+        public IActionResult Steganography(int result) => View();
 
         #endregion
 
         #region WaterMarks
 
-        public IActionResult WaterMarks()
-        {
-            return View();
-        }
+        public IActionResult znakiwodne() => View("WaterMarks");
 
         [HttpPost]
-        public IActionResult WaterMarks(int result)
-        {
-            return View();
-        }
+        public IActionResult WaterMarks(int result) => View();
 
         #endregion
     }

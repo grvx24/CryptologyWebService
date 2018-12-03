@@ -73,3 +73,33 @@ td.lfsr-function-cell {
     background-color:#ffa500;
 }
 
+
+.register-rect{
+    fill: lightgreen;
+    stroke: black;
+    stroke-width: 4px;
+}
+
+    .register-rect-selected{
+        fill: #5c9def;
+        stroke: black;
+        stroke-width: 4px;
+    }
+
+
+
+.register-text {
+    font-size: 20px;
+    font-weight: bold
+}
+
+.register-cell-text{
+    font-size: 30px;
+    font-weight: bold
+}
+
+.multiplexer-rect{
+    fill: lightgray;
+    stroke: black;
+    stroke-width: 4px;
+}

@@ -1,26 +1,24 @@
-﻿<script src="~/js/ciphers/DesCipher.js"></script>
+﻿@{
+    ViewData["Title"] = "Steganografia";
+}
 
+<script src="~/lib/custom/konva.min.js"></script>
 <div class="container">
+    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Steganografia</label>
     <div class="tab">
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
-
-    <div id="Description" class="tabcontent">
-        Des to fajny szyfr.
+    <div id="Description" class="tabcontent col-lg-12">
+        @{
+            await Html.RenderPartialAsync("Steganography_Description");
+        }
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
-
-        @await Html.PartialAsync("_DesPartial")
-
+        @{
+            await Html.RenderPartialAsync("Steganography_Action");
+        }
     </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_DesVisualization")
-    </div>
-
-
 </div>
 
 

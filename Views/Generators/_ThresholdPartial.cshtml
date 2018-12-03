@@ -7,7 +7,7 @@
     <div id="settings" class="col-lg-4">
         <div id="registers">
             <form class="form-inline text-center">
-                <label for="numOfLfsr">Liczba rejestrów LFSR: &nbsp;</label>
+                <label for="numOfLfsr">Liczba rejestrów &nbsp;</label>
                 <select id="numOfLfsr" class="form-control">
                     @for (int i = 1; i <= 20; i+=2)
                     {
@@ -22,6 +22,8 @@
                         <input maxlength="20" id="register1" class="lfsr-registers form-control" type="text" />
                         <label id="registerCounter1" class="btn btn-success">0</label>
                     </div>
+                    <label>Aktualny stan rejestru:</label>
+                    <br/>
                     <label id="register1-content" class="registers-font">01</label>
                 </div>
             </form>
