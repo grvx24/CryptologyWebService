@@ -27,9 +27,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label class="ImageHeader">Udział #1</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+            <label class="ImageHeader">Udział #1</label>
         </div>
         <div class="col-lg-8">
+            <label for="inputModeSelect0">wybierz źródło obrazu:</label>
             <select id="inputModeSelect0" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
@@ -62,9 +63,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label class="ImageHeader">Udział #2</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
+            <label class="ImageHeader">Udział #2</label>
         </div>
         <div class="col-lg-8">
+            <label for="inputModeSelect1">wybierz źródło obrazu:</label>
             <select id="inputModeSelect1" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
@@ -95,9 +97,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label class="ImageHeader">Ukrywany obraz</label><label class="ImageDescription">&nbsp- wybierz źródło obrazu:</label>
+            <label class="ImageHeader">Ukrywany obraz</label>
         </div>
         <div class="col-lg-8">
+            <label for="inputModeSelect2">wybierz źródło obrazu:</label>
             <select id="inputModeSelect2" class="form-control" style="margin-bottom: 20px">
                 <option value="drawing" selected>Rysunek</option>
                 <option value="file">Plik</option>
@@ -112,7 +115,7 @@
                 }
             </div>
         </div>
-        <div id="drawingPanel2">
+        <div id="drawingPanel2">hideError
             <div id="DrawingContainer2" class="myCanvas">
 
             </div>
@@ -124,41 +127,40 @@
 <div class="row">
     <div class=" col-lg-12">
         <div class="text-center">
+            <div class="alert alert-danger" id="ErrorPanel" style="margin-top:10px; display:none; font-size:16px;">
+            </div>
             <button class="btn btn-primary" style="margin-top: 20px" id="sendCanvasToDivide">Podziel na sekrety !</button>
 
             <div id="loading" class="loader" style="display:none"></div>
         </div>
     </div>
 </div>
-
-<div class="col-lg-12">
-    <hr />
-</div>
-
-<div id="secretsDownload" class="text-center">
-
-</div>
-<div class="row">
+<div id="PanelFinalResult" style="display:none">
     <div class="col-lg-12">
-        <div id="Secret">
-            <div id="DisplayContainer" class="myCanvas">
+        <hr />
+    </div>
 
+    <div id="secretsDownload" class="text-center">
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="Secret">
+                <div id="DisplayContainer" class="myCanvas">
+
+                </div>
+                <div class="text-center mySignature">Podgląd sekretów</div>
             </div>
-            <div class="text-center mySignature">Podgląd sekretów</div>
         </div>
     </div>
 </div>
 
 
+
 <style>
-
-    label {
-        margin-top: 5px;
-        font-size: 18px;
-    }
-
     .ImageHeader {
         color: #1c5aa6;
+        font-size: 18px;
     }
 
     .myBackground {
@@ -426,7 +428,11 @@
                 var file = document.getElementById('Image' + i + 'Uploader').files[0];
 
                 if (file == null) {
-                    alerts.push('Nie wybrane pliku.');
+                    if (i == 0 || i == 1) {
+                        alerts.push('Nie wybrane pliku udziału #' + i + '.');
+                    } else if (i == 2) {
+                        alerts.push('Nie wybrane pliku ukrywanego obrazu.');
+                    }
                 }
                 else
                 {
@@ -447,8 +453,8 @@
                 alert("Błąd q.q");
             }
         }
-        if (alerts.length > 0 ) {
-            alert(alerts.join('\n'));
+        if (alerts.length > 0) {
+            showError(alerts.join('<br>'));
         } else {
             if (IndexOfLastFileInput == -1) {
                 sendDataToServer(ImagesData);
@@ -456,6 +462,16 @@
         }
 
     });
+
+    function showError(msg) {
+        $('#PanelFinalResult').hide();  
+        $('#ErrorPanel').show();
+        $('#ErrorPanel').html('<div class="text-center"> ' + msg + '</div>');
+    }
+
+    function hideError() {
+        $('#ErrorPanel').hide();
+    }
 
     function showLoading() {
         $('#loading').show();
@@ -466,6 +482,7 @@
     }
 
     function onSucces(response) {
+        $('#PanelFinalResult').hide();  
         if (response.result === true) {
             var downloadLink = "";
             DisplayLayer.destroyChildren()
@@ -475,7 +492,9 @@
                 downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'.png">Sekret ' + (i+1) +'</a>';
             }
             $('#secretsDownload').html(downloadLink);
+            $('#PanelFinalResult').show();
         } else {
+            $('#PanelFinalResult').hide();
             alert(response.message);
             console.log(response);
         }
@@ -490,6 +509,7 @@
             dataType: 'json',
             contentType: "application/json",
             beforeSend: function () {
+                hideError();
                 showLoading();
             },
             complete: function () {
