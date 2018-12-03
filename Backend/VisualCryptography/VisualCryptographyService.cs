@@ -282,14 +282,12 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
         {
-
+            
 
             int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
 
-            int bitsOnCoding = amo
-
-            _TextToHide.Length
-
+            PixelFormat x = _Image.PixelFormat;
+            int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
 
             return "elo";
         }
