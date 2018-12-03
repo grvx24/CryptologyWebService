@@ -63,7 +63,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
                 return new string(encrypted);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 throw new Exception("Niedozwolony znak!");
             }

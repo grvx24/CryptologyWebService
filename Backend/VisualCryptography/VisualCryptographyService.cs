@@ -289,6 +289,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             PixelFormat x = _Image.PixelFormat;
             int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
 
+
             return "elo";
         }
 
