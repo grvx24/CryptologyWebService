@@ -84,8 +84,6 @@ namespace CryptoWebService.Controllers.Ciphers
             input = StringHelper.ReplaceWhitespace(input, "");
             input = input.ToUpper();
             int alphabetLength = cipher.Alphabet.Length;
-            input = StringHelper.ReplaceWhitespace(input, "");
-            input = input.ToUpper();
             int newKey = (viewModel.Key) % alphabetLength;
             string cipherAlphabet = "";
             for (int i = 0; i < alphabetLength; i++)
@@ -252,14 +250,39 @@ namespace CryptoWebService.Controllers.Ciphers
             return Json(decrypted);
         }
 
+        [HttpPost]
+        public IActionResult BaconVisualization([FromBody]BaconCipherViewModel viewModel)
+        {
+            BaconCipher cipher = new BaconCipher();
+
+            string[] results = new string[2] { "input", "output" };
+            string encrypted = "";
+            string input = viewModel.Message;
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            results[0] = input;
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+                results[1] = encrypted;
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(results);
+        }
+
+        #endregion
+
+#region ColumnarTransposition
         [HttpGet]
         public IActionResult ColumnarTransposition()
         {
             return View();
         }
-        #endregion
 
-#region ColumnarTransposition
         [HttpPost]
         public IActionResult ColumnarTranspositionEncrypt([FromBody]ColumnarTranspositionCipherViewModel viewModel)
         {

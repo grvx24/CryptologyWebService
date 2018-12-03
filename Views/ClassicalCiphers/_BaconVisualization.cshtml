@@ -4,49 +4,49 @@
 
 
 <h2 align="center">Szyfr Bacon'a wizualizacja</h2>
-<div class="col-md-12" style="margin-top:30px">
+<div class="col-md-12" style="margin-top:30px;margin-bottom:20px">
     <row>
-        <div class="col-md-8" style="margin-left:35px;">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="2" id="inputCipher"></textarea>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
-            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary">Wizualizacja</button>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
             <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
         </div>
-       
     </row>
 </div>
 
+<div class="col-md-12" style="margin-left:12px">
+    <div id="cipherOutput"></div>
+</div>
 
 <div class="col-md-12">
-    <div class="col-md-1"></div>
-    <div class="col-md-1"></div>
-    <div class="col-md-8" style="margin-top:10px;">
+    <div class="col-md-8" style="margin-top:20px;">
         <table id="part-1" style="float: left; margin-left:5px;" align="center">
-                <tr>
-                    <th>Znak</th>
-                    <th>Kod</th>
-                </tr>
-                <tr>
-                    <td>A</td>
-                    <td>aaaaa</td>
-                </tr>
-                <tr>
-                    <td>B</td>
-                    <td>aaaab</td>
-                </tr>
-                <tr>
-                    <td>C</td>
-                    <td>aaaba</td>
-                </tr>
-                <tr>
-                    <td>D</td>
-                    <td>aaabb</td>
-                </tr>
-                <tr>
-                    <td>E</td>
-                    <td>aabaa</td>
-                </tr>
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>aaaaa</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>aaaab</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>aaaba</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>aaabb</td>
+            </tr>
+            <tr>
+                <td>E</td>
+                <td>aabaa</td>
+            </tr>
         </table>
         <table id="part-2" style="float: left; margin-left:5px;" align="center">
             <tr>
@@ -165,17 +165,20 @@
         </table>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="col-md-8" style="margin-top:40px; margin-left:35px;">
-        <textarea maxlength="50000" placeholder="Zaszyfrowany  tekst" class="form-control" rows="2" id="outputCipher"></textarea>
-    </div>
+
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
 </div>
+<div>
+    <textarea class="form-control" rows="1" id="indexNumber" style="display:none">0</textarea>
+</div>
+
 
 <script>
       //Ajax
     var baconInit = BaconVisualizationInit({
         urls: {
-            encryptUrl: '@Url.Action("BaconEncrypt", "ClassicalCiphers")',
+            visualizationUrl: '@Url.Action("BaconVisualization", "ClassicalCiphers")',
         }
     });
 

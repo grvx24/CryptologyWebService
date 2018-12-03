@@ -41,10 +41,10 @@
         </div>
     </div>
 </div>
-<div class="col-md-12" style="margin-top:30px; margin-bottom:40px;">
+<div class="col-md-12" style="margin-top:30px; margin-bottom:20px;">
     <row>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="2" id="inputCipher"></textarea>
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -53,31 +53,22 @@
     </row>
 </div>
 
+<div class="col-md-12" style="margin-left:12px;">
+    <div id="cipherOutput"></div>
+</div>
 
-<div id="marginTable" class="col-md-12" style="margin-left:16px">
+<div class="col-md-12" style="margin-left:12px;margin-top:10px">
+    <row>
+        <div id="calculations"></div>
+    </row>
+</div>
+
+<div id="marginTable" class="col-md-12" style="margin-left:16px;margin-top:10px">
     <row>
         <div id="alphabetsTable"></div>
     </row>
 </div>
-<div class="col-md-12" style="margin-left:16px; margin-top:30px">
-    <row id="calculations" hidden>
-            <input type="text" style="text-align:center;background-color:#b6ff00" name="inputLetter" id="inputLetter" class="disabledInput" size="2" disabled />
-            *
-            <input type="text" style="text-align:center" name="keyA" id="keyA" class="disabledInput" size="2" disabled />
-            +
-            <input type="text" style="text-align:center" name="keyB" id="keyB" class="disabledInput" size="2" disabled />
-            mod 
-            <input type="text" style="text-align:center" name="alphabetLength" id="alphabetLength" class="disabledInput" size="4" disabled />
-            =
-            <input type="text" style="text-align:center;background-color:#33b5e5" name="outputLetter" id="outputLetter" class="disabledInput" size="2" disabled />
-    </row>
-</div>
 
-<div class="col-md-12">
-    <div class="col-md-8" style="margin-top:40px;">
-        <textarea maxlength="50000" placeholder="Zaszyfrowany tekst" class="form-control" rows="2" id="outputCipher"></textarea>
-    </div>
-</div>
 
 <div>
     <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>

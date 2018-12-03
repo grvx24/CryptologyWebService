@@ -103,7 +103,6 @@ var CaesarVisualizationInit = function (config) {
                     removeTable();
                     $('#stepNumber').val("1");
 
-                    $('#outputCipher').val("");
                     var alphabetArray = [];
                     var alphabet = data[0];
                     for (i = 0; i < alphabet.length; i++) {
@@ -330,6 +329,7 @@ var AffineCipherInit = function (config) {
         init: init
     }
 }
+
 var AffineVisualizationInit = function (config) {
 
     function removeTable() {
@@ -337,6 +337,16 @@ var AffineVisualizationInit = function (config) {
         $('#alphabetsTable td').remove();
         $('#alphabetsTable tr').remove();
         $('#alphabetsTable tbody').remove();
+
+        $('#cipherOutput th').remove();
+        $('#cipherOutput td').remove();
+        $('#cipherOutput tr').remove();
+        $('#cipherOutput tbody').remove();
+
+        $('#calculations th').remove();
+        $('#calculations td').remove();
+        $('#calculations tr').remove();
+        $('#calculations tbody').remove();    
     }
 
     var visualizationInit = function () {
@@ -358,9 +368,9 @@ var AffineVisualizationInit = function (config) {
                 data: JSON.stringify(model),
                 success: function (data) {
 
+                    var output = data[1];
                     removeTable();
                     $('#stepNumber').val("1");
-                    $('#outputCipher').val("");
                     var alphabetArray = [];
                     var alphabet = data[0];
                     for (i = 0; i < alphabet.length; i++) {
@@ -386,7 +396,6 @@ var AffineVisualizationInit = function (config) {
                     }
                     $tbody.append($tr);
 
-                    $('#calculations').attr('hidden', true);
                     if ($('#inputCipher').val() != "") {
                         $('#nextButton').attr('disabled', false);
                         $('#startButton').attr('disabled', true);
@@ -406,6 +415,30 @@ var AffineVisualizationInit = function (config) {
                         }
                     }
 
+                    var $tableData = $('#cipherOutput');
+                    var $tbodyData = $('<tbody></tbody>');
+                    $tableData.append($tbodyData);
+                    $trData = $('<tr />');
+                    $trData.append($('<th style="border-color:white;font-weight:300;font-size:20px;text-align:right"/>').html('Szyfrogram:'));
+                    for (i = 0; i < output.length; i++) {
+                        $trData.append($('<td style="border-color:white;padding:0px;font-size:20px;font-weight:bold;"/>').html(""));
+                    }
+                    $tbodyData.append($trData);
+
+                    var $tableCalculations = $('#calculations');
+                    var $tbodyCalculations = $('<tbody></tbody>');
+                    $tableCalculations.append($tbodyCalculations);
+                    $trCalculations = $('<tr />');
+                    $trCalculations.append($('<th style="border-color:white;font-weight:300;font-size:20px;text-align:right"/>').html('Obliczenia:'));
+                    for (i = 0; i < 10; i++) {
+                        $trCalculations.append($('<td style="border-color:white;padding:2px;font-size:20px;font-weight:bold;"/>').html(""));
+                    }
+                    $tbodyCalculations.append($trCalculations);
+
+                    if ($('#inputCipher').val() != "") {
+                        $('#nextButton').attr('disabled', false);
+                        $('#startButton').attr('disabled', true);
+                    }
 
                 },
                 error: function (response) {
@@ -471,29 +504,40 @@ var AffineVisualizationInit = function (config) {
                         }
                     }
 
-                    $('#keyA').val(keyA);
-                    $('#keyB').val(keyB);
-                    $('#inputLetter').val(currentLetterValue);
-                    $('#alphabetLength').val(cellsLength-1);
-                    $('#outputLetter').val(outputLetterValue);
+                    var cipherOutput = document.getElementById("cipherOutput");
+                    var rowsOutput = cipherOutput.getElementsByTagName("tr");
+                    var cellsLength = rowsOutput[0].cells.length;
+                    for (var z = 0; z < cellsLength; z++) {
+                        if (z == currentStep) {
+                            rowsOutput[0].cells[z].innerHTML = outputLetter;
+                            rowsOutput[0].cells[z].style.color = '#33b5e5';
+                        }
+                        else {
+                            rowsOutput[0].cells[z].style.color = 'black';
+                        }
+                    }
 
-                   
-                    var currentOutput = $('#outputCipher').val();
-                    var newOutput = currentOutput + outputLetter;
-                    $('#outputCipher').val(newOutput);
+                    var calculations = document.getElementById("calculations");
+                    var rowsCalculations = calculations.getElementsByTagName("tr");
+                    rowsCalculations[0].cells[1].innerHTML = currentLetterValue;
+                    rowsCalculations[0].cells[1].style.color = '#b6ff00';
+                    rowsCalculations[0].cells[2].innerHTML = "*";
+                    rowsCalculations[0].cells[3].innerHTML = keyA;
+                    rowsCalculations[0].cells[4].innerHTML = "+";
+                    rowsCalculations[0].cells[5].innerHTML = keyB;
+                    rowsCalculations[0].cells[6].innerHTML = "mod";
+                    rowsCalculations[0].cells[7].innerHTML = alphabet.length;
+                    rowsCalculations[0].cells[8].innerHTML = "=";
+                    rowsCalculations[0].cells[9].innerHTML = outputLetterValue;
+                    rowsCalculations[0].cells[9].style.color = '#33b5e5';
+
                     currentStep += 1;
                     $('#stepNumber').val(currentStep);
 
-                    $('#calculations').attr('hidden', false);
                     if (currentStep > output.length) {
                         $('#nextButton').attr('disabled', true);
                         $('#startButton').attr('disabled', false);
                     }
-
-                   
-
-
-
                 },
                 error: function (response) {
                     alert(response.responseJSON.message);
@@ -509,7 +553,6 @@ var AffineVisualizationInit = function (config) {
                 $('#startButton').attr('disabled', false);
                 removeTable();
                 $('#nextButton').attr('disabled', true);
-                $('#calculations').attr('hidden', true);
                 if ($('#inputCipher').val() == "") {
                     $('#startButton').attr('disabled', true);
                 }
@@ -521,7 +564,6 @@ var AffineVisualizationInit = function (config) {
                 $('#startButton').attr('disabled', false);
                 removeTable();
                 $('#nextButton').attr('disabled', true);
-                $('#calculations').attr('hidden', true);
                 if ($('#inputCipher').val() == "") {
                     $('#startButton').attr('disabled', true);
                 }
@@ -533,7 +575,6 @@ var AffineVisualizationInit = function (config) {
                 $('#startButton').attr('disabled', false);
                 removeTable();
                 $('#nextButton').attr('disabled', true);
-                $('#calculations').attr('hidden', true);
                 if ($('#inputCipher').val() == "") {
                     $('#startButton').attr('disabled', true);
                 }
@@ -543,24 +584,8 @@ var AffineVisualizationInit = function (config) {
         $("#inputCipher").on('input', function () {
             $('#outputCipher').val("");
             $('#startButton').attr('disabled', false);
-         
-                var table = document.getElementById("alphabetsTable");
-            var rows = table.getElementsByTagName("tr");
-            console.log(rows);
-            if (rows == null) {
-                var cellsLength = rows[0].cells.length;
-
-                for (var z = 1; z < cellsLength; z++) {
-                    rows[0].cells[z].style.backgroundColor = 'white';
-                    rows[1].cells[z].style.backgroundColor = 'white';
-
-                }
-
-            }
-           
-
+            removeTable();        
             $('#nextButton').attr('disabled', true);
-            $('#calculations').attr('hidden', true);
             if ($('#inputCipher').val() == "") {
                 $('#startButton').attr('disabled', true);
             }
@@ -665,7 +690,58 @@ var BaconVisualizationInit = function (config) {
         }); 
     }
 
+    function removeTable() {
+        $('#cipherOutput th').remove();
+        $('#cipherOutput td').remove();
+        $('#cipherOutput tr').remove();
+        $('#cipherOutput tbody').remove();
+    }
+
     var visualizationInit = function () {
+ 
+        $('#startButton').click(function () {
+
+            var model = {
+                message: $('#inputCipher').val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.visualizationUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    var input = data[0];
+                    var output = data[1];
+
+                    $('#stepNumber').val("1");
+                    $('#indexNumber').val("0");
+
+                    removeTable();
+                    clearHighlightsCell();
+
+                    var $tableData = $('#cipherOutput');
+                    var $tbodyData = $('<tbody></tbody>');
+                    $tableData.append($tbodyData);
+                    $trData = $('<tr />');
+                    $trData.append($('<th style="border-color:white;font-weight:300;font-size:20px;text-align:right"/>').html('Szyfrogram:'));
+                    for (i = 0; i < input.length; i++) {
+                        $trData.append($('<td style="border-color:white;padding:0px;font-size:20px;font-weight:bold;"/>').html(""));
+                    }
+                    $tbodyData.append($trData);
+
+                    if ($('#inputCipher').val() != "") {
+                        $('#nextButton').attr('disabled', false);
+                        $('#startButton').attr('disabled', true);
+                    }
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
 
         $('#nextButton').click(function () {
 
@@ -675,98 +751,98 @@ var BaconVisualizationInit = function (config) {
 
             $.ajax({
                 type: 'POST',
-                url: config.urls.encryptUrl,
+                url: config.urls.visualizationUrl,
                 dataType: 'json',
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    var inputLength = ($('#inputCipher').val()).length;
-                    var outputLength = ($('#outputCipher').val()).length;  
+                    var input = data[0];
+                    var output = data[1];
 
-                    var input = $('#inputCipher').val();
-                    var withoutSpaces='';
-                    for (i = 0; i < inputLength; i++) {
-                        if (input[i] != ' ') {
-                            withoutSpaces = withoutSpaces+ input[i];
-                        }
-                    }
-                    withoutSpaces = withoutSpaces.toUpperCase();                 
-                    inputLength = withoutSpaces.length;
-                   
+                    var currentStep = parseInt($('#stepNumber').val());
+                    var currentIndex = parseInt($('#indexNumber').val());
+
                     clearHighlightsCell();
+                    var letterData = output[currentIndex] + output[currentIndex + 1] + output[currentIndex + 2] + output[currentIndex + 3] + output[currentIndex + 4];
 
-                        var letterData = data[outputLength] + data[outputLength+1] + data[outputLength+2] + data[outputLength+3] + data[outputLength+4];
-                        var newdata = $('#outputCipher').val() + letterData;
-                    $('#outputCipher').val(newdata);
+                    var cellValue = input[currentStep-1];
 
-                    if (outputLength+5 == inputLength*5) {
-                        $('#nextButton').attr('disabled', true);
-                        $('#startButton').attr('disabled', false);
-                    }
-
-                    var cellNumber = (outputLength) / 5;
-                    var cellValue = withoutSpaces[cellNumber];
- 
                     $('#part-1 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
+                    });
                     $('#part-2 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
+                    });
                     $('#part-3 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
+                    });
                     $('#part-4 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
+                    });
                     $('#part-5 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
+                    });
                     $('#part-6 tr td').each(function () {
                         if ($(this).text() == cellValue) {
                             $(this).next().css('background-color', '#33b5e5');
                             $(this).css('background-color', '#b6ff00');
                         }
-                    }); 
-                   
+                    });
+
+                        var cipherOutput = document.getElementById("cipherOutput");
+                        var rowsOutput = cipherOutput.getElementsByTagName("tr");
+                        var cellsLength = rowsOutput[0].cells.length;
+                        for (var z = 0; z < cellsLength; z++) {
+                            if (z == currentStep) {
+                                rowsOutput[0].cells[z].innerHTML = letterData;
+                                rowsOutput[0].cells[z].style.color = '#33b5e5';
+                            }
+                            else {
+                                rowsOutput[0].cells[z].style.color = 'black';
+                            }
+                        }
+
+                        currentStep += 1;
+                        $('#stepNumber').val(currentStep);
+                        currentIndex += 5;
+                        $('#indexNumber').val(currentIndex);
+
+                        if (currentStep > input.length) {
+                            $('#nextButton').attr('disabled', true);
+                            $('#startButton').attr('disabled', false);
+                        }
+
                 },
                 error: function (response) {
                     alert(response.responseJSON.message);
                 }
             });
         });
- 
-        $('#startButton').click(function () {
-            $('#outputCipher').val('');
-            if ($('#inputCipher').val() == '') {
-                $('#nextButton').attr('disabled', true);
-            } else {
-                $('#nextButton').attr('disabled', false);
-            }        
-            $('#startButton').attr('disabled', true);
-            clearHighlightsCell();
-        });
 
         $("#inputCipher").on('input', function () {
-                $('#nextButton').attr('disabled', true);
+            $('#nextButton').attr('disabled', true);
+            clearHighlightsCell();
+            removeTable();
+            if ($('#inputCipher').val() == "") {
+                $('#startButton').attr('disabled', true);
+            } else {
                 $('#startButton').attr('disabled', false);
-                clearHighlightsCell();
-                $('#outputCipher').val('');
+            }
         });
     }
 
@@ -2049,30 +2125,28 @@ var VigenereVisualizationInit = function (config) {
 
         $("#alphabetVisualization").on('change',
             function () {
-                $('#outputCipher').val("");
                 $('#startButton').attr('disabled', false);
                 removeTable();
                 $('#nextButton').attr('disabled', true);
                 $('#labelTabulaRecta').attr('hidden', true);
+                if ($('#inputCipher').val() == "" || $('#keyVisualization').val() == "") {
+                $('#startButton').attr('disabled', true);
+                }
             });
 
-        $("#keyVisualization").on('input',
-            function () {
-                $('#outputCipher').val("");
-                $('#startButton').attr('disabled', false);
-                removeTable();
-                $('#nextButton').attr('disabled', true);
-                if ($('#inputCipher').val() == "") {
-                    $('#startButton').attr('disabled', true);
-                }
-                $('#labelTabulaRecta').attr('hidden', true);
+        $("#keyVisualization").on('input', function () {
+            $('#startButton').attr('disabled', false);
+            removeTable();
+            $('#nextButton').attr('disabled', true);
+            if ($('#inputCipher').val() == "" || $('#keyVisualization').val() == "") {
+                $('#startButton').attr('disabled', true);
+            }
+            $('#labelTabulaRecta').attr('hidden', true);
             });
 
         $("#inputCipher").on('input', function () {
-            $('#outputCipher').val("");
             $('#startButton').attr('disabled', false);
             removeTable();
-            $('#outputCipher').val("");
             $('#nextButton').attr('disabled', true);
             if ($('#inputCipher').val() == "" || $('#keyVisualization').val() == "") {
                 $('#startButton').attr('disabled', true);
