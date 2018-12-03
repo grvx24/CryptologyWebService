@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryptoWebService.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         public VigenereCipher(string key,string alphabet)
         {
             this.Key = key.ToUpper();
+            this.Key = StringHelper.ReplaceWhitespace(this.Key, "");
             this.Alphabet = alphabet;
             if (key.Length < 1)
             {
@@ -33,7 +35,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             try
             {
+                message = StringHelper.ReplaceWhitespace(message, "");
                 message = message.ToUpper();
+
 
                 var encrypted = new char[message.Length];
 
@@ -68,6 +72,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             try
             {
+                message = StringHelper.ReplaceWhitespace(message, "");
                 message = message.ToUpper();
 
                 var decrypted = new char[message.Length];

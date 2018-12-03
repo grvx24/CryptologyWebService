@@ -137,5 +137,58 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             
         }
 
+        public char[][] getTable(string message)
+        {
+            message = StringHelper.ReplaceWhitespace(message, "");
+            message = message.ToUpper();
+
+            try
+            {
+                message = message.ToUpper();
+
+                char[][] rows = new char[FenceLevel][];
+                for (int i = 0; i < FenceLevel; i++)
+                {
+                    rows[i] = new char[message.Length];
+                }
+
+                int row = 0, col = 0;
+                bool directionDown = false;
+
+                for (int i = 0; i < message.Length; i++)
+                {
+                    if (row == 0)
+                        directionDown = true;
+                    if (row == FenceLevel - 1)
+                        directionDown = false;
+                    rows[row][col++] = '*';
+
+                    if (directionDown)
+                        row++;
+                    else
+                        row--;
+
+                }
+
+                int index = 0;
+
+                for (int i = 0; i < FenceLevel; i++)
+                {
+                    for (int j = 0; j < message.Length; j++)
+                    {
+                        if (rows[i][j] == '*' && index < message.Length)
+                            rows[i][j] = message[index++];
+                    }
+                }
+
+                return rows;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 }

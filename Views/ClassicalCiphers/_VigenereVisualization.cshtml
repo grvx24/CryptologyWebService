@@ -1,0 +1,65 @@
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+<h2 align="center">Szyfr Vigenere'a wizualizacja </h2>
+<div class="col-md-12" style="margin-top:30px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="keyVisualization">@Text.Key</label>
+                <textarea class="form-control" rows="1" id="keyVisualization"></textarea>
+            </div>
+            <div class="col-md-6">
+                <label for="alphabetVisualization">@Text.ChooseAlphabet</label>
+                <select id="alphabetVisualization" class="form-control">
+                    @{
+                        for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
+                        {
+                            @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top:30px; margin-bottom:40px;">
+    <row>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+<div class="col-md-12" style="margin-left:16px">
+    <row>      
+        <div id="cipherData"></div>
+    </row>
+</div>
+
+<div id="marginTable" class="col-md-12" style="margin-left:16px;margin-top:15px;">
+    <row>
+        <label id="labelTabulaRecta" style="margin-bottom:5px;margin-left:15px;font-weight:300;font-size:20px" hidden>Tabula recta</label>
+        <div id="tabulaRecta"></div>
+    </row>
+</div>
+
+
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+</div>
+
+<script>
+      //Ajax
+    var vigenereInit = VigenereVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("VigenereVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    vigenereInit.init();
+</script>

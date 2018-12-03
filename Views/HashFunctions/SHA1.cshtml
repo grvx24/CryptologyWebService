@@ -15,16 +15,16 @@
 
     <div id="Description" class="tabcontent">
         <h2 align="center">@Text.SHA1Hash</h2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
-
-            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
-
-            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
-
-            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
-
-        </p>
+        <h4>
+            SHA (Secure Hash Algorithm) – rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. SHA-1 opublikowany został w 1995 i całkowicie zastąpił wycofany
+            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2^64 bitów 
+            i działa na podobnych zasadach co MD5.
+        </h4>
+        <h4>
+            W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2^63 obliczeń. 
+            Ta liczba miałaby wartość 2^80, jeśli algorytm byłby bez wad. Przeglądarka Chrome oznacza witryny wykorzystujące SHA-1 jako niebezpieczne.
+            W 2001 powstały cztery następne warianty określane jako SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512).
+        </h4>
     </div>
 
     <div id="Working" class="tabcontent col-lg-12">
@@ -45,8 +45,7 @@
                     <div class="col-lg-1"></div>
                     <div class="col-lg-1"></div>
                     <div class="col-md-8">
-                        <label for="inputEncrypt">@Text.WriteTextToHash</label>
-                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                        <textarea class="form-control" placeholder="@Text.WriteTextToHash" rows="5" id="inputEncrypt"></textarea>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -57,8 +56,8 @@
                 <div class="col-lg-1"></div>
                 <div class="column">
                     <span class="col-md-8">
-                        <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
-                        <button style="margin-top: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
+                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
+                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
                     </span>
                 </div>
             </div>
@@ -68,8 +67,7 @@
                     <div class="col-lg-1"></div>
                     <div class="col-lg-1"></div>
                     <div class="col-md-8">
-                        <label for="outputEncrypt">@Text.Hash</label>
-                        <textarea class="form-control" rows="1" id="outputEncrypt" disabled></textarea>
+                        <textarea class="form-control" placeholder="@Text.Hash" rows="1" id="outputEncrypt" disabled></textarea>
                     </div>
                 </div>
             </div>

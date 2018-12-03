@@ -1,0 +1,186 @@
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+
+
+<h2 align="center">Szyfr Bacon'a wizualizacja</h2>
+<div class="col-md-12" style="margin-top:30px;margin-bottom:20px">
+    <row>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+<div class="col-md-12" style="margin-left:12px">
+    <div id="cipherOutput"></div>
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-8" style="margin-top:20px;">
+        <table id="part-1" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>aaaaa</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>aaaab</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>aaaba</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>aaabb</td>
+            </tr>
+            <tr>
+                <td>E</td>
+                <td>aabaa</td>
+            </tr>
+        </table>
+        <table id="part-2" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+            <tr>
+                <td>F</td>
+                <td>aabab</td>
+            </tr>
+            <tr>
+                <td>G</td>
+                <td>aabba</td>
+            </tr>
+            <tr>
+                <td>H</td>
+                <td>aabbb</td>
+            </tr>
+            <tr>
+                <td>I</td>
+                <td>abaaa</td>
+            </tr>
+            <tr>
+                <td>J</td>
+                <td>abaaa</td>
+            </tr>
+        </table>
+        <table id="part-3" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>K</td>
+                <td>abaab</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>ababa</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>ababb</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>abbaa</td>
+            </tr>
+            <tr>
+                <td>O</td>
+                <td>abbab</td>
+            </tr>
+        </table>
+        <table id="part-4" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>P</td>
+                <td>abbba</td>
+            </tr>
+            <tr>
+                <td>Q</td>
+                <td>abbbb</td>
+            </tr>
+            <tr>
+                <td>R</td>
+                <td>baaaa</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>baaab</td>
+            </tr>
+            <tr>
+                <td>T</td>
+                <td>baaba</td>
+            </tr>
+        </table>
+        <table id="part-5" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>U</td>
+                <td>baabb</td>
+            </tr>
+            <tr>
+                <td>V</td>
+                <td>baabb</td>
+            </tr>
+            <tr>
+                <td>W</td>
+                <td>babaa</td>
+            </tr>
+            <tr>
+                <td>X</td>
+                <td>babab</td>
+            </tr>
+            <tr>
+                <td>Y</td>
+                <td>babba</td>
+            </tr>
+        </table>
+        <table id="part-6" style="float: left; margin-left:5px;" align="center">
+            <tr>
+                <th>Znak</th>
+                <th>Kod</th>
+            </tr>
+            <tr>
+                <td>Z</td>
+                <td>babbb</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+</div>
+<div>
+    <textarea class="form-control" rows="1" id="indexNumber" style="display:none">0</textarea>
+</div>
+
+
+<script>
+      //Ajax
+    var baconInit = BaconVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("BaconVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    baconInit.init();
+</script>

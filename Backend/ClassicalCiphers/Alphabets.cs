@@ -50,9 +50,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 case AlphabetType.PL_Digits:
                     return ALPHABET_PL + DIGITS;
                 case AlphabetType.EN_Digits_Extended:
-                    return ALPHABET_EN + DIGITS + PUNCTUATION+WHITESPACE;
+                    return ALPHABET_EN + DIGITS + PUNCTUATION;
                 case AlphabetType.PL_Digits_Extended:
-                    return ALPHABET_PL + DIGITS + PUNCTUATION + WHITESPACE;
+                    return ALPHABET_PL + DIGITS + PUNCTUATION;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
