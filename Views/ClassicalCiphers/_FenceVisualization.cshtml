@@ -1,0 +1,51 @@
+﻿<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+<h2 align="center">Szyfr płotkowy wizualizacja</h2>
+<div class="col-md-12" style="margin-top:15px;margin-bottom:25px">
+    <row>
+        <div class="col-md-8" style="margin-bottom:30px;margin-top:10px;">
+                <label for="keyVisualization">@Text.Key</label>
+                <select id="keyVisualization" class="form-control">
+                    @{
+                        for (int i = 2; i <= 32; i++)
+                        {
+                            @Html.Raw("<option value=" + i + ">" + i + "</option>")
+                        }
+                    }
+                </select>
+        </div>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+<div class="col-md-12" style="margin-left:12px;">
+    <div id="cipherOutput"></div>
+</div>
+
+<div class="col-md-12" style="margin-left:14px;margin-top:10px">
+    <row>
+        <div id="fenceTable"></div>
+    </row>
+</div>
+
+
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+</div>
+
+<script>
+      //Ajax
+    var fenceInit = FenceVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("FenceVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    fenceInit.init();
+</script>

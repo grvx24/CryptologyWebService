@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryptoWebService.Backend.HashFunctions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,6 @@ namespace CryptoWebService.Models.HashFunctions
     {
         public string Message { get; set; }
         public string Key { get; set; }
-        public HashFunctionType HashType { get; set; }
+        public HMAC.HashFunctionType HashType { get; set; }
     }
 }
