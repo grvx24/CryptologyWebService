@@ -9,7 +9,7 @@
                 <option value="2" selected>patchwork</option>
             </select>
         </div>
-        <div class="layer" id="Method1">
+        <div class="layer" id="Method1_1">
             <label style="margin-bottom:10px;">
                 Ilość bitów przeznaczona na kodowanie
             </label>
@@ -23,9 +23,24 @@
             </div>
         </div>
         <div class="layer" id="Method2">
-            <label style="margin-bottom:10px;">
-                Metoda 2
-            </label>
+            <div class="form-group">
+                <label for="in_key">klucz generatora pseudolosowego</label>
+                <div class="input-group">
+                    <input maxlength="16" placeholder="wpisz klucz generatora"  id="in_key" class="form-control" type="text" />
+                    <span class="input-group-btn">
+                        <button data-toggle="tooltip" data-placement="top" title="Losuje klucz" id="btnRandomGeneratorKey" class="btn btn-success">Losuj</button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="in_n">liczb naturalna n</label>
+                <div class="input-group">
+                    <input maxlength="16" laceholder="wpisz liczbę naturalną" id="in_n" class="form-control" type="text" />
+                    <span class="input-group-btn">
+                        <button data-toggle="tooltip" data-placement="top" title="Losuje liczbe naturalną" id="btnRandomNaturalNumber" class="btn btn-success">Losuj</button>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-lg-8" style="display: flex;flex-direction: column;">
@@ -33,16 +48,19 @@
         <label class="form-control" style="height: 100%" id="MethodDescription"></label>
     </div>
 </div>
-
-
-<div class="col-lg-12">
-    <hr />
+<div class="layer" id="Method1_2" style="display:none;">
+    <div class="form-group">
+        <label for="in_n">tekst do zakodowania</label>
+        <div id="textPanelEncrypt">
+            <textarea maxlength="50000" placeholder="wpisz tekst do zakodowania" class="form-control" rows="5" id="TextInput"></textarea>
+        </div>
+    </div>
 </div>
 
 <div class="row">
     <div class="col-lg-12">
         <div class="col-lg-4">
-            <label class="ImageHeader">Obraz w którym będą ukrywane dane</label>
+            <label class="ImageHeader">Obraz</label>
         </div>
         <div class="col-lg-8">
             <label for="inputModeSelect">Wybierz źródło obrazu:</label>
@@ -54,11 +72,9 @@
     </div>
     <div class="col-lg-12">
         <div id="FileUploadPanel">
-            <div class="col-lg-12">
                 @{
                     await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Image");
                 }
-            </div>
         </div>
         <div id="drawingPanel" style="display: none">
             <div id="DrawingContainer" class="myCanvas">
@@ -69,38 +85,19 @@
     </div>
 </div>
 
-<div id="PanelAfterUploadImage" style="display:none">
+<div class="row">
     <div class="col-lg-12">
-        <hr />
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="col-lg-4">
-                <label class="ImageHeader">Dane ukrywane w obrazie</label><label class="ImageDescription"> &nbsp- wybierz źródło obrazu:</label>
-            </div>
-            <div class="col-lg-8">
-                <select id="inputModeSelectData" class="form-control" style="margin-bottom: 20px">
-                    <option value="file" selected>Plik</option>
-                    <option value="text">Tekst</option>
-                </select>
-            </div>
+        <div class="alert alert-danger" id="ErrorPanel" style="margin-top:10px; display:none; font-size:16px;">
         </div>
-        <div class="col-lg-12">
-            <div id="FileUploadPanelData">
-                <div class="col-lg-12">
-                    @{
-                        await Html.RenderPartialAsync(ViewControlsHelper.GetControlPath("UploadControl"), "Data");
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="text-center" style="margin-top: 20px">
-        <button class="btn btn-primary" id="sendCanvasToDivide">Podziel na sekrety !</button>
-
-        <div id="loading" class="loader" style="display:none"></div>
     </div>
 </div>
+
+<div class="text-center" style="margin-top: 10px">
+    <button class="btn btn-primary" id="sendCanvasToDivide">Ukryj informacje !</button>
+
+    <div id="loading" class="loader" style="display:none"></div>
+</div>
+
 
 
 <div class="row" id="PanelWithResult" style="display:none">
@@ -205,13 +202,16 @@
         var label = document.getElementById("MethodDescription");
 
         if (methodNumber == 1) {
-            $('#Method1').show();
+            $('#Method1_1').show();
+            $('#Method1_2').show();
             $('#Method2').hide();
         } else if (methodNumber == 2) {
-            $('#Method1').hide();
+            $('#Method1_1').hide();
+            $('#Method1_2').hide();
             $('#Method2').show();
         } else {
-            $('#Method1').hide();
+            $('#Method1_1').hide();
+            $('#Method1_2').hide();
             $('#Method2').hide();
             Console.log("InputMethodSelect value is unknow.")
             label.innerHTML = "";
@@ -219,6 +219,34 @@
         }
         label.innerHTML = MethodsDescriptions[methodNumber];
     }
+
+    $('#btnRandomGeneratorKey').click(function () {
+        var in_key = $('#in_key');
+        var keyLength = 64;
+
+        in_key.val(randHex(keyLength / 4));
+        in_key.keyup();
+    });
+
+    $('#btnRandomNaturalNumber').click(function () {
+        var in_n = $('#in_n');
+        var keyLength = 64;
+
+        in_n.val(randHex(keyLength / 4));
+        in_n.keyup();
+    });
+
+    var randHex = function (len) {
+        var maxlen = 8,
+            min = Math.pow(16, Math.min(len, maxlen) - 1);
+        max = Math.pow(16, Math.min(len, maxlen)) - 1,
+            n = Math.floor(Math.random() * (max - min + 1)) + min,
+            r = n.toString(16);
+        while (r.length < len) {
+            r = r + randHex(len - maxlen);
+        }
+        return r.toUpperCase();
+    };
 
     function GetWidth() {
         var width = document.getElementById('Description').offsetWidth;
@@ -390,20 +418,27 @@
     }
 
     $('#sendCanvasToDivide').click(function () {
-        var inputModeEncrypt = $('#inputModeSelect option:selected').val();
+        var inputMethod = $('#inputModeSelect option:selected').val();
 
-        if (inputModeEncrypt === 'drawing') {
+        if (inputMethod === 'drawing') {
             var canvas = document.querySelector('#DrawingContainer canvas');
             sendDataToServer(canvas.toDataURL("image/png"));
-        }
-        else if (inputModeEncrypt === 'file') {
+        } else if (inputMethod === 'file') {
             var file = document.getElementById('ImageUploader').files[0];
 
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                sendDataToServer(reader.result.split(',')[1]);
-            };
+            if (file == null) {
+                showError('Nie wybrane pliku.');
+            } else {
+
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                 sendDataToServer(reader.result.split(',')[1]);
+                };
+            }
+        }
+        else {
+            Console.log("InputModeSelect value is unknow.")
         }
     });
 
@@ -416,42 +451,94 @@
     }
 
     function onSucces(response) {
+        hideLoading();
+
         if (response.result === true) {
             var downloadLink = "";
             DisplayLayer.destroyChildren()
-            for (var i = 0; i < response.secrets.length; i++) {
-                var secret = response.secrets[i];
-                LoadImageToLayerFromData(DisplayLayer, secret.value);
-                downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + secret.value + '" download="' + Date.now() + '_sekret_' + (i + 1)+'.png">Sekret ' + (i+1) +'</a>';
-            }
+
+            var ImageData = response.image;
+            LoadImageToLayerFromData(DisplayLayer, ImageData);
+            downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + ImageData + '" download="' + Date.now() + '_steganografia_out.png">obraz wyjściowy</a>';
+            
             $('#secretsDownload').html(downloadLink);
+            $('#PanelWithResult').show();
         } else {
-            alert(response.message);
+            showError(response.message);
             console.log(response);
         }
     }
 
-    function sendDataToServer(imageData) {
-        imageData = imageData.replace('data:image/png;base64,', '');
-
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Steganography", "VisualCryptography")',
-            data: JSON.stringify(imageData),
-            dataType: 'json',
-            contentType: "application/json",
-            beforeSend: function () {
-                showLoading();
-            },
-            complete: function () {
-                hideLoading();
-            },
-            success: function (response) {
-                onSucces(response);
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        });
+    function showError(msg) {
+        $('#PanelWithResult').hide();
+        $('#ErrorPanel').show();
+        $('#ErrorPanel').html('<div class="text-center"> ' + msg + '</div>');
     }
+
+    function hideError() {
+        $('#ErrorPanel').hide();
+    }
+
+    function sendDataToServer(imageData) {
+        var methodNumber = $('#MethodSelect option:selected').val();
+        imageData = imageData.replace('data:image/png;base64,', '');
+        var slider = document.getElementById("AmountOfBitsSlider");
+        var _AmountOfBitsValue = slider.value;
+        var _GeneratorKey = $('#in_key').val();
+        var _NaturalNumber = $('#in_n').val();
+        var _TextToHide = $('#TextInput').val();
+        var alerts = [];
+
+        if (methodNumber == "1") {
+            if (_TextToHide == "") {
+                alerts.push('Nie wpisano tekstu do zakodowania');
+            }
+        }
+
+        if (methodNumber == "2") {
+            if (_GeneratorKey == "") {
+                alerts.push('Nie wpisano klucza generatora pseudolosowego');
+            }
+            if (_NaturalNumber == "") {
+                alerts.push('Nie wpisano liczby naturalnej');
+            }
+        }
+
+        if (alerts.length > 0) {
+            showError(alerts.join('<br>'));
+        } else {
+            var model = {
+                MethodId: methodNumber,
+                Image: imageData,
+                AmountOfBitsValue: _AmountOfBitsValue,
+                GeneratorKey: _GeneratorKey,
+                NaturalNumber: _NaturalNumber,
+                TextToHide: _TextToHide
+            }
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Steganography", "VisualCryptography")',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: "application/json",
+                 beforeSend: function () {
+                    hideError();
+                    showLoading();
+                },
+                complete: function () {
+                    hideLoading();
+                },
+                success: function (response) {
+                    onSucces(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+       
+    }
+
 </script>

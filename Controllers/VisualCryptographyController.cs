@@ -25,11 +25,11 @@ namespace CryptoWebService.Controllers
         {
             if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The ScretDto is empty." });
+                return Json(new { Result = false, Message = "ERROR - The ScretDto is empty." });
 
             }else if (secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The Image Data is empty." });
+                return Json(new { Result = false, Message = "ERROR - The Image Data is empty." });
             }
             else
             {
@@ -42,7 +42,7 @@ namespace CryptoWebService.Controllers
                 catch (ImageIsNotInGrayScaleException)
                 {
 
-                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                    return Json(new { Result = false, Message = "Obraz nie jest czarno-biały." });
                 }
              
                 Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
@@ -97,20 +97,18 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult Steganography([FromBody] string Image)
+        public IActionResult Steganography([FromBody] SteganographyDto steganographyData)
         {
-            if (Image == null)
+            if (steganographyData == null)
             {
                 return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
             }
             else
             {
-
-                string[] lista;
-
                 try
                 {
-                    lista = VisualCryptographyService.Steganography(Image,"eloszka");
+                    var image = VisualCryptographyService.Steganography(steganographyData);
+                    return Json(new { Result = true, image });
                 }
                 catch (ImageIsNotInGrayScaleException e)
                 {
@@ -118,9 +116,6 @@ namespace CryptoWebService.Controllers
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
                 }
 
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
             }
         }
 

@@ -46,13 +46,24 @@ namespace CryptoWebService.Backend.VisualCryptography
             return VisualSteganographyAlgorithm(new Bitmap(ms0), new Bitmap(ms1), new Bitmap(ms2));
         }
 
-        public static string[] Steganography(string Image, string DataToDecode)
+        public static string Steganography(SteganographyDto SD)
         {
-            byte[] imageBytes0 = Convert.FromBase64String(Image);
+            byte[] imageBytes = Convert.FromBase64String(SD.Image);
 
-            MemoryStream ms0 = new MemoryStream(imageBytes0, 0, imageBytes0.Length);
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
 
-            return SteganographyAlgorithm(new Bitmap(ms0), DataToDecode);
+            if (SD.MethodId == "1")
+            {
+                return LeastSignificantBitMethod(new Bitmap(ms), SD.AmountOfBitsValue, SD.TextToHide);
+            }
+            else if (SD.MethodId == "2")
+            {
+                return PatchWorkMethod(new Bitmap(ms), SD.GeneratorKey, SD.NaturalNumber);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         } 
 
         #region Algorithms
@@ -269,25 +280,24 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
-        private static string[] SteganographyAlgorithm(Bitmap bitmap,string DataToDecode,int amountOfBitsOnCoding = 1 )
+        private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
         {
-            int bitmapWidth = bitmap.Width;
-            int bitmapHeight = bitmap.Height;
-
-            var maxAmountOfBits = bitmapHeight * bitmapWidth * amountOfBitsOnCoding;
-
-            Color colorOfspecificPixel;
-            colorOfspecificPixel = bitmap.GetPixel(0, 0);
-
-            Random random = new Random();
-            List<Bitmap> Secrets = new List<Bitmap>()
-            {
-                new Bitmap(bitmapWidth, bitmapHeight),
-                new Bitmap(bitmapWidth, bitmapHeight)
-            };
 
 
-            return ConvertBitmapToStrings(Secrets);
+            int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
+
+            int bitsOnCoding = amo
+
+            _TextToHide.Length
+
+
+            return "elo";
+        }
+
+        private static string PatchWorkMethod(Bitmap _Image, string _GeneratorKey, string _NaturalNumber)
+        {
+
+            return "elo";
         }
 
         #endregion
