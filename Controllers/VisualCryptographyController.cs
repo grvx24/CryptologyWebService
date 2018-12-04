@@ -25,11 +25,11 @@ namespace CryptoWebService.Controllers
         {
             if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "ERROR - The ScretDto is empty." });
+                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
 
             }else if (secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "ERROR - The Image Data is empty." });
+                return Json(new { Result = false, Message = "ERROR - Obraz nie został przesłany." });
             }
             else
             {
@@ -62,13 +62,13 @@ namespace CryptoWebService.Controllers
         {
             if (Images == null )
             {
-                return Json(new { Result = false, Message = "Dane nie zostały przesłane."});
+                return Json(new { Result = false, Message = " ERROR - Dane nie zostały przesłane." });
             }
             else
             {
                 if (Images.Length != 3 || Images[0] == null|| Images[1] == null|| Images[2] == null)
                 {
-                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
+                    return Json(new { Result = false, Message = "ERROR -  Przesłano mniej niż 3 obrazy." });
                 }
 
                 string[] lista;
@@ -101,7 +101,7 @@ namespace CryptoWebService.Controllers
         {
             if (steganographyData == null)
             {
-                return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
+                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
             }
             else
             {
@@ -110,12 +110,10 @@ namespace CryptoWebService.Controllers
                     var image = VisualCryptographyService.Steganography(steganographyData);
                     return Json(new { Result = true, image });
                 }
-                catch (ImageIsNotInGrayScaleException )
+                catch (IndexOutOfRangeException)
                 {
-
-                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
+                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie by zakodować całą wiadomość." });
                 }
-
             }
         }
 
