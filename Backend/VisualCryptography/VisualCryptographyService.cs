@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using CryptoWebService.Models;
 using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
@@ -46,6 +45,26 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             return VisualSteganographyAlgorithm(new Bitmap(ms0), new Bitmap(ms1), new Bitmap(ms2));
         }
+
+        public static string Steganography(SteganographyDto SD)
+        {
+            byte[] imageBytes = Convert.FromBase64String(SD.Image);
+
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+
+            if (SD.MethodId == "1")
+            {
+                return LeastSignificantBitMethod(new Bitmap(ms), SD.AmountOfBitsValue, SD.TextToHide);
+            }
+            else if (SD.MethodId == "2")
+            {
+                return PatchWorkMethod(new Bitmap(ms), SD.GeneratorKey, SD.NaturalNumber);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        } 
 
         #region Algorithms
 
@@ -175,20 +194,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
-        private static void setPixels(List<Bitmap> Secrets,int i, int j , BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
-        {
-            Secrets[0].SetPixel((j * 2), (i * 2)        , subElements_1[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2), (i * 2) + 1    , subElements_1[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2) + 1, (i * 2)    , subElements_1[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_1[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
-
-            Secrets[1].SetPixel((j * 2), (i * 2)        , subElements_2[(randomIndex + 0 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2), (i * 2) + 1    , subElements_2[(randomIndex + 1 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2) + 1, (i * 2)    , subElements_2[(randomIndex + 2 ) % 4] ? Color.Black : Color.Transparent);
-            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3 ) % 4] ? Color.Black : Color.Transparent);
-        }
-
-
         private static string[] SecretsAlgorithm1(Bitmap bitmap)
         {
             Random random = new Random();
@@ -275,9 +280,41 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
+        private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
+        {
+            
+
+            int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
+
+            PixelFormat x = _Image.PixelFormat;
+            int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
+
+
+            return "elo";
+        }
+
+        private static string PatchWorkMethod(Bitmap _Image, string _GeneratorKey, string _NaturalNumber)
+        {
+
+            return "elo";
+        }
+
         #endregion
 
         #region helpers 
+
+        private static void setPixels(List<Bitmap> Secrets, int i, int j, BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
+        {
+            Secrets[0].SetPixel((j * 2), (i * 2), subElements_1[(randomIndex + 0) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2), (i * 2) + 1, subElements_1[(randomIndex + 1) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2), subElements_1[(randomIndex + 2) % 4] ? Color.Black : Color.Transparent);
+            Secrets[0].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_1[(randomIndex + 3) % 4] ? Color.Black : Color.Transparent);
+
+            Secrets[1].SetPixel((j * 2), (i * 2), subElements_2[(randomIndex + 0) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2), (i * 2) + 1, subElements_2[(randomIndex + 1) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2), subElements_2[(randomIndex + 2) % 4] ? Color.Black : Color.Transparent);
+            Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3) % 4] ? Color.Black : Color.Transparent);
+        }
 
         private static string[] ConvertBitmapToStrings(List<Bitmap> bitmaps)
         {
@@ -293,78 +330,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             }
 
             return listaString.ToArray();
-        }
-
-        public static ViewModelDto PrepareVisualCryptoraphyView()
-        {
-            ViewModelDto VieModelDto = new ViewModelDto();
-
-            List<AnimationDto> Animations = new List<AnimationDto>
-            {
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Width = 300,
-                    Height = 200,
-                    Amplitude = 2,
-                    Period = 20000
-                },
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
-                {
-                    Amplitude = 150
-                }
-            };
-
-            List<ImageDto> Images = new List<ImageDto>
-            {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
-                {
-                    Width = 793,
-                    Height = 200
-                },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
-                {
-                    Width = 991,
-                    Height = 250
-                }
-            };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
-
-            return VieModelDto;
-        }
-
-        public static ViewModelDto PrepareVisualSteganographyView()
-        {
-            ViewModelDto VieModelDto = new ViewModelDto();
-
-            List<AnimationDto> Animations = new List<AnimationDto>
-            {
-                new AnimationDto("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
-                {
-                    Width = 600,
-                    Height = 300,
-                    Amplitude = 3,
-                    Period = 40000
-                },
-            };
-
-            List<ImageDto> Images = new List<ImageDto>
-            {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
-                {
-                    Width = 793,
-                    Height = 200
-                },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
-                {
-                    Width = 991,
-                    Height = 250
-                }
-            };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
-
-            return VieModelDto;
         }
 
         #endregion

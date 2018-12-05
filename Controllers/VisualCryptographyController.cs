@@ -18,18 +18,18 @@ namespace CryptoWebService.Controllers
     public class VisualCryptographyController : Controller
     {
         #region Secrets
-        public IActionResult sekret() => View("Secret", VisualCryptographyService.PrepareVisualCryptoraphyView());
+        public IActionResult sekret() => View("Secret", PrepareViewMenager.PrepareVisualCryptoraphyView());
 
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
         {
             if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The ScretDto is empty." });
+                return Json(new { Result = false, Message = "ERROR - The ScretDto is empty." });
 
             }else if (secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "The Image Data is empty." });
+                return Json(new { Result = false, Message = "ERROR - The Image Data is empty." });
             }
             else
             {
@@ -39,10 +39,10 @@ namespace CryptoWebService.Controllers
                 {
                      lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
                 }
-                catch (ImageIsNotInGrayScaleException e)
+                catch (ImageIsNotInGrayScaleException)
                 {
 
-                    return Json(new { Result = false, Message = "Image is not in gray scale." });
+                    return Json(new { Result = false, Message = "Obraz nie jest czarno-biały." });
                 }
              
                 Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
@@ -55,7 +55,7 @@ namespace CryptoWebService.Controllers
 
         #region VisualSteganography
 
-        public IActionResult steganografiawizualna() => View("VisualSteganography", VisualCryptographyService.PrepareVisualSteganographyView());
+        public IActionResult steganografiawizualna() => View("VisualSteganography", PrepareViewMenager.PrepareVisualSteganographyView());
 
         [HttpPost]
         public IActionResult VisualSteganography([FromBody] string[] Images)
@@ -77,7 +77,7 @@ namespace CryptoWebService.Controllers
                 {
                     lista = VisualCryptographyService.VisualSteganography(Images);
                 }
-                catch (ImageIsNotInGrayScaleException e)
+                catch (ImageIsNotInGrayScaleException )
                 {
 
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
@@ -97,16 +97,27 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult Steganography(int result) => View();
+        public IActionResult Steganography([FromBody] SteganographyDto steganographyData)
+        {
+            if (steganographyData == null)
+            {
+                return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
+            }
+            else
+            {
+                try
+                {
+                    var image = VisualCryptographyService.Steganography(steganographyData);
+                    return Json(new { Result = true, image });
+                }
+                catch (ImageIsNotInGrayScaleException )
+                {
 
-        #endregion
+                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
+                }
 
-        #region WaterMarks
-
-        public IActionResult znakiwodne() => View("WaterMarks");
-
-        [HttpPost]
-        public IActionResult WaterMarks(int result) => View();
+            }
+        }
 
         #endregion
     }
