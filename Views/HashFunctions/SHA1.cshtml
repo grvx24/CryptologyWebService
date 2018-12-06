@@ -4,34 +4,34 @@
     ViewData["Title"] = "SHA1";
 }
 <script src="~/js/hash/HashFunctions.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
+
 
 <div class="container">
     <div class="tab">
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button  class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
-        <button  class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">@Text.SHA1Hash</h2>
-        <h4>
+        <h2 class="title">@Text.SHA1Hash</h2>
+        <p class="description">
             SHA (Secure Hash Algorithm) – rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. SHA-1 opublikowany został w 1995 i całkowicie zastąpił wycofany
-            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2^64 bitów 
+            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2^64 bitów
             i działa na podobnych zasadach co MD5.
-        </h4>
-        <h4>
-            W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2^63 obliczeń. 
+            <br>
+            <br>
+            W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2^63 obliczeń.
             Ta liczba miałaby wartość 2^80, jeśli algorytm byłby bez wad. Przeglądarka Chrome oznacza witryny wykorzystujące SHA-1 jako niebezpieczne.
             W 2001 powstały cztery następne warianty określane jako SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512).
-        </h4>
+        </p>
     </div>
 
-    <div id="Working" class="tabcontent col-lg-12">
+    <div id="Visualization" class="tabcontent col-lg-12">
         <h2>Działanie algorytmu krok po kroku</h2>
     </div>
 
-    <div id="Calculator" class="tabcontent col-lg-12">
+    <div id="Tools" class="tabcontent col-lg-12">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">

@@ -1989,17 +1989,6 @@ var VigenereVisualizationInit = function (config) {
                         $('#startButton').attr('disabled', true);
                     }
 
-                    if ($('#alphabetVisualization').val() == 0 || $('#alphabetVisualization').val() == 1 || $('#alphabetVisualization').val() == 2 || $('#alphabetVisualization').val() == 3) {
-                        document.getElementById("marginTable").style.marginLeft = "16px";
-                    }
-                    else if ($('#alphabetVisualization').val() == 4) {
-                        document.getElementById("marginTable").style.marginLeft = "-250px";
-
-                    }
-                    else if ($('#alphabetVisualization').val() == 5) {
-                        document.getElementById("marginTable").style.marginLeft = "-300px";
-
-                    }
                     $('#labelTabulaRecta').attr('hidden', false);
                 },
                 error: function (response) {
