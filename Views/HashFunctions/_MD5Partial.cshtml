@@ -1,0 +1,60 @@
+﻿<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 align="center">@Text.MD5Hash</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-1"></div>
+            <div class="col-md-8">
+                <textarea class="form-control" placeholder="@Text.WriteTextToHash" rows="5" id="inputEncrypt"></textarea>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-1"></div>
+        <div class="column">
+            <span class="col-md-8">
+                <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-success" id="loadButton" type="submit">Wczytaj z pliku</button>
+            </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-1"></div>
+            <div class="col-md-8">
+                <textarea class="form-control" placeholder="@Text.Hash" rows="1" id="outputEncrypt" disabled></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-1"></div>
+        <span class="col-md-8">
+            <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" type="submit">Zapisz do pliku</button>
+            <button style="margin-top: 5px; padding-left:30px; padding-right: 30px; " class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
+            <button style="margin-top: 5px; margin-bottom: 5px; float: right;" class="btn btn-danger" id="clearButton" type="submit">Wyczyść wszystko</button>
+        </span>
+    </div>
+</div>
+
+<script>
+     var md5Init = MD5FunctionInit({
+        urls: {
+            paddingUrl: '@Url.Action("MD5_Padding", "HashFunctions")',
+            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")',
+            tableUrl: '@Url.Action("MD5_Table", "HashFunctions")'
+
+        }
+    });
+
+    md5Init.init();
+
+</script>

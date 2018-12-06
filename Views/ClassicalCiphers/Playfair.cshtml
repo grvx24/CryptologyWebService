@@ -1,13 +1,12 @@
-﻿@using CryptoWebService.Backend.ClassicalCiphers
-@{
-    ViewData["Title"] = "Playfair";
-}
+﻿
+
 <script src="~/js/ciphers/ClassicalCiphers.js"></script>
 
 <div class="container">
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
 
     <div id="Description" class="tabcontent">
@@ -23,88 +22,12 @@
 
         </p>
     </div>
-    <div id="Working" class="tabcontent col-lg-12">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">@Text.Encryptor</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="keyEncrypt">@Text.Key</label>
-                        <textarea class="form-control" rows="1" id="keyEncrypt"></textarea>
-                    </div>
-                </div>
-            </div>
+    <div id="Tools" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_PlayfairPartial")
+    </div>
 
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
-                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="outputEncrypt">@Text.EncryptedText</label>
-                        <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <span class="col-md-6">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
-                </span>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">@Text.Decryptor</h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="keyDecrypt">@Text.Key</label>
-                        <textarea class="form-control" rows="1" id="keyDecrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="inputDecrypt">@Text.WriteTextToDecrypt</label>
-                        <textarea class="form-control" rows="5" id="inputDecrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label for="outputDecrypt">@Text.DecryptedText</label>
-                        <textarea readonly class="form-control" rows="5" id="outputDecrypt"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <span class="col-md-6">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
-                </span>
-            </div>
-
-        </div>
+    <div id="Visualization" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_PlayfairVisualization")
     </div>
 </div>
 
@@ -127,13 +50,4 @@
         evt.currentTarget.className += " active";
     }
 
-    //Ajax
-    var playfairInit = PlayfairCipherInit({
-        urls: {
-            encryptUrl: '@Url.Action("PlayfairEncrypt", "ClassicalCiphers")',
-            decryptUrl: '@Url.Action("PlayfairDecrypt", "ClassicalCiphers")'
-        }
-    });
-
-    playfairInit.init();
 </script>

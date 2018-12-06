@@ -9,5 +9,6 @@ namespace CryptoWebService.Models.HashFunctions
     public class MD5ViewModel
     {
         public string Message { get; set; }
+        public string Message_visualization { get; set; }
     }
 }

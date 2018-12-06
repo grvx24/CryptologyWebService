@@ -45,23 +45,21 @@
                 <div class="col-lg-1"></div>
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label for="hashSelectTypeEncrypt">Wybrana funkcja skrótu</label>
+                        <label for="hashSelectTypeEncrypt">Wybierz funkcję skrótu</label>
                         <select id="hashSelectTypeEncrypt" class="form-control">
-                            <option value=0>MD5</option>
+                            <option value=0 selected>MD5</option>
                             <option value=1>SHA-1</option>
                             <option value=2>SHA-256</option>
                             <option value=3>SHA-512</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="keyEncrypt">Wpisz klucz</label>
-                        <textarea class="form-control" rows="1" id="keyEncrypt"></textarea>
+                        <textarea class="form-control" placeholder="Wpisz klucz" rows="1" id="keyEncrypt"></textarea>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEncrypt">@Text.WriteTextToHash</label>
-                        <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                        <textarea class="form-control" placeholder="@Text.WriteTextToHash" rows="5" id="inputEncrypt"></textarea>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     </div>
@@ -69,8 +67,8 @@
                     <div class="row">
                         <div class="column">
                             <span class="col-md-8">
-                                <button style="margin-top: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
-                                <button style="margin-top: 5px" class="btn btn-primary" id="clearButton1" type="submit">Wyczyść wszystko</button>
+                                <button style="margin-top: -10px; margin-bottom: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
+                                <button style="margin-top: -10px; margin-bottom: 5px" class="btn btn-primary" id="clearButton1" type="submit">Wyczyść wszystko</button>
                             </span>
                         </div>
                     </div>
@@ -78,12 +76,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="outputEncrypt">@Text.Hash</label>
-                                <textarea class="form-control" rows="2" id="outputEncrypt" disabled></textarea>
+                                <textarea class="form-control" placeholder="@Text.Hash" rows="2" id="outputEncrypt" disabled></textarea>
                             </div>
                         </div>
                         <span class="col-md-8">
-                            <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
+                            <button style="margin-top:-10px;"class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
                         </span>
                     </div>
                 </div>

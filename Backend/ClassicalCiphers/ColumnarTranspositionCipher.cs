@@ -16,8 +16,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             set => _key = value.ToUpper();
         }
 
-        private char[] _sortedKey;
-        private int[] _columnNumbers;
+
+        public char[] _sortedKey;
+        public int[] _columnNumbers;
         private char[,] _charMatrixEncrypted;
         private char[,] _charMatrixDecrypted;
 
@@ -30,6 +31,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
+            Key = StringHelper.ReplaceWhitespace(Key, "");
             _sortedKey = Key.OrderBy(c => c).ToArray();
             _columnNumbers = new int[_sortedKey.Length];
             int[] columnOrder = new int[_columnNumbers.Length];

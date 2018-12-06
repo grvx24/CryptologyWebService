@@ -1,0 +1,54 @@
+﻿<link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
+
+<h2 align="center">Szyfr Playfair wizualizacja</h2>
+<div class="col-md-12" style="margin-top:15px;margin-bottom:25px">
+    <row>
+        <div class="col-md-8" style="margin-bottom:30px;margin-top:10px;">
+            <label for="keyVisualization">@Text.Key</label>
+            <textarea class="form-control" rows="1" id="keyVisualization"></textarea>
+        </div>
+        <div class="col-md-8">
+            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+        </div>
+        <div>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
+            <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
+        </div>
+    </row>
+</div>
+
+<div class="col-md-12" style="margin-left:6px">
+    <row>
+        <div class="col-md-2">
+            <div id="playfairTable"></div>
+        </div>
+        <div class="col-md-8">
+            <label id="labelDigrams" style="margin-top:20px;font-size:15px" hidden>Tekst do zaszyfrowania podzielony na digramy</label>
+            <div id="inputDigrams" hidden></div>
+            <h3 id="lettersPositions" style="color:#2980b9;margin-top:30px"></h3>
+        </div>
+
+    </row>
+</div>
+
+<div class="col-md-12" style="margin-left:16px; margin-top:40px;">
+            <div id="cipherOutput"></div>
+</div>
+
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+</div>
+<div>
+    <textarea class="form-control" rows="1" id="indexNumber" style="display:none">1</textarea>
+</div>
+
+<script>
+      //Ajax
+    var playfairInit = PlayfairVisualizationInit({
+        urls: {
+            visualizationUrl: '@Url.Action("PlayfairVisualization", "ClassicalCiphers")',
+        }
+    });
+
+    playfairInit.init();
+</script>
