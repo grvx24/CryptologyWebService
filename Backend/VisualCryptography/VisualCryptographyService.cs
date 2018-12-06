@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
@@ -283,14 +284,47 @@ namespace CryptoWebService.Backend.VisualCryptography
         private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
         {
             
-
             int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
+            int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
+            int space = _TextToHide.Length * 8;
+            if(space > bitsOnCoding)
+            {
+                throw new IndexOutOfRangeException();
+            }
 
             PixelFormat x = _Image.PixelFormat;
-            int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
 
+            var colorOfspecificPixel = _Image.GetPixel(0, 0);
+            BitArray BitsToHide = new BitArray(Encoding.)
 
-            return "elo";
+            for (int bitIndexMsg = 0, i = 0, j = 0; index < space;)
+            {
+                by_TextToHide[index]
+                var color = _Image.GetPixel(i,j);
+                byte r = color.R;
+                byte g = color.G;
+                byte b = color.B;
+                for (int bitIndex = 7;  bitIndex >( 7 - amountOfBitsOnCoding); i--)
+                {
+                    byte mask = (byte)(1 << bitIndex);
+
+                    self[byteIndex] ^= mask;
+                    index = index + 3;
+                }
+
+                _Image.SetPixel(i, j, Color.FromArgb(r, g, b));
+               
+
+                index++;
+                j = index % _Image.Width;
+                i = (j == 0 ? i + 1 : i);
+            }
+
+            MemoryStream ms = new MemoryStream();
+            _Image.Save(ms, ImageFormat.Png);
+
+            return Convert.ToBase64String(ms.ToArray());
+
         }
 
         private static string PatchWorkMethod(Bitmap _Image, string _GeneratorKey, string _NaturalNumber)

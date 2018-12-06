@@ -112,7 +112,7 @@ namespace CryptoWebService.Controllers
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie by zakodować całą wiadomość." });
+                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
                 }
             }
         }
