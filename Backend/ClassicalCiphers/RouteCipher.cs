@@ -55,7 +55,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
             }
         }
 
-        private string ReadEncryptedFromMatrix()
+        private string ReadEncryptedFromMatrix(int msgLength)
         {
             if (MessageMatrix != null)
             {
@@ -69,9 +69,10 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 int rowRangeMin = 0;
                 int rowRangeMax = MessageMatrix.GetLength(0) - 1;
 
-                while (rowRangeMax != rowRangeMin || columnRangeMin != columnRangeMax)
-                {
+                int steps = 0;
 
+                while (steps< msgLength)
+                {
                     if (direction == 0)
                     {
                         if (encryptedCounter >= MessageMatrix.Length)
@@ -126,8 +127,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                             encrypted[encryptedCounter] = MessageMatrix[rowRangeMin, i];
                             encryptedCounter++;
                         }
-
-
+                        
                         direction = 0;
                         rowRangeMin++;
                     }
@@ -164,14 +164,14 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                     {
                         MessageMatrix = new char[dimensionSize, Key];
                         FillMatrix(message);
-                        encrypted = ReadEncryptedFromMatrix();
+                        encrypted = ReadEncryptedFromMatrix(message.Length);
                         break;
                     }
                 case CipherMode.Key_As_Height:
                     {
                         MessageMatrix = new char[Key, dimensionSize];
                         FillMatrix(message);
-                        encrypted = ReadEncryptedFromMatrix();
+                        encrypted = ReadEncryptedFromMatrix(message.Length);
                         break;
                     }
 

@@ -1433,6 +1433,14 @@ var PlayfairCipherInit = function (config) {
 
         $('#encryptButton').click(function () {
 
+            var regex = /^[a-zA-Z]+$/;
+
+            var encryptKey = $("#keyEncrypt").val();
+            if (!regex.test(encryptKey)) {
+                alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
+                return;
+            }
+
             var model = {
                 message: $('#inputEncrypt').val(),
                 key: $("#keyEncrypt").val()
@@ -1456,6 +1464,14 @@ var PlayfairCipherInit = function (config) {
     }
     var decryptInit = function () {
         $('#decryptButton').click(function () {
+
+            var regex = /^[a-zA-Z]+$/;
+
+            var decryptKey = $("#keyDecrypt").val();
+            if (!regex.test(decryptKey)) {
+                alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
+                return;
+            }
 
             var model = {
                 message: $('#inputDecrypt').val(),

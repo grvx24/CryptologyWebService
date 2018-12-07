@@ -10,7 +10,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
     public class PlayfairCipher : IClassicalCiphers
     {
 
-        private readonly string _alphabet = Alphabets.ALPHABET_EN;
+        private readonly string _alphabet = Alphabets.ALPHABET_EN_WITHOUT_J;
         public string Key { get; set; }
         public char[,] KeyMatrix { get; private set; }
 
@@ -80,6 +80,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             key = StringHelper.ReplaceWhitespace(key, "");
             key = key.ToUpper();
+            key = key.Replace('J', 'I');
 
             var keyDistinct = key.Distinct();
             this.Key = new string(keyDistinct.ToArray());
@@ -96,29 +97,8 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 for (int j = 0; j < 5; j++)
                 {
                     var character = matrixString[matrixStringCounter];
-
-                    if (character == 'J' || character == 'j')
-                    {
-                        _charPositionInMatrix.Add(character, _charPositionInMatrix['I']);
-                        if (j > 0)
-                        {
-                            j--;
-                        }
-                        else
-                        {
-                            if (i > 0)
-                            {
-                                i--;
-                            }
-                            j = 5;
-                        }
-                    }
-                    else
-                    {
-                        KeyMatrix[i, j] = character;
-                        _charPositionInMatrix.Add(character, new CharPosition(i, j));
-                    }
-
+                    KeyMatrix[i, j] = character;
+                    _charPositionInMatrix.Add(character, new CharPosition(i, j));
                     matrixStringCounter++;
                 }
             }
@@ -197,6 +177,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
+            message = message.Replace('J', 'I');
             if (message.Length % 2 != 0)
             {
                 message += "X";
@@ -266,6 +247,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
         {
             message = StringHelper.ReplaceWhitespace(message, "");
             message = message.ToUpper();
+            message = message.Replace('J', 'I');
             if (message.Length % 2 != 0)
             {
                 message += "X";

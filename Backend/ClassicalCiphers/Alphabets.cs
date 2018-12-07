@@ -9,6 +9,7 @@ namespace CryptoWebService.Backend.ClassicalCiphers
     {
         public static readonly string ALPHABET_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         public static readonly string ALPHABET_EN_WITHOUT_J_V = "ABCDEFGHIKLMNOPQRSTUWXYZ";
+        public static readonly string ALPHABET_EN_WITHOUT_J = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         public static readonly string ALPHABET_PL = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUWYZŹŻ";
         public static readonly string DIGITS = "0123456789";
         public static readonly string PUNCTUATION = "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";

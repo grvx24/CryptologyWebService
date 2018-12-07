@@ -70,8 +70,6 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
             try
             {
-                message = message.ToUpper();
-
                 char[][] rows = new char[FenceLevel][];
                 for (int i = 0; i < FenceLevel; i++)
                 {
@@ -118,13 +116,15 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                     if (row == FenceLevel - 1)
                         directionDown = false;
 
-                    if (rows[row][col] != '*')
+                    if (rows[row][col] != '\0')
                         decrypted.Append(rows[row][col]);
 
                     if (directionDown)
                         row++;
                     else
                         row--;
+
+                    col++;
                 }
 
                 return decrypted.ToString();
