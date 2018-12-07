@@ -87,17 +87,9 @@
             .attr("stroke", "black");
 
         svg.append("line")
-            .attr("x1", maxWidth + 125)
-            .attr("y1", 75)
-            .attr("x2", maxWidth + 125)
-            .attr("y2", 150)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-        svg.append("line")
-            .attr("x1", maxWidth + 125)
+            .attr("x1", 75)
             .attr("y1", 150)
-            .attr("x2", 75)
+            .attr("x2", 125)
             .attr("y2", 150)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
@@ -155,10 +147,19 @@
                 function (d, i) {
                     return (d - 1) * width + width / 2;
                 })
-            .attr("y2", 162)
+            .attr("y2", function (d, i) {
+                if (i === functions.length - 1) {
+                    return 150;
+                } else {
+                    return 162;
+                }
+            })
             .attr("stroke-width", 4)
             .attr("stroke", "black");
         fLines.append('circle')
+            .filter(function (d, i) {
+                return i <= functions.length - 2;
+            })
             .attr("cx",
                 function (d, i) {
                     return (d - 1) * width + width / 2;
@@ -168,6 +169,17 @@
             .attr("stroke-width", 3)
             .attr("fill-opacity", 0)
             .attr("r", 12);
+
+        fLines.append("line")
+            .attr("x1", 0)
+            .attr("y1", 150)
+            .attr("x2",
+                function (d, i) {
+                    return (d - 1) * (width) + width / 2;
+                })
+            .attr("y2", 150)
+            .attr("stroke-width", 4)
+            .attr("stroke", "black");
 
         var feedbackText = svg.append('text')
             .attr('id', functionId)
@@ -194,7 +206,7 @@
             .attr('y', 80)
             .attr('fill', 'black')
             .attr("class", "register-cell-text")
-            .text("asdsad");
+            .text("");
 
         svg.append("text")
             .attr("x", 100)

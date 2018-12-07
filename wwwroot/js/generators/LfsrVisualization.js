@@ -129,16 +129,9 @@
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-        svg.append("line")
-            .attr("x1", maxWidth + 160)
-            .attr("y1", 150)
-            .attr("x2", maxWidth + 160)
-            .attr("y2", 300)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
 
         svg.append("line")
-            .attr("x1", maxWidth + 160)
+            .attr("x1", 120)
             .attr("y1", 300)
             .attr("x2", 40)
             .attr("y2", 300)
@@ -147,11 +140,12 @@
 
         svg.append("line")
             .attr("x1", 40)
-            .attr("y1", 300)
+            .attr("y1", 150)
             .attr("x2", 40)
-            .attr("y2", 150)
+            .attr("y2", 300)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
+
 
         svg.append("line")
             .attr("x1", 40)
@@ -198,11 +192,32 @@
                 function (d, i) {
                     return (d - 1) * (width)+width/2;
                 })
-            .attr("y2", 320)
+            .attr("y2", function(d, i) {
+                if (i === functions.length - 1) {
+                    return 300;
+                } else {
+                    return 320;
+                }
+            })
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
+        fLines.append("line")
+            .attr("x1",0)
+            .attr("y1", 300)
+            .attr("x2",
+                function (d, i) {
+                    return (d - 1) * (width) + width / 2;
+                })
+            .attr("y2", 300)
+            .attr("stroke-width", 4)
+            .attr("stroke", "black");
+
+
         fLines.append('circle')
+            .filter(function(d, i) {
+                return i <= functions.length - 2;
+            })
             .attr("cx",
                 function (d, i) {
                     return (d-1) * width + width / 2;
