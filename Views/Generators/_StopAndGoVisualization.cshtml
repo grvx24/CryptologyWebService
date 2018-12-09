@@ -1,10 +1,10 @@
 ﻿<script src="~/lib/custom/d3.min.js"></script>
-<script src="~/js/generators/ThresholdVisualization.js"></script>
+<script src="~/js/generators/StopAndGoVisualization.js"></script>
 
 <div class="row">
     <div class="col-lg-12">
         <h1 class="text-center">
-            Generator progowy - wizualizacja
+            Generator stop and go - wizualizacja
         </h1>
         <br />
         <h2 class="text-center">Podaj wartości początkowe i kliknij "Stwórz rejestr". Maksymalna długość rejestrów dla wizualizacji to 10 bitów.</h2>
@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <svg width="1000" height="650" id="lfsrContainters">
-        <g transform="translate(600,50)" id="thresholdFunction"></g>
+        <g transform="translate(600,50)" id="outputLines"></g>
         <g transform="translate(0,0)" id="lfsr1"></g>
         <g transform="translate(0,200)" id="lfsr2"></g>
         <g transform="translate(0,400)" id="lfsr3"></g>

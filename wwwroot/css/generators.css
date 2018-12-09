@@ -75,7 +75,7 @@ td.lfsr-function-cell {
 
 
 .register-rect{
-    fill: lightgreen;
+    fill: #b0c4de;
     stroke: black;
     stroke-width: 4px;
 }

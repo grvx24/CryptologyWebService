@@ -1,11 +1,12 @@
-﻿var StopAndGoVisualizationInit = function () {
+﻿var SelfDecimationVisualizationInit = function () {
 
     var maxWidth = 400;
     var maxHeight = 50;
-
     var registers = [];
-
     var feedback = [];
+    var D = 3;
+    var K = 5;
+
     //helpers
     function isBinaryString(str) {
         regexp = /^[01]+$/;
@@ -43,84 +44,7 @@
         return arr;
     }
 
-
-    function DrawOutputLines() {
-
-        var group = d3.select('#outputLines');
-
-
-        var output1 = group.append("text")
-            .attr("id","output1")
-            .attr("x", 0)
-            .attr("y", 35)
-            .attr("class","register-cell-text")
-            .text("");
-
-        var output2 = group.append("text")
-            .attr("id", "output2")
-            .attr("x", 50)
-            .attr("y", 330)
-            .attr("class", "register-cell-text")
-            .text("1 + 1");
-
-        var mainOut = group.append("text")
-            .attr("id", "mainOutput")
-            .attr("x", 220)
-            .attr("y", 330)
-            .attr("class", "register-cell-text")
-            .text(""); 
-
-        var line1 = group.append("line")
-            .attr("x1", -50)
-            .attr("y1", 425)
-            .attr("x2", 150)
-            .attr("y2", 425)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-        var line2 = group.append("line")
-            .attr("x1", -50)
-            .attr("y1", 225)
-            .attr("x2", 150)
-            .attr("y2", 225)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-        var line3 = group.append("line")
-            .attr("x1", 150)
-            .attr("y1", 225)
-            .attr("x2", 150)
-            .attr("y2", 425)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-        var circle = group.append("circle")
-            .attr("cx",150)
-            .attr("cy", 325)
-            .attr("stroke", "black")
-            .attr("stroke-width", 3)
-            .attr("fill-opacity", 0)
-            .attr("r", 15);
-
-        var outLines = group.append("line")
-            .attr("x1", 150)
-            .attr("y1", 325)
-            .attr("x2", 200)
-            .attr("y2", 325)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-        group.append("line")
-            .attr("x1", 135)
-            .attr("y1", 325)
-            .attr("x2", 165)
-            .attr("y2", 325)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
-
-    }
-
-    function CreateLfsr(data, functions, svgId, registerName, functionId) {
+    function CreateLfsr(data, functions, svgId, registerName, functionId,D,K) {
 
         $('#' + svgId).empty();
 
@@ -137,6 +61,9 @@
 
         globalTextX = textX + width / 2;
         globalTextY = textY;
+
+        d3.select("#valuesDK")
+            .text("D: " + D + " K: " + K);
 
         var groups = svg.selectAll("g")
             .data(data)
@@ -164,11 +91,10 @@
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-
         svg.append("line")
-            .attr("x1", 125)
+            .attr("x1", 75)
             .attr("y1", 150)
-            .attr("x2", 75)
+            .attr("x2", 125)
             .attr("y2", 150)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
@@ -235,7 +161,6 @@
             })
             .attr("stroke-width", 4)
             .attr("stroke", "black");
-
         fLines.append('circle')
             .filter(function (d, i) {
                 return i <= functions.length - 2;
@@ -261,9 +186,6 @@
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-
-        var outputArray = [];
-
         var feedbackText = svg.append('text')
             .attr('id', functionId)
             .attr('x', 100)
@@ -285,18 +207,17 @@
 
         svg.append('text')
             .attr('id', 'outputBits')
-            .attr('x', 100)
-            .attr('y', 250)
-            .text(outputArray)
-            .attr("class", "register-cell-text");
+            .attr('x', 775)
+            .attr('y', 80)
+            .attr('fill', 'black')
+            .attr("class", "register-cell-text")
+            .text("");
 
         svg.append("text")
             .attr("x", 100)
             .attr("y", 40)
             .attr("class", "register-text")
             .text(registerName);
-
-
     }
 
     function changeFeedbackText() {
@@ -317,114 +238,103 @@
             });
     }
 
-    var outputText = [];
 
     function update() {
 
         $('#nextStepBtn').attr("disabled", true);
+        d3.select('#outputBit').text('');
 
-        var r1 = d3.select('#lfsr1').selectAll("g");
-        var r2 = d3.select('#lfsr2').selectAll("g");
-        var r3 = d3.select('#lfsr3').selectAll("g");
-        var r1Len = registers[0].length;
-        var r2Len = registers[1].length;
-        var r3Len = registers[2].length;
 
-        var o1 = registers[0][r1Len - 1];
+        r1Len = registers[0].length;
 
-        r1.filter(function(d, i) {
-                return i === r1Len - 1;
-            }).select("text")
-            .transition()
-            .duration(300)
-            .attr("x", 500)
-            .attr("y", 85);
+        var r1 = d3.select('#lfsr1');
 
-        setTimeout(function() {
-                d3.select("#output1")
-                    .text(function () {
-                        if (o1 === 1) {
-                            return "1 ==> taktujemy Rejestr2";
-                        } else {
-                            return "0 ==> taktujemy Rejestr3";
-                        }
-                    });
-            },
-            300);
+        if (registers[0][r1Len - 1] === 1) {
 
-        if (o1 === 1) {
-            r2
-                .select("rect")
-                .attr("class", "incorrect-rect");
+            d3.select("#infoText")
+                .text("1: taktujemy K razy")
+                .attr("fill", "lawngreen");
+            d3.select("#counter")
+                .text("0/" + K);
+
+
+            for (var j = 0; j < K; j++) {         
+                if (j === K - 1) {
+                    ClockRegister(j + 1, K, true)
+                } else {
+                    ClockRegister(j + 1, K);
+                }
+            }
+
+
         } else {
-            r3
-                .select("rect")
-                .attr("class", "incorrect-rect");
+
+            d3.select("#infoText")
+                .text("0: taktujemy D razy")
+                .attr("fill", "red");
+            d3.select("#counter")
+                .text("0/" + D);
+
+
+            for (var j = 0; j < D; j++) {
+                if (j === D - 1) {
+                    ClockRegister(j + 1, D, true)
+                } else {
+                    ClockRegister(j + 1, D);
+                }
+            }
         }
 
-        setTimeout(function() {
-                if (o1 === 1) {
+    }
 
-                    shiftBits('lfsr2', registers[1], feedback[1]);
-                    var xor2 = changeFeedbackValuesInfo(registers[1], feedback[1]);
-                    updateFeedbackText('F2', xor2);
+    function ClockRegister(ticks,max,enableBtn=false) {
+        setTimeout(function () {
+            shiftBits('lfsr1', registers[0], feedback[0]);
 
-                } else {
+            var xor1 = changeFeedbackValuesInfo(registers[0], feedback[0]);
 
-                    shiftBits('lfsr3', registers[2], feedback[2]);
-                    var xor3 = changeFeedbackValuesInfo(registers[2], feedback[2]);
-                    updateFeedbackText('F3', xor3);
-                }
-            },
-            500);
+            updateFeedbackText('F1', xor1);
 
+            var counterText = d3.select("#counter");
+            counterText
+                .text(ticks + "/" + max);
 
-        setTimeout(function() {
-
-                r2.filter(function(d, i) {
-                        return i === r1Len - 1;
-                    }).select("rect")
-                    .attr("class", "correct-rect");
-
-                r3.filter(function(d, i) {
-                        return i === r1Len - 1;
-                    }).select("rect")
-                    .attr("class", "correct-rect");
-
-                var o2 = registers[1][r2Len - 1]
-                var o3 = registers[2][r3Len - 1]
-
-                d3.select("#output2")
-                    .text(o2 + " + " + o3);
-                d3.select("#mainOutput")
-                    .text(o2 ^ o3);
-
-            },
-            700);
-
-
-        setTimeout(function() {
-
-                shiftBits('lfsr1', registers[0], feedback[0]);
-                var xor1 = changeFeedbackValuesInfo(registers[0], feedback[0]);
-                updateFeedbackText('F1', xor1);
-
-                r2
-                    .select("rect")
-                    .attr("class", "register-rect");
-
-                r3
-                    .select("rect")
-                    .attr("class", "register-rect");
-
-                d3.select("#output1")
-                    .text("");
-
+            if (enableBtn) {
+                var output = registers[0][r1Len - 1];
                 $('#nextStepBtn').attr("disabled", false);
+                d3.select('#outputBit')
+                    .text(output);
 
-            },
-            2000);
+                var lastR1 = d3.select('#lfsr1').selectAll('g')
+                    .filter(function(d, i) {
+                        return i === r1Len - 1;
+                    });
+                if (output) {
+                    lastR1.select("rect")
+                        .attr("class", "correct-rect");
+                } else {
+                    lastR1.select("rect")
+                        .attr("class", "incorrect-rect");
+                }
 
+            }
+        }, (ticks + 1) * 200);
+    }
+
+    function moveLastBit(registerBlock, registerArr, x, y, delay) {
+        var outputBit = 0;
+        var lastCell = registerBlock.selectAll("g")
+            .filter(function (d, i) {
+                outputBit = d;
+                return i === registerArr.length - 1;
+            });
+
+        lastCell.select("text")
+            .transition()
+            .duration(delay)
+            .attr("x", x)
+            .attr("y", y);
+        return outputBit;
     }
 
     function changeFeedbackValuesInfo(registerArr, feedbackArr) {
@@ -461,8 +371,8 @@
 
         d3.select('#' + lfsrId)
             .selectAll("g")
-            .select("rect");
-            //.attr("class", 'register-rect');
+            .select("rect")
+            .attr("class", 'register-rect');
     }
 
     function updateFeedbackText(feedbackId, xor) {
@@ -489,12 +399,9 @@
         });
 
         $('#createRegisterBtn').click(function () {
+
             CreateRegister(1, 'registerText1', 'feedbackFunctionViz1', 'lfsr1', 'Rejestr 1', 'F1');
-            CreateRegister(2, 'registerText2', 'feedbackFunctionViz2', 'lfsr2', 'Rejestr 2', 'F2');
-            CreateRegister(3, 'registerText3', 'feedbackFunctionViz3', 'lfsr3', 'Rejestr 3', 'F3');
-
         });
-
     }
 
     btnsInit();
@@ -532,7 +439,10 @@
                 }
                 $('#' + polynomialId).val(polynomial.join(','));
 
-                CreateLfsr(registerContent, feedbackContent, svgId, registerName, functionId);
+                D = parseInt($('#valueD option:selected').val());
+                K = parseInt($('#valueK option:selected').val());
+
+                CreateLfsr(registerContent, feedbackContent, svgId, registerName, functionId, D,K);
 
             } else {
 
@@ -545,6 +455,49 @@
         }
     }
 
-    DrawOutputLines();
+    function CreateOutputLines() {
+        var outputArea = d3.select('#outputArea');
+
+        outputArea.append("text")
+            .attr("id", "valuesDK")
+            .attr("x", 100)
+            .attr("y", 50)
+            .attr("class", "register-cell-text")
+            .text("D: "+D+" K: "+K);
+
+        outputArea.append("text")
+            .attr("id", "infoText")
+            .attr("x", 50)
+            .attr("y", 150)
+            .attr("class", "register-cell-text")
+            .text("Info");
+
+        outputArea.append("text")
+            .attr("id", "counter")
+            .attr("x", 50)
+            .attr("y", 200)
+            .attr("class", "register-cell-text")
+            .text("0/10");
+
+        outputArea
+            .append("line")
+            .attr("x1", 2)
+            .attr("y1", 75)
+            .attr("x2", 250)
+            .attr("y2", 75)
+            .attr("stroke-width", 4)
+            .attr("stroke", "black");
+
+
+        outputArea.append("text")
+            .attr('x', 275)
+            .attr('y', 80)
+            .text('')
+            .attr("class", "register-cell-text")
+            .attr('id', 'outputBit');
+    }
+
+    CreateOutputLines();
     $('#createRegisterBtn').click();
+
 }
