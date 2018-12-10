@@ -295,28 +295,29 @@ namespace CryptoWebService.Backend.VisualCryptography
             PixelFormat x = _Image.PixelFormat;
 
             var colorOfspecificPixel = _Image.GetPixel(0, 0);
-            BitArray BitsToHide = new BitArray(Encoding.)
+            BitArray BitsToHide = new BitArray(Encoding.ASCII.GetBytes(_TextToHide));
 
-            for (int bitIndexMsg = 0, i = 0, j = 0; index < space;)
+            for (int bitIndexMsg = 0, i = 0, j = 0; bitIndexMsg < space;)
             {
-                by_TextToHide[index]
+                i = 99999999;
+                var gra = BitsToHide[bitIndexMsg];
                 var color = _Image.GetPixel(i,j);
                 byte r = color.R;
                 byte g = color.G;
                 byte b = color.B;
-                for (int bitIndex = 7;  bitIndex >( 7 - amountOfBitsOnCoding); i--)
+                for (int bitIndex = 7;  bitIndex >( 8 - amountOfBitsOnCoding); bitIndex--)
                 {
                     byte mask = (byte)(1 << bitIndex);
 
-                    self[byteIndex] ^= mask;
-                    index = index + 3;
+                    //self[byteIndex] ^= mask;
+                    bitIndexMsg = bitIndexMsg + 3;
                 }
 
                 _Image.SetPixel(i, j, Color.FromArgb(r, g, b));
-               
 
-                index++;
-                j = index % _Image.Width;
+
+                bitIndexMsg++;
+                j = bitIndexMsg % _Image.Width;
                 i = (j == 0 ? i + 1 : i);
             }
 

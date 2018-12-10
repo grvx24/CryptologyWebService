@@ -37,17 +37,19 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                     lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                    return Json(new { Result = true, secrets });
                 }
                 catch (ImageIsNotInGrayScaleException)
                 {
-
                     return Json(new { Result = false, Message = "Obraz nie jest czarno-biały." });
                 }
-             
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
+                catch (Exception)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
             }
         }
 
@@ -76,16 +78,19 @@ namespace CryptoWebService.Controllers
                 try
                 {
                     lista = VisualCryptographyService.VisualSteganography(Images);
+                    Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                    return Json(new { Result = true, secrets });
                 }
                 catch (ImageIsNotInGrayScaleException )
                 {
 
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
                 }
-
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
+                catch (Exception)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
             }
         }
 
@@ -113,6 +118,10 @@ namespace CryptoWebService.Controllers
                 catch (IndexOutOfRangeException)
                 {
                     return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
+                }
+                catch (Exception)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
                 }
             }
         }
