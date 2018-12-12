@@ -1,0 +1,150 @@
+﻿<br/>
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="p_value">Wartość P</label>
+            <input placeholder="Wpisz liczbę pierwszą" id="p_value" class="form-control" type="text"/>
+        </div>
+        <div class="col-lg-6">
+            <label for="p_value">Wartość Q</label>
+            <input placeholder="Wpisz liczbę pierwszą" id="q_value" class="form-control" type="text" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="publicKey">Klucz publiczny (N, D)</label>
+            <input id="publicKey" class="form-control" type="text"/>
+            <br />
+            <div class="text-center">
+                <button class="btn btn-success">Wczytaj klucz publiczny</button>
+                <button class="btn btn-success">Zapisz klucz publiczny</button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label for="privateKey">Klucz prywatny (N, E)</label>
+            <input id="privateKey" class="form-control" type="text"/>
+            <br/>
+            <div class="text-center">
+                <button class="btn btn-danger">Wczytaj klucz prywatny</button>
+                <button class="btn btn-danger">Zapisz klucz prywatny</button>
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+            <br/>
+            <div class="text-center">
+                <button id="generateKeys" class="btn btn-primary btn-lg">Wygeneruj klucze</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 align="center">@Text.Encryptor</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <label for="encryptKey">Klucz</label>
+                <div class="input-group">
+                    <input placeholder="Podaj parę liczb (N, D) lub (N, E) oddzielonych przecinkiem" id="encryptKey" class="form-control" type="text" />
+                    <span class="input-group-btn">
+                        <button data-toggle="tooltip" data-placement="top" title="Skopiuj klucz publiczny" id="publicKeyCopyEncrypt" class="btn btn-success"><span class="glyphicon glyphicon-copy"></span></button>
+                        <button data-toggle="tooltip" data-placement="top" title="Skopiuj klucz prywatny" id="privateKeyCopyEncrypt" class="btn btn-danger"><span class="glyphicon glyphicon-copy"></span></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
+                <textarea placeholder="Tekst w formacie Unicode" class="form-control" rows="5" id="inputEncrypt"></textarea>
+                <br/>
+                <div class="text-center">
+                    <button class="btn btn-secondary">Wczytaj wiadomość</button>
+                </div>
+
+</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-12">
+                <label for="outputEncrypt">Szyfrogram</label>
+                <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
+                <br/>
+                <div class="text-center">
+                    <button class="btn btn-secondary">Zapisz szyfrogram</button>
+                    <button class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 align="center">@Text.Decryptor</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <label for="encryptKey">Klucz</label>
+                <div class="input-group">
+                    <input placeholder="Podaj parę liczb (N, D) lub (N,E) oddzielonych przecinkiem" id="decryptKey" class="form-control" type="text" />
+                    <span class="input-group-btn">
+                        <button data-toggle="tooltip" data-placement="top" title="Skopiuj klucz publiczny" id="publicKeyCopyDecrypt" class="btn btn-success"><span class="glyphicon glyphicon-copy"></span></button>
+                        <button data-toggle="tooltip" data-placement="top" title="Skopiuj klucz prywatny" id="privateKeyCopyDecrypt" class="btn btn-danger"><span class="glyphicon glyphicon-copy"></span></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label for="inputDencrypt">Szyfrogram</label>
+                <textarea placeholder="Liczby oddzielone przecinkami" class="form-control" rows="5" id="inputDecrypt"></textarea>
+                <br/>
+                <div class="text-center">
+                    <button class="btn btn-secondary">Wczytaj szyfrogram</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-12">
+                <label for="outputEncrypt">Odszyfrowany tekst</label>
+                <textarea readonly class="form-control" rows="5" id="outputDecrypt"></textarea>
+                <br/>
+                <div class="text-center">
+                    <button class="btn btn-secondary">Zapisz wiadomość</button>
+                    <button class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+      //Ajax
+      $(document).ready(function() {
+          var rsaInit = RsaInit({
+              urls: {
+                  generateKeysUrl: '@Url.Action("RsaGenerateKeys","AsymmetricCryptography")',
+                  encryptUrl: '@Url.Action("Encrypt","AsymmetricCryptography")',
+                  decryptUrl: '@Url.Action("Decrypt", "AsymmetricCryptography")'
+              }
+          });
+
+          rsaInit.init();
+      });
+
+</script>

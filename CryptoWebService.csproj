@@ -41,6 +41,7 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\primes\" />
   </ItemGroup>
 
   <ItemGroup>

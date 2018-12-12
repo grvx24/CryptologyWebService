@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using CryptoWebService.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
+using System.Text;
 
 namespace CryptoWebService
 {
@@ -20,6 +23,19 @@ namespace CryptoWebService
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var path = @".\wwwroot\primes\primes.txt";
+            if (File.Exists(path))
+            {
+                using (StreamReader sr = new StreamReader(File.OpenRead(path),Encoding.UTF8))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+                        PrimeNumbers.Primes.Add(int.Parse(line));
+                    }
+                }
+            }
+
         }
 
         public IConfiguration Configuration { get; }
