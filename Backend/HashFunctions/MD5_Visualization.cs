@@ -75,12 +75,46 @@ namespace CryptoWebService.Backend.HashFunctions
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            uint register_A;
+            uint register_B;
+            uint register_C;
+            uint register_D;
+
+            if (i == 1 || i == 5 || i == 9 || i == 13)
+            {
+                register_A = a;
+                register_B = b;
+                register_C = c;
+                register_D = d;
+            }
+            else if (i == 2 || i == 6 || i == 10 || i == 14)
+            {
+                register_A = b;
+                register_B = c;
+                register_C = d;
+                register_D = a;
+            }
+            else if (i == 3 || i == 7 || i == 11 || i == 15)
+            {
+                register_A = c;
+                register_B = d;
+                register_C = a;
+                register_D = b;
+            }
+            else
+            {
+                register_A = d;
+                register_B = a;
+                register_C = b;
+                register_D = c;
+            }
             registers.Add(new Registers()
             {
-                A = a,
-                B = b,
-                C = c,
-                D = d,
+
+                A = register_A,
+                B = register_B,
+                C = register_C,
+                D = register_D,
                 Iteration = i
             });
 
@@ -92,12 +126,46 @@ namespace CryptoWebService.Backend.HashFunctions
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            uint register_A;
+            uint register_B;
+            uint register_C;
+            uint register_D;
+
+            if (i == 1+16 || i == 5+16 || i == 9+16 || i == 13+16)
+            {
+                register_A = a;
+                register_B = b;
+                register_C = c;
+                register_D = d;
+            }
+            else if (i == 2 + 16 || i == 6 + 16 || i == 10 + 16 || i == 14 + 16)
+            {
+                register_A = b;
+                register_B = c;
+                register_C = d;
+                register_D = a;
+            }
+            else if (i == 3 + 16 || i == 7 + 16 || i == 11 + 16 || i == 15 + 16)
+            {
+                register_A = c;
+                register_B = d;
+                register_C = a;
+                register_D = b;
+            }
+            else
+            {
+                register_A = d;
+                register_B = a;
+                register_C = b;
+                register_D = c;
+            }
             registers.Add(new Registers()
             {
-                A = a,
-                B = b,
-                C = c,
-                D = d,
+
+                A = register_A,
+                B = register_B,
+                C = register_C,
+                D = register_D,
                 Iteration = i
             });
         }
@@ -108,12 +176,46 @@ namespace CryptoWebService.Backend.HashFunctions
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
+            uint register_A;
+            uint register_B;
+            uint register_C;
+            uint register_D;
+
+            if (i == 1 +32|| i == 5 + 32 || i == 9 + 32 || i == 13 + 32)
+            {
+                register_A = a;
+                register_B = b;
+                register_C = c;
+                register_D = d;
+            }
+            else if (i == 2 + 32 || i == 6 + 32 || i == 10 + 32 || i == 14 + 32)
+            {
+                register_A = b;
+                register_B = c;
+                register_C = d;
+                register_D = a;
+            }
+            else if (i == 3 + 32 || i == 7 + 32 || i == 11 + 32 || i == 15 + 32)
+            {
+                register_A = c;
+                register_B = d;
+                register_C = a;
+                register_D = b;
+            }
+            else
+            {
+                register_A = d;
+                register_B = a;
+                register_C = b;
+                register_D = c;
+            }
             registers.Add(new Registers()
             {
-                A = a,
-                B = b,
-                C = c,
-                D = d,
+
+                A = register_A,
+                B = register_B,
+                C = register_C,
+                D = register_D,
                 Iteration = i
             });
         }
@@ -124,12 +226,45 @@ namespace CryptoWebService.Backend.HashFunctions
             pom = ROTATE_LEFT(pom, s);
             ulong mod = 4294967296;
             a = (uint)((ulong)(b + pom) % mod);
-            registers.Add(new Registers()
+            uint register_A;
+            uint register_B;
+            uint register_C;
+            uint register_D;
+
+            if (i == 1+48 || i == 5 + 48 || i == 9 + 48 || i == 13 + 48) {
+                register_A = a;
+                register_B = b;
+                register_C = c;
+                register_D = d;
+            }
+            else if(i == 2 + 48 || i == 6 + 48 || i == 10 + 48 || i == 14 + 48)
             {
-                A = a,
-                B = b,
-                C = c,
-                D = d,
+                register_A = b;
+                register_B = c;
+                register_C = d;
+                register_D = a;
+            }
+            else if (i == 3 + 48 || i == 7 + 48 || i == 11 + 48 || i == 15 + 48)
+            {
+                register_A = c;
+                register_B = d;
+                register_C = a;
+                register_D = b;
+            }
+            else
+            {
+                register_A = d;
+                register_B = a;
+                register_C = b;
+                register_D = c;
+            }
+            registers.Add(new Registers()
+            {  
+               
+                A = register_A,
+                B = register_B,
+                C = register_C,
+                D = register_D,
                 Iteration = i
             });
         }
