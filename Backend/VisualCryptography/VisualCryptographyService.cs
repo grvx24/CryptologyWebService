@@ -299,7 +299,6 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             for (int bitIndexMsg = 0, i = 0, j = 0; bitIndexMsg < space;)
             {
-                i = 99999999;
                 var gra = BitsToHide[bitIndexMsg];
                 var color = _Image.GetPixel(i,j);
                 byte r = color.R;

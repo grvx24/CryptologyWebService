@@ -119,7 +119,7 @@ namespace CryptoWebService.Controllers
                 {
                     return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
                 }

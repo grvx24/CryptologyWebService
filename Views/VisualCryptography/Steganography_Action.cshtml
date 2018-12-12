@@ -3,22 +3,228 @@
 <div class="row row-eq-height">
     <div class="col-lg-4">
         <div class="layer">
+            <label>Cel użycia</label>
+            <select id="UseSelect" class="form-control" onchange="OnChangeUseSelect(this.value)">
+                <option value="1" selected>ukryj informacje</option>
+                <option value="2" >znajdź ukrytą informację</option>
+            </select>
+        </div>
+        <div class="layer">
             <label>Metoda kodowania</label>
             <select id="MethodSelect" class="form-control" onchange="OnChangeMethodSelect(this.value)">
-                <option value="1">algorytm najmniej znaczącego bitu</option>
-                <option value="2" selected>patchwork</option>
+                <option value="1" selected>algorytm najmniej znaczącego bitu</option>
+                <option value="2" >patchwork</option>
             </select>
         </div>
         <div class="layer" id="Method1_1" style="display:none;">
             <label style="margin-bottom:10px;">
-                Liczba bitów przeznaczona na kodowanie
+                Wybierz bity przeznaczone na kodowanie
             </label>
-            <div class="slidecontainer">
-                <div class="col-lg-10">
-                    <input type="range" min="1" max="8" value="1" style="margin-top:5px;" class="slider" id="AmountOfBitsSlider">
+            <div>
+                <div class="row">
+                    <div class="myDescriptionChecBoxes text-center">
+                        Bity koloru czerwonego
+                    </div>
+                    <div class="myCheckBoxesContainer">
+                        <div class="checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR8" name="" />
+                            <label for="checkBoxR8" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR7" name="" />
+                            <label for="checkBoxR7" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR6" name="" />
+                            <label for="checkBoxR6" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR5" name="" />
+                            <label for="checkBoxR5" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR4" name="" />
+                            <label for="checkBoxR4" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR3" name="" />
+                            <label for="checkBoxR3" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR2" name="" />
+                            <label for="checkBoxR2" class="redLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxR1" name="" />
+                            <label for="checkBoxR1" class="redLabel"></label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-2">
-                    <span id="AmountOfBitsValue" style="font-size:18px;"> </span>
+                <div class="row">
+                    <div class="myCheckBoxesContainer">
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 8 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 7 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 6 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 5 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 4 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 3 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 2 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 1 </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="myDescriptionChecBoxes text-center">
+                        Bity koloru niebieskiego
+                    </div>
+                    <div class="myCheckBoxesContainer">
+                        <div class="checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB8" name="" />
+                            <label for="checkBoxB8" class="blueLabel"></label>
+                        </div>
+                        <div class="checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB7" name="" />
+                            <label for="checkBoxB7" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB6" name="" />
+                            <label for="checkBoxB6" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB5" name="" />
+                            <label for="checkBoxB5" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB4" name="" />
+                            <label for="checkBoxB4" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB3" name="" />
+                            <label for="checkBoxB3" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB2" name="" />
+                            <label for="checkBoxB2" class="blueLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxB1" name="" />
+                            <label for="checkBoxB1" class="blueLabel"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="myCheckBoxesContainer">
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 8 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 7 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 6 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 5 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 4 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 3 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 2 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 1 </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="myDescriptionChecBoxes text-center">
+                        Bity koloru zielonego
+                    </div>
+                    <div class="myCheckBoxesContainer">
+                        <div class="checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG8" name="" />
+                            <label for="checkBoxG8" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG7" name="" />
+                            <label for="checkBoxG7" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG6" name="" />
+                            <label for="checkBoxG6" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG5" name="" />
+                            <label for="checkBoxG5" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG4" name="" />
+                            <label for="checkBoxG4" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG3" name="" />
+                            <label for="checkBoxG3" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG2" name="" />
+                            <label for="checkBoxG2" class="greenLabel"></label>
+                        </div>
+                        <div class=" checkboxFour ">
+                            <input type="checkbox" value="1" id="checkBoxG1" name="" />
+                            <label for="checkBoxG1" class="greenLabel"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="myCheckBoxesContainer">
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 8 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 7 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 6 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 5 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 4 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 3 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 2 </label>
+                        </div>
+                        <div class="myChecBoxDeciption text-center">
+                            <label> 1 </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,7 +232,7 @@
             <div class="form-group">
                 <label for="in_key">klucz generatora pseudolosowego</label>
                 <div class="input-group">
-                    <input maxlength="16" placeholder="wpisz klucz generatora"  id="in_key" class="form-control" type="text" />
+                    <input maxlength="16" placeholder="wpisz klucz generatora" id="in_key" class="form-control" type="text" />
                     <span class="input-group-btn">
                         <button data-toggle="tooltip" data-placement="top" title="Losuje klucz" id="btnRandomGeneratorKey" class="btn btn-success">Losuj</button>
                     </span>
@@ -55,6 +261,9 @@
             <textarea maxlength="50000" placeholder="wpisz tekst do zakodowania" class="form-control" rows="5" id="TextInput"></textarea>
         </div>
     </div>
+</div>
+<div class="col-lg-12">
+    <hr />
 </div>
 
 <div class="row">
@@ -99,7 +308,6 @@
 </div>
 
 
-
 <div class="row" id="PanelWithResult" style="display:none">
     <div class="col-lg-12">
         <hr />
@@ -118,6 +326,26 @@
 </div>
 
 <style>
+    .myCheckBoxesContainer {
+        display:flex;
+        justify-content: center;
+    }
+
+    .myChecBoxDeciption{
+        width:30px;
+        margin-left:10px;
+    }
+
+    .myDescriptionNumber {
+        font-style: italic;
+    }
+
+    .myDescriptionChecBoxes {
+        font-style: italic;
+        margin-top:10px;
+        margin-bottom:5px;
+        font-size: 16px;
+    }
     .layer {
         margin-top: 5px;
         margin-bottom: 10px;
@@ -156,6 +384,37 @@
         margin-top: 10px;
         margin-bottom: 20px;
     }
+    .checkboxFour {
+        width: 30px;
+        height: 30px;
+        margin-left:10px;
+        background: #ddd;
+        border-radius: 100%;
+        position: relative;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .checkboxFour label {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 100px;
+        transition: all .5s ease;
+        cursor: pointer;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        z-index: 1;
+        box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
+    }
+    .checkboxFour label[class="blueLabel"] { background: #1c5aa6; }
+    .checkboxFour label[class="greenLabel"]{ background: #26ca28; }
+    .checkboxFour label[class="redLabel"]  { background: #ff0000; }
+    .checkboxFour input[type=checkbox]     { visibility: hidden;  }
+
+    .checkboxFour input[type=checkbox]:checked + label {
+        background: rgba(0, 0, 0, 0.19);
+    }
 </style>
 
 <script>
@@ -166,15 +425,6 @@
     var MethodsDescriptions = [];
     MethodsDescriptions["1"] = ["Jedną z najprostrzych metod osadzania znaku wodnego jest moetoda polegajaca na zmianie najmniej znaczącego bitu słowa oposującego dany piksel.Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany, piksel, tym mniejsze znaczenie ma dla globalnegoodczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
     MethodsDescriptions["2"] = ["opis paptchwork"];
-
-
-    var slider = document.getElementById("AmountOfBitsSlider");
-    var output = document.getElementById("AmountOfBitsValue");
-    output.innerHTML = slider.value;
-
-    slider.oninput = function () {
-        output.innerHTML = this.value;
-    }
 
     $(document).ready(function () {
         $("#MethodSelect").val("1").change();
@@ -200,11 +450,16 @@
 
     function OnChangeMethodSelect(methodNumber){
         var label = document.getElementById("MethodDescription");
+        var number = $('#UseSelect option:selected').val();
 
         if (methodNumber == 1) {
             $('#Method1_1').show();
-            $('#Method1_2').show();
             $('#Method2').hide();
+            if (number == 1) {
+                $('#Method1_2').show();
+            } else if (number == 2) {
+                $('#Method1_2').hide();
+            }
         } else if (methodNumber == 2) {
             $('#Method1_1').hide();
             $('#Method1_2').hide();
@@ -218,6 +473,20 @@
             return;
         }
         label.innerHTML = MethodsDescriptions[methodNumber];
+    }
+
+    function OnChangeUseSelect(number) {
+        var methodNumber = $('#MethodSelect option:selected').val();
+        if (methodNumber == '1') {
+            if (number == 1) {
+                $('#Method1_2').show();
+            } else if (number == 2) {
+                $('#Method1_2').hide();
+            } else {
+                Console.log("InputUseSelect value is unknow.")
+                return;
+            }
+        }
     }
 
     $('#btnRandomGeneratorKey').click(function () {
@@ -537,8 +806,5 @@
                 }
             });
         }
-
-       
     }
-
 </script>
