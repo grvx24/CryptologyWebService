@@ -177,7 +177,7 @@ input[type=radio] {
     font-family: "Lucida Console", Monaco, monospace;
 }
 
-.slidecontainer {
+/*.slidecontainer {
     width: 100%;
 }
 
@@ -200,4 +200,4 @@ input[type=radio] {
     border-radius: 50%;
     background: #1c5aa6;
     cursor: pointer;
-}
+}*/
