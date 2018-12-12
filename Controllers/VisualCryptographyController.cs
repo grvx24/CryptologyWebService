@@ -25,11 +25,11 @@ namespace CryptoWebService.Controllers
         {
             if (secretsDto == null || secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "ERROR - The ScretDto is empty." });
+                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
 
             }else if (secretsDto.Image == null)
             {
-                return Json(new { Result = false, Message = "ERROR - The Image Data is empty." });
+                return Json(new { Result = false, Message = "ERROR - Obraz nie został przesłany." });
             }
             else
             {
@@ -37,17 +37,19 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                     lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                    return Json(new { Result = true, secrets });
                 }
                 catch (ImageIsNotInGrayScaleException)
                 {
-
                     return Json(new { Result = false, Message = "Obraz nie jest czarno-biały." });
                 }
-             
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
+                catch (Exception)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
             }
         }
 
@@ -62,13 +64,13 @@ namespace CryptoWebService.Controllers
         {
             if (Images == null )
             {
-                return Json(new { Result = false, Message = "Dane nie zostały przesłane."});
+                return Json(new { Result = false, Message = " ERROR - Dane nie zostały przesłane." });
             }
             else
             {
                 if (Images.Length != 3 || Images[0] == null|| Images[1] == null|| Images[2] == null)
                 {
-                    return Json(new { Result = false, Message = "Przesłano mniej niż 3 obrazy." });
+                    return Json(new { Result = false, Message = "ERROR -  Przesłano mniej niż 3 obrazy." });
                 }
 
                 string[] lista;
@@ -76,16 +78,19 @@ namespace CryptoWebService.Controllers
                 try
                 {
                     lista = VisualCryptographyService.VisualSteganography(Images);
+                    Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
+
+                    return Json(new { Result = true, secrets });
                 }
                 catch (ImageIsNotInGrayScaleException )
                 {
 
                     return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
                 }
-
-                Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
-
-                return Json(new { Result = true, secrets });
+                catch (Exception)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
             }
         }
 
@@ -97,25 +102,52 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult Steganography([FromBody] SteganographyDto steganographyData)
+        public IActionResult SteganographyLSB([FromBody] SteganographyLsbDto steganographyData)
         {
             if (steganographyData == null)
             {
-                return Json(new { Result = false, Message = "Dane nie zostały przesłane." });
+                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
             }
             else
             {
                 try
                 {
-                    var image = VisualCryptographyService.Steganography(steganographyData);
+                    var image = SteganographyService.LsbMethod(steganographyData);
                     return Json(new { Result = true, image });
                 }
-                catch (ImageIsNotInGrayScaleException )
+                catch (IndexOutOfRangeException)
                 {
-
-                    return Json(new { Result = false, Message = "Obraz/obrazy nie są czarno-białe." });
+                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
                 }
+                catch (Exception e)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
+            }
+        }
 
+        [HttpPost]
+        public IActionResult SteganographyPatchWork([FromBody] SteganographyPatchWorkDto steganographyData)
+        {
+            if (steganographyData == null)
+            {
+                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
+            }
+            else
+            {
+                try
+                {
+                    var image = SteganographyService.PatchWorkMethod(steganographyData);
+                    return Json(new { Result = true, image });
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
+                }
             }
         }
 
