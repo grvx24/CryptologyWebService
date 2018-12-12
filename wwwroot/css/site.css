@@ -201,3 +201,30 @@ input[type=radio] {
     background: #1c5aa6;
     cursor: pointer;
 }*/
+
+.title {
+    color: #5c9def;
+    font-family: Cambria, fantasy;
+    font-weight: 700;
+    font-variant: small-caps;
+    text-align: center;
+}
+
+.steps {
+    color: #5c9def;
+    font-family: Cambria, fantasy;
+    font-weight: 500;
+}
+
+.description {
+    box-shadow: 5px 6px 10px rgba(0,0,0,0.4);
+    background-color: #cbd9f2;
+    color: black;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: justify;
+    padding: 20px;
+    font-family: Verdana;
+    background-size: cover;
+    border-radius: 20px;
+}
