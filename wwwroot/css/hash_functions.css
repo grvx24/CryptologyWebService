@@ -8,10 +8,23 @@ table, th, td {
     padding: 3px;
 }
 
-    table.operations, th, td {
-        font-size: 18px;
-        border: 0px solid white;
-        text-align: left;
-    }
 
+input.md5 {
+    text-align: center;
+    border: dashed;
+    border-bottom-color: #5c9def;
+    border-top-color:white;
+    border-left-color:white;
+    border-right-color:white;
+    background-color:white;
+}
 
+input.registers {
+    text-align: center;
+    border:none;
+}
+
+table.md5Data {
+    font-size: 18px;
+    border-color: white;
+}

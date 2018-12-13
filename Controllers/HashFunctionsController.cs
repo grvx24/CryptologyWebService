@@ -230,7 +230,6 @@ namespace CryptoWebService.Controllers
                     
                 }
 
-
                 //List<Registers> _registers = new List<Registers>();
 
                 /*Round 1 Function F*/

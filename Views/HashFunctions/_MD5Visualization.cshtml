@@ -1,7 +1,7 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
 
 <h2 class="title">Działanie algorytmu MD5 krok po kroku</h2>
-<h4>Algorytm MD5 składa się z 4 kroków:</h4>
+<h4 style="margin-top:10px">Algorytm MD5 składa się z 4 kroków:</h4>
 <h3 class="steps">1. Dołączenie bitów dopełniających.</h3>
 <h4>- oryginalną wiadomości uzupełniamy na końcu bitem o wartości "1",</h4>
 <h4>- uzupełniamy wiadomość bitami o wartości "0" tak, aby długość komunikatu była o 64 bity krótsza niż wielokrotność 512,</h4>
@@ -20,22 +20,22 @@
 </div>
 <h4>
     Wiadomość zawiera
-    <input type="text" style="text-align:center" name="messageLength" id="messageLength" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="messageLength" id="messageLength" class="disabledInput" size="4" disabled />
     bitów. Aby długość wiadomości wynosiła 448 mod 512, musimy uzupełnić ją o
-    <input type="text" style="text-align:center" name="paddedBits" id="paddedBits" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="paddedBits" id="paddedBits" class="disabledInput" size="4" disabled />
     bity, ponieważ
-    <input type="text" style="text-align:center" name="messageLength2" id="messageLength2" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="messageLength2" id="messageLength2" class="disabledInput" size="4" disabled />
     mod 512 =
-    <input type="text" style="text-align:center" name="modResult" id="modResult" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="modResult" id="modResult" class="disabledInput" size="4" disabled />
     . Zatem dodajemy jedną '1' oraz
-    <input type="text" style="text-align:center" name="padValue" id="padValue" class="disabledInput" size="2" disabled />
+    <input type="text" class="md5" name="padValue" id="padValue" class="disabledInput" size="2" disabled />
     zera.
 </h4>
 
 <h4> Następnie  dodajemy 64 bity wskazujące długość wiadomości:</h4>
 <div class="col-md-12">
     <div class="col-md-8">
-        <input type="text" name="padMessageLength" size="92" id="padMessageLength" class="disabledInput" style="margin-bottom:15px;" disabled />
+        <input type="text" class="md5" style="margin-bottom:15px;font-size:20px" size="70" id="padMessageLength" disabled />
     </div>
 </div>
 
@@ -50,16 +50,16 @@
     Algorytm MD5 wymaga 128-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na
     cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D (decymalnie):
 </h4>
-<h4>Słowo A: 1732584193</h4>
-<h4>Słowo B: 4023233417</h4>
-<h4>Słowo C: 2562383102</h4>
-<h4>Słowo D: 271733878</h4>
+<h4><b>Słowo A:</b> 1732584193</h4>
+<h4><b>Słowo B:</b> 4023233417</h4>
+<h4><b>Słowo C:</b> 2562383102</h4>
+<h4><b>Słowo D:</b> 271733878</h4>
 <h3 class="steps" style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
 <h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
 <h4>Zdefiniowane stałe:</h4>
 <h4> - słowa A, B, C, D,</h4>
-<h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie T[i] = 4294967296 · |sin(i)|.</h4>
-<table id="table_T" class="operations" style="width:100%">
+<h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie <i>T[i] = 4294967296 · |sin(i)|</i>.</h4>
+<table id="table_T" class="md5Data" style="width:100%;font-size:17px;">
     <tbody>
         <tr>
             <td>T[0]=3614090360</td>
@@ -145,19 +145,19 @@
 </table>
 
 <h4> - cztery funkcje pomocnicze, które na wejściu mają trzy 32-bitowe słowa, a na wyjściu produkują jedno słowo 32-bitowe:</h4>
-<h4>F(X,Y,Z)= XY v not(X)Z </h4>
-<h4>G(X,Y,Z)= XZ v Y not(Z) </h4>
-<h4>H(X,Y,Z)= X xor Y xor Z </h4>
-<h4>I(X,Y,Z)= Y xor (X v not(Z)) </h4>
+<h4><b>F(X,Y,Z)</b> = XY v not(X)Z </h4>
+<h4><b>G(X,Y,Z)</b> = XZ v Y not(Z) </h4>
+<h4><b>H(X,Y,Z)</b> = X xor Y xor Z </h4>
+<h4><b>I(X,Y,Z)</b> = Y xor (X v not(Z)) </h4>
 <h3>Runda 1</h3>
 <h4>
-    Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ F(b,c,d)+ X[k]+ T[i]) <<< s)
+    Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b +(( a + F(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
-<h5>
+<h4>
     Każdorazowo porządek rejestrów ulega przesunięciu cyklicznemu o jedną pozycję. Ponadto przedostatnie argumenty (ilość pozycji o jaką dokonujemy cyklicznego przesunięcia)
     tworzy ciąg okresowy 7, 12, 17, 22, 7, 12, ....
-</h5>
-<table id="table_T" class="operations" style="width:60%">
+</h4>
+<table id="table_T" class="md5Data" style="width:60%">
     <tbody>
         <tr>
             <td>[ABCD  0  7  1]</td>
@@ -188,12 +188,12 @@
 
 <h3>Runda 2</h3>
 <h4>
-    Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ G(b,c,d)+ X[k]+ T[i]) <<< s)
+    Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b +(( a + G(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
-<h5>
+<h4>
     Przebiega podobnie jak runda 1. Zamiast procedury F, stosowana jest procedura G. Przesunięcie tworzy ciąg okresowy 5, 9, 14, 20.
-</h5>
-<table id="table_T" class="operations" style="width:60%">
+</h4>
+<table id="table_T" class="md5Data" style="width:60%">
     <tbody>
         <tr>
             <td>[ABCD  1  5 17]</td>
@@ -223,12 +223,12 @@
 </table>
 <h3>Runda 3</h3>
 <h4>
-    Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ H(b,c,d)+ X[k]+ T[i]) <<< s)
+    Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b + (( a + H(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
-<h5>
+<h4>
     Przebiega z analogicznymi zmianami. Używana jest procedura H. Przesunięcie tworzy ciąg okresowy 4, 11, 16, 23.
-</h5>
-<table id="table_T" class="operations" style="width:60%">
+</h4>
+<table id="table_T" class="md5Data" style="width:60%">
     <tbody>
         <tr>
             <td>[ABCD  5  4 33]</td>
@@ -258,12 +258,12 @@
 </table>
 <h3>Runda 4</h3>
 <h4>
-    Wyknywane jest 16 operacji, gdzie [abcd k s i] oznacza a=b+(( a+ I(b,c,d)+ X[k]+ T[i]) <<< s)
+    Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b+(( a + I(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
-<h5>
+<h4>
     Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
-</h5>
-<table class="operations" id="table_T" style="width:60%;">
+</h4>
+<table class="md5Data" id="table_T" style="width:60%;">
     <tbody>
         <tr>
             <td>[ABCD  0  6 49]</td>
@@ -293,8 +293,8 @@
 </table>
 
 <h4 style="margin-top:10px;">
-    MD5 przetwarza dane w 512-bitowych blokach. Jeżeli twoja przykładowa wiadomość nie była dłuższa niż 448 bitów (czyli 512 bitów po wykonaniu uzupelnienia)
-    możesz zobaczyć przebieg poczczegolnych rund w tabeli.
+    MD5 przetwarza dane w 512-bitowych blokach. Jeżeli twoja przykładowa wiadomość była krótsza niż 448 bitów (czyli 512 bitów po wykonaniu uzupelnienia)
+    możesz zobaczyć przebieg poczczególnych rund w tabeli.
 </h4>
 <div class="col-md-12">
     <div class="col-md-4"></div>
@@ -303,50 +303,111 @@
     </div>
 </div>
 
-<!--Table test-->
 <div class="registers" id="registersTable" style="margin-left:220px"></div>
 
-
-
 <h4 style="margin-top:10px;">
-    Ostateczna wartość rejestrów otrzymywane jest poprzez dodanie zainicjowanej na początku wartości do wartości rejestru po przetwarzaniu:
+    Ostateczna wartość rejestrów otrzymywana jest poprzez dodanie zainicjowanej na początku wartości rejestru do wartości rejestru po przetwarzaniu:
 </h4>
-<table id="table_T" class="display" style="width:40%">
+<table id="table_T" class="md5Data" style="width:40%">
     <tbody>
         <tr>
-            <td> A = A + AA,</td>
-            <td> B = B + BB,</td>
-            <td> C = C + CC,</td>
-            <td> D = D + DD.</td>
+            <td> A = A + AA</td>
+            <td> B = B + BB</td>
+            <td> C = C + CC</td>
+            <td> D = D + DD</td>
         </tr>
     </tbody>
 </table>
-<h4>
-    A = 1732584193 +
-    <input type="text" style="text-align:center" name="AA" id="AA" class="disabledInput" size="12" disabled />
-    =
-    <input type="text" style="text-align:center" name="endA" id="endA" class="disabledInput" size="12" disabled />
-</h4>
-<h4>
-    B = 4023233417 +
-    <input type="text" style="text-align:center" name="BB" id="BB" class="disabledInput" size="12" disabled />
-    =
-    <input type="text" style="text-align:center" name="endB" id="endB" class="disabledInput" size="12" disabled />
-</h4>
-<h4>
-    C = 2562383102 +
-    <input type="text" style="text-align:center" name="CC" id="CC" class="disabledInput" size="12" disabled />
-    =
-    <input type="text" style="text-align:center" name="endC" id="endC" class="disabledInput" size="12" disabled />
-</h4>
-<h4>
-    D = 271733878 +
-    <input type="text" style="text-align:center" name="DD" id="DD" class="disabledInput" size="12" disabled />
-    =
-    <input type="text" style="text-align:center" name="endD" id="endD" class="disabledInput" size="12" disabled />
-</h4>
+<div id="transformations" hidden>
+    <h4>
+        A = (1732584193 +
+        <input type="text" class="registers" id="AA" size="10" disabled />
+        ) MOD 2<sup>32</sup>=
+        <input type="text" class="registers" id="endA" size="10" disabled />
+        =
+        <input type="text" class="registers" id="endA_Bin" size="30" disabled />
+        =
+        <input type="text" class="registers" id="endA_Hex" size="10" disabled />
+    </h4>
+    <h4>
+        B = (4023233417 +
+        <input type="text" class="registers" id="BB" size="10" disabled />
+        ) MOD 2<sup>32</sup>=
+        <input type="text" class="registers" id="endB" size="10" disabled />
+        =
+        <input type="text" class="registers" id="endB_Bin" size="30" disabled />
+        =
+        <input type="text" class="registers" id="endB_Hex" size="10" disabled />
+    </h4>
+    <h4>
+        C = (2562383102 +
+        <input type="text" class="registers" id="CC" size="10" disabled />
+        ) MOD 2<sup>32</sup>=
+        <input type="text" class="registers" id="endC" size="10" disabled />
+        =
+        <input type="text" class="registers" id="endC_Bin" size="30" disabled />
+        =
+        <input type="text" class="registers" id="endC_Hex" size="10" disabled />
+    </h4>
+    <h4>
+        D = (271733878 +
+        <input type="text" class="registers" id="DD" size="10" disabled />
+        ) MOD 2<sup>32</sup>=
+        <input type="text" class="registers" id="endD" size="10" disabled />
+        =
+        <input type="text" class="registers" id="endD_Bin" size="30" disabled />
+        =
+        <input type="text" class="registers" id="endD_Hex" size="10" disabled />
+    </h4>
+</div>
+
 <h3 class="steps" style="margin-top:15px;">4. Wyjście.</h3>
-<h4>Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.</h4>
+<h4>
+    Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.
+    (Pamiętaj, że jeden bajt to 2 znaki heksadecymalne.)
+</h4>
+<div class="col-md-12">
+    <div class="col-md-3">
+        <table id="registersOrder">
+            <tbody>
+                <tr>
+                    <th style="width:40px;font-size:18px"> <b>A</b></th>
+                    <td style="width:40px;font-size:18px"> 4</td>
+                    <td style="width:40px;font-size:18px"> 3</td>
+                    <td style="width:40px;font-size:18px"> 2</td>
+                    <td style="width:40px;font-size:18px"> 1</td>
+                </tr>
+                <tr>
+                    <th style="width:40px;font-size:18px"> <b>B</b></th>
+                    <td style="width:40px;font-size:18px">6</td>
+                    <td style="width:40px;font-size:18px">7</td>
+                    <td style="width:40px;font-size:18px">6</td>
+                    <td style="width:40px;font-size:18px">5</td>
+                </tr>
+                <tr>
+                    <th style="width:40px;font-size:18px"> <b>C</b></th>
+                    <td style="width:40px;font-size:18px">12</td>
+                    <td style="width:40px;font-size:18px">11</td>
+                    <td style="width:40px;font-size:18px">10</td>
+                    <td style="width:40px;font-size:18px">9</td>
+                </tr>
+                <tr>
+                    <th style="width:40px;font-size:18px"> <b>D</b></th>
+                    <td style="width:40px;font-size:18px">16</td>
+                    <td style="width:40px;font-size:18px">15</td>
+                    <td style="width:40px;font-size:18px">14</td>
+                    <td style="width:40px;font-size:18px">13</td>
+                </tr>
+            </tbody>
+        </table>
+        <label id="order">Kolejność odczytywania bajtów</label>
+    </div>
+    <div class="col-md-6">
+        <div id="registersFinal"></div>
+        <label id="finalLabel" hidden>Wartość końcowa rejestrów (Hex)</label>
+    </div>
+</div>
+<div id="messageHash" style="margin-top:20px"></div>
 
 <script>
      var md5Visualization = MD5VisualizationInit({
