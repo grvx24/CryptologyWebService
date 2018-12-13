@@ -124,21 +124,14 @@
         svg.append("line")
             .attr("x1", maxWidth + 100)
             .attr("y1", 150)
-            .attr("x2", maxWidth + 200)
+            .attr("x2", maxWidth + 165)
             .attr("y2", 150)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-        svg.append("line")
-            .attr("x1", maxWidth + 160)
-            .attr("y1", 150)
-            .attr("x2", maxWidth + 160)
-            .attr("y2", 300)
-            .attr("stroke-width", 4)
-            .attr("stroke", "black");
 
         svg.append("line")
-            .attr("x1", maxWidth + 160)
+            .attr("x1", 120)
             .attr("y1", 300)
             .attr("x2", 40)
             .attr("y2", 300)
@@ -147,11 +140,12 @@
 
         svg.append("line")
             .attr("x1", 40)
-            .attr("y1", 300)
+            .attr("y1", 150)
             .attr("x2", 40)
-            .attr("y2", 150)
+            .attr("y2", 300)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
+
 
         svg.append("line")
             .attr("x1", 40)
@@ -185,10 +179,10 @@
         });
 
 
-        cellsForLines.selectAll("line")
+        var fLines = cellsForLines.selectAll("line")
             .data(functions)
-            .enter()
-            .append("line")
+            .enter();
+        fLines.append("line")
             .attr("x1",
                 function (d, i) {
                     return (d - 1) * (width)+width / 2;
@@ -198,9 +192,41 @@
                 function (d, i) {
                     return (d - 1) * (width)+width/2;
                 })
+            .attr("y2", function(d, i) {
+                if (i === functions.length - 1) {
+                    return 300;
+                } else {
+                    return 320;
+                }
+            })
+            .attr("stroke-width", 4)
+            .attr("stroke", "black");
+
+        fLines.append("line")
+            .attr("x1",0)
+            .attr("y1", 300)
+            .attr("x2",
+                function (d, i) {
+                    return (d - 1) * (width) + width / 2;
+                })
             .attr("y2", 300)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
+
+
+        fLines.append('circle')
+            .filter(function(d, i) {
+                return i <= functions.length - 2;
+            })
+            .attr("cx",
+                function (d, i) {
+                    return (d-1) * width + width / 2;
+                })
+            .attr("cy", 300)
+            .attr("stroke", "black")
+            .attr("stroke-width", 3)
+            .attr("fill-opacity", 0)
+            .attr("r", 20);
 
         var outputArray = [];
 
@@ -225,8 +251,8 @@
 
         svg.append('text')
             .attr('id', 'outputBits')
-            .attr('x', 100)
-            .attr('y', 400)
+            .attr('x', 975)
+            .attr('y', 150)
             .text(outputArray)
             .attr("class", "register-cell-text");
 
@@ -254,8 +280,8 @@
             $('#nextStepBtn').attr("disabled", true);
 
             lastItem.select("text").transition().duration(500)
-                .attr("y", 400)
-                .attr("x", 0);
+                .attr("y", 150)
+                .attr("x", 875);
 
             var newBit = 0;
             for (var i = 0; i < xorBits.length; i++) {
@@ -265,10 +291,6 @@
             data.unshift(newBit);
 
             outputArray.unshift(output);
-            if (outputArray.length > 40) {
-                outputArray.pop();
-            }
-
 
             var groups = svg.selectAll("g").data(data);
 
@@ -284,11 +306,14 @@
                         $('#nextStepBtn').attr("disabled", false);
 
                         outputBits.text(function () {
-                            return outputArray;
+                            var txt = outputArray[0].toString();
+                            return txt;
                         });
-
                         changeFeedbackText();
 
+                        if (outputArray.length > 1) {
+                            outputArray.pop();
+                        }
                         return i * textX + width / 2;
                     })
                 .attr("y", textY);
@@ -306,5 +331,8 @@
         }
 
         btnsInit();
+
     }
+
+    $('#createRegisterBtn').click();
 }

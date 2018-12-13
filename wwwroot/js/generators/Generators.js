@@ -130,7 +130,6 @@
                         $('#outputConsole').val(result);
 
                         for (var i = 0; i < data.registers.length; i++) {
-                            console.log(data.registers[i]);
                             $('#register' + (i + 1) + '-content').text(data.registers[i]);
                         }
 

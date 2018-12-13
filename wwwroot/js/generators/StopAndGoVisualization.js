@@ -1,4 +1,4 @@
-﻿var GeffeVisualizationInit = function () {
+﻿var StopAndGoVisualizationInit = function () {
 
     var maxWidth = 400;
     var maxHeight = 50;
@@ -44,87 +44,85 @@
     }
 
 
-    function DrawMultiplexer() {
+    function DrawOutputLines() {
 
-        var group = d3.select('#multiPlexer');
+        var group = d3.select('#outputLines');
 
-        group.append("rect")
+
+        var output1 = group.append("text")
+            .attr("id","output1")
             .attr("x", 0)
-            .attr("y", 0)
-            .attr('width', 200)
-            .attr('height', 350)
-            .attr('class', 'multiplexer-rect');
-        group.append("line")
-            .attr("x1", 0)
-            .attr("y1", 25)
-            .attr("x2", -50)
-            .attr("y2", 25)
+            .attr("y", 35)
+            .attr("class","register-cell-text")
+            .text("");
+
+        var output2 = group.append("text")
+            .attr("id", "output2")
+            .attr("x", 50)
+            .attr("y", 330)
+            .attr("class", "register-cell-text")
+            .text("1 + 1");
+
+        var mainOut = group.append("text")
+            .attr("id", "mainOutput")
+            .attr("x", 220)
+            .attr("y", 330)
+            .attr("class", "register-cell-text")
+            .text(""); 
+
+        var line1 = group.append("line")
+            .attr("x1", -50)
+            .attr("y1", 425)
+            .attr("x2", 150)
+            .attr("y2", 425)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-        group.append("line")
-            .attr("x1", 0)
+        var line2 = group.append("line")
+            .attr("x1", -50)
             .attr("y1", 225)
-            .attr("x2", -50)
+            .attr("x2", 150)
             .attr("y2", 225)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-        group.append("line")
-            .attr("x1", 125)
-            .attr("y1", 425)
-            .attr("x2", -50)
+        var line3 = group.append("line")
+            .attr("x1", 150)
+            .attr("y1", 225)
+            .attr("x2", 150)
             .attr("y2", 425)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
-        group.append("line")
-            .attr("x1", 125)
-            .attr("y1", 350)
-            .attr("x2", 125)
-            .attr("y2", 425)
+        var circle = group.append("circle")
+            .attr("cx",150)
+            .attr("cy", 325)
+            .attr("stroke", "black")
+            .attr("stroke-width", 3)
+            .attr("fill-opacity", 0)
+            .attr("r", 15);
+
+        var outLines = group.append("line")
+            .attr("x1", 150)
+            .attr("y1", 325)
+            .attr("x2", 200)
+            .attr("y2", 325)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
 
         group.append("line")
-            .attr("x1", 200)
-            .attr("y1", 175)
-            .attr("x2", 250)
-            .attr("y2", 175)
+            .attr("x1", 135)
+            .attr("y1", 325)
+            .attr("x2", 165)
+            .attr("y2", 325)
             .attr("stroke-width", 4)
             .attr("stroke", "black");
-
-        group.append("text")
-            .attr("x", 25)
-            .attr("y", 240)
-            .attr("class", "register-cell-text")
-            .attr("id", "mux0")
-            .text('1');
-        group.append("text")
-            .attr("x", 25)
-            .attr("y", 40)
-            .attr("class", "register-cell-text")
-            .attr("id","mux0")
-            .text('0');
-        group.append("text")
-            .attr("x", 25)
-            .attr("y", 325)
-            .attr("class", "register-text")
-            .text('Decyzja wyboru');
-
-        group.append("text")
-            .attr("x", 250)
-            .attr("y", 175)
-            .attr("class", "register-cell-text")
-            .text('')
-            .attr('id','output');
-
 
     }
 
-    function CreateLfsr(data, functions,svgId,registerName, functionId) {
+    function CreateLfsr(data, functions, svgId, registerName, functionId) {
 
-        $('#'+svgId).empty();
+        $('#' + svgId).empty();
 
         var xorBits = [];
 
@@ -133,7 +131,7 @@
         var width = maxWidth / data.length;
 
         var textX = width;
-        var textY = maxHeight*1.7;
+        var textY = maxHeight * 1.7;
 
         var svg = d3.select('#' + svgId);
 
@@ -159,7 +157,7 @@
 
 
         svg.append("line")
-            .attr("x1", maxWidth+100)
+            .attr("x1", maxWidth + 100)
             .attr("y1", 75)
             .attr("x2", maxWidth + 150)
             .attr("y2", 75)
@@ -184,7 +182,7 @@
             .attr("stroke", "black");
 
         svg.append("line")
-            .attr("x1", 75 )
+            .attr("x1", 75)
             .attr("y1", 75)
             .attr("x2", 100)
             .attr("y2", 75)
@@ -194,7 +192,7 @@
         var text = groups.append("text")
             .text(function (d) { return d; })
             .attr("x",
-            function (d, i) {
+                function (d, i) {
                     return i * textX + width / 2;
                 })
             .attr("y", textY)
@@ -220,12 +218,12 @@
             .enter();
         fLines.append("line")
             .attr("x1",
-                function(d, i) {
+                function (d, i) {
                     return (d - 1) * width + width / 2;
                 })
             .attr("y1", 100)
             .attr("x2",
-                function(d, i) {
+                function (d, i) {
                     return (d - 1) * width + width / 2;
                 })
             .attr("y2", function (d, i) {
@@ -243,9 +241,8 @@
                 return i <= functions.length - 2;
             })
             .attr("cx",
-            function (d, i) {
-                console.log(d);
-                    return (d-1) * width + width / 2;
+                function (d, i) {
+                    return (d - 1) * width + width / 2;
                 })
             .attr("cy", 150)
             .attr("stroke", "black")
@@ -326,97 +323,119 @@
 
         $('#nextStepBtn').attr("disabled", true);
 
-        var bit1Val = 0;
+        var r1 = d3.select('#lfsr1').selectAll("g");
+        var r2 = d3.select('#lfsr2').selectAll("g");
+        var r3 = d3.select('#lfsr3').selectAll("g");
+        var r1Len = registers[0].length;
+        var r2Len = registers[1].length;
+        var r3Len = registers[2].length;
 
-        var cell1 = d3.select('#lfsr1')
-            .selectAll('g')
-            .filter(function (d, i) {
-                return i == registers[0].length - 1;
-            })
-            .select("rect")
-            .attr("class", "register-rect-selected")
-            .each(function(d, i) {
-                bit1Val = d;
-            });
+        var o1 = registers[0][r1Len - 1];
 
-        var cell2 = {};
-        var len = 0;
-        var yTrans = 0;
+        r1.filter(function(d, i) {
+                return i === r1Len - 1;
+            }).select("text")
+            .transition()
+            .duration(300)
+            .attr("x", 500)
+            .attr("y", 85);
 
-        if (bit1Val === 1) {
-            cell2 = d3.select('#lfsr3');
-            len = registers[2].length;
-            yTrans = 25;
+        setTimeout(function() {
+                d3.select("#output1")
+                    .text(function () {
+                        if (o1 === 1) {
+                            return "1 ==> taktujemy Rejestr2";
+                        } else {
+                            return "0 ==> taktujemy Rejestr3";
+                        }
+                    });
+            },
+            300);
+
+        if (o1 === 1) {
+            r2
+                .select("rect")
+                .attr("class", "incorrect-rect");
         } else {
-            cell2 = d3.select('#lfsr2');
-            len = registers[1].length;
-            yTrans = 225;
+            r3
+                .select("rect")
+                .attr("class", "incorrect-rect");
         }
 
-        var cell2g = cell2
-            .selectAll('g')
-            .filter(function(d, i) {
-                return i == len - 1;
-            });
-        
-        cell2g.select("rect")
-            .attr("class", "register-rect-selected");
+        setTimeout(function() {
+                if (o1 === 1) {
 
-        cell2g.select("text")
-            .transition()
-            .duration(500)
-            .text(function(d) {
-                return d;
-            })
-            .attr("x", 750)
-            .attr("y", yTrans);
+                    shiftBits('lfsr2', registers[1], feedback[1]);
+                    var xor2 = changeFeedbackValuesInfo(registers[1], feedback[1]);
+                    updateFeedbackText('F2', xor2);
 
+                } else {
 
-        cell2g.select("text")
-            .transition()
-            .delay(1000)
-            .duration(0)
-            .text(function(d) {
+                    shiftBits('lfsr3', registers[2], feedback[2]);
+                    var xor3 = changeFeedbackValuesInfo(registers[2], feedback[2]);
+                    updateFeedbackText('F3', xor3);
+                }
+            },
+            500);
 
-                outputText.unshift(d);
-
-                d3.select('#output')
-                    .text(outputText);
-
-                outputText.pop();
-
-                return d;
-            });
 
         setTimeout(function() {
 
-            shiftBits('lfsr1', registers[0], feedback[0]);
-            shiftBits('lfsr2', registers[1], feedback[1]);
-            shiftBits('lfsr3', registers[2], feedback[2]);
+                r2.filter(function(d, i) {
+                        return i === r1Len - 1;
+                    }).select("rect")
+                    .attr("class", "correct-rect");
 
-            var xor1 = changeFeedbackValuesInfo(registers[0], feedback[0]);
-            var xor2 = changeFeedbackValuesInfo(registers[1], feedback[1]);
-            var xor3 = changeFeedbackValuesInfo(registers[2], feedback[2]);
+                r3.filter(function(d, i) {
+                        return i === r1Len - 1;
+                    }).select("rect")
+                    .attr("class", "correct-rect");
 
-            updateFeedbackText('F1', xor1);
-            updateFeedbackText('F2', xor2);
-            updateFeedbackText('F3', xor3);
+                var o2 = registers[1][r2Len - 1]
+                var o3 = registers[2][r3Len - 1]
 
-            $('#nextStepBtn').attr("disabled", false);
+                d3.select("#output2")
+                    .text(o2 + " + " + o3);
+                d3.select("#mainOutput")
+                    .text(o2 ^ o3);
 
-        },1100)
+            },
+            700);
+
+
+        setTimeout(function() {
+
+                shiftBits('lfsr1', registers[0], feedback[0]);
+                var xor1 = changeFeedbackValuesInfo(registers[0], feedback[0]);
+                updateFeedbackText('F1', xor1);
+
+                r2
+                    .select("rect")
+                    .attr("class", "register-rect");
+
+                r3
+                    .select("rect")
+                    .attr("class", "register-rect");
+
+                d3.select("#output1")
+                    .text("");
+
+                $('#nextStepBtn').attr("disabled", false);
+
+            },
+            2000);
 
     }
 
-    function changeFeedbackValuesInfo(registerArr,feedbackArr) {
+    function changeFeedbackValuesInfo(registerArr, feedbackArr) {
         var xorArr = [];
         feedbackArr.sort();
         for (var i = 0; i < feedbackArr.length; i++) {
-            xorArr.push(registerArr[feedbackArr[i]-1]);
+            xorArr.push(registerArr[feedbackArr[i] - 1]);
         }
         return xorArr;
     }
-    function shiftBits(lfsrId,register,feedback) {
+    function shiftBits(lfsrId, register, feedback) {
         //shift
 
         var width = maxWidth / register.length;
@@ -442,15 +461,15 @@
 
         d3.select('#' + lfsrId)
             .selectAll("g")
-            .select("rect")
-            .attr("class", 'register-rect');
+            .select("rect");
+            //.attr("class", 'register-rect');
     }
 
-    function updateFeedbackText(feedbackId,xor) {
+    function updateFeedbackText(feedbackId, xor) {
         d3.select('#' + feedbackId)
             .text(function () {
                 var s = '';
-                
+
                 var newBit = 0;
                 for (var i = 0; i < xor.length; i++) {
                     newBit ^= xor[i];
@@ -459,7 +478,7 @@
                 for (var i = 0; i < xor.length - 1; i++) {
                     s += xor[i] + '+';
                 }
-                var txt = newBit.toString() + '\t<===\t' + s + xor[xor.length-1];
+                var txt = newBit.toString() + '\t<===\t' + s + xor[xor.length - 1];
                 return txt;
             })
     }
@@ -469,10 +488,10 @@
             update();
         });
 
-        $('#createRegisterBtn').click(function() {
-            CreateRegister(1,'registerText1', 'feedbackFunctionViz1','lfsr1','Rejestr 1','F1');
-            CreateRegister(2,'registerText2', 'feedbackFunctionViz2', 'lfsr2','Rejestr 2','F2');
-            CreateRegister(3,'registerText3', 'feedbackFunctionViz3', 'lfsr3','Rejestr 3','F3');
+        $('#createRegisterBtn').click(function () {
+            CreateRegister(1, 'registerText1', 'feedbackFunctionViz1', 'lfsr1', 'Rejestr 1', 'F1');
+            CreateRegister(2, 'registerText2', 'feedbackFunctionViz2', 'lfsr2', 'Rejestr 2', 'F2');
+            CreateRegister(3, 'registerText3', 'feedbackFunctionViz3', 'lfsr3', 'Rejestr 3', 'F3');
 
         });
 
@@ -481,51 +500,51 @@
     btnsInit();
 
 
-    function CreateRegister(rNumber,registerText, polynomialId,svgId, registerName, functionId) {
+    function CreateRegister(rNumber, registerText, polynomialId, svgId, registerName, functionId) {
 
         var register = $('#' + registerText).val();
-            if (isBinaryString(register)) {
-                if (register.length > 10) {
-                    alert('Maksymalna dozwolona długość rejestru wynosi: 10!');
-                    return;
-                }
-
-                if (register.length < 2) {
-                    alert('Minimalna dozwolona długość rejestru wynosi: 2!');
-                    return;
-                }
-                
-                var feedbackFunction = $('#' + polynomialId).val();
-                var polynomial = feedbackFunction.split(',');
-                polynomial = polynomial.unique();
-
-                registers[rNumber-1] = register.split('').map(Number);
-                feedback[rNumber-1] = polynomial.map(Number);
-
-                if (isCommaSeparatedNumber(polynomial)) {
-
-                    registerContent = register.split('').map(Number);
-                    feedbackContent = polynomial.map(Number);
-
-                    if ((Math.max(...feedbackContent)) > registerContent.length) {
-                        alert('Maksymalny stopień wielomanu przy tym rejestrze może wynosić: ' + registerContent.length);
-                        return;
-                    }
-                    $('#' + polynomialId).val(polynomial.join(','));
-
-                    CreateLfsr(registerContent, feedbackContent, svgId, registerName, functionId);
-
-                } else {
-
-                    alert('Niepoprawny format wielomianu!');
-                    return;
-                }
-            } else {
-                alert('Rejestr musi mieć wartości 0 lub 1!');
+        if (isBinaryString(register)) {
+            if (register.length > 10) {
+                alert('Maksymalna dozwolona długość rejestru wynosi: 10!');
                 return;
             }
+
+            if (register.length < 2) {
+                alert('Minimalna dozwolona długość rejestru wynosi: 2!');
+                return;
+            }
+
+            var feedbackFunction = $('#' + polynomialId).val();
+            var polynomial = feedbackFunction.split(',');
+            polynomial = polynomial.unique();
+
+            registers[rNumber - 1] = register.split('').map(Number);
+            feedback[rNumber - 1] = polynomial.map(Number);
+
+            if (isCommaSeparatedNumber(polynomial)) {
+
+                registerContent = register.split('').map(Number);
+                feedbackContent = polynomial.map(Number);
+
+                if ((Math.max(...feedbackContent)) > registerContent.length) {
+                    alert('Maksymalny stopień wielomanu przy tym rejestrze może wynosić: ' + registerContent.length);
+                    return;
+                }
+                $('#' + polynomialId).val(polynomial.join(','));
+
+                CreateLfsr(registerContent, feedbackContent, svgId, registerName, functionId);
+
+            } else {
+
+                alert('Niepoprawny format wielomianu!');
+                return;
+            }
+        } else {
+            alert('Rejestr musi mieć wartości 0 lub 1!');
+            return;
+        }
     }
 
-    DrawMultiplexer();
+    DrawOutputLines();
     $('#createRegisterBtn').click();
 }

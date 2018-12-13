@@ -75,7 +75,7 @@ td.lfsr-function-cell {
 
 
 .register-rect{
-    fill: lightgreen;
+    fill: #b0c4de;
     stroke: black;
     stroke-width: 4px;
 }
@@ -86,7 +86,23 @@ td.lfsr-function-cell {
         stroke-width: 4px;
     }
 
+.correct-rect {
+    fill: lawngreen;
+    stroke: black;
+    stroke-width: 4px;
+}
 
+    .incorrect-rect{
+        fill: red;
+        stroke: black;
+        stroke-width: 4px;
+    }
+
+.correct-rect-2{
+    fill: #4169e1;
+    stroke: black;
+    stroke-width: 4px;
+}
 
 .register-text {
     font-size: 20px;
