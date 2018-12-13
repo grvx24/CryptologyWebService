@@ -120,16 +120,16 @@ var CaesarVisualizationInit = function (config) {
                     $table.append($tbody);
                    
                     var $tr = $('<tr />');
-                    $tr.append($('<th />').html('Alfabet'));
+                    $tr.append($('<th style="color:#5c9def;font-size:15px"/>').html('Alfabet'));
                     $.each(alphabetArray, function (ignored, alfabet) {
-                        $tr.append($('<td />').html(alfabet));
+                        $tr.append($('<td style="font-size:20px" />').html(alfabet));
                     });
                     $tbody.append($tr);
 
                     $tr = $('<tr />');
-                    $tr.append($('<th />').html('Szyfr'));
+                    $tr.append($('<th style="color:#5c9def;font-size:15px" />').html('Szyfr'));
                     $.each(cipherArray, function (ignored, szyfr) {
-                        $tr.append($('<td />').html(szyfr));
+                        $tr.append($('<td style="font-size: 20px"/>').html(szyfr));
                     });
                     $tbody.append($tr);
 
@@ -383,14 +383,14 @@ var AffineVisualizationInit = function (config) {
                     $table.append($tbody);
 
                     var $tr = $('<tr />');
-                    $tr.append($('<th />').html('Znak'));
+                    $tr.append($('<th style="color:#5c9def;" />').html('Znak'));
                     $.each(alphabetArray, function (ignored, alfabet) {
                         $tr.append($('<td />').html(alfabet));
                     });
                     $tbody.append($tr);
 
                     $tr = $('<tr />');
-                    $tr.append($('<th />').html('Pozycja'));
+                    $tr.append($('<th style="color:#5c9def;" />').html('Pozycja'));
                     for (i = 0; i < alphabet.length; i++) {
                         $tr.append($('<td />').html(i));
                     }
@@ -400,21 +400,7 @@ var AffineVisualizationInit = function (config) {
                         $('#nextButton').attr('disabled', false);
                         $('#startButton').attr('disabled', true);
                     }
-
-                    if ($('#alphabetVisualization').val() == 0 || $('#alphabetVisualization').val() == 1 || $('#alphabetVisualization').val() == 2 || $('#alphabetVisualization').val() == 3) {
-                        document.getElementById("marginTable").style.marginLeft = "16px";
-                    }
-                    else if ($('#alphabetVisualization').val() == 4 || $('#alphabetVisualization').val() == 5) {
-                        document.getElementById("marginTable").style.marginLeft = "-100px";
-                        var table = document.getElementById("alphabetsTable");
-                        var rows = table.getElementsByTagName("tr");
-                        var cellsLength = rows[0].cells.length;
-                        for (var z = 1; z < cellsLength; z++) {
-                            rows[0].cells[z].style.padding = "0.5px";
-                            rows[1].cells[z].style.padding = "0.5px";
-                        }
-                    }
-
+                
                     var $tableData = $('#cipherOutput');
                     var $tbodyData = $('<tbody></tbody>');
                     $tableData.append($tbodyData);
@@ -519,10 +505,10 @@ var AffineVisualizationInit = function (config) {
 
                     var calculations = document.getElementById("calculations");
                     var rowsCalculations = calculations.getElementsByTagName("tr");
-                    rowsCalculations[0].cells[1].innerHTML = currentLetterValue;
-                    rowsCalculations[0].cells[1].style.color = '#b6ff00';
+                    rowsCalculations[0].cells[3].innerHTML = currentLetterValue;
+                    rowsCalculations[0].cells[3].style.color = '#b6ff00';
                     rowsCalculations[0].cells[2].innerHTML = "*";
-                    rowsCalculations[0].cells[3].innerHTML = keyA;
+                    rowsCalculations[0].cells[1].innerHTML = keyA;
                     rowsCalculations[0].cells[4].innerHTML = "+";
                     rowsCalculations[0].cells[5].innerHTML = keyB;
                     rowsCalculations[0].cells[6].innerHTML = "mod";
@@ -685,9 +671,9 @@ var BaconVisualizationInit = function (config) {
         $('#part-5 tr td').each(function () {
            $(this).css('background-color', 'white');
         });
-        $('#part-6 tr td').each(function () {
-           $(this).css('background-color', 'white');
-        }); 
+        //$('#part-6 tr td').each(function () {
+        //   $(this).css('background-color', 'white');
+        //}); 
     }
 
     function removeTable() {
@@ -765,7 +751,14 @@ var BaconVisualizationInit = function (config) {
                     clearHighlightsCell();
                     var letterData = output[currentIndex] + output[currentIndex + 1] + output[currentIndex + 2] + output[currentIndex + 3] + output[currentIndex + 4];
 
-                    var cellValue = input[currentStep-1];
+                    var cellValue = input[currentStep - 1];
+                    if (cellValue == 'J' || cellValue == 'I') {
+                        cellValue='I / J'
+                    }
+
+                    if (cellValue == 'U' || cellValue == 'V') {
+                        cellValue = 'U / V'
+                    }
 
                     $('#part-1 tr td').each(function () {
                         if ($(this).text() == cellValue) {
@@ -797,12 +790,12 @@ var BaconVisualizationInit = function (config) {
                             $(this).css('background-color', '#b6ff00');
                         }
                     });
-                    $('#part-6 tr td').each(function () {
-                        if ($(this).text() == cellValue) {
-                            $(this).next().css('background-color', '#33b5e5');
-                            $(this).css('background-color', '#b6ff00');
-                        }
-                    });
+                    //$('#part-6 tr td').each(function () {
+                    //    if ($(this).text() == cellValue) {
+                    //        $(this).next().css('background-color', '#33b5e5');
+                    //        $(this).css('background-color', '#b6ff00');
+                    //    }
+                    //});
 
                         var cipherOutput = document.getElementById("cipherOutput");
                         var rowsOutput = cipherOutput.getElementsByTagName("tr");
@@ -1149,7 +1142,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
 
                 $('#labelSortedKey').attr('hidden', true);
                 $('#labelEncryptMatrix').attr('hidden', true);
-                if ($('#keyVisualization').val() == "") {
+                if ($('#keyVisualization').val() == "" || $("#inputCipher").val() == "") {
                     $('#startButton').attr('disabled', true);
                 }
 
@@ -1164,7 +1157,7 @@ var ColumnarTranspositionVisualizationInit = function (config) {
             $('#labelSortedKey').attr('hidden', true);
             $('#labelEncryptMatrix').attr('hidden', true);
 
-            if ($('#keyVisualization').val() == "") {
+            if ($('#keyVisualization').val() == "" || $("#inputCipher").val() =="") {
                 $('#startButton').attr('disabled', true);
             }
         });
@@ -2012,17 +2005,6 @@ var VigenereVisualizationInit = function (config) {
                         $('#startButton').attr('disabled', true);
                     }
 
-                    if ($('#alphabetVisualization').val() == 0 || $('#alphabetVisualization').val() == 1 || $('#alphabetVisualization').val() == 2 || $('#alphabetVisualization').val() == 3) {
-                        document.getElementById("marginTable").style.marginLeft = "16px";
-                    }
-                    else if ($('#alphabetVisualization').val() == 4) {
-                        document.getElementById("marginTable").style.marginLeft = "-250px";
-
-                    }
-                    else if ($('#alphabetVisualization').val() == 5) {
-                        document.getElementById("marginTable").style.marginLeft = "-300px";
-
-                    }
                     $('#labelTabulaRecta').attr('hidden', false);
                 },
                 error: function (response) {

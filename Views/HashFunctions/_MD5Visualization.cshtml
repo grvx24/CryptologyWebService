@@ -1,8 +1,6 @@
-﻿
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/dataTables.css">
-<script type="text/javascript" charset="utf8" src="~/js/DataTables.js"></script>
+﻿<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <h2 align="center">Działanie algorytmu MD5 krok po kroku</h2>
 <h4>Algorytm MD5 składa się z 4 kroków:</h4>
@@ -12,6 +10,11 @@
 <h4 style="margin-top:10px">Algorytm MD5 składa się z 4 kroków:</h4>
 <h3 class="steps">1. Dołączenie bitów dopełniających.</h3>
 >>>>>>> PM
+=======
+<h2 class="title">Działanie algorytmu MD5 krok po kroku</h2>
+<h4>Algorytm MD5 składa się z 4 kroków:</h4>
+<h3 class="steps">1. Dołączenie bitów dopełniających.</h3>
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 <h4>- oryginalną wiadomości uzupełniamy na końcu bitem o wartości "1",</h4>
 <h4>- uzupełniamy wiadomość bitami o wartości "0" tak, aby długość komunikatu była o 64 bity krótsza niż wielokrotność 512,</h4>
 <h4>- następnie na końcu wiadomości dodajemy 64 bity wskazujące długość oryginalnej wiadomości.</h4>
@@ -54,21 +57,30 @@
         <textarea class="form-control" style="margin-bottom:10px;border-color:dodgerblue; background-color:white; text-align:justify" rows="7" cols="100" id="allPadding" disabled></textarea>
     </div>
 </div>
-<h3 style="margin-top:15px;">2. Incjowanie bufora.</h3>
+<h3 class="steps" style="margin-top:15px;">2. Incjowanie bufora.</h3>
 <h4>
     Algorytm MD5 wymaga 128-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na
     cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D (decymalnie):
 </h4>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <h5>Słowo A: 1732584193</h5>
 <h5>Słowo B: 4023233417</h5>
 <h5>Słowo C: 2562383102</h5>
 <h5>Słowo D: 271733878</h5>
 <h3 style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
+=======
+<h4>Słowo A: 1732584193</h4>
+<h4>Słowo B: 4023233417</h4>
+<h4>Słowo C: 2562383102</h4>
+<h4>Słowo D: 271733878</h4>
+<h3 class="steps" style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 <h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
 <h4>Zdefiniowane stałe:</h4>
 <h4> - słowa A, B, C, D,</h4>
 <h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie T[i] = 4294967296 · |sin(i)|.</h4>
+<<<<<<< HEAD
 <table id="table_T" class="display" style="width:100%">
 =======
 <h4><b>Słowo A:</b> 1732584193</h4>
@@ -82,6 +94,9 @@
 <h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie <i>T[i] = 4294967296 · |sin(i)|</i>.</h4>
 <table id="table_T" class="md5Data" style="width:100%;font-size:17px;">
 >>>>>>> PM
+=======
+<table id="table_T" class="operations" style="width:100%">
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     <tbody>
         <tr>
             <td>T[0]=3614090360</td>
@@ -168,6 +183,7 @@
 
 <h4> - cztery funkcje pomocnicze, które na wejściu mają trzy 32-bitowe słowa, a na wyjściu produkują jedno słowo 32-bitowe:</h4>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <h5>F(X,Y,Z)= XY v not(X)Z </h5>
 <h5>G(X,Y,Z)= XZ v Y not(Z) </h5>
 <h5>H(X,Y,Z)= X xor Y xor Z </h5>
@@ -178,6 +194,12 @@
 <h4><b>H(X,Y,Z)</b> = X xor Y xor Z </h4>
 <h4><b>I(X,Y,Z)</b> = Y xor (X v not(Z)) </h4>
 >>>>>>> PM
+=======
+<h4>F(X,Y,Z)= XY v not(X)Z </h4>
+<h4>G(X,Y,Z)= XZ v Y not(Z) </h4>
+<h4>H(X,Y,Z)= X xor Y xor Z </h4>
+<h4>I(X,Y,Z)= Y xor (X v not(Z)) </h4>
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 <h3>Runda 1</h3>
 <h4>
     Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b +(( a + F(b,c,d) + X[k] + T[i]) <<< s)</i>
@@ -187,11 +209,15 @@
     tworzy ciąg okresowy 7, 12, 17, 22, 7, 12, ....
 <<<<<<< HEAD
 </h5>
+<<<<<<< HEAD
 <table id="table_T" class="display" style="width:60%">
 =======
 </h4>
 <table id="table_T" class="md5Data" style="width:60%">
 >>>>>>> PM
+=======
+<table id="table_T" class="operations" style="width:60%">
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     <tbody>
         <tr>
             <td>[ABCD  0  7  1]</td>
@@ -228,11 +254,15 @@
     Przebiega podobnie jak runda 1. Zamiast procedury F, stosowana jest procedura G. Przesunięcie tworzy ciąg okresowy 5, 9, 14, 20.
 <<<<<<< HEAD
 </h5>
+<<<<<<< HEAD
 <table id="table_T" class="display" style="width:60%">
 =======
 </h4>
 <table id="table_T" class="md5Data" style="width:60%">
 >>>>>>> PM
+=======
+<table id="table_T" class="operations" style="width:60%">
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     <tbody>
         <tr>
             <td>[ABCD  1  5 17]</td>
@@ -268,11 +298,15 @@
     Przebiega z analogicznymi zmianami. Używana jest procedura H. Przesunięcie tworzy ciąg okresowy 4, 11, 16, 23.
 <<<<<<< HEAD
 </h5>
+<<<<<<< HEAD
 <table id="table_T" class="display" style="width:60%">
 =======
 </h4>
 <table id="table_T" class="md5Data" style="width:60%">
 >>>>>>> PM
+=======
+<table id="table_T" class="operations" style="width:60%">
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     <tbody>
         <tr>
             <td>[ABCD  5  4 33]</td>
@@ -308,11 +342,15 @@
     Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
 <<<<<<< HEAD
 </h5>
+<<<<<<< HEAD
 <table id="table_T" class="display" style="width:60%">
 =======
 </h4>
 <table class="md5Data" id="table_T" style="width:60%;">
 >>>>>>> PM
+=======
+<table class="operations" id="table_T" style="width:60%;">
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     <tbody>
         <tr>
             <td>[ABCD  0  6 49]</td>
@@ -348,9 +386,10 @@
 <div class="col-md-12">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <button class="btn btn-primary" id="showRoundsButton" type="submit" disabled>Podgląd prztwarzania</button>
+        <button class="btn btn-primary" id="showRoundsButton" style="margin-bottom:15px" disabled>Podgląd prztwarzania</button>
     </div>
 </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <!--Table test-->
 <table id="example" class="display" style="width:100%">
@@ -374,6 +413,11 @@
     </tfoot>
 </table>
 =======
+=======
+
+<!--Table test-->
+<div class="registers" id="registersTable" style="margin-left:220px"></div>
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 
 <div class="registers" id="registersTable" style="margin-left:220px"></div>
 >>>>>>> PM
@@ -438,11 +482,29 @@
 <h4>
 <<<<<<< HEAD
     A = 1732584193 +
-    <input type="text" style="text-align:center" name="endA" id="endA" class="disabledInput" size="6" disabled />
+    <input type="text" style="text-align:center" name="AA" id="AA" class="disabledInput" size="12" disabled />
     =
-    <input type="text" style="text-align:center" name="AA" id="AA" class="disabledInput" size="6" disabled />
+    <input type="text" style="text-align:center" name="endA" id="endA" class="disabledInput" size="12" disabled />
 </h4>
-<h3 style="margin-top:15px;">4. Wyjście.</h3>
+<h4>
+    B = 4023233417 +
+    <input type="text" style="text-align:center" name="BB" id="BB" class="disabledInput" size="12" disabled />
+    =
+    <input type="text" style="text-align:center" name="endB" id="endB" class="disabledInput" size="12" disabled />
+</h4>
+<h4>
+    C = 2562383102 +
+    <input type="text" style="text-align:center" name="CC" id="CC" class="disabledInput" size="12" disabled />
+    =
+    <input type="text" style="text-align:center" name="endC" id="endC" class="disabledInput" size="12" disabled />
+</h4>
+<h4>
+    D = 271733878 +
+    <input type="text" style="text-align:center" name="DD" id="DD" class="disabledInput" size="12" disabled />
+    =
+    <input type="text" style="text-align:center" name="endD" id="endD" class="disabledInput" size="12" disabled />
+</h4>
+<h3 class="steps" style="margin-top:15px;">4. Wyjście.</h3>
 <h4>Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.</h4>
 =======
     Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.
@@ -493,15 +555,14 @@
 >>>>>>> PM
 
 <script>
-     var md5Init = MD5FunctionInit({
+     var md5Visualization = MD5VisualizationInit({
         urls: {
             paddingUrl: '@Url.Action("MD5_Padding", "HashFunctions")',
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")',
             tableUrl: '@Url.Action("MD5_Table", "HashFunctions")'
 
         }
     });
 
-    md5Init.init();
+    md5Visualization.init();
 
 </script>

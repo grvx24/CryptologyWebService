@@ -1,37 +1,31 @@
-﻿@*@model CryptoWebService.Models.HashFunctions.MD5ViewModel
-@using CryptoWebService.Backend.HashFunctions
-@{
-    ViewData["Title"] = "MD5";
-}*@
+﻿<script src="~/js/hash/HashFunctions.js"></script>
 
-<script src="~/js/hash/HashFunctions.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
 
 
 <div class="container">
     <div class="tab">
         <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">@Text.MD5Hash</h2>
-        <h4>
+        <h2 class="title">@Text.MD5Hash</h2>
+        <p class="description">
             MD5 (Messsage Digest 5) jest funkcją skrótu zaprojektowaną przez współautora RSA- R.Rivesta. MD5 przekształca ciągi 512-bitowe w ciągi 128-bitowe będące skrótem wiadomości. Funkcja była najbardziej
             popularną funkcją skrótu od roku 1992 do roku 2005, kiedy została złamana przez zespół chińskich kryptoanalityków.
-        </h4>
-        <h4>
+            <br>
+            <br>
             W obecnych czasach znalezienie kolizji MD5 zajmuje kilka sekund, mimo to
             wiele systemów ciągle obsługuje MD5, ze względu na kompatybilnosć wsteczną. Funkcja jest łatwa do zaimplementowania, w trakcie obliczeń dokonywane są jedynie pewne podstawowe operacje na
             blokach 32-bitowych.
-        </h4>
+        </p>
     </div>
 
-    <div id="Working" class="tabcontent col-lg-12">
+    <div id="Visualization" class="tabcontent col-lg-12">
         @await Html.PartialAsync("_MD5Visualization")
     </div>
-    <div id="Calculator" class="tabcontent col-lg-12">
+    <div id="Tools" class="tabcontent col-lg-12">
         @await Html.PartialAsync("_MD5Partial")
     </div>
 </div>
