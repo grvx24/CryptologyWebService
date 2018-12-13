@@ -33,20 +33,22 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         protected override bool GenerateOneBit()
         {
-
             bool clock = true;
-
-            for (int i = 0; i < Registers.Length; i++)
+            Registers[0].NextStep();
+            bool xor = true;
+            for (int i = 0; i < Registers.Length-1; i++)
             {
+                bool output = Registers[i].GetOutputBit();
+                xor = output ^ xor;
+                clock = xor;
                 if (clock)
                 {
-                    Registers[i].NextStep();
-                    clock = Registers[i].GetOutputBit() ^ clock;
-
+                    Registers[i+1].NextStep();
+                    clock = Registers[i + 1].GetOutputBit() ^ clock;
                 }
                 else
                 {
-                    clock = Registers[i].GetOutputBit() ^ clock;
+                    clock = Registers[i+1].GetOutputBit() ^ clock;
                 }
             }
 

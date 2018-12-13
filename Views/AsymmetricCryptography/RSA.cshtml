@@ -1,0 +1,40 @@
+﻿<script src="~/js/asymmetric/RSA.js"></script>
+
+<div class="container">
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        <button class="tablinks" onclick="openTab(event, 'Primes')">Liczby pierwsze</button>
+    </div>
+
+    <div id="Description" class="tabcontent">
+        Opis RSA
+    </div>
+    <div id="Tools" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_RSAPartial")
+    </div>
+    <div id="Primes" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_PrimeNumbers")
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById("defaultPageButton").click();
+
+    function openTab(evt, tabName) {
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
