@@ -8,26 +8,17 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 class="title" >Szyfr Cezara</h2>
-        <p class="description">
-            Szyfr Cezara jest szyfrem przestawieniowym. Każda litera tekstu jawnego zastępowana jest inną, oddaloną od niej o stałą liczbę pozycji w alfabecie.
-            Kluczem nazywamy liczbę informującą, o ilości liter do przesunięcia. W przypadku ostatnich liter alfabetu, przechodzi się do początku. Szyfr można opisać w sposób
-            matematyczny. Pierwszym krokiem w procesie szyfrowania jest przekształcenie każdej litery alfabetu w odpowiednią liczbę całkowitą z zakresu od 0 do m-1.
-            proces szyfrowania dla każdej litery jest określony wzorem:
-            <br>
-            <br>
-            <strong style="font-size:22px"> E(x) = (x + k) mod m </strong>
-            <br>
-            <br>
-            , gdzie <strong>x</strong> jest numerem litery tekstu jawnego w alfabecie, <strong>k</strong> jest kluczem szyfru natomiast <strong>m</strong> to długość alfabetu.
-            <br>
-            <br>
-            Podczas deszyfrowania przesuwamy się w lewo o określoną liczbę pozycji w alfabecie, korzystając ze wzoru:
-            <br>
-            <br>
-            <strong style="font-size:22px"> E(x) = (x - k) mod m </strong>
+        <h2>@Text.Description</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
+
+            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
+
+            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
+
+            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
+
         </p>
-        <p class="description"> Nazwa szyfru pochodzi od rzymskiego wodza i polityka - Juliusza Cezara. Podczas prywatnej korespondencji stosował on szyfr przesuwający z przesunięciem 3.</p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
         @await Html.PartialAsync("_CaesarPartial")

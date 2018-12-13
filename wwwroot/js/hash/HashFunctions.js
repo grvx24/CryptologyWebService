@@ -1,5 +1,6 @@
 ﻿var MD5FunctionInit = function (config) {
 
+
     var encryptInit = function() {
 
         $('#encryptButton').click(function() {
@@ -26,18 +27,6 @@
         });
     }
 
-    var init = function () {
-        encryptInit();
-    }
-
-    return {
-        init: init
-    }
-
-}
-
-var MD5VisualizationInit = function (config) {
-
     var visualInit = function () {
 
         $('#paddingButton').click(function () {
@@ -45,6 +34,11 @@ var MD5VisualizationInit = function (config) {
             var model = {
                 message: $('#exampleMessage').val(),
             }
+            //not working :(
+            //if ($('#exampleMessage').val().length() < 57) {
+            //    $('#showRoundsButton').prop('enabled', true);
+            //}
+           
 
             $.ajax({
                 type: 'POST',
@@ -64,8 +58,9 @@ var MD5VisualizationInit = function (config) {
 
                     var message = $('#exampleMessage').val();
 
-                    if (message.length * 8 < 448) {
-                        $('#showRoundsButton').attr('disabled', false);
+                    if (message.length*8 < 448)
+                    {
+                        $('#showRoundsButton').attr('disabled', false);                 
                     }
                 },
                 error: function (response) {
@@ -84,18 +79,20 @@ var MD5VisualizationInit = function (config) {
             $('#padMessageLength').val('');
             $('#allPadding').val('');
             $('#messageBits').val('');
-            $('#showRoundsButton').attr('disabled', true);
+            $('#showRoundsButton').attr('disabled', true); 
             $('#AA').val('');
             $('#endA').val('');
-        });
+       });
+    }
 
+    var tableInit = function () {
 
         $('#showRoundsButton').click(function () {
 
             var model = {
                 message: $('#exampleMessage').val(),
             }
-
+      
             $.ajax({
                 type: 'POST',
                 url: config.urls.tableUrl,
@@ -103,80 +100,85 @@ var MD5VisualizationInit = function (config) {
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    //console.log(data);
+                    console.log(data);
 
-                    var $table = $('#registersTable');
-                    var $tbody = $('<tbody></tbody>');
+                    //for (var i = 0; i < data.length; i++) {
+                       
 
-                    $table.append($tbody);
+                    //    $('#AA').val(data[data.length - 1]);  
+                    //}
+                    var iteration = Object(data[63]).A;
+                    console.log(iteration);
 
-                    var $tr = $('<tr />');
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Iteracja'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr A'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr B'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr C'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr D'));
-                    $tbody.append($tr);
-
-                    for (i = 0; i < 64; i++) {
-                        var $tr = $('<tr />');
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].iteration));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].a));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].b));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].c));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].d));
-                        $tbody.append($tr);
-                    }
-
-                    var changeColor = document.getElementById("registersTable");
-                    var rows = changeColor.getElementsByTagName("tr");
-                    var registerChanged = 1;
-                    for (var z = 1; z < 65; z++) {
-                        rows[z].cells[registerChanged].style.color = '#33b5e5';
-                        registerChanged++;
-                        if (registerChanged > 4) {
-                            registerChanged = 1;
-                        }
-                    }
-
-                    $('#AA').val(rows[64].cells[1].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    var endSum = parseInt(1732584193) + parseInt(rows[64].cells[1].innerHTML);
-                    var end = (endSum)%(modValue);                  
-                    $('#endA').val(end);
-
-                    $('#BB').val(rows[64].cells[2].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    var endSum = parseInt(4023233417) + parseInt(rows[64].cells[2].innerHTML);
-                    var end = (endSum) % (modValue);
-                    $('#endB').val(end);
-                   
-                    $('#CC').val(rows[64].cells[3].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    console.log(modValue);
-                    var endSum = parseInt(2562383102) + parseInt(rows[64].cells[3].innerHTML);
-                    console.log(endSum);
-                    var end = (endSum) % (modValue);
-                    $('#endC').val(end);
-
-                    $('#DD').val(rows[64].cells[4].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    console.log(modValue);
-                    var endSum = parseInt(271733878) + parseInt(rows[64].cells[4].innerHTML);
-                    console.log(endSum);
-                    var end = (endSum) % (modValue);
-                    $('#endD').val(end);
+                    $('#AA').val(data[data.length - 1]);  
+                   // $('#AA').val(2344);
+                    $('#endA').val(1234);
                 },
                 error: function (response) {
                     console.log(response);
                 }
             });
         })
-
     }
+
+    //var tableInit = function () {
+    //        $("#example").DataTable();
+
+    //        // Premade test data, you can also use your own
+    //    var model = {
+    //            message: $('#exampleMessage').val(),
+    //        }
+
+    //        $("#showRoundsButton").click(function () {
+    //            loadData();
+    //        });
+
+    //        function loadData() {
+    //            $.ajax({
+    //                type: 'GET',
+    //                url: config.urls.tableUrl,
+    //                contentType: "text/plain",
+    //                dataType: 'json',
+    //                data: JSON.stringify(model),
+    //                success: function (data) {
+    //                    myJsonData = data;
+    //                    populateDataTable(myJsonData);
+    //                },
+    //                error: function (e) {
+    //                    console.log("There was an error with your request...");
+    //                    console.log("error: " + JSON.stringify(e));
+    //                }
+    //            });
+    //        }
+
+    //        // populate the data table with JSON data
+    //        function populateDataTable(data) {
+    //            console.log("populating data table...");
+    //            // clear the table before populating it with more data
+    //            $("#example").DataTable().clear();
+    //            var length = data.length;
+    //            for (var i = 1; i < length + 1; i++) {
+    //                var customer = data[i];
+
+    //                // You could also use an ajax property on the data table initialization
+    //                $('#example').dataTable().fnAddData([
+    //                    customer.Iteration,
+    //                    customer.A,
+    //                    customer.B,
+    //                    customer.C,
+    //                    customer.D
+    //                ]);
+    //            }
+    //        }
+        
+    //}
+
+
 
     var init = function () {
         visualInit();
+        encryptInit();
+        tableInit();
     }
 
     return {
@@ -184,7 +186,6 @@ var MD5VisualizationInit = function (config) {
     }
 
 }
-
 
 
 var SHA1FunctionInit = function (config) {

@@ -1,7 +1,7 @@
 ﻿@using CryptoWebService.Backend.ClassicalCiphers
 <link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
 
-<h2 class="title">Szyfr Vigenere'a wizualizacja </h2>
+<h2 align="center">Szyfr Vigenere'a wizualizacja </h2>
 <div class="col-md-12" style="margin-top:30px">
     <div class="col-md-6">
         <div class="row">
@@ -13,7 +13,7 @@
                 <label for="alphabetVisualization">@Text.ChooseAlphabet</label>
                 <select id="alphabetVisualization" class="form-control">
                     @{
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < Alphabets.AVAILABLE_ALPHABETS_NAME.Length; i++)
                         {
                             @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
                         }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
 using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
@@ -46,6 +45,26 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             return VisualSteganographyAlgorithm(new Bitmap(ms0), new Bitmap(ms1), new Bitmap(ms2));
         }
+
+        public static string Steganography(SteganographyDto SD)
+        {
+            byte[] imageBytes = Convert.FromBase64String(SD.Image);
+
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+
+            if (SD.MethodId == "1")
+            {
+                return LeastSignificantBitMethod(new Bitmap(ms), SD.AmountOfBitsValue, SD.TextToHide);
+            }
+            else if (SD.MethodId == "2")
+            {
+                return PatchWorkMethod(new Bitmap(ms), SD.GeneratorKey, SD.NaturalNumber);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        } 
 
         #region Algorithms
 
@@ -259,6 +278,25 @@ namespace CryptoWebService.Backend.VisualCryptography
                 }
             }
             return ConvertBitmapToStrings(Secrets);
+        }
+
+        private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
+        {
+            
+
+            int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
+
+            PixelFormat x = _Image.PixelFormat;
+            int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
+
+
+            return "elo";
+        }
+
+        private static string PatchWorkMethod(Bitmap _Image, string _GeneratorKey, string _NaturalNumber)
+        {
+
+            return "elo";
         }
 
         #endregion
