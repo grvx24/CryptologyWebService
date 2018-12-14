@@ -1,21 +1,17 @@
-﻿@model CryptoWebService.Models.HashFunctions.HMACViewModel
-@using CryptoWebService.Backend.HashFunctions
-@{
-    ViewData["Title"] = "HMAC";
-}
-<script src="~/js/hash/HashFunctions.js"></script>
+﻿<script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
 
 <div class="container">
     <div class="tab">
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Working')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Calculator')">@Text.Calculator</button>
+        <div class="tab">
+            <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+            <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        </div>
     </div>
 
     <div id="Description" class="tabcontent">
-        <h2 align="center">Dupa</h2>
-        <p>
+        <h2 class="title">Funkcje skrótu z kluczem</h2>
+        <p class="description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
 
             Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
@@ -26,71 +22,9 @@
 
         </p>
     </div>
-
-    <div id="Working" class="tabcontent col-lg-12">
-        <h2>Działanie algorytmu krok po kroku</h2>
+    <div id="Tools" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_HMACPartial")
     </div>
-
-    <div id="Calculator" class="tabcontent col-lg-12">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">Dupa</h2>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1"></div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="hashSelectTypeEncrypt">Wybierz funkcję skrótu</label>
-                        <select id="hashSelectTypeEncrypt" class="form-control">
-                            <option value=0 selected>MD5</option>
-                            <option value=1>SHA-1</option>
-                            <option value=2>SHA-256</option>
-                            <option value=3>SHA-512</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Wpisz klucz" rows="1" id="keyEncrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="@Text.WriteTextToHash" rows="5" id="inputEncrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="row">
-                        <div class="column">
-                            <span class="col-md-8">
-                                <button style="margin-top: -10px; margin-bottom: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
-                                <button style="margin-top: -10px; margin-bottom: 5px" class="btn btn-primary" id="clearButton1" type="submit">Wyczyść wszystko</button>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="@Text.Hash" rows="2" id="outputEncrypt" disabled></textarea>
-                            </div>
-                        </div>
-                        <span class="col-md-8">
-                            <button style="margin-top:-10px;"class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
-
-        </div>
 </div>
 
 
@@ -111,14 +45,4 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
-
-    //Ajax
-    var hmacInit = HMACInit({
-        urls: {
-            encryptUrl: '@Url.Action("HMACEncrypt", "HashFunctions")'
-        }
-    });
-
-    hmacInit.init();
 </script>

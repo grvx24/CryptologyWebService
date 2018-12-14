@@ -1,7 +1,7 @@
 ﻿<div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="title">@Text.MD5Hash</h2>
+            <h2 class="title">@Text.SHA512Hash</h2>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-1"></div>
             <div class="col-md-8">
-                <textarea class="form-control" placeholder="@Text.Hash" rows="1" id="outputEncrypt" disabled></textarea>
+                <textarea class="form-control" placeholder="@Text.Hash" rows="2" id="outputEncrypt" disabled></textarea>
             </div>
         </div>
     </div>
@@ -46,12 +46,11 @@
 </div>
 
 <script>
-     var md5Init = MD5FunctionInit({
+        var sha512Init = SHA512FunctionInit({
         urls: {
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
+            encryptUrl: '@Url.Action("SHA512Encrypt", "HashFunctions")'
         }
     });
 
-    md5Init.init();
-
+    sha512Init.init();
 </script>

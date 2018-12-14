@@ -1,9 +1,4 @@
-﻿@model CryptoWebService.Models.HashFunctions.HashViewModel
-@using CryptoWebService.Backend.HashFunctions
-@{
-    ViewData["Title"] = "SHA256";
-}
-<script src="~/js/hash/HashFunctions.js"></script>
+﻿<script src="~/js/hash/HashFunctions.js"></script>
 
 
 <div class="container">
@@ -15,7 +10,7 @@
 
     <div id="Description" class="tabcontent">
         <h2 class="title">@Text.SHA256Hash</h2>
-        <p>
+        <p class="description">
             SHA-2 – zestaw kryptograficznych funkcji skrótu (SHA-224, SHA-256, SHA-384, SHA-512) dających skróty wielkości 224, 256, 384 lub 512 bitów.
             SHA-256 jest funkcją skrótu liczoną na 32-bitowych słowach.
             <br>
@@ -28,58 +23,11 @@
     </div>
 
     <div id="Visualization" class="tabcontent col-lg-12">
-        <h2>Działanie algorytmu krok po kroku</h2>
+        @await Html.PartialAsync("_SHA256Visualization")
     </div>
 
     <div id="Tools" class="tabcontent col-lg-12">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 align="center">@Text.SHA256Hash</h2>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-md-8">
-                        <textarea class="form-control" rows="5" placeholder="@Text.WriteTextToHash" id="inputEncrypt"></textarea>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1"></div>
-                <div class="column">
-                    <span class="col-md-8">
-                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-primary" id="loadButton" type="submit">Wczytaj z pliku</button>
-                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-primary" id="clearButton" type="submit">Wyczyść wszystko</button>
-                    </span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-md-8">
-                        <textarea class="form-control" placeholder="@Text.Hash" rows="1" id="outputEncrypt" disabled></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1"></div>
-                <span class="col-md-8">
-                    <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
-                </span>
-            </div>
-        </div>
+        @await Html.PartialAsync("_SHA256Partial")
     </div>
 
 
@@ -89,7 +37,6 @@
 
 
 <script>
-
     document.getElementById("defaultPageButton").click();
 
     function openTab(evt, tabName) {
@@ -106,14 +53,9 @@
         evt.currentTarget.className += " active";
     }
 
-
-
-    //Ajax
-    var sha256Init = SHA256FunctionInit({
-        urls: {
-            encryptUrl: '@Url.Action("SHA256Encrypt", "HashFunctions")'
-        }
-    });
-
-    sha256Init.init();
 </script>
+
+
+
+
+
