@@ -9,9 +9,9 @@ using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public static class VisualCryptographyService
+    public  class VisualCryptographyService
     {
-        public static string[] DivideStringImagesToSecrets(SecretsDto secretsDto)
+        public  string[] DivideStringImagesToSecrets(SecretsDto secretsDto)
         {
             byte[] imageBytes = Convert.FromBase64String(secretsDto.Image);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
@@ -34,7 +34,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return secrets;
         }
 
-        public static string[] VisualSteganography(string[] Images)
+        public  string[] VisualSteganography(string[] Images)
         {
             byte[] imageBytes0 = Convert.FromBase64String(Images[0]);
             byte[] imageBytes1 = Convert.FromBase64String(Images[1]);
@@ -49,7 +49,7 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         #region Algorithms
 
-        private static string[] VisualSteganographyAlgorithm(Bitmap share1, Bitmap share2, Bitmap ImageToHide)
+        private  string[] VisualSteganographyAlgorithm(Bitmap share1, Bitmap share2, Bitmap ImageToHide)
         {
             Random random = new Random();
             Color colorOfspecificPixel;
@@ -175,7 +175,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
-        private static string[] SecretsAlgorithm1(Bitmap bitmap)
+        private  string[] SecretsAlgorithm1(Bitmap bitmap)
         {
             Random random = new Random();
             Color colorOfspecificPixel;
@@ -215,7 +215,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return ConvertBitmapToStrings(Secrets);
         }
 
-        private static string[] SecretsAlgorithm2(Bitmap bitmap)
+        private  string[] SecretsAlgorithm2(Bitmap bitmap)
         {
             Random random = new Random();
             Color colorOfspecificPixel;
@@ -265,7 +265,7 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         #region helpers 
 
-        private static void setPixels(List<Bitmap> Secrets, int i, int j, BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
+        private  void setPixels(List<Bitmap> Secrets, int i, int j, BitArray subElements_1, BitArray subElements_2, int randomIndex, int ro = 0)
         {
             Secrets[0].SetPixel((j * 2), (i * 2), subElements_1[(randomIndex + 0) % 4] ? Color.Black : Color.Transparent);
             Secrets[0].SetPixel((j * 2), (i * 2) + 1, subElements_1[(randomIndex + 1) % 4] ? Color.Black : Color.Transparent);
@@ -278,7 +278,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             Secrets[1].SetPixel((j * 2) + 1, (i * 2) + 1, subElements_2[(randomIndex + 3) % 4] ? Color.Black : Color.Transparent);
         }
 
-        private static string[] ConvertBitmapToStrings(List<Bitmap> bitmaps)
+        private  string[] ConvertBitmapToStrings(List<Bitmap> bitmaps)
         {
             List<string> listaString = new List<string>();
 
@@ -298,22 +298,22 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         #region ColorHelpers
 
-        private static bool IsItWhiteOrTransparent(Color color)
+        private  bool IsItWhiteOrTransparent(Color color)
         {
             return (IsItWhiteColor(color) || IsItTransparentColor(color));
         }
 
-        private static bool IsItBlackColor(Color IsItBlack)
+        private  bool IsItBlackColor(Color IsItBlack)
         {
             return (IsItBlack.A > 0 && IsItBlack.R == 0 && IsItBlack.G == 0 && IsItBlack.B == 0);
         }
 
-        private static bool IsItWhiteColor(Color IsItWhite)
+        private  bool IsItWhiteColor(Color IsItWhite)
         {
             return (IsItWhite.R == 255 && IsItWhite.G == 255 && IsItWhite.B == 255);
         }
 
-        private static bool IsItTransparentColor(Color IsItTransparent)
+        private  bool IsItTransparentColor(Color IsItTransparent)
         {
             return (IsItTransparent.A == 0);
         }
@@ -322,19 +322,19 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         #region SubElementsConfiguration
 
-        private static bool[,] SubElements_ExpandingWidthMethod = new bool[,]
+        private  bool[,] SubElements_ExpandingWidthMethod = new bool[,]
         {
             { false, true },
             { true, false }
         };
 
-        private static bool[,] SubElements_ExpandingWidthMethod_Opposite = new bool[,]
+        private  bool[,] SubElements_ExpandingWidthMethod_Opposite = new bool[,]
         {
             { true, false },
             { false, true }
         };
 
-        private static bool[,] SubElements_Method = new bool[,]
+        private  bool[,] SubElements_Method = new bool[,]
         {
             { true, false, true, false },
             { false, true, false, true },
@@ -344,7 +344,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             { false, true, true, false }
         };
 
-        private static bool[,] SubElements_Method_Opposite = new bool[,]
+        private  bool[,] SubElements_Method_Opposite = new bool[,]
         {
             { false, true, false, true },
             { true, false, true, false },

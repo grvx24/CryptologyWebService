@@ -4,9 +4,9 @@ using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public static class PrepareViewMenager
+    public  class PrepareViewMenager
     {
-        public static ViewModelDto PrepareVisualCryptoraphyView()
+        public  ViewModelDto PrepareVisualCryptoraphyView()
         {
             ViewModelDto VieModelDto = new ViewModelDto();
 
@@ -44,7 +44,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return VieModelDto;
         }
 
-        public static ViewModelDto PrepareVisualSteganographyView()
+        public  ViewModelDto PrepareVisualSteganographyView()
         {
             ViewModelDto VieModelDto = new ViewModelDto();
 

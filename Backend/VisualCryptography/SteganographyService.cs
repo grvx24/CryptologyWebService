@@ -9,9 +9,9 @@ using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public static class SteganographyService
+    public class SteganographyService
     {
-        public static string LsbMethod(SteganographyLsbDto data)
+        public string LsbMethod(SteganographyLsbDto data)
         {
 
             //int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
@@ -57,7 +57,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return "elo";
         }
 
-        public static string PatchWorkMethod(SteganographyPatchWorkDto data)
+        public string PatchWorkMethod(SteganographyPatchWorkDto data)
         {
 
             return "elo";

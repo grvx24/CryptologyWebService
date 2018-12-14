@@ -18,7 +18,7 @@ namespace CryptoWebService.Controllers
     public class VisualCryptographyController : Controller
     {
         #region Secrets
-        public IActionResult sekret() => View("Secret", PrepareViewMenager.PrepareVisualCryptoraphyView());
+        public IActionResult sekret() => View("Secret", new PrepareViewMenager().PrepareVisualCryptoraphyView());
 
         [HttpPost]
         public IActionResult Secrets([FromBody] SecretsDto secretsDto)
@@ -37,7 +37,7 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    lista = new VisualCryptographyService().DivideStringImagesToSecrets(secretsDto);
                     Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
                     return Json(new { Result = true, secrets });
@@ -57,7 +57,7 @@ namespace CryptoWebService.Controllers
 
         #region VisualSteganography
 
-        public IActionResult steganografiawizualna() => View("VisualSteganography", PrepareViewMenager.PrepareVisualSteganographyView());
+        public IActionResult steganografiawizualna() => View("VisualSteganography", new PrepareViewMenager().PrepareVisualSteganographyView());
 
         [HttpPost]
         public IActionResult VisualSteganography([FromBody] string[] Images)
@@ -77,7 +77,7 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                    lista = VisualCryptographyService.VisualSteganography(Images);
+                    lista = new VisualCryptographyService().VisualSteganography(Images);
                     Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
                     return Json(new { Result = true, secrets });
@@ -112,7 +112,7 @@ namespace CryptoWebService.Controllers
             {
                 try
                 {
-                    var image = SteganographyService.LsbMethod(steganographyData);
+                    var image = new SteganographyService().LsbMethod(steganographyData);
                     return Json(new { Result = true, image });
                 }
                 catch (IndexOutOfRangeException)
@@ -137,7 +137,7 @@ namespace CryptoWebService.Controllers
             {
                 try
                 {
-                    var image = SteganographyService.PatchWorkMethod(steganographyData);
+                    var image = new SteganographyService().PatchWorkMethod(steganographyData);
                     return Json(new { Result = true, image });
                 }
                 catch (IndexOutOfRangeException)
