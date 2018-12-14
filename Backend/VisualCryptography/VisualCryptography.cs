@@ -9,7 +9,7 @@ using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public  class VisualCryptographyService
+    public  class VisualCryptography
     {
         public  string[] DivideStringImagesToSecrets(SecretsViewModel secretsViewModel)
         {

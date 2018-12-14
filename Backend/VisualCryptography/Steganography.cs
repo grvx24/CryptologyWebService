@@ -9,7 +9,7 @@ using CryptoWebService.Models.VisualCryptography;
 
 namespace CryptoWebService.Backend.VisualCryptography
 {
-    public class SteganographyService
+    public class Steganography
     {
         public string LsbMethod(SteganographyLsbViewModel data)
         {
