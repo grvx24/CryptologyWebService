@@ -10,7 +10,7 @@
     <span class="col-md-8">
         <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="margin-bottom:10px; border-color:dodgerblue" rows="1" id="exampleMessage"></textarea>
     </span>
-    <button class="btn btn-primary" id="paddingButton" type="submit">Uzupełnij wiadomość</button>
+    <button class="btn btn-primary" id="paddingButton" type="submit" disabled>Uzupełnij wiadomość</button>
 </div>
 <h4>Wiadomość w postaci bitów.</h4>
 <div class="col-md-12">
@@ -20,15 +20,15 @@
 </div>
 <h4>
     Wiadomość zawiera
-    <input type="text" class="md5" name="messageLength" id="messageLength" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="messageLength" id="messageLength" size="4" disabled readonly />
     bitów. Aby długość wiadomości wynosiła 448 mod 512, musimy uzupełnić ją o
-    <input type="text" class="md5" name="paddedBits" id="paddedBits" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="paddedBits" id="paddedBits" size="4" disabled />
     bity, ponieważ
-    <input type="text" class="md5" name="messageLength2" id="messageLength2" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="messageLength2" id="messageLength2" size="4" disabled readonly />
     mod 512 =
-    <input type="text" class="md5" name="modResult" id="modResult" class="disabledInput" size="4" disabled />
+    <input type="text" class="md5" name="modResult" id="modResult" size="4" disabled readonly />
     . Zatem dodajemy jedną '1' oraz
-    <input type="text" class="md5" name="padValue" id="padValue" class="disabledInput" size="2" disabled />
+    <input type="text" class="md5" name="padValue" id="padValue" size="2" disabled readonly />
     zera.
 </h4>
 
@@ -45,7 +45,28 @@
         <textarea class="form-control" style="margin-bottom:10px;border-color:dodgerblue; background-color:white; text-align:justify" rows="7" cols="100" id="allPadding" disabled></textarea>
     </div>
 </div>
-<h3 class="steps" style="margin-top:15px;">2. Incjowanie bufora.</h3>
+
+<h4 style="margin-top:10px;">
+    MD5 przetwarza dane w 512-bitowych blokach. Na potrzeby wizualizacji zajmiemy się tylko jednym blokiem 512 bitów. Jeżeli twoja przykładowa wiadomość była krótsza niż 448 bitów (czyli 512 bitów po wykonaniu uzupełnienia)
+    możesz zobaczyć wiadomośc po uzupełnieniu w 16 elementowej tablicy X, gdzie każdy element ma 32 bity. Wartości z tablicy X będą wykorzystywane w dalszych etapach obliczania skrótu.
+</h4>
+<div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" id="XTableButton" style="margin-bottom:15px" disabled>Pokaż szesnastkowo</button>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="registers" id="xTable" style="margin-bottom:25px"></div>
+    </div>
+</div>
+
+<h3 class="steps" style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
+<h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
+<h4>Zdefiniowane stałe:</h4>
+<h4> - słowa A, B, C, D,</h4>
 <h4>
     Algorytm MD5 wymaga 128-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na
     cztery słowa (każdy po 32 bity) oznaczone jako A, B, C, D (decymalnie):
@@ -54,10 +75,6 @@
 <h4><b>Słowo B:</b> 4023233417</h4>
 <h4><b>Słowo C:</b> 2562383102</h4>
 <h4><b>Słowo D:</b> 271733878</h4>
-<h3 class="steps" style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
-<h4>Jest to główny krok algorytmu MD5. Są 4 rundy, w każdej rundzie wykonywane jest 16 operacji. </h4>
-<h4>Zdefiniowane stałe:</h4>
-<h4> - słowa A, B, C, D,</h4>
 <h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie <i>T[i] = 4294967296 · |sin(i)|</i>.</h4>
 <table id="table_T" class="md5Data" style="width:100%;font-size:17px;">
     <tbody>
@@ -293,16 +310,15 @@
 </table>
 
 <h4 style="margin-top:10px;">
-    MD5 przetwarza dane w 512-bitowych blokach. Jeżeli twoja przykładowa wiadomość była krótsza niż 448 bitów (czyli 512 bitów po wykonaniu uzupelnienia)
-    możesz zobaczyć przebieg poczczególnych rund w tabeli.
+    Jeżeli twoja przykładowa wiadomość była krótsza niż 448 bitów (czyli 512 bitów po wykonaniu uzupelnienia) możesz zobaczyć przebieg poczczególnych rund w tabeli.
 </h4>
+
 <div class="col-md-12">
     <div class="col-md-4"></div>
     <div class="col-md-4">
         <button class="btn btn-primary" id="showRoundsButton" style="margin-bottom:15px" disabled>Podgląd prztwarzania</button>
     </div>
 </div>
-
 <div class="registers" id="registersTable" style="margin-left:220px"></div>
 
 <h4 style="margin-top:10px;">
@@ -413,7 +429,8 @@
      var md5Visualization = MD5VisualizationInit({
         urls: {
             paddingUrl: '@Url.Action("MD5_Padding", "HashFunctions")',
-            tableUrl: '@Url.Action("MD5_Table", "HashFunctions")'
+            tableUrl: '@Url.Action("MD5_Table", "HashFunctions")',
+            XtableUrl: '@Url.Action("MD5_X_Table", "HashFunctions")'
 
         }
     });

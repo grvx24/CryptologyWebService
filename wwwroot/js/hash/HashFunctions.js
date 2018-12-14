@@ -44,6 +44,11 @@ var MD5VisualizationInit = function (config) {
         $('#registersTable tr').remove();
         $('#registersTable tbody').remove();
 
+        $('#xTable th').remove();
+        $('#xTable td').remove();
+        $('#xTable tr').remove();
+        $('#xTable tbody').remove();
+
         $('#registersFinal th').remove();
         $('#registersFinal td').remove();
         $('#registersFinal tr').remove();
@@ -84,7 +89,9 @@ var MD5VisualizationInit = function (config) {
 
                     if (message.length * 8 < 448) {
                         $('#showRoundsButton').attr('disabled', false);
+                        $('#XTableButton').attr('disabled', false);
                     }
+                 
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -92,6 +99,47 @@ var MD5VisualizationInit = function (config) {
                 }
             });
         });
+
+        $('#XTableButton').click(function () {
+
+            var model = {
+                message: $('#exampleMessage').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.XtableUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    var $table = $('#xTable');
+                    var $tbody = $('<tbody></tbody>');
+
+                    $table.append($tbody);
+
+                    var $tr = $('<tr />');
+                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;width:50px;" />').html('i'));
+                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('X[i]'));
+                    $tbody.append($tr);
+
+                    for (i = 0; i < 16; i++) {
+                        var $tr = $('<tr />');
+                        $tr.append($('<td style="font-size:18px;"/>').html(i));
+                        $tr.append($('<td style="font-size:18px;"/>').html(data[i]));
+                        $tbody.append($tr);
+                    }
+
+                    $('#XTableButton').attr('disabled', true);
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.message);
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+
 
         $("#exampleMessage").on('input', function () {
             $('#messageLength').val('');
@@ -122,6 +170,12 @@ var MD5VisualizationInit = function (config) {
             removeTable();
             $('#finalLabel').attr('hidden', true);
             $('#transformations').attr('hidden', true);
+            $('#XTableButton').attr('disabled', true);
+            if ($("#exampleMessage").val() == "") {
+                $('#paddingButton').attr('disabled', true);
+            } else {
+                $('#paddingButton').attr('disabled', false);
+            }
         });
 
 
@@ -138,7 +192,7 @@ var MD5VisualizationInit = function (config) {
                 contentType: "application/json",
                 data: JSON.stringify(model),
                 success: function (data) {
-                    //console.log(data);
+
 
                     var $table = $('#registersTable');
                     var $tbody = $('<tbody></tbody>');

@@ -6,7 +6,7 @@ using CryptoWebService.Backend.HashFunctions;
 
 namespace CryptoWebService.Models.HashFunctions
 {
-    public class SHA1ViewModel
+    public class HashViewModel
     {
         public string Message { get; set; }
     }
