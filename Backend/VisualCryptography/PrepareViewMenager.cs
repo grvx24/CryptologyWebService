@@ -6,51 +6,51 @@ namespace CryptoWebService.Backend.VisualCryptography
 {
     public  class PrepareViewMenager
     {
-        public  ViewModelDto PrepareVisualCryptoraphyView()
+        public  PageViewModel PrepareVisualCryptoraphyView()
         {
-            ViewModelDto VieModelDto = new ViewModelDto();
+            PageViewModel VieModelViewModel = new PageViewModel();
 
-            List<AnimationDto> Animations = new List<AnimationDto>
+            List<AnimationViewModel> Animations = new List<AnimationViewModel>
             {
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                new AnimationViewModel("/images/1.bmp", "/images/2.bmp")
                 {
                     Width = 300,
                     Height = 200,
                     Amplitude = 2,
                     Period = 20000
                 },
-                new AnimationDto("/images/1.bmp", "/images/2.bmp")
+                new AnimationViewModel("/images/1.bmp", "/images/2.bmp")
                 {
                     Amplitude = 150
                 }
             };
 
-            List<ImageDto> Images = new List<ImageDto>
+            List<ImageViewModel> Images = new List<ImageViewModel>
             {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                new ImageViewModel("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
                 {
                     Width = 793,
                     Height = 200
                 },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                new ImageViewModel("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
                 {
                     Width = 991,
                     Height = 250
                 }
             };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
+            VieModelViewModel.AnimationList = Animations;
+            VieModelViewModel.ImageList = Images;
 
-            return VieModelDto;
+            return VieModelViewModel;
         }
 
-        public  ViewModelDto PrepareVisualSteganographyView()
+        public  PageViewModel PrepareVisualSteganographyView()
         {
-            ViewModelDto VieModelDto = new ViewModelDto();
+            PageViewModel VieModelViewModel = new PageViewModel();
 
-            List<AnimationDto> Animations = new List<AnimationDto>
+            List<AnimationViewModel> Animations = new List<AnimationViewModel>
             {
-                new AnimationDto("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
+                new AnimationViewModel("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
                 {
                     Width = 600,
                     Height = 300,
@@ -59,23 +59,23 @@ namespace CryptoWebService.Backend.VisualCryptography
                 },
             };
 
-            List<ImageDto> Images = new List<ImageDto>
+            List<ImageViewModel> Images = new List<ImageViewModel>
             {
-                new ImageDto("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                new ImageViewModel("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
                 {
                     Width = 793,
                     Height = 200
                 },
-                new ImageDto("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                new ImageViewModel("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
                 {
                     Width = 991,
                     Height = 250
                 }
             };
-            VieModelDto.AnimationList = Animations;
-            VieModelDto.ImageList = Images;
+            VieModelViewModel.AnimationList = Animations;
+            VieModelViewModel.ImageList = Images;
 
-            return VieModelDto;
+            return VieModelViewModel;
         }
     }
 }

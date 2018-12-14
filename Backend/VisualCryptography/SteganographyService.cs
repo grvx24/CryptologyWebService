@@ -11,7 +11,7 @@ namespace CryptoWebService.Backend.VisualCryptography
 {
     public class SteganographyService
     {
-        public string LsbMethod(SteganographyLsbDto data)
+        public string LsbMethod(SteganographyLsbViewModel data)
         {
 
             //int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
@@ -57,7 +57,7 @@ namespace CryptoWebService.Backend.VisualCryptography
             return "elo";
         }
 
-        public string PatchWorkMethod(SteganographyPatchWorkDto data)
+        public string PatchWorkMethod(SteganographyPatchWorkViewModel data)
         {
 
             return "elo";

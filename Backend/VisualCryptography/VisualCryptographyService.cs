@@ -11,18 +11,18 @@ namespace CryptoWebService.Backend.VisualCryptography
 {
     public  class VisualCryptographyService
     {
-        public  string[] DivideStringImagesToSecrets(SecretsDto secretsDto)
+        public  string[] DivideStringImagesToSecrets(SecretsViewModel secretsViewModel)
         {
-            byte[] imageBytes = Convert.FromBase64String(secretsDto.Image);
+            byte[] imageBytes = Convert.FromBase64String(secretsViewModel.Image);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
 
             string[] secrets ;
 
-            if (secretsDto.MethodId == 1)
+            if (secretsViewModel.MethodId == 1)
             {
                 secrets = SecretsAlgorithm1(new Bitmap(ms));
             }
-            else if(secretsDto.MethodId == 2)
+            else if(secretsViewModel.MethodId == 2)
             {
                 secrets = SecretsAlgorithm2(new Bitmap(ms));
             }
