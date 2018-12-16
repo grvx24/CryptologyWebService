@@ -1168,7 +1168,7 @@
         var outputCell = d3.select("#permutationKeyMatrixResult")
             .selectAll(".cell")
             .filter(function (data, index) {
-                return index === i;
+                return index === (i + Math.floor(i / 7));
             });
 
         outputCell
@@ -1190,7 +1190,7 @@
         var outputCell = d3.select("#permutationKeyMatrixResult")
             .selectAll(".cell")
             .filter(function (data, index) {
-                return index === i;
+                return index === (i + Math.floor(i / 7));;
             }).select("rect").attr("class", "cell-rect-result");
     }
 
