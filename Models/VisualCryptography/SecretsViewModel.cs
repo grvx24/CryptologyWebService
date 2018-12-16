@@ -1,6 +1,6 @@
 ﻿namespace CryptoWebService.Models.VisualCryptography
 {
-    public class SecretsDto
+    public class SecretsViewModel
     {
         public int MethodId { get; set; }
         public int AmountOfSecrets { get; set; }

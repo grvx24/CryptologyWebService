@@ -1,6 +1,6 @@
 ﻿namespace CryptoWebService.Models.VisualCryptography
 {
-    public class SteganographyLsbDto
+    public class SteganographyLsbViewModel
     {
         public string Image { get; set; }
         public string GreenBits { get; set; }

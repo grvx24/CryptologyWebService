@@ -18,16 +18,16 @@ namespace CryptoWebService.Controllers
     public class VisualCryptographyController : Controller
     {
         #region Secrets
-        public IActionResult sekret() => View("Secret", PrepareViewMenager.PrepareVisualCryptoraphyView());
+        public IActionResult sekret() => View("Secret", new PrepareViewMenager().PrepareVisualCryptoraphyView());
 
         [HttpPost]
-        public IActionResult Secrets([FromBody] SecretsDto secretsDto)
+        public IActionResult Secrets([FromBody] SecretsViewModel secretsViewModel)
         {
-            if (secretsDto == null || secretsDto.Image == null)
+            if (secretsViewModel == null || secretsViewModel.Image == null)
             {
                 return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
 
-            }else if (secretsDto.Image == null)
+            }else if (secretsViewModel.Image == null)
             {
                 return Json(new { Result = false, Message = "ERROR - Obraz nie został przesłany." });
             }
@@ -37,7 +37,7 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                    lista = VisualCryptographyService.DivideStringImagesToSecrets(secretsDto);
+                    lista = new VisualCryptography().DivideStringImagesToSecrets(secretsViewModel);
                     Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
                     return Json(new { Result = true, secrets });
@@ -57,7 +57,7 @@ namespace CryptoWebService.Controllers
 
         #region VisualSteganography
 
-        public IActionResult steganografiawizualna() => View("VisualSteganography", PrepareViewMenager.PrepareVisualSteganographyView());
+        public IActionResult steganografiawizualna() => View("VisualSteganography", new PrepareViewMenager().PrepareVisualSteganographyView());
 
         [HttpPost]
         public IActionResult VisualSteganography([FromBody] string[] Images)
@@ -77,7 +77,7 @@ namespace CryptoWebService.Controllers
 
                 try
                 {
-                    lista = VisualCryptographyService.VisualSteganography(Images);
+                    lista = new VisualCryptography().VisualSteganography(Images);
                     Object secrets = JSONHelper.TransformArrayToJsonArray(lista);
 
                     return Json(new { Result = true, secrets });
@@ -102,7 +102,7 @@ namespace CryptoWebService.Controllers
         public IActionResult steganografia() => View("Steganography");
 
         [HttpPost]
-        public IActionResult SteganographyLSB([FromBody] SteganographyLsbDto steganographyData)
+        public IActionResult SteganographyLSB([FromBody] SteganographyLsbViewModel steganographyData)
         {
             if (steganographyData == null)
             {
@@ -112,7 +112,7 @@ namespace CryptoWebService.Controllers
             {
                 try
                 {
-                    var image = SteganographyService.LsbMethod(steganographyData);
+                    var image = new Steganography().LsbMethod(steganographyData);
                     return Json(new { Result = true, image });
                 }
                 catch (IndexOutOfRangeException)
@@ -127,7 +127,7 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SteganographyPatchWork([FromBody] SteganographyPatchWorkDto steganographyData)
+        public IActionResult SteganographyPatchWork([FromBody] SteganographyPatchWorkViewModel steganographyData)
         {
             if (steganographyData == null)
             {
@@ -137,7 +137,7 @@ namespace CryptoWebService.Controllers
             {
                 try
                 {
-                    var image = SteganographyService.PatchWorkMethod(steganographyData);
+                    var image = new Steganography().PatchWorkMethod(steganographyData);
                     return Json(new { Result = true, image });
                 }
                 catch (IndexOutOfRangeException)
