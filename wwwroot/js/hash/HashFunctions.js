@@ -26,6 +26,11 @@
         });
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     var init = function () {
         encryptInit();
     }
@@ -38,6 +43,7 @@
 
 var MD5VisualizationInit = function (config) {
 
+<<<<<<< HEAD
     function removeTable() {
         $('#registersTable th').remove();
         $('#registersTable td').remove();
@@ -61,6 +67,9 @@ var MD5VisualizationInit = function (config) {
     }
     
 
+>>>>>>> PM
+=======
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     var visualInit = function () {
 
         $('#paddingButton').click(function () {
@@ -153,6 +162,11 @@ var MD5VisualizationInit = function (config) {
             $('#showRoundsButton').attr('disabled', true);
             $('#AA').val('');
             $('#endA').val('');
+<<<<<<< HEAD
+<<<<<<< HEAD
+       });
+    }
+=======
             $('#endA_Bin').val('');
             $('#endA_Hex').val('');
             $('#BB').val('');
@@ -177,6 +191,10 @@ var MD5VisualizationInit = function (config) {
                 $('#paddingButton').attr('disabled', false);
             }
         });
+>>>>>>> PM
+=======
+        });
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 
 
         $('#showRoundsButton').click(function () {
@@ -228,6 +246,12 @@ var MD5VisualizationInit = function (config) {
                         }
                     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    $('#AA').val(data[data.length - 1]);  
+                   // $('#AA').val(2344);
+                    $('#endA').val(1234);
+=======
                     rows[64].cells[1].style.fontWeight = "bold";
                     rows[64].cells[2].style.fontWeight = "bold";
                     rows[64].cells[3].style.fontWeight = "bold";
@@ -373,6 +397,36 @@ var MD5VisualizationInit = function (config) {
 
                     $('#showRoundsButton').attr('disabled', true);
                     $('#transformations').attr('hidden', false);
+>>>>>>> PM
+=======
+                    $('#AA').val(rows[64].cells[1].innerHTML);
+                    var modValue = Math.pow(2, 32);
+                    var endSum = parseInt(1732584193) + parseInt(rows[64].cells[1].innerHTML);
+                    var end = (endSum)%(modValue);                  
+                    $('#endA').val(end);
+
+                    $('#BB').val(rows[64].cells[2].innerHTML);
+                    var modValue = Math.pow(2, 32);
+                    var endSum = parseInt(4023233417) + parseInt(rows[64].cells[2].innerHTML);
+                    var end = (endSum) % (modValue);
+                    $('#endB').val(end);
+                   
+                    $('#CC').val(rows[64].cells[3].innerHTML);
+                    var modValue = Math.pow(2, 32);
+                    console.log(modValue);
+                    var endSum = parseInt(2562383102) + parseInt(rows[64].cells[3].innerHTML);
+                    console.log(endSum);
+                    var end = (endSum) % (modValue);
+                    $('#endC').val(end);
+
+                    $('#DD').val(rows[64].cells[4].innerHTML);
+                    var modValue = Math.pow(2, 32);
+                    console.log(modValue);
+                    var endSum = parseInt(271733878) + parseInt(rows[64].cells[4].innerHTML);
+                    console.log(endSum);
+                    var end = (endSum) % (modValue);
+                    $('#endD').val(end);
+>>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
                 },
                 error: function (response) {
                     console.log(response);

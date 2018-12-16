@@ -2,9 +2,9 @@
 
 namespace CryptoWebService.Models.VisualCryptography
 {
-    public class ImageDto 
+    public class ImageViewModel 
     {
-        public ImageDto(string imagePath,string name)
+        public ImageViewModel(string imagePath,string name)
         {
             this.Name = name;
             this.ImagePath = imagePath;

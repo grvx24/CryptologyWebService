@@ -1,0 +1,24 @@
+﻿@{
+    var primes = PrimeNumbers.Primes;
+    var cols = 10;
+    var rows = (int)Math.Floor(primes.Count / 10.0);
+    int counter = 0;
+}
+
+<div class="row">
+    <table class="table">
+        <tbody>
+
+            @for (int i = 0; i < rows; i++)
+            {
+            <tr>
+                @for (int j = 0; j < cols; j++)
+                {
+                <td>@primes[counter]</td>
+                counter++;
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
