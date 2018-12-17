@@ -308,7 +308,7 @@ namespace CryptoWebService.Backend.HashFunctions
         }
     
 
-        void set_all_X()
+        public void set_all_X()
         {
             byte[] msg = ASCIIEncoding.ASCII.GetBytes(message);
             byte[] paddedbuffer = CreatePaddedBuffer(msg);

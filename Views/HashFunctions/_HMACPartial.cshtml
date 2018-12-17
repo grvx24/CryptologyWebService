@@ -1,0 +1,77 @@
+﻿<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="title">Funkcje skrótu z kluczem</h2>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-1"></div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="hashSelectTypeEncrypt">Wybierz funkcję skrótu</label>
+                <select id="hashSelectTypeEncrypt" class="form-control">
+                    <option value=0 selected>MD5</option>
+                    <option value=1>SHA-1</option>
+                    <option value=2>SHA-256</option>
+                    <option value=3>SHA-512</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Wpisz klucz" rows="1" id="keyEncrypt"></textarea>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
+                        <textarea class="form-control" placeholder="@Text.WriteTextToHash" rows="5" id="inputEncrypt"></textarea>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <div class="column">
+                    <span class="col-md-8">
+                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-success" id="loadButton" type="submit">Wczytaj z pliku</button>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-md-8">
+                        <textarea class="form-control" placeholder="@Text.Hash" rows="2" id="outputEncrypt" disabled></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div>
+                <span class="col-md-8">
+                    <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" type="submit">Zapisz do pliku</button>
+                    <button style="margin-top: 5px; padding-left:30px; padding-right: 30px; " class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
+                    <button style="margin-top: 5px; margin-bottom: 5px; float: right;" class="btn btn-danger" id="clearButton1" type="submit">Wyczyść wszystko</button>
+                </span>
+            </div>
+        </div>
+    
+<script>
+        var hmacInit = HMACInit({
+        urls: {
+            encryptUrl: '@Url.Action("HMACEncrypt", "HashFunctions")'
+        }
+    });
+
+    hmacInit.init();
+</script>

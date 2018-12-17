@@ -1,7 +1,7 @@
 ﻿<div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="title">@Text.MD5Hash</h2>
+            <h2 class="title">@Text.SHA1Hash</h2>
         </div>
     </div>
 
@@ -45,13 +45,13 @@
     </div>
 </div>
 
+
 <script>
-     var md5Init = MD5FunctionInit({
+    var sha1Init = SHA1FunctionInit({
         urls: {
-            encryptUrl: '@Url.Action("MD5Encrypt", "HashFunctions")'
-        }
-    });
+            encryptUrl: '@Url.Action("SHA1Encrypt", "HashFunctions")'
+            }
+            });
 
-    md5Init.init();
-
+    sha1Init.init();
 </script>
