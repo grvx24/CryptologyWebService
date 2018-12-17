@@ -1,8 +1,8 @@
 ﻿var MD5FunctionInit = function (config) {
 
-    var encryptInit = function() {
+    var encryptInit = function () {
 
-        $('#encryptButton').click(function() {
+        $('#encryptButton').click(function () {
 
             var model = {
                 message: $('#inputEncrypt').val(),
@@ -26,11 +26,6 @@
         });
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
     var init = function () {
         encryptInit();
     }
@@ -43,7 +38,6 @@
 
 var MD5VisualizationInit = function (config) {
 
-<<<<<<< HEAD
     function removeTable() {
         $('#registersTable th').remove();
         $('#registersTable td').remove();
@@ -65,11 +59,8 @@ var MD5VisualizationInit = function (config) {
         $('#messageHash tr').remove();
         $('#messageHash tbody').remove();
     }
-    
 
->>>>>>> PM
-=======
->>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
+
     var visualInit = function () {
 
         $('#paddingButton').click(function () {
@@ -100,7 +91,7 @@ var MD5VisualizationInit = function (config) {
                         $('#showRoundsButton').attr('disabled', false);
                         $('#XTableButton').attr('disabled', false);
                     }
-                 
+
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -162,11 +153,6 @@ var MD5VisualizationInit = function (config) {
             $('#showRoundsButton').attr('disabled', true);
             $('#AA').val('');
             $('#endA').val('');
-<<<<<<< HEAD
-<<<<<<< HEAD
-       });
-    }
-=======
             $('#endA_Bin').val('');
             $('#endA_Hex').val('');
             $('#BB').val('');
@@ -191,10 +177,6 @@ var MD5VisualizationInit = function (config) {
                 $('#paddingButton').attr('disabled', false);
             }
         });
->>>>>>> PM
-=======
-        });
->>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
 
 
         $('#showRoundsButton').click(function () {
@@ -246,12 +228,6 @@ var MD5VisualizationInit = function (config) {
                         }
                     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    $('#AA').val(data[data.length - 1]);  
-                   // $('#AA').val(2344);
-                    $('#endA').val(1234);
-=======
                     rows[64].cells[1].style.fontWeight = "bold";
                     rows[64].cells[2].style.fontWeight = "bold";
                     rows[64].cells[3].style.fontWeight = "bold";
@@ -266,17 +242,17 @@ var MD5VisualizationInit = function (config) {
                     $('#AA').val(finalA);
                     var modValue = Math.pow(2, 32);
                     var endSum = parseInt(1732584193) + parseInt(finalA);
-                    var end = (endSum)%(modValue);                  
+                    var end = (endSum) % (modValue);
                     $('#endA').val(end);
                     var end_Bin = end.toString(2);
                     $('#endA_Bin').val(end_Bin);
                     var endA_Hex = parseInt(end_Bin, 2).toString(16);
                     $('#endA_Hex').val(endA_Hex);
-                    endA_Hex= endA_Hex.toString();
+                    endA_Hex = endA_Hex.toString();
                     var length = endA_Hex.length;
                     if (length < 8) {
                         for (i = length; i < 8; i++) {
-                            endA_Hex = '0'+ endA_Hex;
+                            endA_Hex = '0' + endA_Hex;
                         }
                     }
 
@@ -339,10 +315,10 @@ var MD5VisualizationInit = function (config) {
 
                     var $trFinal = $('<tr />');
                     $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('A'));;
-                    var index=0
-                    for (i = 0; i < 4; i++) {                     
-                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endA_Hex[index] + endA_Hex[index + 1]));    
-                        index = index + 2;    
+                    var index = 0
+                    for (i = 0; i < 4; i++) {
+                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endA_Hex[index] + endA_Hex[index + 1]));
+                        index = index + 2;
                     }
                     $tbodyFinal.append($trFinal);
 
@@ -397,36 +373,6 @@ var MD5VisualizationInit = function (config) {
 
                     $('#showRoundsButton').attr('disabled', true);
                     $('#transformations').attr('hidden', false);
->>>>>>> PM
-=======
-                    $('#AA').val(rows[64].cells[1].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    var endSum = parseInt(1732584193) + parseInt(rows[64].cells[1].innerHTML);
-                    var end = (endSum)%(modValue);                  
-                    $('#endA').val(end);
-
-                    $('#BB').val(rows[64].cells[2].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    var endSum = parseInt(4023233417) + parseInt(rows[64].cells[2].innerHTML);
-                    var end = (endSum) % (modValue);
-                    $('#endB').val(end);
-                   
-                    $('#CC').val(rows[64].cells[3].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    console.log(modValue);
-                    var endSum = parseInt(2562383102) + parseInt(rows[64].cells[3].innerHTML);
-                    console.log(endSum);
-                    var end = (endSum) % (modValue);
-                    $('#endC').val(end);
-
-                    $('#DD').val(rows[64].cells[4].innerHTML);
-                    var modValue = Math.pow(2, 32);
-                    console.log(modValue);
-                    var endSum = parseInt(271733878) + parseInt(rows[64].cells[4].innerHTML);
-                    console.log(endSum);
-                    var end = (endSum) % (modValue);
-                    $('#endD').val(end);
->>>>>>> parent of 09b51ac... Revert "Merge branch 'master' of https://github.com/grvx24/CryptologyWebService"
                 },
                 error: function (response) {
                     console.log(response);
@@ -609,11 +555,11 @@ var HMACInit = function (config) {
 
 
 $(document).ready(function () {
-    $('#clearButton').click(function () {       
-            /*Clear input */
-            $('#inputEncrypt').val('');
-            /*Clear output using id */
-            $('#outputEncrypt').val('');
+    $('#clearButton').click(function () {
+        /*Clear input */
+        $('#inputEncrypt').val('');
+        /*Clear output using id */
+        $('#outputEncrypt').val('');
     });
 });
 
@@ -627,7 +573,6 @@ $(document).ready(function () {
         $('#outputEncrypt').val('');
     });
 });
-
 
 
 
