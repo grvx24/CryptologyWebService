@@ -548,10 +548,6 @@ var HMACInit = function (config) {
     }
 }
 
-//$(document).ready(function () {
-//    $('#table_T').DataTable();
-//});
-
 
 
 $(document).ready(function () {
