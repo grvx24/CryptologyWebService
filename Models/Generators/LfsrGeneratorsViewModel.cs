@@ -20,6 +20,5 @@ namespace CryptoWebService.Models.Generators
         public string[] FeedbackFunctions { get; set; }
         public int? K_value { get; set; }
         public int? D_value { get; set; }
-
     }
 }
