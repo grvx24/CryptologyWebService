@@ -11,21 +11,29 @@
     <Compile Remove="Backend\Generators\**" />
     <Compile Remove="Backend\RSA\**" />
     <Compile Remove="Backend\StreamEncoder\**" />
+    <Compile Remove="Images\**" />
+    <Compile Remove="Services\**" />
     <Content Remove="Backend\ClassicCiphers\**" />
     <Content Remove="Backend\FipsTests\**" />
     <Content Remove="Backend\Generators\**" />
     <Content Remove="Backend\RSA\**" />
     <Content Remove="Backend\StreamEncoder\**" />
+    <Content Remove="Images\**" />
+    <Content Remove="Services\**" />
     <EmbeddedResource Remove="Backend\ClassicCiphers\**" />
     <EmbeddedResource Remove="Backend\FipsTests\**" />
     <EmbeddedResource Remove="Backend\Generators\**" />
     <EmbeddedResource Remove="Backend\RSA\**" />
     <EmbeddedResource Remove="Backend\StreamEncoder\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="Services\**" />
     <None Remove="Backend\ClassicCiphers\**" />
     <None Remove="Backend\FipsTests\**" />
     <None Remove="Backend\Generators\**" />
     <None Remove="Backend\RSA\**" />
     <None Remove="Backend\StreamEncoder\**" />
+    <None Remove="Images\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="_Database\" />
-    <Folder Include="Services\" />
     <Folder Include="wwwroot\primes\" />
   </ItemGroup>
 
