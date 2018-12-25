@@ -1,34 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Drawing;
-using System.IO;
-using CryptoWebService.Backend.VisualCryptography;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using CryptoWebService.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using CryptoWebService.Models.VisualCryptography;
-using CryptoWebService.Models;
-using CryptoWebService.Helpers;
-using CryptoWebService.Data;
 
 namespace CryptoWebService.Controllers
 {
 
     public class QuizController : Controller
     {
-        #region Secrets
+        private readonly ApplicationDbContext _context;
+
+        public QuizController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
         [Route("quiz/{category?}/{id?}")]
-        public IActionResult quiz(string category, int? id)
+        public async Task<IActionResult> quiz(string category, int? id)
         {
             if (String.IsNullOrEmpty(category))
             {
                 // widok wszystkich dostępnych kategorii
                 //pobierz liste kategori
                 // var Categories = new List<Category>
+                //var qs = new QuizService(new ApplicationDbContext(this.con));
 
-                return View("QuizzesCategory");
+                var cat = _context.Category.ToList();
+
+                return View("QuizzesCategory", cat);
             }
             else
             {
@@ -44,7 +47,6 @@ namespace CryptoWebService.Controllers
                 }
             }
         }
-        #endregion
 
     }
 }
