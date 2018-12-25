@@ -2,9 +2,9 @@
 
 namespace CryptoWebService.Models.VisualCryptography
 {
-    public class AnimationViewModel 
+    public class QuestionViewModel 
     {
-        public AnimationViewModel(string staticImage, string movingImage)
+        public QuestionViewModel(string staticImage, string movingImage)
         {
             this.StaticImage = staticImage;
             this.MovingImage = movingImage;
