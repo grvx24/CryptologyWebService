@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CryptoWebService.Models.Quiz
 {
     public class QuizViewModel
     {
-        public QuestionViewModel[] Questions { get; }
+        public List<QuestionViewModel> Questions { get; set; }
 
-        public string QuestionName { get; }
+        public string QuizName { get; set; }
 
-        public QuizViewModel(QuestionViewModel[] questions, string questionName)
-        {
-            Questions = questions;
-            QuestionName = questionName;
-        }
+        public int AmountOfQuestions { get; set; }
     }
 }

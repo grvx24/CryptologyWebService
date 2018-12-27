@@ -1,20 +1,15 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace CryptoWebService.Models.Quiz
 {
     public class QuestionViewModel 
     {
-        public string QuestionContent { get;  }
+        public string QuestionContent { get; set; }
 
-        public Answer[] Answers { get; }
+        public List<AnswerViewModel> Answers { get; set; }
 
-        public int Number { get; }
+        public int Number { get; set; }
 
-        public QuestionViewModel(string questionContent, Answer[] answers,int number)
-        {
-            this.QuestionContent = QuestionContent;
-            this.Answers = answers;
-            this.Number = number;
-        }
+        public int AmountOfQuestionsInQuiz { get; set; }
     }
 }
