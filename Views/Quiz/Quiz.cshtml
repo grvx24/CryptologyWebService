@@ -1,12 +1,78 @@
-﻿
+﻿@model CryptoWebService.Models.Quiz.QuizViewModel
 
 @{
-ViewData["Title"] = "quiz";
+    ViewData["Title"] = "quiz";
 }
 
 <div class="container">
-    <button>
-        Widok quiz
-    </button>
+
+    <label>
+        @Model.QuizName
+    </label>
+
+    @{
+        for (int i = 0; i < Model.Questions.Count(); i++)
+        {
+            await Html.RenderPartialAsync("Question", Model.Questions[i]);
+        }
+    }
+
+    <div class="col-lg-12 text-center">
+        <button>
+            Sprawdź
+        </button>
+    </div>
 </div>
 
+
+<style>
+    .questionContent {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    .question {
+        background-color: rgba(170, 170, 170, 0.10);
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 2px solid rgba(68, 68, 68, 0.76);
+        -moz-box-shadow: 0 0 2px 2px #f4f4f4;
+        -webkit-box-shadow: 0 0 2px 2px #f4f4f4;
+        box-shadow: 0 0 4px 4px #f4f4f4;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .LabelAnswer {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        margin: 5px;
+        cursor: pointer;
+        text-align: center;
+        background-color: #161616;
+        width: 420px;
+        padding: 10px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 2px solid rgba(68, 68, 68, 0.76);
+        color: #000;
+        -moz-box-shadow: 0 0 2px 2px #f4f4f4;
+        -webkit-box-shadow: 0 0 2px 2px #f4f4f4;
+        box-shadow: 0 0 4px 4px #f4f4f4;
+        color: white;
+    }
+
+    .Answer label {
+        background: #73aef8;
+    }
+
+    .Answer input[type=checkbox] {
+        visibility: hidden;
+    }
+
+        .Answer input[type=checkbox]:checked + label {
+            background: #1c5aa6;
+        }
+</style>
