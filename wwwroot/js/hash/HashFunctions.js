@@ -48,6 +48,10 @@ var MD5VisualizationInit = function (config) {
         $('#xTable td').remove();
         $('#xTable tr').remove();
         $('#xTable tbody').remove();
+        $('#xTable2 th').remove();
+        $('#xTable2 td').remove();
+        $('#xTable2 tr').remove();
+        $('#xTable2 tbody').remove();
 
         $('#registersFinal th').remove();
         $('#registersFinal td').remove();
@@ -114,30 +118,74 @@ var MD5VisualizationInit = function (config) {
                 data: JSON.stringify(model),
                 success: function (data) {
 
-                    var $table = $('#xTable');
-                    var $tbody = $('<tbody></tbody>');
-
-                    $table.append($tbody);
-
-                    var $tr = $('<tr />');
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;width:50px;" />').html('i'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('X[i]'));
-                    $tbody.append($tr);
-
-                    for (i = 0; i < 16; i++) {
-                        var $tr = $('<tr />');
-                        $tr.append($('<td style="font-size:18px;"/>').html(i));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i]));
-                        $tbody.append($tr);
+                    if ($('#xTable tr').length != 0 && $('#XTableButton').html() == 'Ukryj tablicę X') {
+                        $('#xTable').attr('hidden', true);
+                        $('#xTable2').attr('hidden', true);
+                        $('#XTableButton').text('Pokaż tablicę X');
                     }
+                    else if ($('#xTable tr').length != 0 && $('#XTableButton').html() == 'Pokaż tablicę X') {
+                        $('#xTable').attr('hidden', false);
+                        $('#xTable2').attr('hidden', false);
+                        $('#XTableButton').text('Ukryj tablicę X');
+                    }
+                    else {
+                        var $table = $('#xTable');
+                        var $tbody = $('<tbody></tbody>');
 
-                    $('#XTableButton').attr('disabled', true);
+                        $table.append($tbody);
+
+                        var $tr = $('<tr />');
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;width:50px;" />').html('i'));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;;width:112px" />').html('X[i]'));
+                        $tbody.append($tr);
+
+                        for (i = 0; i < 8; i++) {
+                            var $tr = $('<tr />');
+                            $tr.append($('<td style="font-size:16px;"/>').html(i));
+                            $tr.append($('<td style="font-size:16px;"/>').html(data[i]));
+                            $tbody.append($tr);
+                        }
+
+
+                        var $table2 = $('#xTable2');
+                        var $tbody2 = $('<tbody></tbody>');
+
+                        $table2.append($tbody2);
+
+                        var $tr2 = $('<tr />');
+                        $tr2.append($('<td style="background-color:#9dc2f2; font-size:18px;width:50px" />').html('i'));
+                        $tr2.append($('<td style="background-color:#9dc2f2; font-size:18px;;width:112px" />').html('X[i]'));
+                        $tbody2.append($tr2);
+
+                        for (i = 8; i < 16; i++) {
+                            var $tr2 = $('<tr />');
+                            $tr2.append($('<td style="font-size:16px;"/>').html(i));
+                            $tr2.append($('<td style="font-size:16px;"/>').html(data[i]));
+                            $tbody2.append($tr2);
+                        }
+
+                        $('#XTableButton').text('Ukryj tablicę X');
+                    }
+                  
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
                     alert(response.responseJSON.message);
                 }
             });
+        });
+
+        $('#TTableButton').click(function () {
+
+                    if ($('#TTableButton').html() == 'Ukryj tablicę T') {
+                        $('#tables_T').attr('hidden', true);
+                        $('#TTableButton').text('Pokaż tablicę T');
+                    }
+                    else if ($('#TTableButton').html() == 'Pokaż tablicę T') {
+                        $('#tables_T').attr('hidden', false);
+                        $('#TTableButton').text('Ukryj tablicę T');
+                    }
+                 
         });
 
 
@@ -150,7 +198,9 @@ var MD5VisualizationInit = function (config) {
             $('#padMessageLength').val('');
             $('#allPadding').val('');
             $('#messageBits').val('');
+            $('#showRoundsButton').text('Pokaż stan rejestrów');
             $('#showRoundsButton').attr('disabled', true);
+            $('#registersTable').attr('hidden', false);
             $('#AA').val('');
             $('#endA').val('');
             $('#endA_Bin').val('');
@@ -170,6 +220,7 @@ var MD5VisualizationInit = function (config) {
             removeTable();
             $('#finalLabel').attr('hidden', true);
             $('#transformations').attr('hidden', true);
+            $('#XTableButton').text('Pokaż tablicę X');
             $('#XTableButton').attr('disabled', true);
             if ($("#exampleMessage").val() == "") {
                 $('#paddingButton').attr('disabled', true);
@@ -193,186 +244,198 @@ var MD5VisualizationInit = function (config) {
                 data: JSON.stringify(model),
                 success: function (data) {
 
+                    if ($('#registersTable td').length != 0 && $('#showRoundsButton').html() == 'Ukryj stan rejestrów') {
+                        $('#registersTable').attr('hidden', true);
+                        $('#showRoundsButton').text('Pokaż stan rejestrów');
+                    }
+                    else if ($('#registersTable td').length != 0 && $('#showRoundsButton').html() == 'Pokaż stan rejestrów') {
+                        $('#registersTable').attr('hidden', false);
+                        $('#showRoundsButton').text('Ukryj stan rejestrów');
+                    }
+                    else {
 
-                    var $table = $('#registersTable');
-                    var $tbody = $('<tbody></tbody>');
+                        var $table = $('#registersTable');
+                        var $tbody = $('<tbody></tbody>');
 
-                    $table.append($tbody);
+                        $table.append($tbody);
 
-                    var $tr = $('<tr />');
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Iteracja'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr A'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr B'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr C'));
-                    $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr D'));
-                    $tbody.append($tr);
-
-                    for (i = 0; i < 64; i++) {
                         var $tr = $('<tr />');
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].iteration));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].a));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].b));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].c));
-                        $tr.append($('<td style="font-size:18px;"/>').html(data[i].d));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Iteracja'));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr A'));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr B'));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr C'));
+                        $tr.append($('<td style="background-color:#9dc2f2; font-size:18px;" />').html('Rejestr D'));
                         $tbody.append($tr);
-                    }
 
-                    var changeColor = document.getElementById("registersTable");
-                    var rows = changeColor.getElementsByTagName("tr");
-                    var registerChanged = 1;
-                    for (var z = 1; z < 65; z++) {
-                        rows[z].cells[registerChanged].style.color = '#33b5e5';
-                        registerChanged++;
-                        if (registerChanged > 4) {
-                            registerChanged = 1;
+                        for (i = 0; i < 64; i++) {
+                            var $tr = $('<tr />');
+                            $tr.append($('<td style="font-size:18px;"/>').html(data[i].iteration));
+                            $tr.append($('<td style="font-size:18px;"/>').html(data[i].a));
+                            $tr.append($('<td style="font-size:18px;"/>').html(data[i].b));
+                            $tr.append($('<td style="font-size:18px;"/>').html(data[i].c));
+                            $tr.append($('<td style="font-size:18px;"/>').html(data[i].d));
+                            $tbody.append($tr);
                         }
-                    }
 
-                    rows[64].cells[1].style.fontWeight = "bold";
-                    rows[64].cells[2].style.fontWeight = "bold";
-                    rows[64].cells[3].style.fontWeight = "bold";
-                    rows[64].cells[4].style.fontWeight = "bold";
-
-                    var finalA = rows[64].cells[1].innerHTML;
-                    var finalB = rows[64].cells[2].innerHTML;
-                    var finalC = rows[64].cells[3].innerHTML;
-                    var finalD = rows[64].cells[4].innerHTML;
-
-
-                    $('#AA').val(finalA);
-                    var modValue = Math.pow(2, 32);
-                    var endSum = parseInt(1732584193) + parseInt(finalA);
-                    var end = (endSum) % (modValue);
-                    $('#endA').val(end);
-                    var end_Bin = end.toString(2);
-                    $('#endA_Bin').val(end_Bin);
-                    var endA_Hex = parseInt(end_Bin, 2).toString(16);
-                    $('#endA_Hex').val(endA_Hex);
-                    endA_Hex = endA_Hex.toString();
-                    var length = endA_Hex.length;
-                    if (length < 8) {
-                        for (i = length; i < 8; i++) {
-                            endA_Hex = '0' + endA_Hex;
+                        var changeColor = document.getElementById("registersTable");
+                        var rows = changeColor.getElementsByTagName("tr");
+                        var registerChanged = 1;
+                        for (var z = 1; z < 65; z++) {
+                            rows[z].cells[registerChanged].style.color = '#33b5e5';
+                            registerChanged++;
+                            if (registerChanged > 4) {
+                                registerChanged = 1;
+                            }
                         }
-                    }
 
-                    $('#BB').val(finalB);
-                    modValue = Math.pow(2, 32);
-                    endSum = parseInt(4023233417) + parseInt(finalB);
-                    end = (endSum) % (modValue);
-                    $('#endB').val(end);
-                    end_Bin = end.toString(2);
-                    $('#endB_Bin').val(end_Bin);
-                    var endB_Hex = parseInt(end_Bin, 2).toString(16);
-                    $('#endB_Hex').val(endB_Hex);
-                    endB_Hex = endB_Hex.toString();
-                    var length = endB_Hex.length;
-                    if (length < 8) {
-                        for (i = length; i < 8; i++) {
-                            endB_Hex = '0' + endB_Hex;
+                        rows[64].cells[1].style.fontWeight = "bold";
+                        rows[64].cells[2].style.fontWeight = "bold";
+                        rows[64].cells[3].style.fontWeight = "bold";
+                        rows[64].cells[4].style.fontWeight = "bold";
+
+                        var finalA = rows[64].cells[1].innerHTML;
+                        var finalB = rows[64].cells[2].innerHTML;
+                        var finalC = rows[64].cells[3].innerHTML;
+                        var finalD = rows[64].cells[4].innerHTML;
+
+
+                        $('#AA').val(finalA);
+                        var modValue = Math.pow(2, 32);
+                        var endSum = parseInt(1732584193) + parseInt(finalA);
+                        var end = (endSum) % (modValue);
+                        $('#endA').val(end);
+                        var end_Bin = end.toString(2);
+                        $('#endA_Bin').val(end_Bin);
+                        var endA_Hex = parseInt(end_Bin, 2).toString(16);
+                        $('#endA_Hex').val(endA_Hex);
+                        endA_Hex = endA_Hex.toString();
+                        var length = endA_Hex.length;
+                        if (length < 8) {
+                            for (i = length; i < 8; i++) {
+                                endA_Hex = '0' + endA_Hex;
+                            }
                         }
-                    }
 
-                    $('#CC').val(finalC);
-                    modValue = Math.pow(2, 32);
-                    endSum = parseInt(2562383102) + parseInt(finalC);
-                    end = (endSum) % (modValue);
-                    $('#endC').val(end);
-                    end_Bin = end.toString(2);
-                    $('#endC_Bin').val(end_Bin);
-                    var endC_Hex = parseInt(end_Bin, 2).toString(16);
-                    $('#endC_Hex').val(endC_Hex);
-                    endC_Hex = endC_Hex.toString();
-                    var length = endC_Hex.length;
-                    if (length < 8) {
-                        for (i = length; i < 8; i++) {
-                            endC_Hex = '0' + endC_Hex;
+                        $('#BB').val(finalB);
+                        modValue = Math.pow(2, 32);
+                        endSum = parseInt(4023233417) + parseInt(finalB);
+                        end = (endSum) % (modValue);
+                        $('#endB').val(end);
+                        end_Bin = end.toString(2);
+                        $('#endB_Bin').val(end_Bin);
+                        var endB_Hex = parseInt(end_Bin, 2).toString(16);
+                        $('#endB_Hex').val(endB_Hex);
+                        endB_Hex = endB_Hex.toString();
+                        var length = endB_Hex.length;
+                        if (length < 8) {
+                            for (i = length; i < 8; i++) {
+                                endB_Hex = '0' + endB_Hex;
+                            }
                         }
-                    }
 
-                    $('#DD').val(finalD);
-                    modValue = Math.pow(2, 32);
-                    endSum = parseInt(271733878) + parseInt(finalD);
-                    end = (endSum) % (modValue);
-                    $('#endD').val(end);
-                    end_Bin = end.toString(2);
-                    $('#endD_Bin').val(end_Bin);
-                    var endD_Hex = parseInt(end_Bin, 2).toString(16);
-                    $('#endD_Hex').val(endD_Hex);
-                    endD_Hex = endD_Hex.toString();
-                    var length = endD_Hex.length;
-                    if (length < 8) {
-                        for (i = length; i < 8; i++) {
-                            endD_Hex = '0' + endD_Hex;
+                        $('#CC').val(finalC);
+                        modValue = Math.pow(2, 32);
+                        endSum = parseInt(2562383102) + parseInt(finalC);
+                        end = (endSum) % (modValue);
+                        $('#endC').val(end);
+                        end_Bin = end.toString(2);
+                        $('#endC_Bin').val(end_Bin);
+                        var endC_Hex = parseInt(end_Bin, 2).toString(16);
+                        $('#endC_Hex').val(endC_Hex);
+                        endC_Hex = endC_Hex.toString();
+                        var length = endC_Hex.length;
+                        if (length < 8) {
+                            for (i = length; i < 8; i++) {
+                                endC_Hex = '0' + endC_Hex;
+                            }
                         }
+
+                        $('#DD').val(finalD);
+                        modValue = Math.pow(2, 32);
+                        endSum = parseInt(271733878) + parseInt(finalD);
+                        end = (endSum) % (modValue);
+                        $('#endD').val(end);
+                        end_Bin = end.toString(2);
+                        $('#endD_Bin').val(end_Bin);
+                        var endD_Hex = parseInt(end_Bin, 2).toString(16);
+                        $('#endD_Hex').val(endD_Hex);
+                        endD_Hex = endD_Hex.toString();
+                        var length = endD_Hex.length;
+                        if (length < 8) {
+                            for (i = length; i < 8; i++) {
+                                endD_Hex = '0' + endD_Hex;
+                            }
+                        }
+
+
+                        var $tableFinal = $('#registersFinal');
+                        var $tbodyFinal = $('<tbody></tbody>');
+
+                        $tableFinal.append($tbodyFinal);
+
+                        var $trFinal = $('<tr />');
+                        $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('A'));;
+                        var index = 0
+                        for (i = 0; i < 4; i++) {
+                            $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endA_Hex[index] + endA_Hex[index + 1]));
+                            index = index + 2;
+                        }
+                        $tbodyFinal.append($trFinal);
+
+                        var $trFinal = $('<tr />');
+                        $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('B'));;
+                        index = 0
+                        for (i = 0; i < 4; i++) {
+                            $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endB_Hex[index] + endB_Hex[index + 1]));
+                            index = index + 2;
+                        }
+                        $tbodyFinal.append($trFinal);
+
+                        var $trFinal = $('<tr />');
+                        $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('C'));;
+                        index = 0
+                        for (i = 0; i < 4; i++) {
+                            $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endC_Hex[index] + endC_Hex[index + 1]));
+                            index = index + 2;
+                        }
+                        $tbodyFinal.append($trFinal);
+
+                        var $trFinal = $('<tr />');
+                        $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('D'));;
+                        index = 0
+                        for (i = 0; i < 4; i++) {
+                            $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endD_Hex[index] + endD_Hex[index + 1]));
+                            index = index + 2;
+                        }
+                        $tbodyFinal.append($trFinal);
+                        $('#finalLabel').attr('hidden', false);
+
+
+                        var $tableHash = $('#messageHash');
+                        var $tbodyHash = $('<tbody></tbody>');
+
+                        $tableHash.append($tbodyHash);
+
+                        var $trHash = $('<tr />');
+                        $trHash.append($('<th style="font-size:25px; border-color:white; background-color:white" />').html('Skrót wiadomośći:'));
+
+                        var hash_A = endA_Hex[6].toString() + endA_Hex[7].toString() + endA_Hex[4].toString() + endA_Hex[5].toString() + endA_Hex[2].toString() + endA_Hex[3].toString() +
+                            endA_Hex[0].toString() + endA_Hex[1].toString();
+                        var hash_B = endB_Hex[6].toString() + endB_Hex[7].toString() + endB_Hex[4].toString() + endB_Hex[5].toString() + endB_Hex[2].toString() + endB_Hex[3].toString() +
+                            endB_Hex[0].toString() + endB_Hex[1].toString();
+                        var hash_C = endC_Hex[6].toString() + endC_Hex[7].toString() + endC_Hex[4].toString() + endC_Hex[5].toString() + endC_Hex[2].toString() + endC_Hex[3].toString() +
+                            endC_Hex[0].toString() + endC_Hex[1].toString();
+                        var hash_D = endD_Hex[6].toString() + endD_Hex[7].toString() + endD_Hex[4].toString() + endD_Hex[5].toString() + endD_Hex[2].toString() + endD_Hex[3].toString() +
+                            endD_Hex[0].toString() + endD_Hex[1].toString();
+                        var hash = hash_A + hash_B + hash_C + hash_D;
+                        $trHash.append($('<td style="font-size:25px; border-color:white"/>').html(hash));
+                        $tbodyHash.append($trHash);
+
+                        $('#showRoundsButton').text('Ukryj stan rejestrów');
+                        $('#transformations').attr('hidden', false);
+
                     }
-
-
-                    var $tableFinal = $('#registersFinal');
-                    var $tbodyFinal = $('<tbody></tbody>');
-
-                    $tableFinal.append($tbodyFinal);
-
-                    var $trFinal = $('<tr />');
-                    $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('A'));;
-                    var index = 0
-                    for (i = 0; i < 4; i++) {
-                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endA_Hex[index] + endA_Hex[index + 1]));
-                        index = index + 2;
-                    }
-                    $tbodyFinal.append($trFinal);
-
-                    var $trFinal = $('<tr />');
-                    $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('B'));;
-                    index = 0
-                    for (i = 0; i < 4; i++) {
-                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endB_Hex[index] + endB_Hex[index + 1]));
-                        index = index + 2;
-                    }
-                    $tbodyFinal.append($trFinal);
-
-                    var $trFinal = $('<tr />');
-                    $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('C'));;
-                    index = 0
-                    for (i = 0; i < 4; i++) {
-                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endC_Hex[index] + endC_Hex[index + 1]));
-                        index = index + 2;
-                    }
-                    $tbodyFinal.append($trFinal);
-
-                    var $trFinal = $('<tr />');
-                    $trFinal.append($('<th style="font-size:18px; width:40px;" />').html('D'));;
-                    index = 0
-                    for (i = 0; i < 4; i++) {
-                        $trFinal.append($('<td style="font-size:18px; width:40px;"/>').html(endD_Hex[index] + endD_Hex[index + 1]));
-                        index = index + 2;
-                    }
-                    $tbodyFinal.append($trFinal);
-                    $('#finalLabel').attr('hidden', false);
-
-
-                    var $tableHash = $('#messageHash');
-                    var $tbodyHash = $('<tbody></tbody>');
-
-                    $tableHash.append($tbodyHash);
-
-                    var $trHash = $('<tr />');
-                    $trHash.append($('<th style="font-size:25px; border-color:white" />').html('Skrót wiadomośći:'));
-
-                    var hash_A = endA_Hex[6].toString() + endA_Hex[7].toString() + endA_Hex[4].toString() + endA_Hex[5].toString() + endA_Hex[2].toString() + endA_Hex[3].toString() +
-                        endA_Hex[0].toString() + endA_Hex[1].toString();
-                    var hash_B = endB_Hex[6].toString() + endB_Hex[7].toString() + endB_Hex[4].toString() + endB_Hex[5].toString() + endB_Hex[2].toString() + endB_Hex[3].toString() +
-                        endB_Hex[0].toString() + endB_Hex[1].toString();
-                    var hash_C = endC_Hex[6].toString() + endC_Hex[7].toString() + endC_Hex[4].toString() + endC_Hex[5].toString() + endC_Hex[2].toString() + endC_Hex[3].toString() +
-                        endC_Hex[0].toString() + endC_Hex[1].toString();
-                    var hash_D = endD_Hex[6].toString() + endD_Hex[7].toString() + endD_Hex[4].toString() + endD_Hex[5].toString() + endD_Hex[2].toString() + endD_Hex[3].toString() +
-                        endD_Hex[0].toString() + endD_Hex[1].toString();
-                    var hash = hash_A + hash_B + hash_C + hash_D;
-                    $trHash.append($('<td style="font-size:25px; border-color:white"/>').html(hash));
-                    $tbodyHash.append($trHash);
-
-                    $('#showRoundsButton').attr('disabled', true);
-                    $('#transformations').attr('hidden', false);
+                  
                 },
                 error: function (response) {
                     console.log(response);

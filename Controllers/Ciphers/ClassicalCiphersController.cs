@@ -589,9 +589,119 @@ namespace CryptoWebService.Controllers.Ciphers
             return Json(decrypted);
 
         }
+        public IActionResult RouteVisualization([FromBody]RouteEncryptViewModel viewModel)
+        {
+            RouteCipher cipher = new RouteCipher(viewModel.Key, (RouteCipher.CipherMode)viewModel.Mode);
+
+            string encrypted = "";
+
+
+            string[] results = new string[3] {"output", "input","route"};
+            List<int> RouteList = new List<int>();
+            string input = viewModel.Message;
+            input = StringHelper.ReplaceWhitespace(input, "");
+            input = input.ToUpper();
+            results[1] = input;
+            try
+            {
+                encrypted = cipher.Encrypt(viewModel.Message);
+                results[0] = encrypted;
+
+
+                int encryptedCounter = 0;
+                int direction = 0;//0-down, 1-left, 2-up, 3-right
+
+                int columnRangeMin = 0;
+                int columnRangeMax = cipher.MessageMatrix.GetLength(1) - 1;
+
+                int rowRangeMin = 0;
+                int rowRangeMax = cipher.MessageMatrix.GetLength(0) - 1;
+
+                int steps = 0;
+
+                while (steps < input.Length)
+                {
+                    if (direction == 0)
+                    {
+                        if (encryptedCounter >= cipher.MessageMatrix.Length)
+                            break;
+                        for (int i = rowRangeMin; i <= rowRangeMax; i++)
+                        {
+                            RouteList.Add(i);
+                            RouteList.Add(columnRangeMax);
+                            encryptedCounter++;
+                        }
+
+                        direction = 1;
+                        columnRangeMax--;
+                    }
+
+                    if (direction == 1)
+                    {
+                        if (encryptedCounter >= cipher.MessageMatrix.Length)
+                            break;
+                        for (int i = columnRangeMax; i >= columnRangeMin; i--)
+                        {
+                            RouteList.Add(rowRangeMax);
+                            RouteList.Add(i);
+                            encryptedCounter++;
+                        }
+
+
+                        direction = 2;
+                        rowRangeMax--;
+                    }
+
+                    if (direction == 2)
+                    {
+                        if (encryptedCounter >= cipher.MessageMatrix.Length)
+                            break;
+                        for (int i = rowRangeMax; i >= columnRangeMin; i--)
+                        {
+                            RouteList.Add(i);
+                            RouteList.Add(columnRangeMin);
+                            encryptedCounter++;
+                        }
+
+
+                        direction = 3;
+                        columnRangeMin++;
+                    }
+                    if (direction == 3)
+                    {
+                        if (encryptedCounter >= cipher.MessageMatrix.Length)
+                            break;
+                        for (int i = columnRangeMin; i <= columnRangeMax; i++)
+                        {
+                            RouteList.Add(rowRangeMin);
+                            RouteList.Add(i);
+                            encryptedCounter++;
+                        }
+
+                        direction = 0;
+                        rowRangeMin++;
+                    }
+                }
+                    var stringRoute = new StringBuilder();
+                    for (int i = 0; i < RouteList.Count; i++)
+                    {
+                        stringRoute.Append(RouteList[i]);
+                        stringRoute.Append(',');
+                    }
+                    results[2] = stringRoute.ToString();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+
+            return Json(results);
+        }
+
         #endregion
 
-#region Vigenere
+        #region Vigenere
         [HttpGet]
         public IActionResult Vigenere()
         {
