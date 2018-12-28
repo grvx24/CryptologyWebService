@@ -633,6 +633,42 @@ $(document).ready(function () {
     });
 });
 
+function saveTextAsFile() {
+    var textToWrite = document.getElementById("outputEncrypt").value;
+    var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    var fileNameToSaveAs = 'hash';
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null) {
+
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function destroyClickedElement(event) {
+    document.body.removeChild(event.target);
+}
+
+function loadFileAsText() {
+    var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+    var fileReader = new FileReader();
+    fileReader.onload = function (fileLoadedEvent) {
+        var textFromFileLoaded = fileLoadedEvent.target.result;
+        document.getElementById("inputEncrypt").value = textFromFileLoaded;
+    };
+    fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
 
 
 
