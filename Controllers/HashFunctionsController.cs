@@ -52,7 +52,7 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SHA1Encrypt([FromBody]SHA1ViewModel viewModel)
+        public IActionResult SHA1Encrypt([FromBody]HashViewModel viewModel)
         {
             SHA1Hash hash = new SHA1Hash();
 
@@ -82,7 +82,7 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SHA256Encrypt([FromBody]SHA1ViewModel viewModel)
+        public IActionResult SHA256Encrypt([FromBody]HashViewModel viewModel)
         {
             SHA256Hash hash = new SHA256Hash();
 
@@ -111,7 +111,7 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SHA512Encrypt([FromBody]SHA1ViewModel viewModel)
+        public IActionResult SHA512Encrypt([FromBody]HashViewModel viewModel)
         {
             SHA512Hash hash = new SHA512Hash();
 
@@ -177,13 +177,12 @@ namespace CryptoWebService.Controllers
         {
 
             MD5_Visualization md5_viso = new MD5_Visualization();
-            string[] results = new string[8] { "nie_działa", "nie_działa ", "nie_działa ", "nie_działa", "nie działa", "nie działa", "nie działa" , "nie działa"};
+            string[] results = new string[8] { "", "", "", "", "", "", "" , ""};
 
             try
             {
-                //string message = viewModel.Message_visualization;
+
                 string message = viewModel.Message;
-                //string message = "Hello World!";
                 if (message.Length * 8 < 448)
                 {
                     md5_viso = new MD5_Visualization(message);
@@ -210,7 +209,31 @@ namespace CryptoWebService.Controllers
             return Json(results);
         }
 
+        [HttpPost]
+        public IActionResult MD5_X_Table([FromBody]MD5ViewModel viewModel)
+        {
 
+            MD5_Visualization md5_viso = new MD5_Visualization();
+            uint[] X_table;
+            try
+            {
+
+                string message = viewModel.Message;
+                if (message.Length * 8 < 448)
+                {
+                    md5_viso = new MD5_Visualization(message);
+                }
+
+                md5_viso.set_all_X();
+                X_table = md5_viso.X;
+
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
+            }
+            return Json(X_table);
+        }
 
 
         [HttpPost]
@@ -218,7 +241,6 @@ namespace CryptoWebService.Controllers
         {
 
             MD5_Visualization md5 = new MD5_Visualization();
-            string json = "";
             List<Registers> _registers = new List<Registers>();
             try
             {              

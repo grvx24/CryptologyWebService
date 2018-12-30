@@ -75,53 +75,43 @@
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="SelfDecimation">Rueppela</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szyfry<span class="caret"></span></a>
-                            <div class="dropdown-menu">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <h5>Klasyczne</h5>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Affine">Afiniczny</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Bacon">Bacona</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Caesar">Cezara</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="ColumnarTransposition">Transpozycji kolumn</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Fence">Płotkowy</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Playfair">Playfair</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Route">Ścieżkowy</a>
-                                            <a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Vigenere">Vigenere'a</a>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <h5>Blokowe</h5>
-                                            <a class="dropdown-item" asp-controller="BlockCiphers" asp-action="Aes">AES</a>
-                                            <a class="dropdown-item" asp-controller="BlockCiphers" asp-action="Des">DES</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true"> Szyfry blokowe<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="BlockCiphers" asp-action="Aes">AES</a></li>
+                                <li><a class="dropdown-item" asp-controller="BlockCiphers" asp-action="Des">DES</a></li>
+                            </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funkcje skrótu<span class="caret"></span></a>
-                            <div class="dropdown-menu">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MDC">Bez klucza:</a>
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a>
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a>
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a>
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a>
-                                            <a class="dropdown-item" href="#">SHA-3 (Keccak)</a>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="MAC">Z kluczem:</a>
-                                            <a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true"> Szyfry klasyczne<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Affine">Afiniczny</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Bacon">Bacona</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Caesar">Cezara</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="ColumnarTransposition">Transpozycji kolumn</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Fence">Płotkowy</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Playfair">Playfair</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Route">Ścieżkowy</a></li>
+                                <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Vigenere">Vigenere'a</a></li>
+                            </ul>
                         </li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kryptografia asymetryczna</a></li>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Funkcje skrótu<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a></li>
+                                @*<li><a class="dropdown-item" href="#">SHA-3 (Keccak)</a></li>*@
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC (z kluczem)</a></li>
+                            </ul>
+                        </li>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Kryptografia asymetryczna<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="AsymmetricCryptography" asp-action="RSA">RSA</a></li>
+                            </ul>
+                        </li>
                         <li class="btn-group">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Szyfrowanie obrazów<span class="caret"></span></a>
                             <ul class="dropdown-menu">
