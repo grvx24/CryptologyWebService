@@ -150,7 +150,8 @@
             } else {
                 alert('Niepoprawny format szyfrogramu!');
             }
-
+        } else {
+            alert('Niepoprawny format szyfrogramu!');
         }
     }
 
@@ -204,6 +205,119 @@
         });
     }
 
+    var loadFileInit = function() {
+
+        $('#fileMessage').change(function () {
+            var filename = $(this).val().split('\\').pop();
+            $('#filenameMessage').val(filename);
+
+            var file = document.getElementById('fileMessage').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+                reader.onload = function(evt) {
+                    document.getElementById("inputEncrypt").value = evt.target.result;
+                }
+                reader.onerror = function(evt) {
+                    alert("Wystąpił błąd podczas wczytywania pliku!");
+                }
+            }
+        });
+
+        $('#fileCipherText').change(function () {
+            var filename = $(this).val().split('\\').pop();
+            $('#filenameCipherText').val(filename);
+
+            var file = document.getElementById('fileCipherText').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+                reader.onload = function (evt) {
+                    document.getElementById("inputDecrypt").value = evt.target.result;
+                }
+                reader.onerror = function (evt) {
+                    alert("Wystąpił błąd podczas wczytywania pliku!");
+                }
+            }
+        });
+
+
+        $('#filePublicKey').change(function() {
+
+            var file = document.getElementById('filePublicKey').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+                reader.onload = function (evt) {
+                    document.getElementById("publicKey").value = evt.target.result;
+                }
+                reader.onerror = function (evt) {
+                    alert("Wystąpił błąd podczas wczytywania pliku!");
+                }
+            }
+        });
+
+        $('#filePrivateKey').change(function () {
+
+            var file = document.getElementById('filePrivateKey').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+                reader.onload = function (evt) {
+                    document.getElementById("privateKey").value = evt.target.result;
+                }
+                reader.onerror = function (evt) {
+                    alert("Wystąpił błąd podczas wczytywania pliku!");
+                }
+            }
+        });
+
+    }
+
+    function downloadFile(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+
+    var saveToFileInit = function() {
+        $('#saveCipherText').click(function() {
+            var text = $('#outputEncrypt').val();
+            if (text != '') {
+                downloadFile('szyfrogram.txt', text);
+            }
+        });
+
+        $('#saveMessageText').click(function () {
+            var text = $('#outputDecrypt').val();
+            if (text != '') {
+                downloadFile('tekst.txt', text);
+            }
+        });
+
+        $('#savePublicKey').click(function () {
+            var text = $('#publicKey').val();
+            if (text != '') {
+                downloadFile('klucz_publiczny.txt', text);
+            }
+        });
+
+        $('#savePrivateKey').click(function () {
+            var text = $('#privateKey').val();
+            if (text != '') {
+                downloadFile('klucz_prywatny.txt', text);
+            }
+        });
+    }
+
 
     var toolTipInit = function() {
         $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
@@ -214,6 +328,8 @@
         toolTipInit();
         buttonsInit();
         copyBtnsInit();
+        loadFileInit();
+        saveToFileInit();
     }
 
 
