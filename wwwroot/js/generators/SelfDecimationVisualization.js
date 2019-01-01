@@ -470,14 +470,14 @@
             .attr("x", 50)
             .attr("y", 150)
             .attr("class", "register-cell-text")
-            .text("Info");
+            .text("");
 
         outputArea.append("text")
             .attr("id", "counter")
             .attr("x", 50)
             .attr("y", 200)
             .attr("class", "register-cell-text")
-            .text("0/10");
+            .text("");
 
         outputArea
             .append("line")
