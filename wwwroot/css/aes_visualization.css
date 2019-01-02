@@ -84,7 +84,13 @@
 }
 .description-text-simple {
     font-size: 22px;
-    text-anchor: middle;
+    text-anchor: start;
+    pointer-events: none;
+}
+
+.description-text-simple-big {
+    font-size: 30px;
+    text-anchor: start;
     pointer-events: none;
 }
 
