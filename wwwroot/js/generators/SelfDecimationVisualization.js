@@ -248,8 +248,12 @@
         r1Len = registers[0].length;
 
         var r1 = d3.select('#lfsr1');
+        var output = registers[0][r1Len - 1];
 
-        if (registers[0][r1Len - 1] === 1) {
+        d3.select('#outputBit')
+            .text(output);
+
+        if (output === 1) {
 
             d3.select("#infoText")
                 .text("1: taktujemy K razy")
@@ -302,8 +306,7 @@
             if (enableBtn) {
                 var output = registers[0][r1Len - 1];
                 $('#nextStepBtn').attr("disabled", false);
-                d3.select('#outputBit')
-                    .text(output);
+                
 
                 var lastR1 = d3.select('#lfsr1').selectAll('g')
                     .filter(function(d, i) {
@@ -400,6 +403,8 @@
 
         $('#createRegisterBtn').click(function () {
 
+            d3.select('#outputBit')
+                .text('');
             CreateRegister(1, 'registerText1', 'feedbackFunctionViz1', 'lfsr1', 'Rejestr 1', 'F1');
         });
     }
