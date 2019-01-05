@@ -177,7 +177,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         public void NextStep()
         {
-            OutputBit = Register[Register.Length - 1];
             bool temp = false;
 
             for (int i = 0; i < FeedbackFunction.Length; i++)
@@ -199,6 +198,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
         }
         public bool GetOutputBit()
         {
+            OutputBit = Register[Register.Length - 1];
             return OutputBit;
         }
 
