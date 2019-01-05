@@ -132,6 +132,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
             }
 
             FeedbackFunctionInit();
+            OutputBit = Register[Register.Length - 1];
         }
 
         public Lfsr(int length)
@@ -147,6 +148,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
             }
 
             FeedbackFunctionInit();
+            OutputBit = Register[Register.Length - 1];
         }
 
         public Lfsr(string registerValues)
@@ -161,6 +163,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
             }
 
             FeedbackFunctionInit();
+            OutputBit = Register[Register.Length - 1];
         }
 
         public void SetRegisterValues(BitArray array)
@@ -177,6 +180,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         public void NextStep()
         {
+            OutputBit = Register[Register.Length - 1];
             bool temp = false;
 
             for (int i = 0; i < FeedbackFunction.Length; i++)
@@ -198,7 +202,6 @@ namespace CryptoWebService.Backend.LfsrGenerators
         }
         public bool GetOutputBit()
         {
-            OutputBit = Register[Register.Length - 1];
             return OutputBit;
         }
 
