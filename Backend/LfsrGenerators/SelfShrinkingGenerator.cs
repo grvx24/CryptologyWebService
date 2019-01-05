@@ -46,7 +46,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
                 counter++;
                 if (counter > breakValue)
                 {
-                    throw new Exception("Po 1000 krokach nie znaleziono bitu '1' w pierwszym rejestrze");
+                    throw new Exception("Nie znaleziono bitu '1', zmień wartości w rejestrze!");
                 }
             }
 
