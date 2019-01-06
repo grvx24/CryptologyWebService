@@ -43,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="_Database\" />
     <Folder Include="wwwroot\primes\" />
   </ItemGroup>
 
