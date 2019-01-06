@@ -20,10 +20,10 @@ namespace CryptoWebService.Controllers
         }
 
 
-        [Route("quiz/{category?}/{id?}")]
-        public async Task<IActionResult> quiz(string category, int? id)
+        [Route("quiz/{categoryName?}/{id?}")]
+        public async Task<IActionResult> quiz(string categoryName, int? id)
         {
-            if (String.IsNullOrEmpty(category))
+            if (String.IsNullOrEmpty(categoryName))
             {
                 // widok wszystkich dostępnych kategorii
                 //pobierz liste kategori
@@ -39,7 +39,15 @@ namespace CryptoWebService.Controllers
             {
                 if(id == null || id == 0)
                 {
-                    var Quizzes = _context.Quiz.Where(quiz => quiz.Category.CategoryName == category).ToList();
+                    if (categoryName == "funkcjeskrotu")
+                    {
+                        categoryName = "funkcjeskrótu";
+                    }
+                    else if (categoryName == "szyfrowanieobrazow")
+                    {
+                        categoryName = "szyfrowanieobrazów";
+                    }
+                    var Quizzes = _context.Quiz.Where(quiz => quiz.Category.CategoryName.Replace(" ",String.Empty) == categoryName).ToList();
                     return View("QuizzesList", Quizzes);
                 }
                 else
