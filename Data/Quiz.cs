@@ -12,6 +12,7 @@ namespace CryptoWebService.Data
 
         public int Id { get; set; }
         public string QuizName { get; set; }
+        public int QuizNumber { get; set; }
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }

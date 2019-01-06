@@ -69,6 +69,9 @@ namespace CryptoWebService.Data
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.QuizNumber)
+                    .IsRequired();
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Quiz)
                     .HasForeignKey(d => d.CategoryId)
