@@ -33,16 +33,20 @@ CREATE TABLE [dbo].[Answer] (
 );
 GO
 
-INSERT INTO Category (CategoryName) values ('Generatory')
-INSERT INTO Category (CategoryName) values ('Szyfratory')
-INSERT INTO Category (CategoryName) values ('Funkcje Skrótu')
-INSERT INTO Category (CategoryName) values ('Podpisy Cyfrowe')
+INSERT INTO Category (CategoryName) values ('generatory')
+INSERT INTO Category (CategoryName) values ('szyfry blokowe')
+INSERT INTO Category (CategoryName) values ('szyfry klasyczne')
+INSERT INTO Category (CategoryName) values ('funkcje skrótu')
+INSERT INTO Category (CategoryName) values ('kryptografia asymetryczna')
+INSERT INTO Category (CategoryName) values ('szyfrowanie obrazów')
 GO
 
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Generatory',1)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Szyfratory',2)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Funkcje Skrótu',3)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Podpisy Cyfrowe',4)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz generatory',1)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfry blokowe',2)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfry klasyczne',3)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz funkcje skrótu',4)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz kryptografia asymetryczna',5)
+INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfrowanie obrazów',6)
 GO
 
 INSERT INTO Question (Content,QuizId) values ('Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
