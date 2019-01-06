@@ -8,6 +8,7 @@ GO
 CREATE TABLE [dbo].[Quiz] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
     [QuizName]     VARCHAR (255) NOT NULL,
+	[QuizNumber]   INT           NOT NULL,
 	[CategoryId]   INT           NOT NULL,
     PRIMARY KEY    CLUSTERED ([ID] ASC),
 	FOREIGN KEY    ([CategoryId]) REFERENCES [dbo].[Category] ([ID])
@@ -41,12 +42,12 @@ INSERT INTO Category (CategoryName) values ('kryptografia asymetryczna')
 INSERT INTO Category (CategoryName) values ('szyfrowanie obrazów')
 GO
 
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz generatory',1)
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfry blokowe',2)
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfry klasyczne',3)
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz funkcje skrótu',4)
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz kryptografia asymetryczna',5)
-INSERT INTO Quiz (QuizName,CategoryId) values ('startowy quiz szyfrowanie obrazów',6)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz generatory',1,1)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfry blokowe',1,2)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfry klasyczne',1,3)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz funkcje skrótu',1,4)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz kryptografia asymetryczna',1,5)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfrowanie obrazów',1,6)
 GO
 
 INSERT INTO Question (Content,QuizId) values ('Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
