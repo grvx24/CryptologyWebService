@@ -1019,27 +1019,189 @@
 
         var formulaSvg = d3.select("#mixColumnsFormula")
             .append("g")
-            .attr("transform", "translate(300,100)");
+            .attr("transform", "translate(0,50)");
+
+        var resultFormula = [];
+        var products = [];
+
+        var mul = '';
+
+
+        for (var i = 0; i < valuesFromCellsBefore.length; i++) {
+            switch (valuesFromHelperMatrix[i]) {
+                case '01':
+                    {
+                        var value = valuesFromCellsBefore[i];
+                        var hexValue = value.toString(16).toUpperCase();
+                        if (hexValue.length == 1) {
+                            hexValue = '0' + hexValue;
+                        }
+                        mul = valuesFromHelperMatrix[i] + ' x ' + hexValue;
+                        resultFormula.push(mul + ' ----> ' + hexValue);
+
+                        products.push(value);
+                        break;
+                    }
+                case '02':
+                    {
+                        var value = valuesFromCellsBefore[i];
+                        var valueHex = value.toString(16).toUpperCase();
+                        var msb = valuesFromCellsBefore[i] & 128;
+
+                        if (msb == 128) {
+                            mul = valuesFromHelperMatrix[i] + ' x ' + valueHex;
+                            var mulStart = '(' + valueHex + ' << 1) = ';
+                            var mulAfterShift = value << 1;
+                            var mulAfterShiftHex = mulAfterShift.toString(16).toUpperCase();
+                            var mulAfterShiftHex8Bits = mulAfterShiftHex.substring(1);
+
+
+                            var valueInGF256 = mulAfterShift & 255;
+                            var xor = 0x1b;
+                            var xored = valueInGF256 ^ xor;
+                            var xoredHex = xored.toString(16).toUpperCase();
+                            if (xoredHex.length == 1) {
+                                xoredHex = '0' + xoredHex;
+                            }
+
+                            resultFormula.push(mul + ' ----> ' + mulStart +
+                                mulAfterShiftHex + ' ----> ' + mulAfterShiftHex8Bits + ' xor 1B = ' + xoredHex);
+
+                            products.push(xored);
+
+                        } else {
+                            mul = valuesFromHelperMatrix[i] + ' x ' + valueHex;
+                            var mulStart = '(' + valueHex + ' << 1) = ';
+                            var mulAfterShift = value << 1;
+                            var mulAfterShiftHex = mulAfterShift.toString(16).toUpperCase();
+                            if (mulAfterShiftHex.length == 1) {
+                                mulAfterShiftHex = '0' + mulAfterShiftHex;
+                            }
+
+                            resultFormula.push(mul + ' ----> ' + mulStart+
+                                mulAfterShiftHex);
+
+                            products.push(mulAfterShift);
+                        }
+
+                        
+                        break;
+                    }
+                case '03':
+                    {
+                        var value = valuesFromCellsBefore[i];
+                        var valueHex = value.toString(16).toUpperCase();
+                        if (valueHex.length == 1) {
+                            valueHex = '0' + valueHex;
+                        }
+                        var msb = valuesFromCellsBefore[i] & 128;
+
+                        if (msb == 128) {
+                            mul = valuesFromHelperMatrix[i] + ' x ' + valueHex;
+                            var mulStart = '(' + valueHex + ' << 1) = ';
+                            var mulAfterShift = value << 1;
+                            var mulAfterShiftHex = mulAfterShift.toString(16).toUpperCase();
+                            var mulAfterShiftHex8Bits = mulAfterShiftHex.substring(1);
+
+
+                            var valueInGF256 = mulAfterShift & 255;
+                            var xor = 0x1b;
+                            var xored = valueInGF256 ^ xor;
+                            var xoredHex = xored.toString(16).toUpperCase();
+                            if (xoredHex.length == 1) {
+                                xoredHex = '0' + xoredHex;
+                            }
+                            var secondxored = xored ^ value;
+                            var secondxoredHex = secondxored.toString(16).toUpperCase();
+                            if (secondxoredHex.length == 1) {
+                                secondxoredHex = '0' + secondxoredHex;
+                            }
+
+                            resultFormula.push(mul + ' ----> ' + mulStart +
+                                mulAfterShiftHex + ' ----> ' + mulAfterShiftHex8Bits + ' xor 1B = ' + xoredHex + ' ----> '
+                                + xoredHex + ' xor ' + valueHex + ' = ' + secondxoredHex);
+
+                            products.push(secondxored);
+
+                        } else {
+                            mul = valuesFromHelperMatrix[i] + ' x ' + valueHex;
+                            var mulStart = '(' + valueHex + ' << 1) = ';
+                            var mulAfterShift = value << 1;
+                            var mulAfterShiftHex = mulAfterShift.toString(16).toUpperCase();
+                            if (mulAfterShiftHex.length == 1) {
+                                mulAfterShiftHex = '0' + mulAfterShiftHex;
+                            }
+
+                            var secondxored = mulAfterShift ^ value;
+                            var secondxoredHex = secondxored.toString(16).toUpperCase();
+                            if (secondxoredHex.length == 1) {
+                                secondxoredHex = '0' + secondxoredHex;
+                            }
+
+                            resultFormula.push(mul + ' ----> ' + mulStart +
+                                mulAfterShiftHex + ' ----> '
+                                + mulAfterShiftHex + ' xor ' + valueHex + ' = ' + secondxoredHex);
+
+                            products.push(secondxored);
+                        }
+                        break;
+                    }
+            }
+        }
+
+        var productsHex = '';
+        var productsXOR = 0;
+        for (var i = 0; i < products.length - 1; i++) {
+            productsXOR ^= products[i];
+            var hex = products[i].toString(16).toUpperCase();
+            if (hex.length == 1) {
+                hex = '0' + hex;
+            }
+            productsHex += hex+ ' xor '; 
+        }
+
+        var lastHex = products[products.length - 1].toString(16).toUpperCase();
+        if (lastHex.length == 1) {
+            lastHex = '0' + lastHex;
+        }
+
+        productsXOR ^= products[products.length - 1];
+        var productsXORHex = productsXOR.toString(16).toUpperCase();
+        if (productsXORHex.length == 1) {
+            productsXORHex = '0' + productsXORHex;
+        }
+
+        productsHex += lastHex.toString(16).toUpperCase()
+            + ' = ' + productsXORHex;
+        
+
+            formulaSvg.append("text")
+                .attr("class", "description-text-simple")
+                .attr("x", 0)
+                .attr("y", 0)
+            .text(resultFormula[0]);
 
         formulaSvg.append("text")
             .attr("class", "description-text-simple")
             .attr("x", 0)
-            .attr("y", 0)
-            .text(function (d, i) {
-                var result = '';
-                for (var i = 0; i < valuesFromCellsBefore.length; i++) {
-                    if (i < valuesFromCellsBefore.length - 1) {
+            .attr("y", 25)
+            .text(resultFormula[1]);
+        formulaSvg.append("text")
+            .attr("class", "description-text-simple")
+            .attr("x", 0)
+            .attr("y", 50)
+            .text(resultFormula[2]);
+        formulaSvg.append("text")
+            .attr("class", "description-text-simple")
+            .attr("x", 0)
+            .attr("y", 75)
+            .text(resultFormula[3]);
 
-                        result += ('(' + valuesFromCellsBefore[i] + ' x '
-                            + valuesFromHelperMatrix[i] + ')' + ' + ');
-                    } else {
-                        result += ('(' + valuesFromCellsBefore[i] + ' x '
-                            + valuesFromHelperMatrix[i] + ')');
-                    }
-
-                }
-                return result;
-            });
+        formulaSvg.append("text")
+            .attr("class", "description-text-simple-big")
+            .attr("x", 0)
+            .attr("y", 125)
+            .text(productsHex);
 
     }
     function handleMouseOutOnMixColumns(d, i) {

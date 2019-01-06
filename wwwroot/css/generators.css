@@ -104,6 +104,12 @@ td.lfsr-function-cell {
     stroke-width: 4px;
 }
 
+.cell-rect-background {
+    fill: #ffa;
+    stroke: black;
+    stroke-width: 4px;
+}
+
 .register-text {
     font-size: 20px;
     font-weight: bold
