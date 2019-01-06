@@ -20,42 +20,35 @@ namespace CryptoWebService.Controllers
         }
 
 
-        [Route("quiz/{categoryName?}/{id?}")]
-        public async Task<IActionResult> quiz(string categoryName, int? id)
+        [Route("quiz/{categoryName?}/{quizNumber?}")]
+        public async Task<IActionResult> quiz(string categoryName, int? quizNumber)
         {
             if (String.IsNullOrEmpty(categoryName))
             {
-                // widok wszystkich dostępnych kategorii
-                //pobierz liste kategori
-                // var Categories = new List<Category>
-                //var qs = new QuizService(new ApplicationDbContext(this.con));
-
-
                 var Categories = _context.Category.ToList();
 
                 return View("QuizzesCategory", Categories);
             }
             else
             {
-                if(id == null || id == 0)
+                categoryName = changeCategoryName(categoryName);
+
+                var QuizzesInCategory = _context.Quiz.Where(q => q.Category.CategoryName.Replace(" ", String.Empty) == categoryName).ToList();
+
+                if (QuizzesInCategory.Count == 0) return NotFound();
+
+                if (quizNumber == null || quizNumber == 0)
                 {
-                    if (categoryName == "funkcjeskrotu")
-                    {
-                        categoryName = "funkcjeskrótu";
-                    }
-                    else if (categoryName == "szyfrowanieobrazow")
-                    {
-                        categoryName = "szyfrowanieobrazów";
-                    }
-                    var Quizzes = _context.Quiz.Where(quiz => quiz.Category.CategoryName.Replace(" ",String.Empty) == categoryName).ToList();
-                    return View("QuizzesList", Quizzes);
+                    return View("QuizzesList", QuizzesInCategory);
                 }
                 else
                 {  
                     List<QuestionViewModel> questionViewModels = new List<QuestionViewModel>();
-                    List<AnswerViewModel> answerViewModels; 
+                    List<AnswerViewModel> answerViewModels;
 
-                    var quiz = _context.Quiz.Where(q => q.Id == id).FirstOrDefault();
+                    var quiz = QuizzesInCategory.Where(q => q.Quiznumber == quizNumber).FirstOrDefault();
+                    if (quiz == null) return NotFound();
+
                     var Questions = _context.Question.Where(question => question.QuizId == quiz.Id).ToList();
 
                     for (int i = 0; i < Questions.Count(); i++)
@@ -88,10 +81,25 @@ namespace CryptoWebService.Controllers
             }
         }
 
-
-        public List<String> GetCategories()
+        [HttpPost]
+        public IActionResult CheckQuiz(UserAnswers userAnswers)
         {
-            return _context.Category.Select(c => c.CategoryName).ToList();
+
+            return View("Quiz");
+        }
+
+        private string changeCategoryName(string categoryName)
+        {
+            if (categoryName == "funkcjeskrotu")
+            {
+                categoryName = "funkcjeskrótu";
+            }
+            else if (categoryName == "szyfrowanieobrazow")
+            {
+                categoryName = "szyfrowanieobrazów";
+            }
+
+            return categoryName;
         }
     }
 }
