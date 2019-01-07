@@ -46,7 +46,7 @@ namespace CryptoWebService.Controllers
                     List<QuestionViewModel> questionViewModels = new List<QuestionViewModel>();
                     List<AnswerViewModel> answerViewModels;
 
-                    var quiz = QuizzesInCategory.Where(q => q.Quiznumber == quizNumber).FirstOrDefault();
+                    var quiz = QuizzesInCategory.Where(q => q.QuizNumber == quizNumber).FirstOrDefault();
                     if (quiz == null) return NotFound();
 
                     var Questions = _context.Question.Where(question => question.QuizId == quiz.Id).ToList();
