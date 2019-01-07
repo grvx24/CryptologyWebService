@@ -94,6 +94,9 @@ var MD5VisualizationInit = function (config) {
                     if (message.length * 8 < 448) {
                         $('#showRoundsButton').attr('disabled', false);
                         $('#XTableButton').attr('disabled', false);
+                        $('#showRoundsButton').click();
+                        $('#showRoundsButton').text('Pokaż stan rejestrów');
+                        $('#registersTable').attr('hidden', true);
                     }
 
                 },
@@ -186,6 +189,19 @@ var MD5VisualizationInit = function (config) {
                         $('#TTableButton').text('Ukryj tablicę T');
                     }
                  
+        });
+
+        $('#calculationButton').click(function () {
+
+            if ($('#calculationButton').html() == 'Ukryj przykład obliczania') {
+                $('#exampleCalculation').attr('hidden', true);
+                $('#calculationButton').text('Pokaż przykład obliczania');
+            }
+            else if ($('#calculationButton').html() == 'Pokaż przykład obliczania') {
+                $('#exampleCalculation').attr('hidden', false);
+                $('#calculationButton').text('Ukryj przykład obliczania');
+            }
+
         });
 
 
@@ -431,7 +447,7 @@ var MD5VisualizationInit = function (config) {
                         $trHash.append($('<td style="font-size:25px; border-color:white"/>').html(hash));
                         $tbodyHash.append($trHash);
 
-                        $('#showRoundsButton').text('Ukryj stan rejestrów');
+                        $('#showRoundsButton').text('Pokaż stan rejestrów');
                         $('#transformations').attr('hidden', false);
 
                     }

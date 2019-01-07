@@ -10,13 +10,53 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">@Text.SHA1Hash</h2>
         <p class="description">
-            SHA (Secure Hash Algorithm) – rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. SHA-1 opublikowany został w 1995 i całkowicie zastąpił wycofany
-            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2^64 bitów
+            <b>SHA</b> <i>(Secure Hash Algorithm)</i> to rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. SHA-1 opublikowany został w 1995 i całkowicie zastąpił wycofany
+            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2<sup>64</sup> bitów
             i działa na podobnych zasadach co MD5.
             <br>
+            <br>Wiadomości przetwarzane są w blokach 512-bitowych. Uzupełnianie wiadomości przebiega identyczne jak w MD5. Do wiadomości dodajemy '1' oraz tyle '0', aby uzupełnić wiadomość do długości
+            448 bitów. Ostatnie 64 bity przeznaczone są na informację o długości wiadomości.
+            <br>Algorytm SHA1 wymaga 160-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na pięć słów (każdy po 32 bity) oznaczone jako  H<sub>0</sub>, H<sub>1</sub>,
+            H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub> (decymalnie):
+            <br><b>Słowo H<sub>0</sub>:</b> 1732584193
+            <br><b>Słowo H<sub>1</sub>:</b> 4023233417
+            <br><b>Słowo H<sub>2</sub>:</b> 2562383102
+            <br><b>Słowo H<sub>3</sub>:</b> 271733878
+            <br><b>Słowo H<sub>4</sub>:</b> 3285377520
             <br>
-            W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2^63 obliczeń.
-            Ta liczba miałaby wartość 2^80, jeśli algorytm byłby bez wad. Przeglądarka Chrome oznacza witryny wykorzystujące SHA-1 jako niebezpieczne.
+            <br>
+            Są 4 rundy, w każdej rundzie wykonywane jest 20 operacji. Każda runda na wejściu pobiera 512-bitowy blok wiadomości, słowa ABCDE oraz stałą K[t] <i>(t = 0...79)</i>.
+            <br><br>Funkcje pomocnicze <i>f(0), f(1), ..., f(79)</i> dla t = 0...79 operujące na 32-bitowych słowach B, C, D:
+            <br><b>f(t;B,C,D)</b>  = (B AND C) OR ((NOT B) AND D)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>( 0 &le; t &le; 19)</i>
+            <br><b>f(t;B,C,D)</b>  = B XOR C XOR D  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(20 &le; t &le; 39)</i>
+            <br><b>f(t;B,C,D)</b>  = (B AND C) OR (B AND D) OR (C AND D)  &nbsp;&nbsp;&nbsp;<i>(40 &le; t &le; 59)</i>
+            <br><b>f(t;B,C,D)</b>  = B XOR C XOR D   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(60 &le; t &le; 79)</i>
+            <br><br>
+            Ciąg stałych słów K (0), K (1), ..., K (79):
+            <br><b>K(t)</b> = 1518500249  &nbsp;&nbsp;&nbsp;<i>( 0 &le; t &le; 19)</i>,
+            <br><b>K(t)</b> = 1859775393  &nbsp;&nbsp;&nbsp;<i>(20 &le; t &le; 39)</i>,
+            <br><b>K(t)</b> = 2400959708  &nbsp;&nbsp;&nbsp;<i>(40 &le; t &le; 59)</i>,
+            <br><b>K(t)</b> = 3395469782  &nbsp;&nbsp;&nbsp;<i></i>(60 &le; t &le; 79).
+            <br><br>
+            W celu wygenerowania skrótu komunikatu 512-bitowy blok, powstały po uzupełnieniu wiadomości, dzielony jest na 16 słów 32-bitowych <b>w[t]</b> <i>( 0 ≤ t ≤ 15)</i>. Następnie tablica <i>w</i> rozszerzana jest do 80 elementów 32-bitowych za pomocą operacji:
+            <br><br>
+            Dla <i>t = 16...79</i>:
+            <br>
+            w[t] = (w[t-3] xor w[t-8] xor w[t-14] xor w[t-16]) <<< 1 &nbsp;&nbsp;&nbsp;&nbsp;    ( "<i><<< x</i>" - oznacza rotację w lewo o x bitów)
+            <br><br> Następnie wartości bufora kopiowane są do zamiennych pomocniczych A, B, C, D.
+            <br> H<sub>0</sub> = A,&nbsp;&nbsp;&nbsp; H<sub>1</sub> = B,&nbsp;&nbsp;&nbsp; H<sub>2</sub> = C,&nbsp;&nbsp;&nbsp; H<sub>3</sub> = D,&nbsp;&nbsp;&nbsp; H<sub>4</sub> = E.
+            <br><br>
+            Później dla <i>t = 0...79</i> wykonywane są następujące operacje:
+            <br><br>TEMP = (A <<< 5) + f(t;B,C,D) + E + W(t) + K(t)
+            <br><br>E = D, &nbsp;&nbsp;&nbsp;&nbsp; D = C, &nbsp;&nbsp;&nbsp;&nbsp; C = (B <<< 30 ), &nbsp;&nbsp;&nbsp;&nbsp; B = A, &nbsp;&nbsp;&nbsp;&nbsp; A = TEMP.
+            <br><br>
+            Ostateczna wartość rejestrów otrzymywana jest poprzez dodanie zainicjowanej na początku wartości rejestru do wartości rejestru po przetwarzaniu:
+            <br><br>
+                <b>H<sub>0</sub></b> = H<sub>0</sub> + A,&nbsp;&nbsp;&nbsp; <b>H<sub>1</sub></b> = H<sub>1</sub> + B,&nbsp;&nbsp;&nbsp; <b>H<sub>2</sub></b> = H<sub>2</sub> + C,&nbsp;&nbsp;&nbsp; <b>H<sub>3</sub></b> = H<sub>3</sub> + D,&nbsp;&nbsp;&nbsp; <b>H<sub>4</sub></b> = H<sub>4</sub> + D.
+            <br><br>
+            Skrót wiadomości powstaje poprzez połączenie wartości rejestrów H<sub>0</sub>, H<sub>1</sub>, H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub> w kolejności od najmniej znaczącego bajtu rejestru H<sub>0</sub> do najbardziej znaczącego bajtu rejestru H<sub>4</sub> (pamiętaj, że jeden bajt to 2 znaki heksadecymalne).
+            <br><br>W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2<sup>63</sup> obliczeń.
+            Ta liczba miałaby wartość 2<sup>80</sup>, jeśli algorytm byłby bez wad. Przeglądarka Chrome oznacza witryny wykorzystujące SHA-1 jako niebezpieczne.
             W 2001 powstały cztery następne warianty określane jako SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512).
         </p>
     </div>
