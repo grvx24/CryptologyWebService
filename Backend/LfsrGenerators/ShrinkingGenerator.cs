@@ -32,13 +32,22 @@ namespace CryptoWebService.Backend.LfsrGenerators
         }
         protected override bool GenerateOneBit()
         {
-            while (!Registers[0].GetOutputBit())
+            int breakValue = 1000;
+            int counter = 0;
+            while (counter < breakValue)
             {
-                NextStep();
+                if (Registers[0].GetOutputBit())
+                {
+                    NextStep();
+                    return Registers[1].GetOutputBit();
+                }
+                else
+                {
+                    NextStep();
+                }
+                counter++;
             }
-
-            var result = Registers[1].GetOutputBit();
-            return result;
+            throw new Exception("Nie znaleziono bitu '1', zmień wartości w pierwszym rejestrze!");
 
         }
     }

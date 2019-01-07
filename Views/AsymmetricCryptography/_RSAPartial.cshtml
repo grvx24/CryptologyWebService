@@ -16,18 +16,30 @@
             <label for="publicKey">Klucz publiczny (N, D)</label>
             <input id="publicKey" class="form-control" type="text"/>
             <br />
-            <div class="text-center">
-                <button class="btn btn-success">Wczytaj klucz publiczny</button>
-                <button class="btn btn-success">Zapisz klucz publiczny</button>
+            <div class="form-inline">
+                <label class="input-group">
+                    <span class="btn btn-success">
+                        Wczytaj klucz publiczny&hellip; <input id="filePublicKey" accept="text/plain" type="file" style="display: none;">
+                    </span>
+                </label>
+                <label class="input-group">
+                    <button id="savePublicKey" class="btn btn-success">Zapisz klucz publiczny</button>
+                </label>
             </div>
         </div>
         <div class="col-lg-6">
             <label for="privateKey">Klucz prywatny (N, E)</label>
-            <input id="privateKey" class="form-control" type="text"/>
-            <br/>
-            <div class="text-center">
-                <button class="btn btn-danger">Wczytaj klucz prywatny</button>
-                <button class="btn btn-danger">Zapisz klucz prywatny</button>
+            <input id="privateKey" class="form-control" type="text" />
+            <br />
+            <div class="form-inline">
+                <label class="input-group">
+                    <span class="btn btn-danger">
+                        Wczytaj klucz prywatny&hellip; <input id="filePrivateKey" accept="text/plain" type="file" style="display: none;">
+                    </span>
+                </label>
+                <label class="input-group">
+                    <button id="savePrivateKey" class="btn btn-danger">Zapisz klucz prywatny</button>
+                </label>
             </div>
 
         </div>
@@ -63,12 +75,18 @@
             <div class="col-md-12">
                 <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
                 <textarea placeholder="Tekst w formacie Unicode" class="form-control" rows="5" id="inputEncrypt"></textarea>
-                <br/>
+                <br />
                 <div class="text-center">
-                    <button class="btn btn-secondary">Wczytaj wiadomość</button>
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary">
+                                Wczytaj wiadomość&hellip; <input id="fileMessage" accept="text/plain" type="file" style="display: none;">
+                            </span>
+                        </label>
+                        <input id="filenameMessage" type="text" class="form-control" readonly>
+                    </div>
                 </div>
-
-</div>
+            </div>
         </div>
     </div>
 
@@ -79,7 +97,7 @@
                 <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
                 <br/>
                 <div class="text-center">
-                    <button class="btn btn-secondary">Zapisz szyfrogram</button>
+                    <button id="saveCipherText" class="btn btn-primary">Zapisz szyfrogram</button>
                     <button class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
                 </div>
                 </div>
@@ -108,9 +126,16 @@
             <div class="col-md-12">
                 <label for="inputDencrypt">Szyfrogram</label>
                 <textarea placeholder="Liczby oddzielone przecinkami" class="form-control" rows="5" id="inputDecrypt"></textarea>
-                <br/>
+                <br />
                 <div class="text-center">
-                    <button class="btn btn-secondary">Wczytaj szyfrogram</button>
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary">
+                                Wczytaj szyfrogram&hellip; <input id="fileCipherText" accept="text/plain" type="file" style="display: none;">
+                            </span>
+                        </label>
+                        <input id="filenameCipherText" type="text" class="form-control" readonly>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +148,7 @@
                 <textarea readonly class="form-control" rows="5" id="outputDecrypt"></textarea>
                 <br/>
                 <div class="text-center">
-                    <button class="btn btn-secondary">Zapisz wiadomość</button>
+                    <button id="saveMessageText" class="btn btn-primary">Zapisz wiadomość</button>
                     <button class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
                 </div>
             </div>

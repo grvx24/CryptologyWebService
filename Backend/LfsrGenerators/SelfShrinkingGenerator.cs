@@ -33,6 +33,9 @@ namespace CryptoWebService.Backend.LfsrGenerators
             Registers[0].NextStep();
             var value2 = Registers[0].GetOutputBit();
 
+            int breakValue = 1000;
+            int counter = 0;
+
             while (!value1)
             {
                 Registers[0].NextStep();
@@ -40,6 +43,11 @@ namespace CryptoWebService.Backend.LfsrGenerators
                 Registers[0].NextStep();
                 value2 = Registers[0].GetOutputBit();
 
+                counter++;
+                if (counter > breakValue)
+                {
+                    throw new Exception("Nie znaleziono bitu '1', zmień wartości w rejestrze!");
+                }
             }
 
             return value2;
