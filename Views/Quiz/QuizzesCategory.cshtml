@@ -1,41 +1,64 @@
-﻿@model IEnumerable<CryptoWebService.Data.Category>
+﻿@model IEnumerable<CryptoWebService.Models.Quiz.Dto.CategoryDto>
 
 @{
     ViewData["Title"] = "quiz";
 }
 
 <div class="container">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-    }
-
     <table class="table">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CategoryName)
+            <tr >
+                <th class="MyStyle">
+                    nazwa kategorii
                 </th>
-                <th></th>
+                <th class="text-center MyStyle" >
+                    liczba dostepnych quizów
+                </th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th class="text-center MyStyle">
+                        funkcje administratora
+                    </th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr style="font-size:18px;">
                     <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
+                        <a asp-action="@item.SecondCategoryName" >@item.CategoryName</a>
                     </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.NumberOfQuizzes)
                     </td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-pencil"></a>
+                        <label style="margin:0px 5px"></label>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                    </td>
+                    }
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
+<style>
+    .MyStyle {
+        color: #1c5aa6;
+        font-size:18px;
+    }
+
+    table tbody tr td {
+        border-bottom: 1px solid #1c5aa6
+    }
+    .table thead tr th {
+        border-bottom: 2px solid #1c5aa6
+    }
+    .table tbody tr td {
+        vertical-align: middle;
+    }
+</style>

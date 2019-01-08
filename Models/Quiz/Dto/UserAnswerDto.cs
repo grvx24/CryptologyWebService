@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoWebService.Models.Quiz
+namespace CryptoWebService.Models.Quiz.Dto
 {
-    public class UserAnswer
+    public class UserAnswerDto
     {
         public int QuestionId { get; set; }
 

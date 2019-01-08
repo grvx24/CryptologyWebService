@@ -1,4 +1,4 @@
-﻿namespace CryptoWebService.Models.Quiz
+﻿namespace CryptoWebService.Models.Quiz.ViewModel
 {
     public class AnswerViewModel
     {

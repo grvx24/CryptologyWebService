@@ -1,38 +1,92 @@
-﻿@model IEnumerable<CryptoWebService.Data.Quiz>
+﻿@model CryptoWebService.Models.Quiz.ViewModel.QuizzesListViewModel
 
 @{
-    ViewData["Title"] = "quiz";
+    ViewData["Title"] = Model.CategoryName;
 }
 
-<div class="container">
-    <button>
-        widok listy quizów
-    </button>
 
+<div class="container">
+    <h2 class="text-center" style="color: #1c5aa6; margin-bottom:20px;">
+        lista quizów z kategorii: 
+        <label>
+            @Model.CategoryName
+        </label>
+    </h2>
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.QuizName)
+                <th class="MyStyle">
+                    nazwa quizu
                 </th>
-                <th></th>
+                <th class="text-center MyStyle">
+                    liczba pytań
+                </th>
+                <th>
+
+                </th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th class="text-center MyStyle">
+                        funkcje administratora
+                    </th>
+                }
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Quizzes)
             {
-                <tr>
+                <tr style="font-size:18px">
                     <td>
                         @Html.DisplayFor(modelItem => item.QuizName)
+                        
                     </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.NumberOfQuestions)
                     </td>
+                    <td class="text-center">
+                        @{
+                            if (item.NumberOfQuestions <= 0)
+                            {
+                                <input type="button" class="btn btn-primary" disabled value="Rozwiąż !">
+                            }
+                            else
+                            {
+                                <a href="@("./"+Model.SecondCategoryName+ "/" + item.QuizNumber)">
+                                    <input type="button" class="btn btn-primary" value="Rozwiąż !">
+                                </a>
+                            }
+                        }
+                    </td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-pencil"></a>
+                            <label style="margin:0px 5px"></label>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                        </td>
+                    }
+
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
+<style>
+    .MyStyle {
+        color: #1c5aa6;
+        font-size: 18px;
+    }
+
+    table tbody tr td {
+        border-bottom: 1px solid #1c5aa6;
+    }
+
+    .table thead tr th {
+        border-bottom: 2px solid #1c5aa6; 
+    }
+
+    .table tbody tr td {
+        vertical-align: middle;
+    }
+</style>

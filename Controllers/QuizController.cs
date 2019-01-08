@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoWebService.Models.Quiz;
+using CryptoWebService.Models.Quiz.Dto;
+using CryptoWebService.Models.Quiz.ViewModel;
 
 namespace CryptoWebService.Controllers
 {
@@ -25,7 +27,13 @@ namespace CryptoWebService.Controllers
         {
             if (String.IsNullOrEmpty(categoryName))
             {
-                var Categories = _context.Category.ToList();
+                IEnumerable<CategoryDto> Categories = _context.Category
+                    .Select(cat =>new CategoryDto(){
+                        Id = cat.Id,
+                        CategoryName = cat.CategoryName,
+                        SecondCategoryName = changeCategoryName(cat.CategoryName.Replace(" ", String.Empty)),
+                        NumberOfQuizzes = _context.Quiz.Where(q => q.CategoryId== cat.Id).Count()
+                    }).ToList();
 
                 return View("QuizzesCategory", Categories);
             }
@@ -33,13 +41,26 @@ namespace CryptoWebService.Controllers
             {
                 categoryName = changeCategoryName(categoryName);
 
-                var QuizzesInCategory = _context.Quiz.Where(q => q.Category.CategoryName.Replace(" ", String.Empty) == categoryName).ToList();
+                var QuizzesInCategory = _context.Quiz.Where(q => q.Category.CategoryName.Replace(" ", String.Empty) == categoryName)
+                    .Select(q => new QuizDto()
+                    {
+                        Id = q.Id,
+                        QuizName = q.QuizName,
+                        QuizNumber = q.QuizNumber,
+                        NumberOfQuestions = _context.Question.Where(question => question.QuizId == q.Id).Count()
+                    }).ToList();
 
                 if (QuizzesInCategory.Count == 0) return NotFound();
 
                 if (quizNumber == null || quizNumber == 0)
                 {
-                    return View("QuizzesList", QuizzesInCategory);
+                    var viewModel = new QuizzesListViewModel()
+                    {
+                        CategoryName = _context.Category.Where(c => c.CategoryName.Replace(" ", String.Empty) == categoryName).Select(c => c.CategoryName).FirstOrDefault(),
+                        SecondCategoryName = categoryName,
+                        Quizzes = QuizzesInCategory
+                    };
+                    return View("QuizzesList", viewModel);
                 }
                 else
                 {  
@@ -81,8 +102,9 @@ namespace CryptoWebService.Controllers
             }
         }
 
+
         [HttpPost]
-        public IActionResult CheckQuiz(UserAnswers userAnswers)
+        public IActionResult CheckQuiz(UserAnswersDto userAnswers)
         {
 
             return View("Quiz");
