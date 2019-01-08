@@ -30,6 +30,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
             {
                 Registers[registerIndex] = register;
             }
+            Registers[registerIndex].UpdateOutputBit();
         }
 
         protected virtual bool GenerateOneBit()
