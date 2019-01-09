@@ -5,7 +5,7 @@ namespace CryptoWebService.Helpers
 {
     public static class RandomHelper
     {
-        private static List<E> ShuffleList<E>(List<E> listToShuffle)
+        public static List<E> ShuffleList<E>(List<E> listToShuffle)
         {
             int randomIndex = 0;
             Random r = new Random();
