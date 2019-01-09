@@ -8,6 +8,7 @@ using System.Linq;
 using CryptoWebService.Models.Quiz;
 using CryptoWebService.Models.Quiz.Dto;
 using CryptoWebService.Models.Quiz.ViewModel;
+using CryptoWebService.Helpers;
 
 namespace CryptoWebService.Controllers
 {
@@ -80,6 +81,7 @@ namespace CryptoWebService.Controllers
                         {
                             answerViewModels.Add(new AnswerViewModel()
                             {
+                                AnswerId = answers[j].Id,
                                 AnswerContent = answers[j].Content
                             });
                         }
@@ -88,14 +90,16 @@ namespace CryptoWebService.Controllers
                         {
                             QuestionContent = Questions[i].Content,
                             Answers = answerViewModels,
-                            Number = i+1,
+                            QuestionId = Questions[i].Id,
                             AmountOfQuestionsInQuiz = Questions.Count()
                         });
                     }
 
                     QuizViewModel quizViewModel = new QuizViewModel();
+                    quizViewModel.QuizId = quiz.Id;
                     quizViewModel.QuizName = quiz.QuizName;
-                    quizViewModel.Questions = questionViewModels;
+                    quizViewModel.AmountOfQuestions = questionViewModels.Count();
+                    quizViewModel.Questions = RandomHelper.ShuffleList(questionViewModels);
 
                     return View("Quiz", quizViewModel);
                 }
@@ -104,11 +108,58 @@ namespace CryptoWebService.Controllers
 
 
         [HttpPost]
-        public IActionResult CheckQuiz(UserAnswersDto userAnswers)
+        [Route("quiz/Checkquiz")]
+        public IActionResult Checkquiz([FromBody] UserAnswersDto userAnswers)
         {
+            try
+            {
+                if (userAnswers == null) return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
 
-            return View("Quiz");
+                var quiz = _context.Quiz.Where(q => q.Id == userAnswers.QuizId).FirstOrDefault();
+                if (quiz == null) return Json(new { Result = false, Message = "ERROR - Quiz o podanym Id nie istnieje." });
+
+                int Points = 0;
+                var questionsDB = _context.Question.Where(q => q.QuizId == quiz.Id);
+                foreach (var item in userAnswers.QuestionAnswers)
+                {
+                    var questionDB = questionsDB.Where(q => q.Id == item.QuestionId).FirstOrDefault();
+                    bool CorrectAnswerOnQuestion = true;
+                    if (questionDB != null)
+                    {
+                        var qAnswersDB = _context.Answer.Where(q => q.QuestionId == questionDB.Id);
+                        foreach (var itemAnswer in qAnswersDB)
+                        {
+                            var x = item.SelectedAnswersId.Where(q => q == itemAnswer.Id);
+                            if ((x == null || x.Count() == 0) && itemAnswer.Correct || (x != null ||x.Count() > 0) && !itemAnswer.Correct)
+                            {
+                                CorrectAnswerOnQuestion = false;
+                                break;
+                            }
+                        }
+                        if (CorrectAnswerOnQuestion) Points += 1;
+                    }
+                    else
+                    {
+                        return Json(new { Result = false, Message = "ERROR - Pytanie o podanym Id nie istnieje." });
+                    }
+                }
+
+                float score = (float)Points / (float)questionsDB.Count();
+
+                if (score > 0)
+                {
+                    score *= 100;
+                }
+
+                return Json(new { Result = true, score = score });
+            }catch(Exception e)
+            {
+                return Json(new { Result = false, Message = "Nieznany bład", ErrorMessage = e.Message});
+            }
+           
         }
+
+
 
         private string changeCategoryName(string categoryName)
         {

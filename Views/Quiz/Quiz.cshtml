@@ -5,18 +5,21 @@
 }
 
 <div class="container">
-
-    <label>
+    <input hidden id="quizId" value="@Model.QuizId" />
+    <input hidden id="amountOfQuestions" value="@Model.AmountOfQuestions" />
+    
+    <label class="col-lg-12 text-center" style="font-size:20px; color:#1c5aa6;">
         @Model.QuizName
     </label>
 
     @{
         for (int i = 0; i < Model.Questions.Count(); i++)
         {
+            Model.Questions[i].Number = i + 1;
             await Html.RenderPartialAsync("Question", Model.Questions[i]);
         }
     }
-    <div class="col-lg-12 text-center" id="ResultPanel">
+    <div class="col-lg-12 text-center" id="ResultPanel" style="display:none" >
         <svg viewBox="0 0 36 36" class="circular-chart blue">
             <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             <path id="CircleId" class="circle"
@@ -34,13 +37,100 @@
 </div>
 
 <script>
-    function CheckQuiz() {
-        var ResultValue = 56;
-        $('#CircleId').addClass('circleAnimation');
-        document.getElementById("CircleId").setAttribute("stroke-dasharray", ResultValue + ",100");
-        $('#ResultPercentage').text(ResultValue+"%");
+    function TakeQuestionAnswers(questionNumber) {
+        questionNumber = questionNumber + 1;
+        var allAnswersOnQuestion = $('[id^=question_' + questionNumber + '_]');
+        var _selectedAnswersId = [];
 
-        showLoading();
+        var i;
+        for (i = 0; i < allAnswersOnQuestion.length; i++) {
+            var isChecked = allAnswersOnQuestion[i].checked;
+            if (isChecked) {
+                _selectedAnswersId.push(allAnswersOnQuestion[i].id.split("_")[5]);
+            }   
+        }
+
+        if (_selectedAnswersId.length == 0) {
+            return undefined ;
+        } else {
+            return {
+                QuestionId: allAnswersOnQuestion[0].id.split("_")[3],
+                SelectedAnswersId: _selectedAnswersId
+            };
+        }
+    }
+
+    function TakeAnswersOnQuestion() {
+        var amountOfQuestionsInQuiz = parseInt(document.getElementById("amountOfQuestions").getAttribute("value"));
+
+        var questionAnswers = [];
+        var i;
+        for (i = 0; i < amountOfQuestionsInQuiz; i++) {
+            var x = TakeQuestionAnswers(i);
+            if (typeof x !== 'undefined') {
+                questionAnswers.push(x);
+            }  
+        }
+
+        var UserAnswersDto = {
+            QuestionAnswers: questionAnswers,
+            QuizId: document.getElementById("quizId").getAttribute("value")
+        }
+
+        return UserAnswersDto;
+    }
+
+    function CheckQuiz() {
+
+        var UserAnswersDto = TakeAnswersOnQuestion();
+
+        if (UserAnswersDto.QuestionAnswers.length > 0) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Checkquiz")',
+                data: JSON.stringify(UserAnswersDto),
+                dataType: 'json',
+                contentType: "application/json",
+                beforeSend: function () {
+                    hideResult();
+                    showLoading();
+                },
+                complete: function () {
+                    hideLoading();
+                },
+                success: function (response) {
+                    if (response.result == true) {
+                        onSucces(response);
+                    } else {
+                        onError(response);
+                    }
+                },
+                error: function (response) {
+                    onError("AJAX ERROR" + response);
+                }
+            });
+        } else {
+            onError("0 zaznaczeń");
+        }
+
+         
+    }
+
+    function onSucces(response) {
+        showResult(response.score);
+    }
+    function onError(response) {
+        console.log(response);
+    }
+    function hideResult() {
+        $('#ResultPanel').hide();
+    }
+
+    function showResult(result) {
+        $('#ResultPanel').show();
+        $('#CircleId').addClass('circleAnimation');
+        document.getElementById("CircleId").setAttribute("stroke-dasharray", result + ",100");
+        $('#ResultPercentage').text(result + "%");
     }
 
     function showLoading() {
@@ -83,7 +173,7 @@
     }
 
     .circleAnimation {
-        animation: progress 1s ease-out forwards;
+        animation: progress 2s ease-out forwards;
     }
 
     @@keyframes progress {
