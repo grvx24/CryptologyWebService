@@ -38,7 +38,10 @@
                 <ul class="nav navbar-nav navbar-right" id="navbar-nav-top">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">O nas</a></li>
+                    <li><a asp-action="DownloadDesktop" asp-controller="Home">
+                        Pobierz aplikację desktopową</a></li>
                     <partial name="_LoginPartial" />
+
                 </ul>
             </div><!-- /.navbar-collapse -->
 
@@ -146,7 +149,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - CryptoWebService</p>
+            <p>&copy; 2019 - KryptoKombajn</p>
         </footer>
     </div>
 

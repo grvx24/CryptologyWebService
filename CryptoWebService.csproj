@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\desktop\" />
     <Folder Include="wwwroot\primes\" />
   </ItemGroup>
 

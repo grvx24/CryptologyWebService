@@ -5,11 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CryptoWebService.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace CryptoWebService.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public HomeController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         public IActionResult Index()
         {
             return View();
@@ -38,6 +46,18 @@ namespace CryptoWebService.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public FileResult DownloadDesktop()
+        {
+            string rootDir = _hostingEnvironment.WebRootPath;
+            string filedir = "/desktop/KryptoKombajnDesktop.zip";
+            string filename = "KryptoKombajnDesktop.zip";
+            FileInfo file = new FileInfo(Path.Combine(rootDir, filedir));
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(rootDir+ filedir);
+            return File(fileBytes, "application/x-msdownload", filename);
+            
         }
     }
 }

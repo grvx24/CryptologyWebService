@@ -19,7 +19,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
                 switch (length)
                 {
                     case 2:
-                        dictionary.Add(length, new int[] {0, length - 1});
+                        dictionary.Add(length, new int[] { 0, length - 1 });
                         break;
                     case 3:
                         dictionary.Add(length, new int[] { 0, length - 1 });
@@ -28,7 +28,7 @@ namespace CryptoWebService.Backend.LfsrGenerators
                         dictionary.Add(length, new int[] { 0, length - 1 });
                         break;
                     case 5:
-                        dictionary.Add(length, new int[] { 0, 2 });
+                        dictionary.Add(length, new int[] { 1, length - 1 });
                         break;
                     case 6:
                         dictionary.Add(length, new int[] { 0, length - 1 });
@@ -37,43 +37,43 @@ namespace CryptoWebService.Backend.LfsrGenerators
                         dictionary.Add(length, new int[] { 0, length - 1 });
                         break;
                     case 8:
-                        dictionary.Add(length, new int[] { 0, 1, 6, 7 });
+                        dictionary.Add(length, new int[] { 3, 4, 5, 7 });
                         break;
                     case 9:
-                        dictionary.Add(length, new int[] { 0, 4 });
+                        dictionary.Add(length, new int[] { 4, 8 });
                         break;
                     case 10:
-                        dictionary.Add(length, new int[] { 0, 3 });
+                        dictionary.Add(length, new int[] { 6, 9 });
                         break;
                     case 11:
-                        dictionary.Add(length, new int[] { 0, 8, 10 });
+                        dictionary.Add(length, new int[] { 8, 10 });
                         break;
                     case 12:
-                        dictionary.Add(length, new int[] { 0, 3, 9, 10, 11 });
+                        dictionary.Add(length, new int[] { 3, 9, 10, 11 });
                         break;
                     case 13:
-                        dictionary.Add(length, new int[] { 0, 2, 4, 5, 6, 11 });
+                        dictionary.Add(length, new int[] { 7, 10, 11, 12 });
                         break;
                     case 14:
-                        dictionary.Add(length, new int[] { 0, 3, 4, 5 });
+                        dictionary.Add(length, new int[] { 1, 11, 12, 13 });
                         break;
                     case 15:
-                        dictionary.Add(length, new int[] { 0, 1, 13, 14 });
+                        dictionary.Add(length, new int[] { 13, 14 });
                         break;
                     case 16:
-                        dictionary.Add(length, new int[] { 0, 3, 6 });
+                        dictionary.Add(length, new int[] { 3, 12, 14, 15 });
                         break;
                     case 17:
-                        dictionary.Add(length, new int[] { 0, 6, 7, 8 });
+                        dictionary.Add(length, new int[] { 13, 16 });
                         break;
                     case 18:
-                        dictionary.Add(length, new int[] { 0, 1, 2, 8 });
+                        dictionary.Add(length, new int[] { 10, 17 });
                         break;
                     case 19:
-                        dictionary.Add(length, new int[] { 0, 1, 5, 18 });
+                        dictionary.Add(length, new int[] { 13, 16, 17, 18 });
                         break;
                     case 20:
-                        dictionary.Add(length, new int[] { 0, 1, 2, 8, 17, 19 });
+                        dictionary.Add(length, new int[] { 16, 19 });
                         break;
                 }
             }
