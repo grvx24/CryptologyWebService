@@ -61,8 +61,29 @@
                     {
                         <td class="text-center">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-pencil"></a>
-                            <label style="margin:0px 5px"></label>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                            @if (item.NumberOfQuestions == 0)
+                            {
+                                <label style="margin:0px 5px"></label>
+                                <a data-toggle="modal" data-target=".bootstrapmodal" class="glyphicon glyphicon-trash"></a>
+                                <div class="modal fade bootstrapmodal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button>
+                                                    czy na pewno?
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                            </div>
+                                            <div class="modal-footer">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            }
                         </td>
                     }
 
