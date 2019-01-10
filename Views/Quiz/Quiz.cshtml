@@ -29,6 +29,8 @@
             <text x="18" y="20.35" class="percentage" id="ResultPercentage">0%</text>
         </svg>
     </div>
+    <div class="text-center alert col-lg-12 alert-danger" role="alert" id="alertPanel" style="display:none; margin-top:20px;">
+    </div>
     <div class="col-lg-12 text-center">
         <div id="loading" class="loader" style="display:none;"></div>
         <input style="cursor:pointer;" type="button" class="btn btn-block CheckButton" value="Sprawdź !" onclick="CheckQuiz()">
@@ -92,6 +94,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 beforeSend: function () {
+                    hideAlert()
                     hideResult();
                     showLoading();
                 },
@@ -110,10 +113,18 @@
                 }
             });
         } else {
-            onError("0 zaznaczeń");
-        }
+            showAlert("Nie zaznaczono żadnej odpowiedzi")
+        }    
+    }
 
-         
+    function showAlert(msg) {
+        hideResult();
+        $('#alertPanel').show();
+        $('#alertPanel').text(msg);
+    }
+
+    function hideAlert() {
+        $('#alertPanel').hide();
     }
 
     function onSucces(response) {
