@@ -1776,12 +1776,10 @@ var RouteCipherInit = function (config) {
         $('#encryptButton').click(function () {
 
             var key = parseInt($("#keyEncrypt option:selected").val());
-            var mode = parseInt($("#encryptMode option:selected").val());
 
             var model = {
                 message: $('#inputEncrypt').val(),
                 key: key,
-                mode: mode
             }
 
             $.ajax({
@@ -1804,12 +1802,10 @@ var RouteCipherInit = function (config) {
         $('#decryptButton').click(function () {
 
             var key = parseInt($("#keyDecrypt option:selected").val());
-            var mode = parseInt($("#decryptMode option:selected").val());
             console.log(key);
             var model = {
                 message: $('#inputDecrypt').val(),
                 key: key,
-                mode: mode
             }
 
             $.ajax({
