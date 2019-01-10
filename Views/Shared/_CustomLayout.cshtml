@@ -46,7 +46,7 @@
     </nav>
     <header>
 
-        <img src="~/images/logo1.png" alt="Main logo" width="600" style="margin-left:100px; margin-top:-20px;">
+        <img src="~/images/logo1.png" alt="Main logo" width="600" style="margin-left:100px; margin-top:-20px;" onclick="window.location.href='/'"  > 
 
 
         <nav class="navbar navbar-default">
@@ -64,8 +64,21 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <ul class="nav navbar-nav">
                         <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Funkcje skrótu<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="MDC">Funkcje skrótu bez klucza:</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a></li>
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a></li>
+                                @*<li><a class="dropdown-item" href="#">SHA-3 (Keccak)</a></li>*@
+                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC (z kluczem)</a></li>
+                            </ul>
+                        </li>
+                        <li class="btn-group">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true"> Generatory<span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Generators" asp-action="Lfsr">Rejestr LFSR</a></li>
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="Cascade">Kaskadowy</a></li>
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="Geffe">Geffe'go</a></li>
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="Shrinking">Rozrzedzający</a></li>
@@ -73,6 +86,12 @@
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="Threshold">Progowy</a></li>
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="SelfShrinking">Samorozrzedzający</a></li>
                                 <li><a class="dropdown-item" asp-controller="Generators" asp-action="SelfDecimation">Rueppela</a></li>
+                            </ul>
+                        </li>
+                        <li class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Kryptografia asymetryczna<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="AsymmetricCryptography" asp-action="RSA">RSA</a></li>
                             </ul>
                         </li>
                         <li class="btn-group">
@@ -93,23 +112,6 @@
                                 <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Playfair">Playfair</a></li>
                                 <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Route">Ścieżkowy</a></li>
                                 <li><a class="dropdown-item" asp-controller="ClassicalCiphers" asp-action="Vigenere">Vigenere'a</a></li>
-                            </ul>
-                        </li>
-                        <li class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Funkcje skrótu<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="MD5">MD5</a></li>
-                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA1">SHA-1</a></li>
-                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA256">SHA-256</a></li>
-                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="SHA512">SHA-512</a></li>
-                                @*<li><a class="dropdown-item" href="#">SHA-3 (Keccak)</a></li>*@
-                                <li><a class="dropdown-item" asp-controller="HashFunctions" asp-action="HMAC">HMAC (z kluczem)</a></li>
-                            </ul>
-                        </li>
-                        <li class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Kryptografia asymetryczna<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="AsymmetricCryptography" asp-action="RSA">RSA</a></li>
                             </ul>
                         </li>
                         <li class="btn-group">

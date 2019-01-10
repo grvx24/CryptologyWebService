@@ -7,28 +7,26 @@
 <h4>- uzupełniamy wiadomość bitami o wartości "0" tak, aby długość komunikatu była o 64 bity krótsza niż wielokrotność 512,</h4>
 <h4>- następnie na końcu wiadomości dodajemy 64 bity wskazujące długość oryginalnej wiadomości.</h4>
 <div class="col-md-12">
-    <span class="col-md-8">
-        <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="margin-bottom:10px; border-color:dodgerblue" rows="1" id="exampleMessage"></textarea>
-    </span>
-    <button class="btn btn-primary" id="paddingButton" type="submit" disabled>Uzupełnij wiadomość</button>
+     <textarea class="form-control" placeholder="Wpisz przykładową wiadomość" style="width:83%;float:left; margin-right:40px; margin-bottom:10px;margin-left:-15px; border-color:dodgerblue; font-size:20px" rows="1" id="exampleMessage"></textarea>
+    <button class="btn btn-primary" id="paddingButton" type="submit" style="height:42px; float:left" disabled>Uzupełnij wiadomość</button>
 </div>
 <h4>Wiadomość w postaci bitów.</h4>
 <div class="col-md-12">
-    <div class="col-md-8">
-        <textarea class="form-control" placeholder="Wiadomość w  bitach" style="margin-bottom:10px;border-color:dodgerblue;background-color:white; text-align:justify" rows="3" id="messageBits" disabled></textarea>
-    </div>
+    
+        <textarea class="form-control" placeholder="Wiadomość w  bitach" style="margin-left:-15px; margin-bottom:10px;border-color:dodgerblue;background-color:white; text-align:justify; font-size:20px" rows="3" id="messageBits" disabled></textarea>
+    
 </div>
 <h4>
     Wiadomość zawiera
-    <input type="text" class="md5" name="messageLength" id="messageLength" size="4" disabled readonly />
+    <input type="text" class="pad" name="messageLength" id="messageLength" size="4" disabled readonly />
     bitów. Aby długość wiadomości wynosiła 448 mod 512, musimy uzupełnić ją o
-    <input type="text" class="md5" name="paddedBits" id="paddedBits" size="4" disabled />
+    <input type="text" class="pad" name="paddedBits" id="paddedBits" size="4" disabled />
     bity, ponieważ
-    <input type="text" class="md5" name="messageLength2" id="messageLength2" size="4" disabled readonly />
+    <input type="text" class="pad" name="messageLength2" id="messageLength2" size="4" disabled readonly />
     mod 512 =
-    <input type="text" class="md5" name="modResult" id="modResult" size="4" disabled readonly />
+    <input type="text" class="pad" name="modResult" id="modResult" size="4" disabled readonly />
     . Zatem dodajemy jedną '1' oraz
-    <input type="text" class="md5" name="padValue" id="padValue" size="2" disabled readonly />
+    <input type="text" class="pad" name="padValue" id="padValue" size="2" disabled readonly />
     zera.
 </h4>
 
@@ -41,26 +39,22 @@
 
 <h4> Wiadomość po uzupełnieniu:</h4>
 <div class="col-md-12">
-    <div class="col-md-8">
-        <textarea class="form-control" style="margin-bottom:10px;border-color:dodgerblue; background-color:white; text-align:justify" rows="7" cols="100" id="allPadding" disabled></textarea>
-    </div>
+        <textarea class="form-control" style="margin-left:-15px; margin-bottom:10px;border-color:dodgerblue; background-color:white; text-align:justify; font-size:20px" rows="7" cols="100" id="allPadding" disabled></textarea>    
 </div>
 
-<h4 style="margin-top:10px;">
+<h4 style="margin-top:15px;">
     MD5 przetwarza dane w 512-bitowych blokach. Na potrzeby wizualizacji zajmiemy się tylko jednym blokiem 512 bitów. Jeżeli twoja przykładowa wiadomość była krótsza niż 448 bitów (czyli 512 bitów po wykonaniu uzupełnienia)
     możesz zobaczyć wiadomośc po uzupełnieniu w 16 elementowej tablicy X, gdzie każdy element ma 32 bity. Wartości z tablicy X będą wykorzystywane w dalszych etapach obliczania skrótu.
 </h4>
 <div class="col-md-12">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <button class="btn btn-primary" id="XTableButton" style="margin-bottom:15px" disabled>Pokaż szesnastkowo</button>
-    </div>
+        <button class="btn btn-primary" id="XTableButton" style="margin-bottom:15px;margin-left:-15px" disabled>Pokaż tablicę X</button>
 </div>
 <div class="col-md-12">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="registers" id="xTable" style="margin-bottom:25px"></div>
+    <div class="col-md-8">
+        <div  id="xTable" style="margin-bottom:25px;margin-right:25px;float:left;margin-left:-30px"></div>
+        <div  id="xTable2" style="margin-bottom:25px;float:left;"></div>
     </div>
+           
 </div>
 
 <h3 class="steps" style="margin-top:15px;">3. Przetwarzanie zasadnicze.</h3>
@@ -75,98 +69,343 @@
 <h4><b>Słowo B:</b> 4023233417</h4>
 <h4><b>Słowo C:</b> 2562383102</h4>
 <h4><b>Słowo D:</b> 271733878</h4>
-<h4> - 64-elementowa tablica T powstała z funkcji sinus, gdzie <i>T[i] = 4294967296 · |sin(i)|</i>.</h4>
-<table id="table_T" class="md5Data" style="width:100%;font-size:17px;">
-    <tbody>
-        <tr>
-            <td>T[0]=3614090360</td>
-            <td>T[1]=3905402710</td>
-            <td>T[2]=606105819</td>
-            <td>T[3]=3250441966</td>
-            <td>T[4]=4118548399</td>
-            <td>T[5]=1200080426</td>
-            <td>T[6]=2821735955</td>
-            <td>T[7]=4249261313</td>
-        </tr>
-        <tr>
-            <td>T[8]=1770035416</td>
-            <td>T[9]=2336552879</td>
-            <td>T[10]=4294925233</td>
-            <td>T[11]=2304563134</td>
-            <td>T[12]=1804603682</td>
-            <td>T[13]=4254626195</td>
-            <td>T[14]=2792965006</td>
-            <td>T[15]=1236535329</td>
-        </tr>
-        <tr>
-            <td>T[16]=4129170786</td>
-            <td>T[17]=3225465664</td>
-            <td>T[18]=643717713</td>
-            <td>T[19]=3921069994</td>
-            <td>T[20]=3593408605</td>
-            <td>T[21]=38016083</td>
-            <td>T[22]=3634488961</td>
-            <td>T[23]=3889429448</td>
-        </tr>
-        <tr>
-            <td>T[24]=568446438</td>
-            <td>T[25]=3275163606</td>
-            <td>T[26]=4107603335</td>
-            <td>T[27]=1163531501</td>
-            <td>T[28]=2850285829</td>
-            <td>T[29]=4243563512</td>
-            <td>T[30]=1735328473</td>
-            <td>T[31]=2368359562</td>
-        </tr>
-        <tr>
-            <td>T[32]=4294588738</td>
-            <td>T[33]=2272392833</td>
-            <td>T[34]=1839030562</td>
-            <td>T[35]=4259657740</td>
-            <td>T[36]=2763975236</td>
-            <td>T[37]=1272893353</td>
-            <td>T[38]=4139469664</td>
-            <td>T[39]=3200236656</td>
-        </tr>
-        <tr>
-            <td>T[40]=681279174</td>
-            <td>T[41]=3936430074</td>
-            <td>T[42]=3572445317</td>
-            <td>T[43]=76029189</td>
-            <td>T[44]=3654602809</td>
-            <td>T[45]=3873151461</td>
-            <td>T[46]=530742520</td>
-            <td>T[47]=3299628645</td>
-        </tr>
-        <tr>
-            <td>T[48]=4096336452</td>
-            <td>T[49]=1126891415</td>
-            <td>T[50]=2878612391</td>
-            <td>T[51]=4237533241</td>
-            <td>T[52]=1700485571</td>
-            <td>T[53]=2399980690</td>
-            <td>T[54]=4293915773</td>
-            <td>T[55]=2240044497</td>
-        </tr>
-        <tr>
-            <td>T[56]=1873313359</td>
-            <td>T[57]=4264355552</td>
-            <td>T[58]=2734768916</td>
-            <td>T[59]=1309151649</td>
-            <td>T[60]=4149444226</td>
-            <td>T[61]=3174756917</td>
-            <td>T[62]=718787259</td>
-            <td>T[63]=3951481745</td>
-        </tr>
-    </tbody>
-</table>
+
+<div class="col-md-12">
+    <h4 style="float:left;margin-right:30px;margin-left:-15px;"> - 64-elementowa tablica T[1...64] powstała z funkcji sinus, gdzie <i>T[i] = 4294967296 · |sin(i)|</i>.</h4>
+    <button class="btn btn-primary" id="TTableButton" style="margin-bottom:15px;float:left">Pokaż tablicę T</button>
+</div>
+
+<div class="col-md-12" id="tables_T" hidden style="margin-bottom:25px">
+    <table id="table_T1" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>3614090360</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3905402710</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>606105819</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>3250441966</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>4118548399</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>1200080426</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2821735955</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>4249261313</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table id="table_T2" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>1770035416</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>2336552879</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>4294925233</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>2304563134</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>1804603682</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>4254626195</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>2792965006</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>1236535329</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T3" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>4129170786</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>3225465664</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>643717713</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>3921069994</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>3593408605</td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>38016083</td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>3634488961</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>3889429448</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T4" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>568446438</td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td>3275163606</td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>4107603335</td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>1163531501</td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>2850285829</td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>4243563512</td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td>1735328473</td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td>2368359562</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T5" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td>4294588738</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>2272392833</td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>1839030562</td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td>4259657740</td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td>2763975236</td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td>1272893353</td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>4139469664</td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>3200236656</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T6" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td>681279174</td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td>3936430074</td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td>3572445317</td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>76029189</td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td>3654602809</td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td>3873151461</td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td>530742520</td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td>3299628645</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T7" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td>4096336452</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>T1126891415</td>
+            </tr>
+            <tr>
+                <td>51</td>
+                <td>2878612391</td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td>4237533241</td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td>1700485571</td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td>2399980690</td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td>4293915773</td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td>2240044497</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="table_T8" style="font-size:16px;float:left;margin-right:7px">
+        <tbody>
+            <tr>
+                <th>i</th>
+                <th>T[i]</th>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td>1873313359</td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td>4264355552</td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td>2734768916</td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td>1309151649</td>
+            </tr>
+            <tr>
+                <td>61</td>
+                <td>4149444226</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td>3174756917</td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td>718787259</td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td>3951481745</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 
 <h4> - cztery funkcje pomocnicze, które na wejściu mają trzy 32-bitowe słowa, a na wyjściu produkują jedno słowo 32-bitowe:</h4>
 <h4><b>F(X,Y,Z)</b> = XY v not(X)Z </h4>
 <h4><b>G(X,Y,Z)</b> = XZ v Y not(Z) </h4>
 <h4><b>H(X,Y,Z)</b> = X xor Y xor Z </h4>
 <h4><b>I(X,Y,Z)</b> = Y xor (X v not(Z)) </h4>
-<h3>Runda 1</h3>
+<h3 style="color:lightslategray"><i>Runda 1</i></h3>
 <h4>
     Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b +(( a + F(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
@@ -174,7 +413,7 @@
     Każdorazowo porządek rejestrów ulega przesunięciu cyklicznemu o jedną pozycję. Ponadto przedostatnie argumenty (ilość pozycji o jaką dokonujemy cyklicznego przesunięcia)
     tworzy ciąg okresowy 7, 12, 17, 22, 7, 12, ....
 </h4>
-<table id="table_T" class="md5Data" style="width:60%">
+<table class="md5Data" style="width:60%;color:#5c9def">
     <tbody>
         <tr>
             <td>[ABCD  0  7  1]</td>
@@ -202,15 +441,48 @@
         </tr>
     </tbody>
 </table>
+<div class="col-md-12">
+    <button class="btn btn-primary" id="calculationButton" style="margin-bottom:15px;margin-top:15px;margin-left:-15px;float:left">Pokaż przykład obliczania</button>
+</div>
+<div class="col-md-12" id="exampleCalculation" hidden style="margin-bottom:15px">
+    <h4>
+        Przykład [abcd k s i], &nbsp; &nbsp;<span style="color: #327AB7"> a</span> = b + ((<span style="color: #327AB7"> a</span>+ <span style="color: #9542CD"> F(b,c,d)</span> + <span style="color: #D9534F">X[k]</span> + <span style="color: #5CB85C">T[i]</span>) <<< s), gdzie
+        <br>
+        <br>
+        <b>[<span style="color: #9542CD"> ABCD</span> 0 7 1]</b> &nbsp;&nbsp;&nbsp;  <span style="color: #D9534F"><b>X[k=0]</b> = 1819043144</span>  &nbsp;&nbsp;&nbsp;<span style="color: #5CB85C"><b>T[i=1]</b> = 3614090360</span>
+        <br><br>
+        <span style="color: #9542CD"> F(b,c,d)</span>= F(B,C,D) = BC v not(B)D = (4023233417 * 2562383102) V ( NOT(4023233417) * 271733878) = <span style="color: #9542CD">2562383102</span>
+        <br><br>
+        ((<span style="color: #327AB7"> a</span> + <span style="color: #9542CD"> F(b,c,d)</span> + <span style="color: #D9534F">X[k]</span> + <span style="color: #5CB85C">T[i]</span>) = <span style="color: #327AB7"> 1732584193</span> + <span style="color: #9542CD">2562383102</span> + <span style="color: #D9534F">1819043144</span> + <span style="color: #5CB85C">3614090360</span> = 9728100799
+        <br><br>
+        <span style="color: #808080"> (10 01000011110101110000100110111111)</span>
+        <br><br>
+        Powyższy wynik ma 34 bity, więc wykonujemy operację modulo, aby otrzymać wynik 32 bitowy:
+        <br><br>
+        9728100799 MOD (2<sup>32</sup>) = 1138166207 <span style="color: #808080"> (01000011110101110000100110111111)</span>
+        <br><br>
+        Następnie wykonujemy operację przesunięcia bitowego o 7 bitów:
+        <br><br>
+        ((<span style="color: #327AB7"> a</span> + <span style="color: #9542CD"> F(b,c,d)</span> + <span style="color: #D9534F">X[k]</span> + <span style="color: #5CB85C">T[i]</span>) <<< s) = 1138166207 <<< 7 = 3951353761
+        <br><br>
+            <span style="color: #808080">(01000011110101110000100110111111 <<< 7 = 11101011100001001101111110100001)</span>
+        <br><br>
+        Na koniec otrzymany wynik dodajemy modulo z b:
+        <br><br>
+        <span style="color: #327AB7"> a</span> = b + ((<span style="color: #327AB7"> a</span> + <span style="color: #9542CD"> F(b,c,d)</span> + <span style="color: #D9534F">X[k]</span> + <span style="color: #5CB85C">T[i]</span> <<< s) = (4023233417 + 3951353761) MOD (2<sup>32</sup>) = 3679619882
+        <br><br>
+        Teraz <span style="color: #327AB7"> <b>a</b></span> jest równe <span style="color: #327AB7"> <b>3679619882</b></span>. Natomiast wartości rejestrów <b>b</b>, <b>c</b> i <b>d</b> nie ulegają zmianie.
+    </h4>
+</div>
 
-<h3>Runda 2</h3>
+<h3 style="color:lightslategray"><i>Runda 2</i></h3>
 <h4>
     Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b +(( a + G(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
 <h4>
     Przebiega podobnie jak runda 1. Zamiast procedury F, stosowana jest procedura G. Przesunięcie tworzy ciąg okresowy 5, 9, 14, 20.
 </h4>
-<table id="table_T" class="md5Data" style="width:60%">
+<table class="md5Data" style="width:60%;color:#5c9def">
     <tbody>
         <tr>
             <td>[ABCD  1  5 17]</td>
@@ -238,14 +510,14 @@
         </tr>
     </tbody>
 </table>
-<h3>Runda 3</h3>
+<h3 style="color:lightslategray"><i>Runda 3</i></h3>
 <h4>
     Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b + (( a + H(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
 <h4>
     Przebiega z analogicznymi zmianami. Używana jest procedura H. Przesunięcie tworzy ciąg okresowy 4, 11, 16, 23.
 </h4>
-<table id="table_T" class="md5Data" style="width:60%">
+<table class="md5Data" style="width:60%;color:#5c9def">
     <tbody>
         <tr>
             <td>[ABCD  5  4 33]</td>
@@ -273,14 +545,14 @@
         </tr>
     </tbody>
 </table>
-<h3>Runda 4</h3>
+<h3 style="color:lightslategray"><i>Runda 4</i></h3>
 <h4>
     Wyknywane jest 16 operacji, gdzie <b>[abcd k s i]</b> oznacza <i>a = b+(( a + I(b,c,d) + X[k] + T[i]) <<< s)</i>
 </h4>
 <h4>
     Używana jest procedura I. Przesunięcie tworzy ciąg okresowy 6, 10, 15, 21.
 </h4>
-<table class="md5Data" id="table_T" style="width:60%;">
+<table class="md5Data" style="width:60%;color:#5c9def">
     <tbody>
         <tr>
             <td>[ABCD  0  6 49]</td>
@@ -314,76 +586,73 @@
 </h4>
 
 <div class="col-md-12">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <button class="btn btn-primary" id="showRoundsButton" style="margin-bottom:15px" disabled>Podgląd prztwarzania</button>
+        <button class="btn btn-primary" id="showRoundsButton" style="margin-bottom:15px;margin-left:-15px" disabled>Pokaż stan rejestrów</button>
     </div>
-</div>
-<div class="registers" id="registersTable" style="margin-left:220px"></div>
+<div class="registers" id="registersTable" style="margin-left:220px" hidden></div>
 
 <h4 style="margin-top:10px;">
     Ostateczna wartość rejestrów otrzymywana jest poprzez dodanie zainicjowanej na początku wartości rejestru do wartości rejestru po przetwarzaniu:
 </h4>
-<table id="table_T" class="md5Data" style="width:40%">
+<table  class="md5Data" style="width:40%">
     <tbody>
         <tr>
-            <td> A = A + AA</td>
-            <td> B = B + BB</td>
-            <td> C = C + CC</td>
-            <td> D = D + DD</td>
+            <td> <b>A</b> = A + AA</td>
+            <td> <b>B</b> = B + BB</td>
+            <td> <b>C</b> = C + CC</td>
+            <td> <b>D</b> = D + DD</td>
         </tr>
     </tbody>
 </table>
 <div id="transformations" hidden>
     <h4>
         A = (1732584193 +
-        <input type="text" class="registers" id="AA" size="10" disabled />
+        <input type="text" class="md5" id="AA" size="9" disabled />
         ) MOD 2<sup>32</sup>=
-        <input type="text" class="registers" id="endA" size="10" disabled />
+        <input type="text" class="md5" id="endA" size="9" disabled />
         =
-        <input type="text" class="registers" id="endA_Bin" size="30" disabled />
+        <input type="text" class="md5" id="endA_Bin" size="30" disabled />
         =
-        <input type="text" class="registers" id="endA_Hex" size="10" disabled />
+        <input type="text" class="md5" id="endA_Hex" size="9" style="font-weight:bold" disabled />
     </h4>
     <h4>
         B = (4023233417 +
-        <input type="text" class="registers" id="BB" size="10" disabled />
+        <input type="text" class="md5" id="BB" size="9" disabled />
         ) MOD 2<sup>32</sup>=
-        <input type="text" class="registers" id="endB" size="10" disabled />
+        <input type="text" class="md5" id="endB" size="9" disabled />
         =
-        <input type="text" class="registers" id="endB_Bin" size="30" disabled />
+        <input type="text" class="md5" id="endB_Bin" size="30" disabled />
         =
-        <input type="text" class="registers" id="endB_Hex" size="10" disabled />
+        <input type="text" class="md5" id="endB_Hex" size="9" style="font-weight:bold" disabled />
     </h4>
     <h4>
         C = (2562383102 +
-        <input type="text" class="registers" id="CC" size="10" disabled />
+        <input type="text" class="md5" id="CC" size="9" disabled />
         ) MOD 2<sup>32</sup>=
-        <input type="text" class="registers" id="endC" size="10" disabled />
+        <input type="text" class="md5" id="endC" size="9" disabled />
         =
-        <input type="text" class="registers" id="endC_Bin" size="30" disabled />
+        <input type="text" class="md5" id="endC_Bin" size="30" disabled />
         =
-        <input type="text" class="registers" id="endC_Hex" size="10" disabled />
+        <input type="text" class="md5" id="endC_Hex" size="9" style="font-weight:bold" disabled />
     </h4>
     <h4>
-        D = (271733878 +
-        <input type="text" class="registers" id="DD" size="10" disabled />
+        D = (271733878 &nbsp;&nbsp;+
+        <input type="text" class="md5" id="DD" size="9" disabled />
         ) MOD 2<sup>32</sup>=
-        <input type="text" class="registers" id="endD" size="10" disabled />
+        <input type="text" class="md5" id="endD" size="9" disabled />
         =
-        <input type="text" class="registers" id="endD_Bin" size="30" disabled />
+        <input type="text" class="md5" id="endD_Bin" size="30" disabled />
         =
-        <input type="text" class="registers" id="endD_Hex" size="10" disabled />
+        <input type="text" class="md5" id="endD_Hex" size="9" style="font-weight:bold" disabled />
     </h4>
 </div>
 
 <h3 class="steps" style="margin-top:15px;">4. Wyjście.</h3>
 <h4>
-    Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D.
-    (Pamiętaj, że jeden bajt to 2 znaki heksadecymalne.)
+    Skrót wiadomości powstaje poprzez połączenie wartości rejestrów A, B, C, D w kolejności od najmniej znaczącego bajtu rejestru A do najbardziej znaczącego bajtu rejestru D
+    (pamiętaj, że jeden bajt to 2 znaki heksadecymalne).
 </h4>
-<div class="col-md-12">
-    <div class="col-md-3">
+<div class="col-md-12" style="margin-left:-15px;">
+    <div class="col-md-3" style="margin-left:-15px;">
         <table id="registersOrder">
             <tbody>
                 <tr>
