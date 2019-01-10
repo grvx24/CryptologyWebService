@@ -10,14 +10,41 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">Szyfr Vigenere'a</h2>
         <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
-
-            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
-
-            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
-
-            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
-
+            <b>Szyfr Vigenère'a</b> to szyfr podstawieniowy. Jego działanie polega na stosowaniu różnie zdefiniowanych podstawień dla kolejnych liter tekstu.
+            Szyfr Vigenère'a to szyfr podstawieniowy. Istnieją dwie metody szyfrowania z wykorzystaniem tego szyfru.
+            <br>Metoda pierwsza polega na stosowaniu różnie zdefiniowanych podstawień dla kolejnych liter tekstu.
+            Do szyfrowania i deszyfrowania wykorzystuje się tablicę zawierającą w pierwszym wierszu litery alfabetu w
+            oryginalnej kolejności, a następnie w każdym kolejnym wierszu litery alfabetu przesunięte o jedną kolejną pozycję w lewo.
+            Tablica ta nosi łacińską nazwę <i>tabula recta</i>.
+            Aby zaszyfrować wiadomość, należy wybrać sekretne słowo kluczowe, na jego podstawie będą wybierane wiersze z różnie przesuniętymi literami alfabetu.
+            <br>Szyfrogram powstaje z liter w tabeli znajdujących się na przecięciu wiersza, wyznaczanego przez literę tekstu jawnego i kolumny wyznaczanej przez literę tajnego klucza.
+            <br><br>
+            W drugiej metodzie szyfrowania szyfrem Vigenère'a, każdej kolejnej literze alfabetu przypisana jest kolejna liczba z zakresu od 0 do <i>m</i>. Aby otrzymać <i>i</i>-tą literę szyfrogramu,
+            należy podstawić do poniższego wzoru odpowiednie liczby oznaczające poszczególne litery alfabetu:
+            <br><br>
+            <strong style="font-size:22px"> C<sub>i</sub> =  T<sub>i</sub> +  K<sub>i</sub> mod m</strong>
+            <br><br>
+            , gdzie  C<sub>i</sub> jest liczbą odpowiadającą <i>i</i>-tej literze szyfrogramu, T<sub>i</sub> jest liczbą odpowiadającą <i>i</i>-tej literze tajnego klucza (jeśli klucz jest krótszy od tekstu jawnego, należy zapętlać kolejne litery klucza), K<sub>i</sub> to liczba odpowiadająca <i>i</i>-tej literze tekstu jawnego natomiast litera <i>m</i> to liczność alfabetu.
+            <br>
+            <br>
+            Przykład:
+            <br><b>Tekst jawny</b>: Kryptografia
+            <br><b>Klucz</b>: Kombajn
+            <br><b>liczność alfabetu</b>: 26
+            <br><b>Obliczenia</b>:
+            <br> <b>K</b> + K = 10 + 10 = 20 MOD 26 = <b>U</b>
+            <br> <b>R</b> + O = 17 + 14 = 31 MOD 26 = <b>F</b>
+            <br> <b>Y</b> + M = 24 + 12 = 36 MOD 26 = <b>K</b>
+            <br> <b>P</b> + B = 15 + 1 = 16 MOD 26 = <b>Q</b>
+            <br> <b>T</b> + A = 19 + 0 = 19 MOD 26 = <b>T</b>
+            <br> <b>O</b> + J = 14 + 9 = 23 MOD 26 = <b>X</b>
+            <br> <b>G</b> + N = 6 + 13 = 19 MOD 26 = <b>T</b>
+            <br> <b>R</b> + K = 17 + 10 = 27 MOD 26 = <b>B</b>
+            <br> <b>A</b> + O = 0 + 14 = 14 MOD 26 = <b>O</b>
+            <br> <b>F</b> + M = 5 + 12 = 17 MOD 26 = <b>R</b>
+            <br> <b>I</b> + B = 8 + 1 = 9 MOD 26 = <b>J</b>
+            <br> <b>A</b> + A = 0 + 0 = 0 MOD 26 = <b>A</b>
+            <br><br><b>Szyfrogram</b>:UFKQTXTBORJA
         </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
