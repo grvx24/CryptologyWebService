@@ -69,15 +69,29 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button>
-                                                    czy na pewno?
+                                                <button data-dismiss="modal" class="close">
+                                                    <span>&times;</span>
                                                 </button>
+                                                <div class="modal-title">
+                                                    Potwierdzenie
+                                                </div>
                                             </div>
                                             <div class="modal-body">
+                                                <p>
+                                                    Czy na pewno chcesz usunąć quiz ?
+                                                </p>
+                                                <p>
+                                                    "@item.QuizName"
+                                                </p>
 
                                             </div>
                                             <div class="modal-footer">
-
+                                                <button class="btn btn-primary">
+                                                    Tak, Usuń
+                                                </button>
+                                                <button class="btn btn-default" data-dismiss="modal">
+                                                    Anuluj
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

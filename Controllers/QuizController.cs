@@ -175,5 +175,82 @@ namespace CryptoWebService.Controllers
 
             return categoryName;
         }
+
+        #region delete
+        [HttpPost]
+        [Route("quiz/DeleteQuiz")]
+        public bool DeleteQuiz(int? quizID)
+        {
+            if (quizID != null || !quizID.HasValue) return false;
+
+            var quiz = _context.Quiz.Where(q => q.Id == quizID.Value).FirstOrDefault();
+            if (quiz == null) return false;
+
+            var questionsInQuiz = _context.Question.Where(q => q.QuizId == quiz.Id).Count();
+
+            return true;
+        }
+
+        [HttpPost]
+        [Route("quiz/DeleteCategory")]
+        public bool DeleteCategory(int categoryId)
+        {
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/DeleteAnswer")]
+        public bool DeleteAnswer(int answerId)
+        {
+            return false;
+        }
+        #endregion
+
+        #region create
+        [HttpPost]
+        [Route("quiz/CreateQuiz")]
+        public bool CreateQuiz(int quizID)
+        {
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/CreateCategory")]
+        public bool CreateCategory(int categoryId)
+        {
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/CreateAnswer")]
+        public bool CreateAnswer(int answerId)
+        {
+            return false;
+        }
+        #endregion
+
+        #region update
+        [HttpPost]
+        [Route("quiz/UpdateQuiz")]
+        public bool UpdateQuiz(int quizID)
+        {
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/UpdateCategory")]
+        public bool UpdateCategory(int categoryId)
+        {
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/UpdateAnswer")]
+        public bool UpdateAnswer(int answerId)
+        {
+            return false;
+        }
+        #endregion
+
     }
 }
