@@ -42,7 +42,10 @@
                 <div class="col-lg-1"></div>
                 <div class="column">
                     <span class="col-md-8">
-                        <button style="margin-top: 5px; margin-bottom: 5px" class="btn btn-success" id="loadButton" type="submit">Wczytaj z pliku</button>
+                        <row>
+                            <button style="margin-top: 5px; margin-bottom: 5px; float:left; margin-right:10px" class="btn btn-success" id="loadButton" type="submit" onclick="loadFileAsText()">Wczytaj z pliku</button>
+                            <input type="file" id="fileToLoad" style="float:left; margin-top:5px;">
+                        </row>
                     </span>
                 </div>
             </div>
@@ -59,7 +62,7 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-1"></div>
                 <span class="col-md-8">
-                    <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" type="submit">Zapisz do pliku</button>
+                    <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" onclick="saveTextAsFile()" type="submit">Zapisz do pliku</button>
                     <button style="margin-top: 5px; padding-left:30px; padding-right: 30px; " class="btn btn-primary" id="encryptButton" type="submit">Oblicz</button>
                     <button style="margin-top: 5px; margin-bottom: 5px; float: right;" class="btn btn-danger" id="clearButton1" type="submit">Wyczyść wszystko</button>
                 </span>

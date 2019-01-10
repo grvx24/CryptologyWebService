@@ -2,58 +2,38 @@
 <link rel="stylesheet" type="text/css" href="~/css/ciphers_visualization.css">
 
 <h2 class="title">Szyfr ścieżkowy wizualizacja </h2>
-<div class="col-md-12" style="margin-top:30px">
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="keyVisualization">@Text.Key</label>
-                <select id="keyVisualization" class="form-control">
-                    @{
-                        for (int i = 1; i <= 50; i++)
-                        {
-                            @Html.Raw("<option value=" + i + ">" + i + "</option>")
-                        }
+<div class="col-md-12" style="margin-top:15px;margin-bottom:25px">
+    <div class="row">
+        <div class="col-md-8" style="margin-bottom:30px;margin-top:10px;">
+            <label for="keyVisualization">@Text.Key</label>
+            <select id="keyVisualization" class="form-control">
+                @{
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        @Html.Raw("<option value=" + i + ">" + i + "</option>")
                     }
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="modeVisualization">@Text.EncryptMode</label>
-                <select id="modeVisualization" class="form-control">
-                    @{
-                        for (int i = 0; i <= 1; i++)
-                        {
-                            @Html.Raw("<option value=" + i + ">" + (i == 0 ? Text.WidthMode : Text.HeightMode) + "</option>")
-                        }
-                    }
-                </select>
-            </div>
+                }
+            </select>
         </div>
-    </div>
-</div>
-<div class="col-md-12" style="margin-top:30px; margin-bottom:40px;">
-    <row>
         <div class="col-md-8">
             <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
-            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary">Wizualizacja</button>
+            <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
             <button id="nextButton" style="float: left;" class="btn btn-success" disabled>Następny krok</button>
         </div>
-    </row>
+    </div>
 </div>
-
-
-<div class="col-md-12" style="margin-left:16px">
-    <row>
-        <div id="alphabetsTable"></div>
-    </row>
+<div class="col-md-12">
+    <div id="cipherOutput"></div>
 </div>
-
 
 <div class="col-md-12">
-    <div class="col-md-8" style="margin-top:40px;">
-        <textarea maxlength="50000" placeholder="Zaszyfrowany tekst" class="form-control" rows="2" id="outputCipher"></textarea>
-    </div>
+        <div id="encryptMatrix" style="margin-top:5px"></div>
+</div>
+<div>
+    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+    <textarea class="form-control" rows="1" id="step" style="display:none">1</textarea>
 </div>
 
 <script>

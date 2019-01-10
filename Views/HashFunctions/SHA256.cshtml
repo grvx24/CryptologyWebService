@@ -10,13 +10,54 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">@Text.SHA256Hash</h2>
         <p class="description">
-            SHA-2 – zestaw kryptograficznych funkcji skrótu (SHA-224, SHA-256, SHA-384, SHA-512) dających skróty wielkości 224, 256, 384 lub 512 bitów.
-            SHA-256 jest funkcją skrótu liczoną na 32-bitowych słowach.
+            <b>SHA-2</b> to zestaw kryptograficznych funkcji skrótu (<i>SHA-224, SHA-256, SHA-384, SHA-512</i>) dających skróty wielkości 224, 256, 384 lub 512 bitów.
+            Skrót wiadomości w <b>SHA-256</b> ma długość 256 bitów. Wiadomość przetwarzana jest w 512-bitowych blokach, operacje wykonywane są na 32-bitowych słowach.
+            Algorytm przetwarzania składa się z 64 kroków.
             <br>
+            <br>Wiadomości przetwarzane są w blokach 512-bitowych. Uzupełnianie wiadomości polega na dodaniu '1' oraz tyle '0', aby uzupełnić wiadomość do długości
+            448 bitów. Ostatnie 64 bity przeznaczone są na informację o długości wiadomości.
+            <br><br>Algorytm SHA256 wymaga 256-bitowego bufora o określonej wartości początkowej. Bufor podzielony jest na osiem słów (każdy po 32 bity) oznaczone jako  H<sub>0</sub>, H<sub>1</sub>,
+            H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub>, H<sub>5</sub>, H<sub>6</sub>, H<sub>7</sub> (decymalnie):
+            <br><b>Słowo H<sub>0</sub>:</b> 1779033703
+            <br><b>Słowo H<sub>1</sub>:</b> 3144134277
+            <br><b>Słowo H<sub>2</sub>:</b> 1013904242
+            <br><b>Słowo H<sub>3</sub>:</b> 2773480762
+            <br><b>Słowo H<sub>4</sub>:</b> 1359893119
+            <br><b>Słowo H<sub>5</sub>:</b> 2600822924
+            <br><b>Słowo H<sub>6</sub>:</b> 528734635
+            <br><b>Słowo H<sub>7</sub>:</b> 1541459225
+            <br><br>
+            64-elementowa tablica stałych słów K (0), K (1), ..., K (64). Są to pierwsze 32 bity ułamkowych części pierwiastka sześciennego pierwszych 64 liczb pierwszych 2 .. 311.
+            <br>Na przykład: K[0] = 1116352408, K[63] = 3329325298.
+            <br><br>Funkcje pomocnicze <i>f(0), f(1), ..., f(79)</i> dla t = 0...79 operujące na 32-bitowych słowach B, C, D:
+            <br><b>f(X,Y,Z)</b>  = (X AND Y) OR ((NOT X) AND Z)
+            <br><b>g(X,Y,Z)</b>  = (X AND Y) OR (X AND Z) OR (Y AND Z)
+            <br><br>
+            W celu wygenerowania skrótu komunikatu 512-bitowy blok, powstały po uzupełnieniu wiadomości, dzielony jest na 16 słów 32-bitowych <b>w[t]</b> <i>( 0 ≤ t ≤ 15)</i>.
+            Następnie tablica <i>w</i> rozszerzana jest do 64 elementów 32-bitowych za pomocą operacji:
+            <br><br>
+            Dla <i>t = 16...63</i>:
             <br>
-            W obecnych czasach znalezienie kolizji MD5 zajmuje kilka sekund, mimo to
-            wiele systemów ciągle obsługuje MD5, ze względu na kompatybilnosć wsteczną. Funkcja jest łatwa do zaimplementowania, w trakcie obliczeń dokonywane są jedynie pewne podstawowe operacje na
-            blokach 32-bitowych.
+            s<sub>0</sub> = (w[t-15] >>>  7) xor  (w[t-15] >>>  18) xor  (w[t-15] >>  3)
+            <br>s<sub>1</sub> = (w[t-2] >>>  17) xor  (w[t-2] >>>  19) xor  (w[t-2] >> 10)
+            <br> w[t] = w[t-16] +  s<sub>0</sub> +  w[t-7] +  s<sub>1</sub>
+            <br> ( "<i>>>> x</i>" - oznacza rotację w prawo o x bitów, natomiast "<i>>> x</i>" - oznacza przesunięcie w prawo o x bitów)
+            <br><br> Następnie wartości bufora kopiowane są do zamiennych pomocniczych A, B, C, D, E, F, G, H.
+            <br>A = H<sub>0</sub>,&nbsp;&nbsp;B = H<sub>1</sub>,&nbsp;&nbsp;c = H<sub>2</sub>&nbsp;&nbsp;D = H<sub>3</sub>,&nbsp;&nbsp;E = H<sub>4</sub>,&nbsp;&nbsp;F = H<sub>5</sub>&nbsp;&nbsp;G = H<sub>6</sub>,&nbsp;&nbsp;H = H<sub>7</sub>.
+            <br><br>
+            Później dla <i>t = 0...63</i> wykonywane są następujące operacje:
+            <br><br>s<sub>1</sub> = (E >>> 6) xor (E >>> 11) xor (E >>> 25)
+            <br><br>TEMP<sub>1</sub> = H + s<sub>1</sub> + f(E,F,G) + k[t] + w[t]
+            <br><br>s<sub>0</sub> = (A >>> 2) xor (A >>> 13) xor (A >>> 22)
+            <br><br>TEMP<sub>2</sub> = s<sub>0</sub> + g(A,B,C)
+            <br><br>H = G, &nbsp;&nbsp;&nbsp; G = F, &nbsp;&nbsp;&nbsp; F = E, &nbsp;&nbsp;&nbsp;  E = D + TEMP<sub>1</sub>, &nbsp;&nbsp;&nbsp; D = C, &nbsp;&nbsp;&nbsp; C = B, &nbsp;&nbsp;&nbsp; B = A, &nbsp;&nbsp;&nbsp; A = TEMP<sub>1</sub> + TEMP<sub>2</sub>.
+            <br><br>
+            Ostateczna wartość rejestrów otrzymywana jest poprzez dodanie zainicjowanej na początku wartości rejestru do wartości rejestru po przetwarzaniu:
+            <br><br>
+            <b>H<sub>0</sub></b> = H<sub>0</sub> + A,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>1</sub></b> = H<sub>1</sub> + B,&nbsp;&nbsp;&nbsp;<b>H<sub>2</sub></b> = H<sub>2</sub> + C,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>3</sub></b> = H<sub>3</sub> + D,
+            <br> <b>H<sub>4</sub></b> = H<sub>4</sub> + E,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>5</sub></b> = H<sub>5</sub> + F,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>6</sub></b> = H<sub>6</sub> + G,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>7</sub></b> = H<sub>7</sub> + H.
+            <br><br>
+            Skrót wiadomości powstaje poprzez połączenie wartości rejestrów H<sub>0</sub>, H<sub>1</sub>, H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub>, H<sub>5</sub>, H<sub>6</sub>, H<sub>7</sub> w kolejności od najmniej znaczącego bajtu rejestru H<sub>0</sub> do najbardziej znaczącego bajtu rejestru H<sub>4</sub> (pamiętaj, że jeden bajt to 2 znaki heksadecymalne).
 
         </p>
     </div>

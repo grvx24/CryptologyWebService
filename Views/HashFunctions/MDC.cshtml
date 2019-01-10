@@ -6,48 +6,30 @@
 <script src="~/js/hash/HashFunctions.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
 
-<div class="container">
-
-    <h2 align="center">@Text.WithoutKey</h2>
-    <p>
-        Dupa
-    </p>
-    <div class="container">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <div class="boxed">
-                <h4 style="margin:0px;"> KOMPRESJA</h4>
-                h przekształca wejście x o dowolnej długości na wyjście h(x) o ustalonej długości
-            </div>
-            <div class="boxed">
-                <h4 style="margin:0px;">ŁATWOŚĆ OBLICZEŃ</h4>
-                dla danej funkcji h i wejścia x wartość h(x) jest łatwo obliczalna, w czasie wielomoianowym
-            </div>
-            <div class="boxed">
-                <h4 style="margin:0px;">JEDNOKIERUNKOWOŚĆ</h4>
-                dla prawie wszystkich wartości jest obliczeniowo trudne znalezienie argumentu dającego jako skrót tę wartość
-            </div>
-        </div>
+    <h2 class="title" align="center">@Text.WithoutKey</h2>
+    <div class="description">
+        <b>Funkcje skrótu</b> zwane także funkcjami haszującymi pobierają na wejściu dowolnie długą wiadomość i tworzą krótki,
+        ustalonej długości wynik nazywany skrótem. Funkcje te są używane do 
+        <i> podpisów cyfrowych, szyfrowania z kluczem publicznym, weryfikowania integralności, uwierzytelniania komunikatów, ochrony haseł, protokołów
+        uzgadniania klucza</i>  i wielu innych protokołów kryptograficznych.
+        <br />
+        Funkcję <b>h</b> nazywamy funkcją skrótu, jeśli ma co najmniej trzy właściwości:
+        <br>
+        <br>
+        <h4 style="margin:0px;"> <b>KOMPRESJA</b></h4>
+        - <i>h</i> przekształca wejście <i>x</i> o dowolnej długości na wyjście <i>h(x)</i> o ustalonej długości,
+        <br><br>
+        <h4 style="margin:0px;"><b>ŁATWOŚĆ OBLICZEŃ</b></h4>
+        - dla danej funkcji <i>h</i> i wejścia <i>x</i> wartość <i>h(x)</i> jest łatwo obliczalna, w czasie wielomoianowym,
+        <br><br>
+        <h4 style="margin:0px;"><b>JEDNOKIERUNKOWOŚĆ</b></h4>
+        - dla prawie wszystkich wartości jest obliczeniowo trudne znalezienie argumentu dającego jako skrót tę wartość.
+        <br />
+        <br />
+        Ogólny schemat działania funkcji skrótu:
     </div>
-    <p>Ogólny schemat działania funkcji skrótu:</p>
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-top:20px;">
         <div align="center">
             <img src="~/images/HashFunctionSchema.png">
         </div>
     </div>
-    <p>Ze względów funkcjonalnych wyróżnia się dwie klasy funkcji skrótu (kliknij w wybraną, aby dowiedzieć się więcej).</p>
-    <div class="col-md-12">
-        <div align="center">
-            <span>
-                <button class="button" style="" id="checkHashClass" type="submit">
-                    <h4 style="margin:0px;">MDC</h4>
-                    Podklasa funkcji skrótu bez klucza
-                </button>
-                <button class="button" id="checkHashClass" type="submit">
-                    <h4 style="margin:0px;">MAC</h4>
-                    Podklasa funkcji skrótu z kluczem
-                </button>
-            </span>
-        </div>
-    </div>
-</div>

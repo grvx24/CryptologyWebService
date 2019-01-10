@@ -8,20 +8,13 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 {
     public class RouteCipher : IClassicalCiphers
     {
-        public enum CipherMode
-        {
-            Key_As_Width,
-            Key_As_Height
-        }
 
         public int Key { get; set; }
         public char[,] MessageMatrix { get; private set; }
-        public CipherMode Mode { get; set; }
 
-        public RouteCipher(int key, CipherMode mode)
+        public RouteCipher(int key)
         {
             Key = key;
-            Mode = mode;
         }
 
         private void FillMatrix(string message)
@@ -158,26 +151,10 @@ namespace CryptoWebService.Backend.ClassicalCiphers
                 dimensionSize = message.Length / Key;
             }
 
-            switch (Mode)
-            {
-                case CipherMode.Key_As_Width:
-                    {
-                        MessageMatrix = new char[dimensionSize, Key];
-                        FillMatrix(message);
-                        encrypted = ReadEncryptedFromMatrix(message.Length);
-                        break;
-                    }
-                case CipherMode.Key_As_Height:
-                    {
-                        MessageMatrix = new char[Key, dimensionSize];
-                        FillMatrix(message);
-                        encrypted = ReadEncryptedFromMatrix(message.Length);
-                        break;
-                    }
-
-
-            }
-
+             MessageMatrix = new char[dimensionSize, Key];
+             FillMatrix(message);
+             encrypted = ReadEncryptedFromMatrix(message.Length);                    
+      
             return encrypted;
         }
 
@@ -283,26 +260,9 @@ namespace CryptoWebService.Backend.ClassicalCiphers
 
             string result = "";
 
-            switch (Mode)
-            {
-                case CipherMode.Key_As_Width:
-                    {
-                        MessageMatrix = new char[dimensionSize, Key];
-                        WriteDecryptedToMatrix(ref message);
-                        result = ReadDecryptedFromMatrix();
-
-                        break;
-                    }
-
-                case CipherMode.Key_As_Height:
-                    {
-                        MessageMatrix = new char[Key, dimensionSize];
-                        WriteDecryptedToMatrix(ref message);
-                        result = ReadDecryptedFromMatrix();
-
-                        break;
-                    }
-            }
+            MessageMatrix = new char[dimensionSize, Key];
+            WriteDecryptedToMatrix(ref message);
+            result = ReadDecryptedFromMatrix();
 
             return result;
         }
