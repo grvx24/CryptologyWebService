@@ -107,6 +107,10 @@ namespace CryptoWebService.Backend.LfsrGenerators
 
         }
 
+        public void UpdateOutputBit()
+        {
+            this.OutputBit = Register[Register.Length - 1];
+        }
         public override string ToString()
         {
             char[] result = new char[Register.Length];
