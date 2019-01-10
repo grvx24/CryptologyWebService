@@ -22,18 +22,18 @@ namespace CryptoWebService.Controllers
             _context = context;
         }
 
-
         [Route("quiz/{categoryName?}/{quizNumber?}")]
-        public async Task<IActionResult> quiz(string categoryName, int? quizNumber)
+        public async Task<IActionResult> quiz(string categoryName, int? quizNumber,bool? edit)
         {
             if (String.IsNullOrEmpty(categoryName))
             {
                 IEnumerable<CategoryDto> Categories = _context.Category
-                    .Select(cat =>new CategoryDto(){
+                    .Select(cat => new CategoryDto()
+                    {
                         Id = cat.Id,
                         CategoryName = cat.CategoryName,
                         SecondCategoryName = changeCategoryName(cat.CategoryName.Replace(" ", String.Empty)),
-                        NumberOfQuizzes = _context.Quiz.Where(q => q.CategoryId== cat.Id).Count()
+                        NumberOfQuizzes = _context.Quiz.Where(q => q.CategoryId == cat.Id).Count()
                     }).ToList();
 
                 return View("QuizzesCategory", Categories);
@@ -64,7 +64,7 @@ namespace CryptoWebService.Controllers
                     return View("QuizzesList", viewModel);
                 }
                 else
-                {  
+                {
                     List<QuestionViewModel> questionViewModels = new List<QuestionViewModel>();
                     List<AnswerViewModel> answerViewModels;
 
@@ -77,7 +77,7 @@ namespace CryptoWebService.Controllers
                     {
                         List<Answer> answers = _context.Answer.Where(a => a.QuestionId == Questions[i].Id).ToList();
                         answerViewModels = new List<AnswerViewModel>();
-                        for (int j = 0; j<answers.Count(); j++)
+                        for (int j = 0; j < answers.Count(); j++)
                         {
                             answerViewModels.Add(new AnswerViewModel()
                             {
@@ -106,7 +106,6 @@ namespace CryptoWebService.Controllers
             }
         }
 
-
         [HttpPost]
         [Route("quiz/Checkquiz")]
         public IActionResult Checkquiz([FromBody] UserAnswersDto userAnswers)
@@ -130,7 +129,7 @@ namespace CryptoWebService.Controllers
                         foreach (var itemAnswer in qAnswersDB)
                         {
                             var x = item.SelectedAnswersId.Where(q => q == itemAnswer.Id);
-                            if (((x == null || x.Count() == 0) && itemAnswer.Correct) 
+                            if (((x == null || x.Count() == 0) && itemAnswer.Correct)
                                 || (x != null && x.Count() > 0 && !itemAnswer.Correct))
                             {
                                 CorrectAnswerOnQuestion = false;
@@ -153,14 +152,13 @@ namespace CryptoWebService.Controllers
                 }
 
                 return Json(new { Result = true, score = score });
-            }catch(Exception e)
-            {
-                return Json(new { Result = false, Message = "Nieznany bład", ErrorMessage = e.Message});
             }
-           
+            catch (Exception e)
+            {
+                return Json(new { Result = false, Message = "Nieznany bład", ErrorMessage = e.Message });
+            }
+
         }
-
-
 
         private string changeCategoryName(string categoryName)
         {
@@ -179,151 +177,250 @@ namespace CryptoWebService.Controllers
         #region delete
         [HttpPost]
         [Route("quiz/DeleteQuiz")]
-        public bool DeleteQuiz(int quizID)
+        public IActionResult DeleteQuiz([FromBody] int quizID)
         {
             try
             {
-                if (quizID != null)
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    var quiz = _context.Quiz.Where(q => q.Id == quizID).FirstOrDefault();
-                    if (quiz != null)
+                    if (quizID != null)
                     {
-                        int questionsInQuiz = _context.Question.Where(q => q.QuizId == quiz.Id).Count();
-
-                        if (questionsInQuiz == 0)
+                        var quiz = _context.Quiz.Where(q => q.Id == quizID).FirstOrDefault();
+                        if (quiz != null)
                         {
+                            int questionsInQuiz = _context.Question.Where(q => q.QuizId == quiz.Id).Count();
 
-                            return true;
+                            if (questionsInQuiz == 0)
+                            {
+                                _context.Quiz.Remove(quiz);
+                                _context.SaveChanges();
+                                return Json(new { Result = true, Message = "Quiz został usunięty." });
+                            }
                         }
                     }
                 }
-            }catch(Exception e)
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception e)
             {
                 Console.Write("Delete Quiz Error_" + e.Message);
             }
-            return false;
+            return Json(new { Result = false, Message = "Nie udało się usunąć quizu" });
         }
 
         [HttpPost]
         [Route("quiz/DeleteCategory")]
-        public bool DeleteCategory(int categoryId)
+        public IActionResult DeleteCategory([FromBody] int categoryId)
         {
             try
             {
-                if (categoryId != null)
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    var category = _context.Category.Where(q => q.Id == categoryId).FirstOrDefault();
-                    if (category != null)
+                    if (categoryId != null)
                     {
-                        int quizzesinCategory = _context.Quiz.Where(q => q.CategoryId == categoryId).Count();
-
-                        if (quizzesinCategory == 0)
+                        var category = _context.Category.Where(q => q.Id == categoryId).FirstOrDefault();
+                        if (category != null)
                         {
+                            int quizzesinCategory = _context.Quiz.Where(q => q.CategoryId == categoryId).Count();
 
-                            return true;
+                            if (quizzesinCategory == 0)
+                            {
+                                return Json(new { Result = true, Message = "Kategoria została usunięta." });
+                            }
                         }
                     }
+                }
+                else
+                {
+                    return Unauthorized();
                 }
             }
             catch (Exception e)
             {
-                Console.Write("Delete Quiz Error_" + e.Message);
+                Console.Write("Delete Category Error_" + e.Message);
             }
-            return false;
+            return Json(new { Result = false, Message = "Nie udało się usunąć kategorii." });
         }
 
         [HttpPost]
         [Route("quiz/DeleteQuestion")]
-        public bool DeleteQuestion(int questionId)
+        public IActionResult DeleteQuestion([FromBody] int questionId)
         {
             try
             {
-                if (questionId != null)
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    var question = _context.Question.Where(q => q.Id == questionId).FirstOrDefault();
-                    if (question != null)
+                    if (questionId != null)
                     {
-                        int answersInQuestion = _context.Answer.Where(q => q.QuestionId == questionId).Count();
-                        if (answersInQuestion == 0)
+                        var question = _context.Question.Where(q => q.Id == questionId).FirstOrDefault();
+                        if (question != null)
                         {
-                            return true;
+                            int answersInQuestion = _context.Answer.Where(q => q.QuestionId == questionId).Count();
+                            if (answersInQuestion == 0)
+                            {
+                                return Json(new { Result = true, Message = "Pytanie zostało usunięte." });
+                            }
                         }
                     }
+                }
+                else
+                {
+                    return Unauthorized();
                 }
             }
             catch (Exception e)
             {
-                Console.Write("Delete Quiz Error_" + e.Message);
+                Console.Write("Delete Question Error_" + e.Message);
             }
-            return false;
+            return Json(new { Result = false, Message = "Nie udało się usunąć pytania." });
         }
 
         [HttpPost]
         [Route("quiz/DeleteAnswer")]
-        public bool DeleteAnswer(int answerId)
+        public IActionResult DeleteAnswer([FromBody] int answerId)
         {
             try
             {
-                if (answerId != null)
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    var answer = _context.Answer.Where(a => a.Id == answerId).FirstOrDefault();
-                    if (answer != null)
+                    if (answerId != null)
                     {
-                        return true;
+                        var answer = _context.Answer.Where(a => a.Id == answerId).FirstOrDefault();
+                        if (answer != null)
+                        {
+                            return Json(new { Result = true, Message = "Odpowiedź została usunięta." });
+                        }
                     }
+                }
+                else
+                {
+                    return Unauthorized();
                 }
             }
             catch (Exception e)
             {
-                Console.Write("Delete Quiz Error_" + e.Message);
+                Console.Write("Delete Answer Error_" + e.Message);
             }
-            return false;
+            return Json(new { Result = false, Message = "Nie udało się usunąć odpowiedzi." });
         }
         #endregion
 
         #region create
         [HttpPost]
         [Route("quiz/CreateQuiz")]
-        public bool CreateQuiz(int quizID)
+        public IActionResult CreateQuiz([FromBody] int quizID)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się utworzyć quizu." });
+        }
+
+        [HttpPost]
+        [Route("quiz/CreateQuestion")]
+        public IActionResult CreateQuestion([FromBody] int questionID)
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się utworzyć pytania." });
         }
 
         [HttpPost]
         [Route("quiz/CreateCategory")]
-        public bool CreateCategory(int categoryId)
+        public IActionResult CreateCategory([FromBody] int categoryId)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się utworzyć kategorii." });
         }
 
         [HttpPost]
         [Route("quiz/CreateAnswer")]
-        public bool CreateAnswer(int answerId)
+        public IActionResult CreateAnswer([FromBody] int answerId)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się utworzyć odpowiedzi." });
         }
         #endregion
 
         #region update
         [HttpPost]
         [Route("quiz/UpdateQuiz")]
-        public bool UpdateQuiz(int quizID)
+        public IActionResult UpdateQuiz([FromBody] int quizID)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się zmodyfikować quizu." });
+        }
+
+        [HttpPost]
+        [Route("quiz/UpdateQuestion")]
+        public IActionResult UpdateQuestion([FromBody] int questionID)
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się zmodyfikować pytania." });
         }
 
         [HttpPost]
         [Route("quiz/UpdateCategory")]
-        public bool UpdateCategory(int categoryId)
+        public IActionResult UpdateCategory([FromBody] int categoryId)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się zmodyfikować kategorii." });
         }
 
         [HttpPost]
         [Route("quiz/UpdateAnswer")]
-        public bool UpdateAnswer(int answerId)
+        public IActionResult UpdateAnswer([FromBody] int answerId)
         {
-            return false;
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się zmodyfikować odpowiedzi." });
         }
         #endregion
 
