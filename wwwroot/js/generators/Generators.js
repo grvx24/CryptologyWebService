@@ -62,6 +62,14 @@
 
     }
 
+    function showLoading() {
+        $('#loading').show();
+    }
+
+    function hideLoading() {
+        $('#loading').hide();
+    }
+
     var generateBtnInit = function() {
 
 
@@ -122,6 +130,12 @@
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify(model),
+                    beforeSend: function () {
+                        showLoading();
+                    },
+                    complete: function() {
+                        hideLoading();
+                    },
                     success: function (data) {
 
                         var result = data.data;

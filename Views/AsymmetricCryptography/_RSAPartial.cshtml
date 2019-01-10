@@ -47,6 +47,7 @@
             <br/>
             <div class="text-center">
                 <button id="generateKeys" class="btn btn-primary btn-lg">Wygeneruj klucze</button>
+                <div class="loader" id="loading3" style="display: none"></div>
             </div>
 
         </div>
@@ -96,9 +97,10 @@
                 <label for="outputEncrypt">Szyfrogram</label>
                 <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
                 <br/>
-                <div class="text-center">
+                <div class="text-left">
                     <button id="saveCipherText" class="btn btn-primary">Zapisz szyfrogram</button>
                     <button class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
+                    <div class="loader" id="loading1" style="display: none"></div>
                 </div>
                 </div>
         </div>
@@ -150,6 +152,7 @@
                 <div class="text-center">
                     <button id="saveMessageText" class="btn btn-primary">Zapisz wiadomość</button>
                     <button class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
+                    <div class="loader" id="loading2" style="display: none"></div>
                 </div>
             </div>
         </div>

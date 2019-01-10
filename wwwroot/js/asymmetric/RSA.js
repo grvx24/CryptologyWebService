@@ -51,6 +51,12 @@
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify(model),
+                    beforeSend: function () {
+                        showLoading3();
+                    },
+                    complete: function () {
+                        hideLoading3();
+                    },
                     success: function (data) {
 
                         $('#privateKey').val(data.privateKey);
@@ -96,6 +102,12 @@
                 dataType: 'json',
                 contentType: "application/json",
                 data: JSON.stringify(model),
+                beforeSend: function () {
+                    showLoading1();
+                },
+                complete: function () {
+                    hideLoading1();
+                },
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
@@ -138,6 +150,12 @@
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify(model),
+                    beforeSend: function () {
+                        showLoading2();
+                    },
+                    complete: function () {
+                        hideLoading2();
+                    },
                     success: function(data) {
 
                         $('#outputDecrypt').val(data);
@@ -321,6 +339,26 @@
 
     var toolTipInit = function() {
         $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
+    }
+
+    function showLoading1() {
+        $('#loading1').show();
+    }
+    function showLoading2() {
+        $('#loading2').show();
+    }
+    function showLoading3() {
+        $('#loading3').show();
+    }
+
+    function hideLoading1() {
+        $('#loading1').hide();
+    }
+    function hideLoading2() {
+        $('#loading2').hide();
+    }
+    function hideLoading3() {
+        $('#loading3').hide();
     }
 
 
