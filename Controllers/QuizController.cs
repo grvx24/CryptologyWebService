@@ -179,22 +179,82 @@ namespace CryptoWebService.Controllers
         #region delete
         [HttpPost]
         [Route("quiz/DeleteQuiz")]
-        public bool DeleteQuiz(int? quizID)
+        public bool DeleteQuiz(int quizID)
         {
-            if (quizID != null || !quizID.HasValue) return false;
+            try
+            {
+                if (quizID != null)
+                {
+                    var quiz = _context.Quiz.Where(q => q.Id == quizID).FirstOrDefault();
+                    if (quiz != null)
+                    {
+                        int questionsInQuiz = _context.Question.Where(q => q.QuizId == quiz.Id).Count();
 
-            var quiz = _context.Quiz.Where(q => q.Id == quizID.Value).FirstOrDefault();
-            if (quiz == null) return false;
+                        if (questionsInQuiz == 0)
+                        {
 
-            var questionsInQuiz = _context.Question.Where(q => q.QuizId == quiz.Id).Count();
-
-            return true;
+                            return true;
+                        }
+                    }
+                }
+            }catch(Exception e)
+            {
+                Console.Write("Delete Quiz Error_" + e.Message);
+            }
+            return false;
         }
 
         [HttpPost]
         [Route("quiz/DeleteCategory")]
         public bool DeleteCategory(int categoryId)
         {
+            try
+            {
+                if (categoryId != null)
+                {
+                    var category = _context.Category.Where(q => q.Id == categoryId).FirstOrDefault();
+                    if (category != null)
+                    {
+                        int quizzesinCategory = _context.Quiz.Where(q => q.CategoryId == categoryId).Count();
+
+                        if (quizzesinCategory == 0)
+                        {
+
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Delete Quiz Error_" + e.Message);
+            }
+            return false;
+        }
+
+        [HttpPost]
+        [Route("quiz/DeleteQuestion")]
+        public bool DeleteQuestion(int questionId)
+        {
+            try
+            {
+                if (questionId != null)
+                {
+                    var question = _context.Question.Where(q => q.Id == questionId).FirstOrDefault();
+                    if (question != null)
+                    {
+                        int answersInQuestion = _context.Answer.Where(q => q.QuestionId == questionId).Count();
+                        if (answersInQuestion == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Delete Quiz Error_" + e.Message);
+            }
             return false;
         }
 
@@ -202,6 +262,21 @@ namespace CryptoWebService.Controllers
         [Route("quiz/DeleteAnswer")]
         public bool DeleteAnswer(int answerId)
         {
+            try
+            {
+                if (answerId != null)
+                {
+                    var answer = _context.Answer.Where(a => a.Id == answerId).FirstOrDefault();
+                    if (answer != null)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Delete Quiz Error_" + e.Message);
+            }
             return false;
         }
         #endregion
