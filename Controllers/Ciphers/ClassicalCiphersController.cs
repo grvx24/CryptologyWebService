@@ -552,7 +552,7 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult RouteEncrypt([FromBody]RouteEncryptViewModel viewModel)
         {
-            RouteCipher cipher = new RouteCipher(viewModel.Key,(RouteCipher.CipherMode)viewModel.Mode);
+            RouteCipher cipher = new RouteCipher(viewModel.Key);
 
             string encrypted = "";
 
@@ -573,7 +573,7 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult RouteDecrypt([FromBody]RouteEncryptViewModel viewModel)
         {
-            RouteCipher cipher = new RouteCipher(viewModel.Key, (RouteCipher.CipherMode)viewModel.Mode);
+            RouteCipher cipher = new RouteCipher(viewModel.Key);
 
             string decrypted = "";
 
@@ -591,7 +591,7 @@ namespace CryptoWebService.Controllers.Ciphers
         }
         public IActionResult RouteVisualization([FromBody]RouteEncryptViewModel viewModel)
         {
-            RouteCipher cipher = new RouteCipher(viewModel.Key, (RouteCipher.CipherMode)viewModel.Mode);
+            RouteCipher cipher = new RouteCipher(viewModel.Key);
 
             string encrypted = "";
 
