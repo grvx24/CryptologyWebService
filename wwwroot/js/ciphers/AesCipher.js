@@ -51,6 +51,12 @@
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify(model),
+                    beforeSend: function() {
+                        showLoading1();
+                    },
+                    complete: function() {
+                        hideLoading1();
+                    },
                     success: function(data) {
 
                         $('#outputEncrypt').val(data);
@@ -87,6 +93,12 @@
                         dataType: 'json',
                         contentType: "application/json",
                         data: JSON.stringify(model),
+                        beforeSend: function () {
+                            showLoading1();
+                        },
+                        complete: function () {
+                            hideLoading1();
+                        },
                         success: function (data) {
                             
                             var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Zaszyfrowany plik</a>';
@@ -130,6 +142,12 @@ var decryptInit = function () {
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify(model),
+                    beforeSend: function () {
+                        showLoading2();
+                    },
+                    complete: function () {
+                        hideLoading2();
+                    },
                     success: function (data) {
 
                         outputDecryptBase64 = '';
@@ -187,6 +205,12 @@ var decryptInit = function () {
                         dataType: 'json',
                         contentType: "application/json",
                         data: JSON.stringify(model),
+                        beforeSend: function () {
+                            showLoading2();
+                        },
+                        complete: function () {
+                            hideLoading2();
+                        },
                         success: function (data) {
                             
                             var downloadLink = '<a href="data:application/octet-stream;charset=utf-16le;base64,' + data + '">Odszyfrowany plik</a>';
@@ -726,6 +750,20 @@ var decryptInit = function () {
         });   
     }
 
+
+    function showLoading1() {
+        $('#loading1').show();
+    }
+    function showLoading2() {
+        $('#loading2').show();
+    }
+
+    function hideLoading1() {
+        $('#loading1').hide();
+    }
+    function hideLoading2() {
+        $('#loading2').hide();
+    }
 
     var init = function() {
         encryptInit();

@@ -116,7 +116,17 @@ namespace CryptoWebService.Controllers.Ciphers
             EncodingInformation keyEncoding = (EncodingInformation)int.Parse(viewModel.KeyEncoding);
             EncodingInformation IVEncoding = (EncodingInformation)int.Parse(viewModel.IVEncoding);
 
-            byte[] message = Convert.FromBase64String(viewModel.Message);
+            byte[] message = null;
+            try
+            {
+                message = Convert.FromBase64String(viewModel.Message);
+            }
+            catch (Exception)
+            {
+                string msg = "Niepoprawny format Base64!";
+                return BadRequest(new { Result = false, Message = msg });
+            }
+            
 
             byte[] key = null;
             byte[] iv = null;
@@ -258,7 +268,17 @@ namespace CryptoWebService.Controllers.Ciphers
             EncodingInformation keyEncoding = (EncodingInformation)int.Parse(viewModel.KeyEncoding);
             EncodingInformation IVEncoding = (EncodingInformation)int.Parse(viewModel.IVEncoding);
 
-            byte[] message = Convert.FromBase64String(viewModel.Message);
+            byte[] message = null;
+
+            try
+            {
+                message = Convert.FromBase64String(viewModel.Message);
+            }
+            catch (Exception)
+            {
+                string msg = "Niepoprawny format Base64!";
+                return BadRequest(new { Result = false, Message = msg });
+            }
 
             byte[] key = null;
             byte[] iv = null;
