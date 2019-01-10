@@ -130,7 +130,8 @@ namespace CryptoWebService.Controllers
                         foreach (var itemAnswer in qAnswersDB)
                         {
                             var x = item.SelectedAnswersId.Where(q => q == itemAnswer.Id);
-                            if ((x == null || x.Count() == 0) && itemAnswer.Correct || (x != null ||x.Count() > 0) && !itemAnswer.Correct)
+                            if (((x == null || x.Count() == 0) && itemAnswer.Correct) 
+                                || (x != null && x.Count() > 0 && !itemAnswer.Correct))
                             {
                                 CorrectAnswerOnQuestion = false;
                                 break;
