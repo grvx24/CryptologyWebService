@@ -17,6 +17,8 @@
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -25,6 +27,20 @@
             });
         });
     }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            if ($('#inputEncrypt').val() != "") {
+                $('#encryptButton').attr('disabled', false);
+            } else {
+                $('#encryptButton').attr('disabled', true);
+                $('#saveButton').attr('disabled', true);
+                $('#outputEncrypt').val("");
+            }
+        });
+
 
     var init = function () {
         encryptInit();
@@ -652,7 +668,7 @@ $(document).ready(function () {
 function saveTextAsFile() {
     var textToWrite = document.getElementById("outputEncrypt").value;
     var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
-    var fileNameToSaveAs = 'hash';
+    var fileNameToSaveAs = 'hash' + Date.now();
 
     var downloadLink = document.createElement("a");
     downloadLink.download = fileNameToSaveAs;
@@ -675,17 +691,18 @@ function destroyClickedElement(event) {
 }
 
 function loadFileAsText() {
-    var fileToLoad = document.getElementById("fileToLoad").files[0];
-
-    var fileReader = new FileReader();
-    fileReader.onload = function (fileLoadedEvent) {
-        var textFromFileLoaded = fileLoadedEvent.target.result;
-        document.getElementById("inputEncrypt").value = textFromFileLoaded;
-    };
-    fileReader.readAsText(fileToLoad, "UTF-8");
+    var file = document.getElementById("fileText").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            document.getElementById("inputEncrypt").value = evt.target.result;
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
 }
-
-
 
 
 

@@ -42,10 +42,11 @@
                 <div class="col-lg-1"></div>
                 <div class="column">
                     <span class="col-md-8">
-                        <row>
-                            <button style="margin-top: 5px; margin-bottom: 5px; float:left; margin-right:10px" class="btn btn-success" id="loadButton" type="submit" onclick="loadFileAsText()">Wczytaj z pliku</button>
-                            <input type="file" id="fileToLoad" style="float:left; margin-top:5px;">
-                        </row>
+                        <label class="input-group">
+                            <span class="btn btn-success" style="margin-top: 5px;">
+                                Wczytaj z pliku<input id="fileText" accept="text/plain" type="file" onchange="loadFileAsText()" style="display: none;">
+                            </span>
+                        </label>
                     </span>
                 </div>
             </div>

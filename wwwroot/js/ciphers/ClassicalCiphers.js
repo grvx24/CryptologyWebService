@@ -2360,3 +2360,81 @@ var VigenereVisualizationInit = function (config) {
 
 }
 //#endregion
+
+function loadFileToEncrypt() {
+    var file = document.getElementById("fileText").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            var maxLength = $("#inputEncrypt").attr('maxlength');
+            document.getElementById("inputEncrypt").value = evt.target.result.substring(0, maxLength);;
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+}
+
+
+function loadFileToDecrypt() {
+    var file = document.getElementById("fileTextDecrypt").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            var maxLength = $("#inputDecrypt").attr('maxlength');
+            document.getElementById("inputDecrypt").value = evt.target.result.substring(0, maxLength);;
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+}
+
+function saveEncryptedAsFile() {
+    var textToWrite = document.getElementById("outputEncrypt").value;
+    var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    var fileNameToSaveAs = 'szyfrogram' + Date.now();
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null) {
+
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function saveDecryptedAsFile() {
+    var textToWrite = document.getElementById("outputDecrypt").value;
+    var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    var fileNameToSaveAs = 'Odszyfrowana' + Date.now();
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null) {
+
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function destroyClickedElement(event) {
+    document.body.removeChild(event.target);
+}
+
