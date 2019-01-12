@@ -7,7 +7,7 @@
 <div class="col-md-12" style="margin-top:30px; margin-bottom: 71px">
     <row>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+            <textarea maxlength="50" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -16,17 +16,14 @@
     </row>
 </div>
 
-<div class="col-md-8" style="margin-left:12px;margin-top: -50px; margin-bottom:18px">
-    <div id="cipherOutput"></div>
-</div>
+    <div class="col-md-11" style="margin-left:12px;margin-top: -50px; margin-bottom:18px">
+        <div class="tableHorizontal">
+            <div id="cipherOutput"></div>
+        </div> 
+    </div>
 
-<div class="col-md-12">
-    <div class="col-md-8" >
-        <table id="part-1" class="bacon" align="center">
-            <tr>
-                <th style="color:#5c9def">Znak</th>
-                <th style="color:#5c9def">Kod</th>
-            </tr>
+    <div class="col-md-12">
+        <table id="part-1" class="bacon" align="center" width="150" style="margin-left:15px;margin-right:25px">
             <tr>
                 <td>A</td>
                 <td>aaaaa</td>
@@ -47,17 +44,12 @@
                 <td>E</td>
                 <td>aabaa</td>
             </tr>
-        </table>
-        <table id="part-2" class="bacon" align="center">
-            <tr>
-                <th style="color:#5c9def">Znak</th>
-                <th style="color:#5c9def">Kod</th>
-            </tr>
-            <tr>
             <tr>
                 <td>F</td>
                 <td>aabab</td>
             </tr>
+        </table>
+        <table id="part-2" class="bacon" align="center" width="150" style="margin-right:25px">
             <tr>
                 <td>G</td>
                 <td>aabba</td>
@@ -74,12 +66,6 @@
                 <td>K</td>
                 <td>abaaa</td>
             </tr>
-        </table>
-        <table id="part-3" class="bacon" align="center">
-            <tr>
-                <th style="color:#5c9def">Znak</th>
-                <th style="color:#5c9def">Kod</th>
-            </tr>
             <tr>
                 <td>L</td>
                 <td>ababa</td>
@@ -88,6 +74,8 @@
                 <td>M</td>
                 <td>ababb</td>
             </tr>
+        </table>
+        <table id="part-3" class="bacon" align="center" width="150" style="margin-right:25px">
             <tr>
                 <td>N</td>
                 <td>abbaa</td>
@@ -99,12 +87,6 @@
             <tr>
                 <td>P</td>
                 <td>abbba</td>
-            </tr>
-        </table>
-        <table id="part-4" class="bacon" align="center">
-            <tr>
-                <th style="color:#5c9def">Znak</th>
-                <th style="color:#5c9def">Kod</th>
             </tr>
             <tr>
                 <td>Q</td>
@@ -118,6 +100,8 @@
                 <td>S</td>
                 <td>baaab</td>
             </tr>
+        </table>
+        <table id="part-4" class="bacon" align="center" width="150" style="margin-right:25px">
             <tr>
                 <td>T</td>
                 <td>baaba</td>
@@ -125,12 +109,6 @@
             <tr>
                 <td>U / V</td>
                 <td>baabb</td>
-            </tr>
-        </table>
-        <table id="part-5" class="bacon" align="center">
-            <tr>
-                <th style="color:#5c9def">Znak</th>
-                <th style="color:#5c9def">Kod</th>
             </tr>
             <tr>
                 <td>W</td>
@@ -150,17 +128,17 @@
             </tr>
         </table>
     </div>
-</div>
-
-<div>
-    <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
-</div>
-<div>
-    <textarea class="form-control" rows="1" id="indexNumber" style="display:none">0</textarea>
-</div>
 
 
-<script>
+    <div>
+        <textarea class="form-control" rows="1" id="stepNumber" style="display:none">1</textarea>
+    </div>
+    <div>
+        <textarea class="form-control" rows="1" id="indexNumber" style="display:none">0</textarea>
+    </div>
+
+
+    <script>
       //Ajax
     var baconInit = BaconVisualizationInit({
         urls: {
@@ -169,4 +147,4 @@
     });
 
     baconInit.init();
-</script>
+    </script>

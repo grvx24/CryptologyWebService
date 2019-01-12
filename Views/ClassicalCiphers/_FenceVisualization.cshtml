@@ -15,7 +15,7 @@
                 </select>
         </div>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+            <textarea maxlength="50" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -24,14 +24,17 @@
     </row>
 </div>
 
-<div class="col-md-12" style="margin-left:12px;">
-    <div id="cipherOutput"></div>
+<div class="col-md-11" style="margin-left:12px;">
+    <div class="tableHorizontal">
+        <div id="cipherOutput"></div>
+    </div>
+   
 </div>
 
-<div class="col-md-12" style="margin-left:14px;margin-top:10px">
-    <row>
-        <div id="fenceTable"></div>
-    </row>
+<div class="col-md-11" style="margin-left:14px;margin-top:10px">
+    <div class="tableHorizontal">
+            <div id="fenceTable"></div>
+    </div>
 </div>
 
 

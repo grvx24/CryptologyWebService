@@ -5,10 +5,10 @@
     <row>
         <div class="col-md-8" style="margin-bottom:30px;margin-top:10px;">
             <label for="keyVisualization">@Text.Key</label>
-            <textarea class="form-control" rows="1" id="keyVisualization"></textarea>
+            <textarea class="form-control" rows="1" id="keyVisualization" maxlength="25"></textarea>
         </div>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+            <textarea maxlength="50" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -17,24 +17,27 @@
     </row>
 </div>
 
-<div class="col-md-12" >
-    <div id="cipherOutput"></div>
+<div class="col-md-11" style="margin-left:12px;">
+    <div class="tableHorizontal">
+        <div id="cipherOutput"></div>
+    </div>    
 </div>
 
 <div class="col-md-12" style="margin-left:16px;margin-top:30px;">
     <row>
-        <div>
+        <div class="tableHorizontal">
             <div id="sortedKey"></div>
             <label id="labelSortedKey" hidden>Klucz posortowany alfabetycznie z nadanymi numerami</label>
         </div>
-        <div>
+        <div class="tableHorizontal">
             <div id="numeredKey" style="margin-top:20px;"></div>
+            
+            <div>
+                <div id="encryptMatrix" style="margin-top:5px"></div>
+                <label id="labelEncryptMatrix" hidden>Tabela wypełniona tekstem do zaszyfrowania</label>
+            </div>
         </div>
-        <div>
-            <div id="encryptMatrix" style="margin-top:5px"></div>
-            <label id="labelEncryptMatrix" hidden>Tabela wypełniona tekstem do zaszyfrowania</label>
-        </div>
-    </row>
+</row>
 </div>
        
 <div>
