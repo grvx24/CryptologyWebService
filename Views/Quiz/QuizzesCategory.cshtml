@@ -7,19 +7,19 @@
 <div class="container">
     <table class="table">
         <thead>
-            <tr >
+            <tr>
                 <th class="MyStyle">
                     nazwa kategorii
                 </th>
-                <th class="text-center MyStyle" >
+                <th class="text-center MyStyle">
                     liczba dostepnych quizów
                 </th>
-                @if (User.Identity.IsAuthenticated)
+                @*@if (User.Identity.IsAuthenticated)
                 {
                     <th class="text-center MyStyle">
                         funkcje administratora
                     </th>
-                }
+                }*@
             </tr>
         </thead>
         <tbody>
@@ -27,22 +27,56 @@
             {
                 <tr style="font-size:18px;">
                     <td>
-                        <a asp-action="@item.SecondCategoryName" >@item.CategoryName</a>
+                        <a asp-action="@item.SecondCategoryName">@item.CategoryName</a>
                     </td>
                     <td class="text-center">
                         @Html.DisplayFor(modelItem => item.NumberOfQuizzes)
                     </td>
-                    @if (User.Identity.IsAuthenticated)
+                    @*@if (User.Identity.IsAuthenticated)
                     {
-                    <td class="text-center">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-pencil"></a>
-                        <label style="margin:0px 5px"></label>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
-                    </td>
-                    }
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-pencil"></a>
+                            @if (item.NumberOfQuizzes == 0*)
+                            {
+                                <label style="margin:0px 5px"></label>
+                                <a data-toggle="modal" data-target="@(".ModalId_"+item.Id)" class="glyphicon glyphicon-trash" title="usuń kategorie"></a>
+                                <div class="modal fade @("ModalId_"+item.Id)" id="@("ModalId_"+item.Id)">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button data-dismiss="modal" class="close">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <div class="modal-title">
+                                                    Potwierdzenie
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Czy na pewno chcesz usunąć kategorie ?
+                                                </p>
+                                                <p>
+                                                    "@item.CategoryName"
+                                                </p>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" onclick="@("deleteCategory("+item.Id+")")">
+                                                    Tak, Usuń
+                                                </button>
+                                                <button class="btn btn-default" data-dismiss="modal">
+                                                    Anuluj
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </td>
+                    }*@
                 </tr>
             }
-        </tbody>
+        </tbody> 
     </table>
 </div>
 

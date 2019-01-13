@@ -52,7 +52,7 @@ namespace CryptoWebService.Controllers
                         NumberOfQuestions = _context.Question.Where(question => question.QuizId == q.Id).Count()
                     }).ToList();
 
-                if (QuizzesInCategory.Count == 0) return NotFound();
+                
 
                 if (quizNumber == null || quizNumber == 0)
                 {
@@ -215,40 +215,6 @@ namespace CryptoWebService.Controllers
         }
 
         [HttpPost]
-        [Route("quiz/DeleteCategory")]
-        public IActionResult DeleteCategory([FromBody] int categoryId)
-        {
-            try
-            {
-                if (this.User.Identity.IsAuthenticated)
-                {
-                    if (categoryId != null)
-                    {
-                        var category = _context.Category.Where(q => q.Id == categoryId).FirstOrDefault();
-                        if (category != null)
-                        {
-                            int quizzesinCategory = _context.Quiz.Where(q => q.CategoryId == categoryId).Count();
-
-                            if (quizzesinCategory == 0)
-                            {
-                                return Json(new { Result = true, Message = "Kategoria została usunięta." });
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Write("Delete Category Error_" + e.Message);
-            }
-            return Json(new { Result = false, Message = "Nie udało się usunąć kategorii." });
-        }
-
-        [HttpPost]
         [Route("quiz/DeleteQuestion")]
         public IActionResult DeleteQuestion([FromBody] int questionId)
         {
@@ -281,33 +247,9 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się usunąć pytania." });
         }
 
-        [HttpPost]
-        [Route("quiz/DeleteAnswer")]
-        public IActionResult DeleteAnswer([FromBody] int answerId)
+        public bool DeleteAnswer(int answerId)
         {
-            try
-            {
-                if (this.User.Identity.IsAuthenticated)
-                {
-                    if (answerId != null)
-                    {
-                        var answer = _context.Answer.Where(a => a.Id == answerId).FirstOrDefault();
-                        if (answer != null)
-                        {
-                            return Json(new { Result = true, Message = "Odpowiedź została usunięta." });
-                        }
-                    }
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Write("Delete Answer Error_" + e.Message);
-            }
-            return Json(new { Result = false, Message = "Nie udało się usunąć odpowiedzi." });
+            return false;
         }
         #endregion
 
@@ -351,7 +293,7 @@ namespace CryptoWebService.Controllers
 
         [HttpPost]
         [Route("quiz/CreateQuestion")]
-        public IActionResult CreateQuestion([FromBody] int questionID)
+        public IActionResult CreateQuestion([FromBody] QuestionModel questionModel)
         {
             if (this.User.Identity.IsAuthenticated)
             {
@@ -363,53 +305,9 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się utworzyć pytania." });
         }
 
-        [HttpPost]
-        [Route("quiz/CreateCategory")]
-        public IActionResult CreateCategory([FromBody] CategoryModel categoryModel)
+        public bool CreateAnswer( AnswerModel answerModel)
         {
-            try
-            {
-                if (this.User.Identity.IsAuthenticated)
-                {
-                    if (categoryModel != null)
-                    {
-
-                        //int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
-                        //_context.Quiz.Add(
-                        //    new Quiz
-                        //    {
-                        //        QuizName = quizModel.QuizName,
-                        //        CategoryId = quizModel.CategoryId,
-                        //        QuizNumber = maxNumer + 1
-                        //    });
-                        //_context.SaveChanges();
-                        return Json(new { Result = true, Message = "Kategoria została utworzona." });
-                    }
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Write("Create Category Error_" + e.Message);
-            }
-            return Json(new { Result = false, Message = "Nie udało się utworzyć kategorii." });
-        }
-
-        [HttpPost]
-        [Route("quiz/CreateAnswer")]
-        public IActionResult CreateAnswer([FromBody] int answerId)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            return Json(new { Result = false, Message = "Nie udało się utworzyć odpowiedzi." });
+            return false;
         }
         #endregion
 
@@ -442,19 +340,7 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się zmodyfikować pytania." });
         }
 
-        [HttpPost]
-        [Route("quiz/UpdateCategory")]
-        public IActionResult UpdateCategory([FromBody] int categoryId)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            return Json(new { Result = false, Message = "Nie udało się zmodyfikować kategorii." });
-        }
+
 
         [HttpPost]
         [Route("quiz/UpdateAnswer")]
@@ -471,5 +357,64 @@ namespace CryptoWebService.Controllers
         }
         #endregion
 
+
+        #region Category 
+        [HttpPost]
+        [Route("quiz/CreateCategory")]
+        public IActionResult CreateCategory([FromBody] CategoryModel categoryModel)
+        {
+            try
+            {
+                if (this.User.Identity.IsAuthenticated)
+                {
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Create Category Error_" + e.Message);
+            }
+            return Json(new { Result = false, Message = "Nie udało się utworzyć kategorii." });
+        }
+
+        [HttpPost]
+        [Route("quiz/UpdateCategory")]
+        public IActionResult UpdateCategory([FromBody] int categoryId)
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            return Json(new { Result = false, Message = "Nie udało się zmodyfikować kategorii." });
+        }
+
+        [HttpPost]
+        [Route("quiz/DeleteCategory")]
+        public IActionResult DeleteCategory([FromBody] int categoryId)
+        {
+            try
+            {
+                if (this.User.Identity.IsAuthenticated)
+                {
+
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Delete Category Error_" + e.Message);
+            }
+            return Json(new { Result = false, Message = "Nie udało się usunąć kategorii." });
+        }
+        #endregion
     }
 }
