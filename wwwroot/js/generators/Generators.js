@@ -150,12 +150,12 @@
                         var downloadLink = $("#downloadBtn");
 
                         if (lastUsedMode == 2) {
-                            var href = "data:application/octet-stream;charset=utf-16le;base64," + data;
+                            var href = "data:application/octet-stream;charset=utf-16le;base64," + result;
                             downloadLink.attr("download", 'ciąg' + Date.now() + '.bin');
                             downloadLink.attr("href", href);
 
                         } else {
-                            var href = "data:application/text;charset=utf-16le;," + data;
+                            var href = "data:application/text;charset=utf-16le;," + result;
                             downloadLink.attr("download", 'ciąg' + Date.now() + '.txt');
                             downloadLink.attr("href", href);
                         }
