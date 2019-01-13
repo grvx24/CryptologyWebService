@@ -9,6 +9,7 @@ using CryptoWebService.Models.Quiz;
 using CryptoWebService.Models.Quiz.Dto;
 using CryptoWebService.Models.Quiz.ViewModel;
 using CryptoWebService.Helpers;
+using CryptoWebService.Models.Quiz.Model;
 
 namespace CryptoWebService.Controllers
 {
@@ -55,10 +56,12 @@ namespace CryptoWebService.Controllers
 
                 if (quizNumber == null || quizNumber == 0)
                 {
+                    var categoryDB = _context.Category.Where(c => c.CategoryName.Replace(" ", String.Empty) == categoryName).FirstOrDefault();
                     var viewModel = new QuizzesListViewModel()
                     {
-                        CategoryName = _context.Category.Where(c => c.CategoryName.Replace(" ", String.Empty) == categoryName).Select(c => c.CategoryName).FirstOrDefault(),
+                        CategoryName = categoryDB.CategoryName,
                         SecondCategoryName = categoryName,
+                        CategoryId = categoryDB.Id,
                         Quizzes = QuizzesInCategory
                     };
                     return View("QuizzesList", viewModel);
@@ -311,14 +314,37 @@ namespace CryptoWebService.Controllers
         #region create
         [HttpPost]
         [Route("quiz/CreateQuiz")]
-        public IActionResult CreateQuiz([FromBody] int quizID)
+        public IActionResult CreateQuiz([FromBody] QuizModel quizModel)
         {
-            if (this.User.Identity.IsAuthenticated)
+            try
             {
+                if (this.User.Identity.IsAuthenticated)
+                {
+                    if (quizModel != null)
+                    {
+
+                        int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
+                        _context.Quiz.Add(
+                            new Quiz
+                            {
+                                QuizName = quizModel.QuizName,
+                                CategoryId = quizModel.CategoryId,
+                                QuizNumber = maxNumer + 1
+                            });
+                        _context.SaveChanges();
+                        return Json(new { Result = true, Message = "Quiz został utworzony." });
+
+
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
-            else
+            catch (Exception e)
             {
-                return Unauthorized();
+                Console.Write("Create Quiz Error_" + e.Message);
             }
             return Json(new { Result = false, Message = "Nie udało się utworzyć quizu." });
         }
@@ -339,14 +365,35 @@ namespace CryptoWebService.Controllers
 
         [HttpPost]
         [Route("quiz/CreateCategory")]
-        public IActionResult CreateCategory([FromBody] int categoryId)
+        public IActionResult CreateCategory([FromBody] CategoryModel categoryModel)
         {
-            if (this.User.Identity.IsAuthenticated)
+            try
             {
+                if (this.User.Identity.IsAuthenticated)
+                {
+                    if (categoryModel != null)
+                    {
+
+                        //int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
+                        //_context.Quiz.Add(
+                        //    new Quiz
+                        //    {
+                        //        QuizName = quizModel.QuizName,
+                        //        CategoryId = quizModel.CategoryId,
+                        //        QuizNumber = maxNumer + 1
+                        //    });
+                        //_context.SaveChanges();
+                        return Json(new { Result = true, Message = "Kategoria została utworzona." });
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
-            else
+            catch (Exception e)
             {
-                return Unauthorized();
+                Console.Write("Create Category Error_" + e.Message);
             }
             return Json(new { Result = false, Message = "Nie udało się utworzyć kategorii." });
         }

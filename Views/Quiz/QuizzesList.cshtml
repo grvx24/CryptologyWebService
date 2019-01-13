@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = Model.CategoryName;
 }
-
+<input hidden id="categoryId" value="@Model.CategoryId" />
 
 <div class="container">
     <h2 class="text-center" style="color: #1c5aa6; margin-bottom:20px;">
@@ -61,54 +61,112 @@
                     </td>
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <td class="text-center">
-                        <a href="@("./"+Model.SecondCategoryName+ "/" + item.QuizNumber+"?edit=true")" class="glyphicon glyphicon-pencil" title="edytuj quiz"></a>
+                        <td class="text-center">
+                            <a href="@("./"+Model.SecondCategoryName+ "/" + item.QuizNumber+"?edit=true")" class="glyphicon glyphicon-pencil" title="edytuj quiz"></a>
 
-                        @if (item.NumberOfQuestions == 0)
-                        {
-                            <label style="margin:0px 5px"></label>
-                            <a data-toggle="modal" data-target="@(".ModalId_"+item.Id)" class="glyphicon glyphicon-trash" title="usuń quiz"></a>
-                            <div class="modal fade @("ModalId_"+item.Id)" id="@("ModalId_"+item.Id)">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button data-dismiss="modal" class="close">
-                                                <span>&times;</span>
-                                            </button>
-                                            <div class="modal-title">
-                                                Potwierdzenie
+                            @if (item.NumberOfQuestions == 0)
+                            {
+                                <label style="margin:0px 5px"></label>
+                                <a data-toggle="modal" data-target="@(".ModalId_"+item.Id)" class="glyphicon glyphicon-trash" title="usuń quiz"></a>
+                                <div class="modal fade @("ModalId_"+item.Id)" id="@("ModalId_"+item.Id)">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button data-dismiss="modal" class="close">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <div class="modal-title">
+                                                    Potwierdzenie
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>
-                                                Czy na pewno chcesz usunąć quiz ?
-                                            </p>
-                                            <p>
-                                                "@item.QuizName"
-                                            </p>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Czy na pewno chcesz usunąć quiz ?
+                                                </p>
+                                                <p>
+                                                    "@item.QuizName"
+                                                </p>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-primary" onclick="@("deleteQuiz("+item.Id+")")">
-                                                Tak, Usuń
-                                            </button>
-                                            <button class="btn btn-default" data-dismiss="modal">
-                                                Anuluj
-                                            </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" onclick="@("deleteQuiz("+item.Id+")")">
+                                                    Tak, Usuń
+                                                </button>
+                                                <button class="btn btn-default" data-dismiss="modal">
+                                                    Anuluj
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </td>
+                            }
+                        </td>
                     }
                 </tr>
             }
         </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th class="text-center MyStyle">
+                        <a data-toggle="modal" data-target=".addQuizModal" class="MyStyle" title="dodaj quiz">dodaj quiz <div class="glyphicon glyphicon-plus "></div></a>
+
+                        <div class="modal fade addQuizModal" id="addQuizModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button data-dismiss="modal" class="close">
+                                            <span>&times;</span>
+                                        </button>
+                                        <div class="modal-title">
+                                            tworzenie quizu
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" style="height:60px;">
+                                        <div class="form-group">
+                                            <div class="col-lg-3">
+                                                <label for="addingQuizName">nazwa quizu</label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" id="addingQuizName" placeholder="nazwa quizu" autofocus>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" onclick="@("addQuiz()")">
+                                            Utwórz quiz
+                                        </button>
+                                        <button class="btn btn-default" data-dismiss="modal">
+                                            Anuluj
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                }
+            </tr>
+        </tfoot>
     </table>
 </div>
 
 <script>
+
+    $(function () {
+        $('#addingQuizName').keypress(function (e) {
+            if (e.which == 10 || e.which == 13) {
+                addQuiz();
+            }
+        });
+    });
+
     function onSucces(response) {
         location.reload();
     }
@@ -126,6 +184,40 @@
         $('#alertPanel').hide();
     }
 
+    function addQuiz() {
+
+        var addingQuizName = document.getElementById('addingQuizName').value;
+        var CategoryId = document.getElementById("categoryId").value;
+
+        var model =  {
+            CategoryId: CategoryId,
+            QuizName: addingQuizName
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateQuiz")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                hideAlert();
+            },
+            success: function (response) {
+                if (response.result == true) {
+                    $('#addQuizModal').modal('hide');
+                    onSucces(response);
+                } else {
+                    $('#addQuizModal').modal('hide');
+                    onError(response);
+                }
+            },
+            error: function (response) {
+                onError("AJAX ERROR" + response);
+            }
+        });
+    }
+
     function deleteQuiz(quizId) {
         $.ajax({
             type: 'POST',
@@ -139,6 +231,7 @@
             success: function (response) {
                 if (response.result == true) {
                     $('#ModalId_' + quizId).modal('hide');
+                    
                     onSucces(response);
                 } else {
                     $('#ModalId_' + quizId).modal('hide');
@@ -148,7 +241,7 @@
             error: function (response) {
                 onError("AJAX ERROR" + response);
             }
-        });   
+        });
     }
 </script>
 
@@ -163,7 +256,7 @@
     }
 
     .table thead tr th {
-        border-bottom: 2px solid #1c5aa6; 
+        border-bottom: 2px solid #1c5aa6;
     }
 
     .table tbody tr td {
