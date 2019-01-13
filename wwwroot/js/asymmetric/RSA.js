@@ -240,6 +240,7 @@
                     alert("Wystąpił błąd podczas wczytywania pliku!");
                 }
             }
+            $('#fileMessage').val(null);
         });
 
         $('#fileCipherText').change(function () {
@@ -257,10 +258,12 @@
                     alert("Wystąpił błąd podczas wczytywania pliku!");
                 }
             }
+            $('#fileCipherText').val(null);
         });
 
 
         $('#filePublicKey').change(function() {
+
 
             var file = document.getElementById('filePublicKey').files[0];
             if (file) {
@@ -273,6 +276,9 @@
                     alert("Wystąpił błąd podczas wczytywania pliku!");
                 }
             }
+            $('#filePublicKey').val(null);
+
+            
         });
 
         $('#filePrivateKey').change(function () {
@@ -288,6 +294,7 @@
                     alert("Wystąpił błąd podczas wczytywania pliku!");
                 }
             }
+            $('#filePrivateKey').val(null);
         });
 
     }
