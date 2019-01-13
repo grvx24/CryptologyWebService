@@ -35,7 +35,7 @@
         <div class="form-group">
             <div class="col-md-12">
                 <label for="inputEncrypt" style="margin-top:5px">Tekst do zaszyfrowania</label>
-                <textarea class="form-control" rows="5" id="inputEncrypt" maxlength="1000000" placeholder="@Text.WriteTextToEncrypt"></textarea>
+                <textarea class="form-control" rows="5" id="inputEncrypt" maxlength="500000" placeholder="@Text.WriteTextToEncrypt"></textarea>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -112,7 +112,7 @@
         <div class="form-group">
             <div class="col-md-12">
                 <label for="inputDecrypt" style="margin-top:5px">Tekst do odszyfrowania</label>
-                <textarea class="form-control" rows="5" id="inputDecrypt" maxlength="1000000" placeholder="@Text.WriteTextToDecrypt"></textarea>
+                <textarea class="form-control" rows="5" id="inputDecrypt" maxlength="500000" placeholder="@Text.WriteTextToDecrypt"></textarea>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </div>

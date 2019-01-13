@@ -1,0 +1,42 @@
+﻿<script src="~/js/hash/HashFunctions.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/hash_functions.css">
+
+<div class="container">
+    <div class="tab">
+        <div class="tab">
+            <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+            <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+        </div>
+    </div>
+
+    <div id="Description" class="tabcontent">
+        <h2 class="title">SHA-3 (Keccak)</h2>
+        <p class="description">
+            Kocciak - bla bla bla 
+
+        </p>
+    </div>
+    <div id="Tools" class="tabcontent col-lg-12">
+        @await Html.PartialAsync("_SHA3Partial")
+    </div>
+</div>
+
+
+<script>
+
+    document.getElementById("defaultPageButton").click();
+
+    function openTab(evt, tabName) {
+        var i;
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        var tabLinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>

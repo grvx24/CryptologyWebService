@@ -34,15 +34,8 @@ var MD5FunctionInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "") {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany");              
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            }
         });
              
 
@@ -528,15 +521,8 @@ var SHA1FunctionInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "") {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany");
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            }
         });
 
     var init = function () {
@@ -586,15 +572,8 @@ var SHA256FunctionInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "") {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany");
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            }
         });
 
     var init = function () {
@@ -643,15 +622,8 @@ var SHA512FunctionInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "") {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany");
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            }
         });
 
     var init = function () {
@@ -663,6 +635,7 @@ var SHA512FunctionInit = function (config) {
     }
 }
 //#endregion
+
 //#region HMAC
 var HMACInit = function (config) {
     var encryptInit = function () {
@@ -699,16 +672,9 @@ var HMACInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "" && $('#keyEncrypt').val() != "" ) {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu oraz klucz muszą być wpisane");
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-                $('#outputEncrypt').val("");
-            }
+           
         });
 
     $("#keyEncrypt").on('input',
@@ -716,16 +682,9 @@ var HMACInit = function (config) {
             $('#outputEncrypt').val("");
             $('#saveButton').attr('disabled', true);
             $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-            if ($('#inputEncrypt').val() != "" && $('#keyEncrypt').val() != "") {
                 $('#encryptButton').attr('disabled', false);
                 $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-            } else {
-                $('#encryptButton').attr('disabled', true);
-                $('#encryptButton').attr('title', "Tekst do obliczenia skrótu oraz klucz muszą być wpisane");
-                $('#saveButton').attr('disabled', true);
-                $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-                $('#outputEncrypt').val("");
-            }
+             
         });
 
     $("#hashSelectTypeEncrypt").on('change',
@@ -745,6 +704,65 @@ var HMACInit = function (config) {
 }
 //#endregion
 
+//#region SHA3
+var SHA3Init = function (config) {
+    var encryptInit = function () {
+
+        $('#encryptButton').click(function () {
+
+            var model = {
+                message: $('#inputEncrypt').val(),
+                hashSize: $('#hashSelectSizeEncrypt option:selected').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.encryptUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+    }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+            
+        });
+
+    $("#hashSelectSizeEncrypt").on('change',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+        });
+
+    var init = function () {
+        encryptInit();
+    }
+
+    return {
+        init: init
+    }
+}
+//#endregion
+
+
 //#region alllHash
 $(document).ready(function () {
     $('#clearButton').click(function () {       
@@ -755,8 +773,6 @@ $(document).ready(function () {
 
         $('#saveButton').attr('disabled', true);
         $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-        $('#encryptButton').attr('disabled', true);
-        $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany"); 
         if ($("#keyEncrypt").length > 0) {
             /*Clear key */
             $('#keyEncrypt').val('');
@@ -830,26 +846,12 @@ function checkTextareaChange() {
     $('#outputEncrypt').val("");
     $('#saveButton').attr('disabled', true);
     if ($("#keyEncrypt").length > 0) {     
-        if ($('#inputEncrypt').val() != "" && $('#keyEncrypt').val() != "") {
             $('#encryptButton').attr('disabled', false);
-            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-        } else {
-            $('#encryptButton').attr('disabled', true);
-            $('#encryptButton').attr('title', "Tekst do obliczenia skrótu oraz klucz muszą być wpisane");
-            $('#saveButton').attr('disabled', true);
-            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-        }
+            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');     
     }
     else {       
-        if ($('#inputEncrypt').val() != "") {
             $('#encryptButton').attr('disabled', false);
-            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
-        } else {
-            $('#encryptButton').attr('disabled', true);
-            $('#encryptButton').attr('title', "Tekst do obliczenia skrótu musi zostać wpisany");
-            $('#saveButton').attr('disabled', true);
-            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
-        }
+            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');        
     }
 
 }

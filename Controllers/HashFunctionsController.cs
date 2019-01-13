@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CryptoWebService.Backend.HashFunctions;
+using CryptoWebService.Backend.HashFunctions.Keccak;
+using CryptoWebService.Helpers;
 using CryptoWebService.Models.HashFunctions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
@@ -14,6 +16,8 @@ namespace CryptoWebService.Controllers
 {
     public class HashFunctionsController : Controller
     {
+
+#region MD5
         public MD5_Visualization MD5_Visualization { get; private set; }
 
         [HttpGet]
@@ -43,8 +47,9 @@ namespace CryptoWebService.Controllers
             }
             return Json(encrypted);
         }
+#endregion MD5
 
-
+ #region SHA1
         [HttpGet]
         public IActionResult SHA1()
         {
@@ -72,9 +77,9 @@ namespace CryptoWebService.Controllers
             }
             return Json(encrypted);
         }
+#endregion SHA1
 
-
-
+#region SHA256
         [HttpGet]
         public IActionResult SHA256()
         {
@@ -102,8 +107,9 @@ namespace CryptoWebService.Controllers
             }
             return Json(encrypted);
         }
+#endregion SHA256
 
-
+#region SHA512
         [HttpGet]
         public IActionResult SHA512()
         {
@@ -131,7 +137,9 @@ namespace CryptoWebService.Controllers
             }
             return Json(encrypted);
         }
+        #endregion SHA512
 
+#region HMAC
         [HttpGet]
         public IActionResult HMAC()
         {
@@ -169,9 +177,70 @@ namespace CryptoWebService.Controllers
         { 
             return View();
         }
+#endregion HMAC
 
+#region SHA3
+        [HttpGet]
+        public IActionResult SHA3()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult SHA3Encrypt([FromBody]SHA3ViewModel viewModel)
+        {
+            var hashSize = viewModel.HashSize;
+            string input = viewModel.Message;
+            input = StringHelper.StringToBinary(input);
+            Bitstring bitstring = new Bitstring(input);
+            int outputLength=0;
+            Sha3Permutation sha3 = Sha3Permutation.Sha3_224();
+            string encrypted = "";
+            try
+            {
+                switch (hashSize)
+                {
+                    case Sha3HashAlgorithm.Size.Bits224:
+                        {
+                            sha3 = Sha3Permutation.Sha3_224();
+                            outputLength = 224;
+                            break;
+                        }      
+                    case Sha3HashAlgorithm.Size.Bits256:
+                        {
+                            sha3 = Sha3Permutation.Sha3_256();
+                            outputLength = 256;
+                            break;
+                        }
+                    case Sha3HashAlgorithm.Size.Bits384:
+                        {
+                            sha3 = Sha3Permutation.Sha3_384();
+                            outputLength = 384;
+                            break;
+                        }
+                    case Sha3HashAlgorithm.Size.Bits512:
+                        {
+                            sha3 = Sha3Permutation.Sha3_512();
+                            outputLength = 512;
+                            break;
+                        }
+                    default:
+                        Console.WriteLine("No size");
+                        break;
+                }
+                Bitstring b = new Bitstring(sha3.Process(bitstring.Bytes, outputLength, bitstring.Length));
+                encrypted = b.ToHexString(false, false);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
 
+            return Json(encrypted);
+        }
+#endregion SHA3
+
+        #region MD5_Visualization
         [HttpPost]
         public IActionResult MD5_Padding([FromBody]MD5ViewModel viewModel)
         {
@@ -252,8 +321,6 @@ namespace CryptoWebService.Controllers
                     
                 }
 
-                //List<Registers> _registers = new List<Registers>();
-
                 /*Round 1 Function F*/
                 MD5_Visualization.FF(ref md5.A, md5.B, md5.C, md5.D, 0, 7, 1, md5.X, _registers);
                 MD5_Visualization.FF(ref md5.D, md5.A, md5.B, md5.C, 1, 12, 2, md5.X, _registers);
@@ -271,7 +338,6 @@ namespace CryptoWebService.Controllers
                 MD5_Visualization.FF(ref md5.D, md5.A, md5.B, md5.C, 13, 12, 14, md5.X, _registers);
                 MD5_Visualization.FF(ref md5.C, md5.D, md5.A, md5.B, 14, 17, 15, md5.X, _registers);
                 MD5_Visualization.FF(ref md5.B, md5.C, md5.D, md5.A, 15, 22, 16, md5.X, _registers);
-
 
                 /*Round 2 Function G*/
                 MD5_Visualization.GG(ref md5.A, md5.B, md5.C, md5.D, 1, 5, 17, md5.X, _registers);
@@ -291,7 +357,6 @@ namespace CryptoWebService.Controllers
                 MD5_Visualization.GG(ref md5.C, md5.D, md5.A, md5.B, 7, 14, 31, md5.X, _registers);
                 MD5_Visualization.GG(ref md5.B, md5.C, md5.D, md5.A, 12, 20, 32, md5.X, _registers);
 
-
                 /*Round 3 Function H*/
                 MD5_Visualization.HH(ref md5.A, md5.B, md5.C, md5.D, 5, 4, 33, md5.X, _registers);
                 MD5_Visualization.HH(ref md5.D, md5.A, md5.B, md5.C, 8, 11, 34, md5.X, _registers);
@@ -309,7 +374,6 @@ namespace CryptoWebService.Controllers
                 MD5_Visualization.HH(ref md5.D, md5.A, md5.B, md5.C, 12, 11, 46, md5.X, _registers);
                 MD5_Visualization.HH(ref md5.C, md5.D, md5.A, md5.B, 15, 16, 47, md5.X, _registers);
                 MD5_Visualization.HH(ref md5.B, md5.C, md5.D, md5.A, 2, 23, 48, md5.X, _registers);
-
 
                 /*Round 4 Function I*/
                 MD5_Visualization.II(ref md5.A, md5.B, md5.C, md5.D, 0, 6, 49, md5.X, _registers);
@@ -329,18 +393,14 @@ namespace CryptoWebService.Controllers
                 MD5_Visualization.II(ref md5.C, md5.D, md5.A, md5.B, 2, 15, 63, md5.X, _registers);
                 MD5_Visualization.II(ref md5.B, md5.C, md5.D, md5.A, 9, 21, 64, md5.X, _registers);
 
-                // serialize JSON to a string and then write string to a file
-              //json = JsonConvert.SerializeObject(_registers, Formatting.Indented);
-
             }
             catch (Exception )
             {
                 return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
-            //return Json(_registers);
             return Json(_registers.ToArray());
         }
-
+#endregion MD5_Visualization
 
 
     }
