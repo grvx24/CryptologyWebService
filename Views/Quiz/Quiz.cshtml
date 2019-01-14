@@ -102,38 +102,43 @@
         $('#creatingQuestionAlert').hide();
     }
 
-    function UpdateQuestion(questionId) {
+    function UpdateQuestion(questionId,a1id,a2id,a3id,a4id) {
         var quizID = document.getElementById("quizId").value;
-        var questionContent = document.getElementById('CreatingQuestionContent').value;
-        var answer1 = document.getElementById("CreatingQuestionAnswer1").value;
-        var answer1IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect1").checked;
-        var answer2 = document.getElementById("CreatingQuestionAnswer2").value;
-        var answer2IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect2").checked;
-        var answer3 = document.getElementById("CreatingQuestionAnswer3").value;
-        var answer3IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect3").checked;
-        var answer4 = document.getElementById("CreatingQuestionAnswer4").value;
-        var answer4IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect4").checked;
+        var questionContent = document.getElementById('UQC_' + questionId).value;
+        var answer1 = document.getElementById("UQCA_" + questionId + "_" + a1id).value;
+        var answer1IsCorrect = document.getElementById("UQCAIC_" + questionId + "_" + a1id).checked;
+        var answer2 = document.getElementById("UQCA_" + questionId + "_" + a2id).value;
+        var answer2IsCorrect = document.getElementById("UQCAIC_" + questionId + "_" + a2id).checked;
+        var answer3 = document.getElementById("UQCA_" + questionId + "_" + a3id).value;
+        var answer3IsCorrect = document.getElementById("UQCAIC_" + questionId + "_" + a3id).checked;
+        var answer4 = document.getElementById("UQCA_" + questionId + "_" + a4id).value;
+        var answer4IsCorrect = document.getElementById("UQCAIC_" + questionId + "_" + a4id).checked;
         var Answers = [];
 
         Answers[0] = {
             AnswerContent: answer1,
+            AnswerId: a1id,
             IsCorrect: answer1IsCorrect
         };
         Answers[1] = {
             AnswerContent: answer2,
+            AnswerId: a2id,
             IsCorrect: answer2IsCorrect
         };
         Answers[2] = {
             AnswerContent: answer3,
+            AnswerId: a3id,
             IsCorrect: answer3IsCorrect
         };
         Answers[3] = {
             AnswerContent: answer4,
+            AnswerId: a4id,
             IsCorrect: answer4IsCorrect
         };
 
         var model =  {
             QuizId: quizID,
+            QuestionId: questionId,
             QuestionContent: questionContent,
             Answers: Answers
         }
