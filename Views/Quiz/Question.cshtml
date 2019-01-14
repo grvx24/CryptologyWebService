@@ -24,53 +24,53 @@
                     <div class="modal-body col-lg-12">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="CreatingQuestionContent">treść pytania</label>
-                                <textarea class="form-control" id="CreatingQuestionContent" placeholder="treść pytania" autofocus>@(Model.QuestionContent)</textarea>
+                                <label for="@("UQC_" +Model.QuestionId)">treść pytania</label>
+                                <textarea class="form-control" id="@("UQC_" +Model.QuestionId)" placeholder="treść pytania" autofocus>@(Model.QuestionContent)</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="CreatingQuestionAnswer1">odpowiedź 1</label>
-                                <textarea class="form-control" id="CreatingQuestionAnswer1" placeholder="odpowiedź numer 1" >@(Model.Answers[0].AnswerContent)</textarea>
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)">odpowiedź 1</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" placeholder="odpowiedź numer 1" >@(Model.Answers[0].AnswerContent)</textarea>
                             </div>
                             <div class="form-check text-center">
-                                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect1" checked="@(Model.Answers[0].IsCorrect)">
-                                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect1">Poprawna odpowiedź</label>
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" checked="@(Model.Answers[0].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)">Poprawna odpowiedź</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="CreatingQuestionAnswer2">odpowiedź 2</label>
-                                <textarea class="form-control" id="CreatingQuestionAnswer2" placeholder="odpowiedź numer 2">@(Model.Answers[1].AnswerContent) </textarea>
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)">odpowiedź 2</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)" placeholder="odpowiedź numer 2">@(Model.Answers[1].AnswerContent) </textarea>
                             </div>
                             <div class="form-check text-center">
-                                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect2" checked="@(Model.Answers[1].IsCorrect)">
-                                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect2">Poprawna odpowiedź</label>
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)" checked="@(Model.Answers[1].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)">Poprawna odpowiedź</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="CreatingQuestionAnswer3">odpowiedź 3</label>
-                                <textarea class="form-control" id="CreatingQuestionAnswer3" placeholder="odpowiedź numer 3">@(Model.Answers[2].AnswerContent)</textarea>
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)">odpowiedź 3</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)" placeholder="odpowiedź numer 3">@(Model.Answers[2].AnswerContent)</textarea>
                             </div>
                             <div class="form-check text-center">
-                                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect3" checked="@(Model.Answers[2].IsCorrect)">
-                                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect3">Poprawna odpowiedź</label>
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)" checked="@(Model.Answers[2].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)">Poprawna odpowiedź</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="CreatingQuestionAnswer4">odpowiedź 4</label>
-                                <textarea class="form-control" id="CreatingQuestionAnswer4" placeholder="odpowiedź numer 4">@(Model.Answers[3].AnswerContent)</textarea>
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)">odpowiedź 4</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)" placeholder="odpowiedź numer 4">@(Model.Answers[3].AnswerContent)</textarea>
                             </div>
                             <div class="form-check text-center">
-                                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect4" checked="@(Model.Answers[3].IsCorrect)">
-                                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect4">Poprawna odpowiedź</label>
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)" checked="@(Model.Answers[3].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)">Poprawna odpowiedź</label>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" onclick="@("UpdateQuestion("+Model.QuestionId+")")">
+                        <button class="btn btn-primary" onclick="@("UpdateQuestion("+Model.QuestionId+","+Model.Answers[0].AnswerId+","+Model.Answers[1].AnswerId+","+Model.Answers[2].AnswerId+","+Model.Answers[3].AnswerId+")")">
                             Zapisz
                         </button>
                         <button class="btn btn-default" data-dismiss="modal">
