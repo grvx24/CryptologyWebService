@@ -12,6 +12,14 @@
         @Model.QuizName
     </label>
 
+    @{ 
+        if(Model.CanEdit == true && User.Identity.IsAuthenticated)
+        {
+            await Html.RenderPartialAsync("CreatingQuestion", Model.QuizId);
+        }
+    }
+
+
     @{
         for (int i = 0; i < Model.Questions.Count(); i++)
         {
@@ -130,9 +138,11 @@
     function onSucces(response) {
         showResult(response.score);
     }
+
     function onError(response) {
         console.log(response);
     }
+
     function hideResult() {
         $('#ResultPanel').hide();
     }

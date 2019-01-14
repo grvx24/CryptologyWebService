@@ -71,6 +71,9 @@
     <Content Update="ViewControls\VisualCryptography\ImageControl.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Quiz\CreatingQuestion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Quiz\Question.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

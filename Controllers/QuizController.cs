@@ -92,7 +92,7 @@ namespace CryptoWebService.Controllers
                         questionViewModels.Add(new QuestionViewModel()
                         {
                             QuestionContent = Questions[i].Content,
-                            Answers = answerViewModels,
+                            Answers = RandomHelper.ShuffleList( answerViewModels),
                             QuestionId = Questions[i].Id,
                             AmountOfQuestionsInQuiz = Questions.Count()
                         });
@@ -103,6 +103,7 @@ namespace CryptoWebService.Controllers
                     quizViewModel.QuizName = quiz.QuizName;
                     quizViewModel.AmountOfQuestions = questionViewModels.Count();
                     quizViewModel.Questions = RandomHelper.ShuffleList(questionViewModels);
+                    quizViewModel.CanEdit = edit == null ? false : edit.Value;
 
                     return View("Quiz", quizViewModel);
                 }
@@ -262,7 +263,7 @@ namespace CryptoWebService.Controllers
             {
                 if (this.User.Identity.IsAuthenticated)
                 {
-                    if (quizModel != null)
+                    if (quizModel != null && !String.IsNullOrEmpty(quizModel.QuizName))
                     {
 
                         int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
@@ -275,8 +276,6 @@ namespace CryptoWebService.Controllers
                             });
                         _context.SaveChanges();
                         return Json(new { Result = true, Message = "Quiz został utworzony." });
-
-
                     }
                 }
                 else
@@ -297,17 +296,68 @@ namespace CryptoWebService.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
+                if(questionModel != null)
+                {
+                    if(String.IsNullOrEmpty(questionModel.QuestionContent)) return Json(new { Result = false, Message = "Treść pytania nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[0].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 1 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[1].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 2 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[2].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 3 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[3].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 4 nie może być pusta." });
+                    if (questionModel.Answers.Select(a => a.IsCorrect).Where(q => q == true).Count() <= 0) return Json(new { Result = false, Message = "Chociaż jedna odpowiedź musi być poprawna." });
+
+                    int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
+
+                    Question newObject = new Question
+                    {
+                        Content = questionModel.QuestionContent,
+                        QuizId = questionModel.QuizId
+                    };
+
+                    _context.Question.Add(newObject);
+                    _context.SaveChanges();
+
+
+                    _context.Answer.Add(
+                        new Answer
+                        {
+                            QuestionId = newObject.Id,
+                            Content = questionModel.Answers[0].AnswerContent,
+                            Correct = questionModel.Answers[0].IsCorrect
+                        });
+
+                    _context.Answer.Add(
+                        new Answer
+                        {
+                            QuestionId = newObject.Id,
+                            Content = questionModel.Answers[1].AnswerContent,
+                            Correct = questionModel.Answers[1].IsCorrect
+                        });
+
+                    _context.Answer.Add(
+                        new Answer
+                        {
+                            QuestionId = newObject.Id,
+                            Content = questionModel.Answers[2].AnswerContent,
+                            Correct = questionModel.Answers[2].IsCorrect
+                        });
+
+                    _context.Answer.Add(
+                        new Answer
+                        {
+                            QuestionId = newObject.Id,
+                            Content = questionModel.Answers[3].AnswerContent,
+                            Correct = questionModel.Answers[3].IsCorrect
+                        });
+                    _context.SaveChanges();
+                    return Json(new { Result = true, Message = "Pytanie zostało utworzone." });
+
+                }
             }
             else
             {
                 return Unauthorized();
             }
             return Json(new { Result = false, Message = "Nie udało się utworzyć pytania." });
-        }
-
-        public bool CreateAnswer( AnswerModel answerModel)
-        {
-            return false;
         }
         #endregion
 
@@ -340,8 +390,6 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się zmodyfikować pytania." });
         }
 
-
-
         [HttpPost]
         [Route("quiz/UpdateAnswer")]
         public IActionResult UpdateAnswer([FromBody] int answerId)
@@ -354,66 +402,6 @@ namespace CryptoWebService.Controllers
                 return Unauthorized();
             }
             return Json(new { Result = false, Message = "Nie udało się zmodyfikować odpowiedzi." });
-        }
-        #endregion
-
-
-        #region Category 
-        [HttpPost]
-        [Route("quiz/CreateCategory")]
-        public IActionResult CreateCategory([FromBody] CategoryModel categoryModel)
-        {
-            try
-            {
-                if (this.User.Identity.IsAuthenticated)
-                {
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Write("Create Category Error_" + e.Message);
-            }
-            return Json(new { Result = false, Message = "Nie udało się utworzyć kategorii." });
-        }
-
-        [HttpPost]
-        [Route("quiz/UpdateCategory")]
-        public IActionResult UpdateCategory([FromBody] int categoryId)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            return Json(new { Result = false, Message = "Nie udało się zmodyfikować kategorii." });
-        }
-
-        [HttpPost]
-        [Route("quiz/DeleteCategory")]
-        public IActionResult DeleteCategory([FromBody] int categoryId)
-        {
-            try
-            {
-                if (this.User.Identity.IsAuthenticated)
-                {
-
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Write("Delete Category Error_" + e.Message);
-            }
-            return Json(new { Result = false, Message = "Nie udało się usunąć kategorii." });
         }
         #endregion
     }

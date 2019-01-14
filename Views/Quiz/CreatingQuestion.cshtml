@@ -1,0 +1,133 @@
+﻿@model int
+
+<div class="text-center">
+    <input class="btn btn-default"  type="button" data-toggle="collapse" data-target="#collapseQuestion" aria-expanded="false" aria-controls="collapseQuestion" value="dodaj pytanie" />
+</div>
+
+<div class="collapse panel-body question col-lg-12" id="collapseQuestion">
+    <div class="text-center alert col-lg-12 alert-danger" role="alert" id="creatingQuestionAlert" style="display:none;">
+    </div>
+    <div >
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="CreatingQuestionContent">treść pytania</label>
+                <input class="form-control" id="CreatingQuestionContent" placeholder="treść pytania" autofocus>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="CreatingQuestionAnswer1">odpowiedź 1</label>
+                <input class="form-control" id="CreatingQuestionAnswer1" placeholder="odpowiedź numer 1">
+            </div>
+            <div class="form-check text-center">
+                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect1">
+                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect1">Poprawna odpowiedź</label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="CreatingQuestionAnswer2">odpowiedź 2</label>
+                <input class="form-control" id="CreatingQuestionAnswer2" placeholder="odpowiedź numer 2">
+            </div>
+            <div class="form-check text-center">
+                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect2">
+                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect2">Poprawna odpowiedź</label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="CreatingQuestionAnswer3">odpowiedź 3</label>
+                <input class="form-control" id="CreatingQuestionAnswer3" placeholder="odpowiedź numer 3">
+            </div>
+            <div class="form-check text-center">
+                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect3">
+                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect3">Poprawna odpowiedź</label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="CreatingQuestionAnswer4">odpowiedź 4</label>
+                <input class="form-control" id="CreatingQuestionAnswer4" placeholder="odpowiedź numer 4">
+            </div>
+            <div class="form-check text-center">
+                <input type="checkbox" class="form-check-input" id="CreatingQuestionAnswerIsCorrect4">
+                <label class="form-check-label" for="CreatingQuestionAnswerIsCorrect4">Poprawna odpowiedź</label>
+            </div>
+        </div>
+        <div class="col-lg-12 text-center" style="margin-top:20px;">
+            <button class="btn btn-primary" onclick="@("createQuestion()")">
+                Utwórz pytanie
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function showCreatingAlert(msg) {
+        $('#creatingQuestionAlert').show();
+        $('#creatingQuestionAlert').text(msg);
+    }
+
+    function hideCreatingAlert() {
+        $('#creatingQuestionAlert').hide();
+    }
+
+    function createQuestion() {
+        var quizID = document.getElementById("quizId").value;
+        var questionContent = document.getElementById('CreatingQuestionContent').value;
+        var answer1 = document.getElementById("CreatingQuestionAnswer1").value;
+        var answer1IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect1").checked;
+        var answer2 = document.getElementById("CreatingQuestionAnswer2").value;
+        var answer2IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect2").checked;
+        var answer3 = document.getElementById("CreatingQuestionAnswer3").value;
+        var answer3IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect3").checked;
+        var answer4 = document.getElementById("CreatingQuestionAnswer4").value;
+        var answer4IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect4").checked;
+
+        var Answers = [];
+        Answers[0] = {
+            AnswerContent: answer1,
+            IsCorrect: answer1IsCorrect
+        };
+        Answers[1] = {
+            AnswerContent: answer2,
+            IsCorrect: answer2IsCorrect
+        };
+        Answers[2] = {
+            AnswerContent: answer3,
+            IsCorrect: answer3IsCorrect
+        };
+        Answers[3] = {
+            AnswerContent: answer4,
+            IsCorrect: answer4IsCorrect
+        };
+
+        var model =  {
+            QuizId: quizID,
+            QuestionContent: questionContent,
+            Answers: Answers
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateQuestion")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                hideCreatingAlert();
+            },
+            success: function (response) {
+                if (response.result == true) {
+                    location.reload();
+                } else {
+                    showCreatingAlert(response.message);
+                }
+            },
+            error: function (response) {
+                onError("AJAX ERROR" + response.message);
+            }
+        });
+    }
+</script>
