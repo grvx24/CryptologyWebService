@@ -1409,7 +1409,11 @@ var PlayfairCipherInit = function (config) {
             var regex = /^[a-zA-Z]+$/;
 
             var encryptKey = $("#keyEncrypt").val();
-            if (!regex.test(encryptKey)) {
+            if (encryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
+            else if (!regex.test(encryptKey)) {
                 alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
                 return;
             }
@@ -1441,7 +1445,11 @@ var PlayfairCipherInit = function (config) {
             var regex = /^[a-zA-Z]+$/;
 
             var decryptKey = $("#keyDecrypt").val();
-            if (!regex.test(decryptKey)) {
+            if (decryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
+            else if (!regex.test(decryptKey)) {
                 alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
                 return;
             }
@@ -1502,6 +1510,13 @@ var PlayfairVisualizationInit = function (config) {
 
         $('#startButton').click(function () {
 
+            var regex = /^[a-zA-Z]+$/;
+
+            var encryptKey = $("#keyVisualization").val();
+            if (!regex.test(encryptKey)) {
+                alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
+                return;
+            } 
 
             var model = {
                 message: $('#inputCipher').val(),
@@ -2023,6 +2038,12 @@ var VigenereCipherInit = function (config) {
 
         $('#encryptButton').click(function () {
 
+                var encryptKey = $("#keyEncrypt").val();
+                if (encryptKey == "") {
+                    alert('Uzupełnij wartość tajnego klucza!');
+                    return;
+                }
+
             var model = {
                 message: $('#inputEncrypt').val(),
                 key: $("#keyEncrypt").val(),
@@ -2047,6 +2068,12 @@ var VigenereCipherInit = function (config) {
     }
     var decryptInit = function () {
         $('#decryptButton').click(function () {
+
+            var decryptKey = $("#keyDecrypt").val();
+            if (decryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
 
             var model = {
                 message: $('#inputDecrypt').val(),
@@ -2100,6 +2127,12 @@ var VigenereVisualizationInit = function (config) {
     var visualizationInit = function () {
 
         $('#startButton').click(function () {
+
+            var encryptKey = $("#keyVisualization").val();
+            if (encryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
 
             var model = {
                 message: $('#inputCipher').val(),

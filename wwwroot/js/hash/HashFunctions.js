@@ -585,7 +585,8 @@ var SHA256FunctionInit = function (config) {
     }
 
 }
-//#endregion
+//#endregion
+
 //#region SHA512
 var SHA512FunctionInit = function (config) {
 

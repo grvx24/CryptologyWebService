@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CryptoWebService.Backend.HashFunctions;
-using CryptoWebService.Backend.HashFunctions.Keccak;
 using CryptoWebService.Helpers;
 using CryptoWebService.Models.HashFunctions;
 using Microsoft.AspNetCore.Mvc;
@@ -189,53 +188,17 @@ namespace CryptoWebService.Controllers
         [HttpPost]
         public IActionResult SHA3Encrypt([FromBody]SHA3ViewModel viewModel)
         {
-            var hashSize = viewModel.HashSize;
-            string input = viewModel.Message;
-            input = StringHelper.StringToBinary(input);
-            Bitstring bitstring = new Bitstring(input);
-            int outputLength=0;
-            Sha3Permutation sha3 = Sha3Permutation.Sha3_224();
+            SHA3Hash hash = new SHA3Hash(viewModel.HashSize);
+
             string encrypted = "";
             try
             {
-                switch (hashSize)
-                {
-                    case Sha3HashAlgorithm.Size.Bits224:
-                        {
-                            sha3 = Sha3Permutation.Sha3_224();
-                            outputLength = 224;
-                            break;
-                        }      
-                    case Sha3HashAlgorithm.Size.Bits256:
-                        {
-                            sha3 = Sha3Permutation.Sha3_256();
-                            outputLength = 256;
-                            break;
-                        }
-                    case Sha3HashAlgorithm.Size.Bits384:
-                        {
-                            sha3 = Sha3Permutation.Sha3_384();
-                            outputLength = 384;
-                            break;
-                        }
-                    case Sha3HashAlgorithm.Size.Bits512:
-                        {
-                            sha3 = Sha3Permutation.Sha3_512();
-                            outputLength = 512;
-                            break;
-                        }
-                    default:
-                        Console.WriteLine("No size");
-                        break;
-                }
-                Bitstring b = new Bitstring(sha3.Process(bitstring.Bytes, outputLength, bitstring.Length));
-                encrypted = b.ToHexString(false, false);
+                encrypted = hash.Encrypt(viewModel.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(new { Result = false, Message = e.Message });
+                return BadRequest(new { Result = false, Message = Text.InvalidCharacter });
             }
-
             return Json(encrypted);
         }
 #endregion SHA3

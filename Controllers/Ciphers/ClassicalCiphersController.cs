@@ -286,6 +286,7 @@ namespace CryptoWebService.Controllers.Ciphers
         [HttpPost]
         public IActionResult ColumnarTranspositionEncrypt([FromBody]ColumnarTranspositionCipherViewModel viewModel)
         {
+
             ColumnarTranspositionCipher cipher = new ColumnarTranspositionCipher(viewModel.Key);
 
             string encrypted = "";
@@ -296,7 +297,7 @@ namespace CryptoWebService.Controllers.Ciphers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Result = false, Message = e.Message });
+                return BadRequest(new { Result = false, Message = "Uzupełnij wartość tajnego klucza!" });
             }
 
             return Json(encrypted);
@@ -315,7 +316,7 @@ namespace CryptoWebService.Controllers.Ciphers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Result = false, Message = e.Message });
+                return BadRequest(new { Result = false, Message = "Uzupełnij wartość tajnego klucza!" });
             }
 
             return Json(decrypted);
@@ -359,7 +360,7 @@ namespace CryptoWebService.Controllers.Ciphers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Result = false, Message = e.Message });
+                return BadRequest(new { Result = false, Message = "Uzupełnij wartość tajnego klucza!" });
             }
 
             return Json(results);
@@ -473,7 +474,7 @@ namespace CryptoWebService.Controllers.Ciphers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Result = false, Message = e.Message });
+                return BadRequest(new { Result = false, Message = "Uzupełnij wartość tajnego klucza!" });
             }
 
             return Json(encrypted);
