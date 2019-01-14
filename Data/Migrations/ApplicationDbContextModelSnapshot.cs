@@ -92,6 +92,8 @@ namespace CryptoWebService.Data.Migrations
                         .HasMaxLength(255)
                         .IsUnicode(false);
 
+                    b.Property<int>("QuizNumber");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
