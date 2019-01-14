@@ -7,18 +7,21 @@
 <div class="container">
     <input hidden id="quizId" value="@Model.QuizId" />
     <input hidden id="amountOfQuestions" value="@Model.AmountOfQuestions" />
-    
+
     <label class="col-lg-12 text-center" style="font-size:20px; color:#1c5aa6;">
         @Model.QuizName
     </label>
 
-    @{ 
-        if(Model.CanEdit == true && User.Identity.IsAuthenticated)
+    @{
+        if (Model.CanEdit == true && User.Identity.IsAuthenticated)
         {
             await Html.RenderPartialAsync("CreatingQuestion", Model.QuizId);
         }
     }
-
+    <div class="text-center success col-lg-12 alert-success " role="contentinfo" id="infoPanel" style="display:none; margin-top:10px;">
+    </div>
+    <div class="text-center alert col-lg-12 alert-danger " role="contentinfo" id="infoPanelAlert" style="display:none; margin-top:10px;">
+    </div>
 
     @{
         for (int i = 0; i < Model.Questions.Count(); i++)
@@ -27,7 +30,7 @@
             await Html.RenderPartialAsync("Question", Model.Questions[i]);
         }
     }
-    <div class="col-lg-12 text-center" id="ResultPanel" style="display:none" >
+    <div class="col-lg-12 text-center" id="ResultPanel" style="display:none">
         <svg viewBox="0 0 36 36" class="circular-chart blue">
             <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             <path id="CircleId" class="circle"
@@ -90,6 +93,132 @@
         return UserAnswersDto;
     }
 
+    function showCreatingAlert(msg) {
+        $('#creatingQuestionAlert').show();
+        $('#creatingQuestionAlert').text(msg);
+    }
+
+    function hideCreatingAlert() {
+        $('#creatingQuestionAlert').hide();
+    }
+
+    function UpdateQuestion(questionId) {
+        var quizID = document.getElementById("quizId").value;
+        var questionContent = document.getElementById('CreatingQuestionContent').value;
+        var answer1 = document.getElementById("CreatingQuestionAnswer1").value;
+        var answer1IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect1").checked;
+        var answer2 = document.getElementById("CreatingQuestionAnswer2").value;
+        var answer2IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect2").checked;
+        var answer3 = document.getElementById("CreatingQuestionAnswer3").value;
+        var answer3IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect3").checked;
+        var answer4 = document.getElementById("CreatingQuestionAnswer4").value;
+        var answer4IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect4").checked;
+        var Answers = [];
+
+        Answers[0] = {
+            AnswerContent: answer1,
+            IsCorrect: answer1IsCorrect
+        };
+        Answers[1] = {
+            AnswerContent: answer2,
+            IsCorrect: answer2IsCorrect
+        };
+        Answers[2] = {
+            AnswerContent: answer3,
+            IsCorrect: answer3IsCorrect
+        };
+        Answers[3] = {
+            AnswerContent: answer4,
+            IsCorrect: answer4IsCorrect
+        };
+
+        var model =  {
+            QuizId: quizID,
+            QuestionContent: questionContent,
+            Answers: Answers
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateQuestion")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                hideCreatingAlert();
+            },
+            success: function (response) {
+                if (response.result == true) {
+                    location.reload();
+                } else {
+                    //showCreatingAlert(response.message);
+                }
+            },
+            error: function (response) {
+                onError("AJAX ERROR" + response.message);
+            }
+        });
+    }
+
+
+    function createQuestion() {
+        var quizID = document.getElementById("quizId").value;
+        var questionContent = document.getElementById('CreatingQuestionContent').value;
+        var answer1 = document.getElementById("CreatingQuestionAnswer1").value;
+        var answer1IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect1").checked;
+        var answer2 = document.getElementById("CreatingQuestionAnswer2").value;
+        var answer2IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect2").checked;
+        var answer3 = document.getElementById("CreatingQuestionAnswer3").value;
+        var answer3IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect3").checked;
+        var answer4 = document.getElementById("CreatingQuestionAnswer4").value;
+        var answer4IsCorrect = document.getElementById("CreatingQuestionAnswerIsCorrect4").checked;
+
+        var Answers = [];
+        Answers[0] = {
+            AnswerContent: answer1,
+            IsCorrect: answer1IsCorrect
+        };
+        Answers[1] = {
+            AnswerContent: answer2,
+            IsCorrect: answer2IsCorrect
+        };
+        Answers[2] = {
+            AnswerContent: answer3,
+            IsCorrect: answer3IsCorrect
+        };
+        Answers[3] = {
+            AnswerContent: answer4,
+            IsCorrect: answer4IsCorrect
+        };
+
+        var model =  {
+            QuizId: quizID,
+            QuestionContent: questionContent,
+            Answers: Answers
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateQuestion")',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                hideCreatingAlert();
+            },
+            success: function (response) {
+                if (response.result == true) {
+                    location.reload();
+                } else {
+                    showCreatingAlert(response.message);
+                }
+            },
+            error: function (response) {
+                onError("AJAX ERROR" + response.message);
+            }
+        });
+    }
+
     function CheckQuiz() {
 
         var UserAnswersDto = TakeAnswersOnQuestion();
@@ -125,10 +254,52 @@
         }    
     }
 
+    function deleteQuestion(questionID) {
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DeleteQuestion")',
+            data: JSON.stringify(questionID),
+            dataType: 'json',
+            contentType: "application/json",
+            beforeSend: function () {
+                hideInfo();
+            },
+            success: function (response) {
+                if (response.result == true) {
+                    $('#ModalId_' + questionID).modal('hide');        
+                    showInfo(response);
+                    location.reload();
+                } else {
+                    $('#ModalId_' + questionID).modal('hide');
+                    showInfo(response);
+                    onError(response);
+                }
+            },
+            error: function (response) {
+                onError("AJAX ERROR" + response);
+            }
+        });
+    }
+
     function showAlert(msg) {
         hideResult();
         $('#alertPanel').show();
         $('#alertPanel').text(msg);
+    }
+
+    function showInfo(msg) {
+        if (msg.result == true) {
+            $('#infoPanel').show();
+            $('#infoPanel').text(msg.message);
+        } else {
+            $('#infoPanelAlert').show();
+            $('#infoPanelAlert').text(msg.message);
+        }
+    }
+
+    function hideInfo() {
+        $('#infoPanel').hide();
+        $('#infoPanelAlert').hide(); 
     }
 
     function hideAlert() {

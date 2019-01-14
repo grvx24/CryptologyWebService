@@ -9,5 +9,6 @@ namespace CryptoWebService.Models.Quiz.ViewModel
         public List<AnswerViewModel> Answers { get; set; }
         public int Number { get; set; }
         public int AmountOfQuestionsInQuiz { get; set; }
+        public bool CanEdit { get; set; }
     }
 }

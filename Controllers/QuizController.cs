@@ -52,8 +52,6 @@ namespace CryptoWebService.Controllers
                         NumberOfQuestions = _context.Question.Where(question => question.QuizId == q.Id).Count()
                     }).ToList();
 
-                
-
                 if (quizNumber == null || quizNumber == 0)
                 {
                     var categoryDB = _context.Category.Where(c => c.CategoryName.Replace(" ", String.Empty) == categoryName).FirstOrDefault();
@@ -85,24 +83,27 @@ namespace CryptoWebService.Controllers
                             answerViewModels.Add(new AnswerViewModel()
                             {
                                 AnswerId = answers[j].Id,
-                                AnswerContent = answers[j].Content
+                                AnswerContent = answers[j].Content,
+                                IsCorrect = ((edit == null) || edit.Value == false) ? null : (bool?)answers[j].Correct
                             });
                         }
 
                         questionViewModels.Add(new QuestionViewModel()
                         {
                             QuestionContent = Questions[i].Content,
-                            Answers = RandomHelper.ShuffleList( answerViewModels),
+                            Answers = (edit == null ||edit.Value == false) ?  RandomHelper.ShuffleList( answerViewModels): answerViewModels,
                             QuestionId = Questions[i].Id,
+                            CanEdit = edit == null ? false : edit.Value,
                             AmountOfQuestionsInQuiz = Questions.Count()
                         });
                     }
+
 
                     QuizViewModel quizViewModel = new QuizViewModel();
                     quizViewModel.QuizId = quiz.Id;
                     quizViewModel.QuizName = quiz.QuizName;
                     quizViewModel.AmountOfQuestions = questionViewModels.Count();
-                    quizViewModel.Questions = RandomHelper.ShuffleList(questionViewModels);
+                    quizViewModel.Questions = (edit == null || edit.Value == false) ? RandomHelper.ShuffleList(questionViewModels): questionViewModels.OrderByDescending(q => q.QuestionId).ToList();
                     quizViewModel.CanEdit = edit == null ? false : edit.Value;
 
                     return View("Quiz", quizViewModel);
@@ -178,7 +179,7 @@ namespace CryptoWebService.Controllers
             return categoryName;
         }
 
-        #region delete
+
         [HttpPost]
         [Route("quiz/DeleteQuiz")]
         public IActionResult DeleteQuiz([FromBody] int quizID)
@@ -228,11 +229,12 @@ namespace CryptoWebService.Controllers
                         var question = _context.Question.Where(q => q.Id == questionId).FirstOrDefault();
                         if (question != null)
                         {
-                            int answersInQuestion = _context.Answer.Where(q => q.QuestionId == questionId).Count();
-                            if (answersInQuestion == 0)
-                            {
-                                return Json(new { Result = true, Message = "Pytanie zostało usunięte." });
-                            }
+                            _context.Answer.RemoveRange(_context.Answer.Where(q => q.QuestionId == questionId));
+                            _context.SaveChanges();
+                            _context.Question.Remove(_context.Question.Where(q => q.Id == questionId).SingleOrDefault());
+                            _context.SaveChanges();
+
+                            return Json(new { Result = true, Message = "Pytanie zostało usunięte." });
                         }
                     }
                 }
@@ -248,13 +250,6 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się usunąć pytania." });
         }
 
-        public bool DeleteAnswer(int answerId)
-        {
-            return false;
-        }
-        #endregion
-
-        #region create
         [HttpPost]
         [Route("quiz/CreateQuiz")]
         public IActionResult CreateQuiz([FromBody] QuizModel quizModel)
@@ -304,8 +299,6 @@ namespace CryptoWebService.Controllers
                     if (String.IsNullOrEmpty(questionModel.Answers[2].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 3 nie może być pusta." });
                     if (String.IsNullOrEmpty(questionModel.Answers[3].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 4 nie może być pusta." });
                     if (questionModel.Answers.Select(a => a.IsCorrect).Where(q => q == true).Count() <= 0) return Json(new { Result = false, Message = "Chociaż jedna odpowiedź musi być poprawna." });
-
-                    int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
 
                     Question newObject = new Question
                     {
@@ -359,29 +352,29 @@ namespace CryptoWebService.Controllers
             }
             return Json(new { Result = false, Message = "Nie udało się utworzyć pytania." });
         }
-        #endregion
-
-        #region update
-        [HttpPost]
-        [Route("quiz/UpdateQuiz")]
-        public IActionResult UpdateQuiz([FromBody] int quizID)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            return Json(new { Result = false, Message = "Nie udało się zmodyfikować quizu." });
-        }
 
         [HttpPost]
         [Route("quiz/UpdateQuestion")]
-        public IActionResult UpdateQuestion([FromBody] int questionID)
+        public IActionResult UpdateQuestion([FromBody] QuestionModel questionModel)
         {
             if (this.User.Identity.IsAuthenticated)
             {
+                if (questionModel != null)
+                {
+                    if (String.IsNullOrEmpty(questionModel.QuestionContent)) return Json(new { Result = false, Message = "Treść pytania nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[0].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 1 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[1].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 2 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[2].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 3 nie może być pusta." });
+                    if (String.IsNullOrEmpty(questionModel.Answers[3].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 4 nie może być pusta." });
+                    if (questionModel.Answers.Select(a => a.IsCorrect).Where(q => q == true).Count() <= 0) return Json(new { Result = false, Message = "Chociaż jedna odpowiedź musi być poprawna." });
+
+                    var quizToUpdate = _context.Question.Where(q => q.Id == questionModel.QuizId).SingleOrDefault();
+
+                    quizToUpdate.Content = questionModel.QuestionContent;
+
+                    _context.SaveChanges();
+                    return Json(new { Result = true, Message = "Pytanie zostało zmodyfikowane." });
+                }
             }
             else
             {
@@ -390,19 +383,5 @@ namespace CryptoWebService.Controllers
             return Json(new { Result = false, Message = "Nie udało się zmodyfikować pytania." });
         }
 
-        [HttpPost]
-        [Route("quiz/UpdateAnswer")]
-        public IActionResult UpdateAnswer([FromBody] int answerId)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            return Json(new { Result = false, Message = "Nie udało się zmodyfikować odpowiedzi." });
-        }
-        #endregion
     }
 }
