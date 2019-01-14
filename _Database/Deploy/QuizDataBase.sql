@@ -1,13 +1,13 @@
 ﻿CREATE TABLE [dbo].[Category] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
-    [CategoryName] VARCHAR (255) NOT NULL,
+    [CategoryName] NVARCHAR (255) NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 GO
 
 CREATE TABLE [dbo].[Quiz] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
-    [QuizName]     VARCHAR (255) NOT NULL,
+    [QuizName]     NVARCHAR (255) NOT NULL,
 	[QuizNumber]   INT           NOT NULL,
 	[CategoryId]   INT           NOT NULL,
     PRIMARY KEY    CLUSTERED ([ID] ASC),
@@ -17,7 +17,7 @@ GO
 
 CREATE TABLE [dbo].[Question] (
     [Id]         INT          IDENTITY(1,1)  NOT NULL,
-    [Content]    VARCHAR (255) NOT NULL,
+    [Content]    NVARCHAR (255) NOT NULL,
     [QuizId]     INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([QuizId]) REFERENCES [dbo].[Quiz] ([ID])
@@ -26,7 +26,7 @@ GO
 
 CREATE TABLE [dbo].[Answer] (
     [Id]         INT           IDENTITY(1,1) NOT NULL,
-    [Content]    VARCHAR (255) NOT NULL,
+    [Content]    NVARCHAR (255) NOT NULL,
     [Correct]    BIT           NOT NULL,
     [QuestionId] INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
@@ -50,14 +50,14 @@ INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz krypt
 INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfrowanie obrazów',1,6)
 GO
 
-INSERT INTO Question (Content,QuizId) values ('Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
-INSERT INTO Question (Content,QuizId) values ('Które z poniższych generatorów wykorzystują zmienną liczbę rejestrów LSFR?',1)
-INSERT INTO Question (Content,QuizId) values ('Który z generatorów wykorzystuje trzy rejestry LFSR powiązane ze sobą nieliniowo przez multiplekser?',1)
-INSERT INTO Question (Content,QuizId) values ('Ile rejestrów LFSR wykorzystuje generator rozrzedzający?',1)
-INSERT INTO Question (Content,QuizId) values ('Do którego generatora pasuje poniższy opis? "Generator zbudowany z trzech rejestrów LSFR o różnej długości. LFSR-1 taktuje rejestr LFSR-2 jedynką, a rejestr LFSR-3 zerem. Ciąg wyjściowy jest sumą modulo 2 ciągów wyjściowych LSFR-2 i LFSR-3. "',1)
-INSERT INTO Question (Content,QuizId) values ('Generator samoobcinający jest odmianą genaratora rozrzedzającego (obcinającego), Zamiast dwóch rejestrów LFSR, stosuje parę bitów wyjściowych jednego rejestru LFSR. W porównaniu z generatorem rozrzedzającym generator samoobcinający... ',1)
-INSERT INTO Question (Content,QuizId) values ('Do którego generatora pasuje poniższy opis? "Generator wykorzystuje jeden rejestr LFSR i steruje własnym wyjściem zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LSFR jest taktowany d razy a gdy jest równe 1 to k razy,"',1)
-INSERT INTO Question (Content,QuizId) values ('Stan początkowy n bitów, z którego rejestr rozpoczyna pracę nazywamy:',1)
+INSERT INTO Question (Content,QuizId) values (N'Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
+INSERT INTO Question (Content,QuizId) values (N'Które z poniższych generatorów wykorzystują zmienną liczbę rejestrów LSFR?',1)
+INSERT INTO Question (Content,QuizId) values (N'Który z generatorów wykorzystuje trzy rejestry LFSR powiązane ze sobą nieliniowo przez multiplekser?',1)
+INSERT INTO Question (Content,QuizId) values (N'Ile rejestrów LFSR wykorzystuje generator rozrzedzający?',1)
+INSERT INTO Question (Content,QuizId) values (N'Do którego generatora pasuje poniższy opis? "Generator zbudowany z trzech rejestrów LSFR o różnej długości. LFSR-1 taktuje rejestr LFSR-2 jedynką, a rejestr LFSR-3 zerem. Ciąg wyjściowy jest sumą modulo 2 ciągów wyjściowych LSFR-2 i LFSR-3. "',1)
+INSERT INTO Question (Content,QuizId) values (N'Generator samoobcinający jest odmianą genaratora rozrzedzającego (obcinającego), Zamiast dwóch rejestrów LFSR, stosuje parę bitów wyjściowych jednego rejestru LFSR. W porównaniu z generatorem rozrzedzającym generator samoobcinający... ',1)
+INSERT INTO Question (Content,QuizId) values (N'Do którego generatora pasuje poniższy opis? "Generator wykorzystuje jeden rejestr LFSR i steruje własnym wyjściem zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LSFR jest taktowany d razy a gdy jest równe 1 to k razy,"',1)
+INSERT INTO Question (Content,QuizId) values (N'Stan początkowy n bitów, z którego rejestr rozpoczyna pracę nazywamy:',1)
 GO
 
 INSERT INTO Answer (Content,Correct,QuestionId) values ('T=2^n-1',1,1)
