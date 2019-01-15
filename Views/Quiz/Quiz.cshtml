@@ -98,6 +98,15 @@
         $('#creatingQuestionAlert').text(msg);
     }
 
+    function showUpdateAlert(msg) {
+        $('#updateQuestionAlert').show();
+        $('#updateQuestionAlert').text(msg);
+    }
+
+    function hideUpdateAlert() {
+        $('#updateQuestionAlert').hide();
+    }
+
     function hideCreatingAlert() {
         $('#creatingQuestionAlert').hide();
     }
@@ -150,13 +159,13 @@
             dataType: 'json',
             contentType: "application/json",
             beforeSend: function () {
-                hideCreatingAlert();
+                hideUpdateAlert();
             },
             success: function (response) {
                 if (response.result == true) {
                     location.reload();
                 } else {
-                    //showCreatingAlert(response.message);
+                    showUpdateAlert(response.message);
                 }
             },
             error: function (response) {

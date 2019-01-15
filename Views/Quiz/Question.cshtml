@@ -22,6 +22,8 @@
                         </div>
                     </div>
                     <div class="modal-body col-lg-12">
+                        <div class="text-center alert col-lg-12 alert-danger" role="alert" id="updateQuestionAlert" style="display:none;">
+                        </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="@("UQC_" +Model.QuestionId)">treść pytania</label>
@@ -31,7 +33,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)">odpowiedź 1</label>
-                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" placeholder="odpowiedź numer 1" >@(Model.Answers[0].AnswerContent)</textarea>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" placeholder="odpowiedź numer 1">@(Model.Answers[0].AnswerContent)</textarea>
                             </div>
                             <div class="form-check text-center">
                                 <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" checked="@(Model.Answers[0].IsCorrect)">
