@@ -89,6 +89,8 @@ namespace CryptoWebService.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
+                    b.Property<int>("QuizNumber");
+
                     b.Property<string>("QuizName")
                         .IsRequired()
                         .HasMaxLength(255)
