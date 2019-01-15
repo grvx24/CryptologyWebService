@@ -10,6 +10,8 @@ using CryptoWebService.Models.Quiz.Dto;
 using CryptoWebService.Models.Quiz.ViewModel;
 using CryptoWebService.Helpers;
 using CryptoWebService.Models.Quiz.Model;
+using System.Text;
+using System.Data.SqlClient;
 
 namespace CryptoWebService.Controllers
 {
@@ -17,10 +19,12 @@ namespace CryptoWebService.Controllers
     public class QuizController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly string connectionString;
 
         public QuizController(ApplicationDbContext context)
         {
             _context = context;
+            connectionString = "Server=(localdb)\\mssqllocaldb;Database=QuizDatabase;Trusted_Connection=True;MultipleActiveResultSets=true";
         }
 
         [Route("quiz/{categoryName?}/{quizNumber?}")]
@@ -260,17 +264,41 @@ namespace CryptoWebService.Controllers
                 {
                     if (quizModel != null && !String.IsNullOrEmpty(quizModel.QuizName))
                     {
-
                         int maxNumer = _context.Quiz.Select(q => q.QuizNumber).Max();
-                        _context.Quiz.Add(
-                            new Quiz
+
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+                            SqlTransaction transaction = connection.BeginTransaction("UpdateQuestion");
+                            SqlCommand command = new SqlCommand();
+                            try
                             {
-                                QuizName = quizModel.QuizName,
-                                CategoryId = quizModel.CategoryId,
-                                QuizNumber = maxNumer + 1
-                            });
-                        _context.SaveChanges();
-                        return Json(new { Result = true, Message = "Quiz został utworzony." });
+                                command = connection.CreateCommand();
+                                command.CommandText = "INSERT INTO Quiz (QuizName,CategoryId,QuizNumber) VALUES (@v1,@v2,@v3)";
+                                command.Parameters.AddWithValue("@v1", quizModel.QuizName);
+                                command.Parameters.AddWithValue("@v2", quizModel.CategoryId);
+                                command.Parameters.AddWithValue("@v3", maxNumer + 1);
+                                command.Transaction = transaction;
+                                command.Connection = connection;
+
+                                command.ExecuteNonQuery();
+                                transaction.Commit();
+                                connection.Close();
+                                return Json(new { Result = true, Message = "Quiz został utworzony." });
+                            }
+                            catch (Exception )
+                            {
+                                try
+                                {
+                                    transaction.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                    Console.WriteLine("  Message: {0}", ex2.Message);
+                                }
+                            }
+                        }
                     }
                 }
                 else
@@ -300,50 +328,55 @@ namespace CryptoWebService.Controllers
                     if (String.IsNullOrEmpty(questionModel.Answers[3].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 4 nie może być pusta." });
                     if (questionModel.Answers.Select(a => a.IsCorrect).Where(q => q == true).Count() <= 0) return Json(new { Result = false, Message = "Chociaż jedna odpowiedź musi być poprawna." });
 
-                    Question newObject = new Question
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        Content = questionModel.QuestionContent,
-                        QuizId = questionModel.QuizId
-                    };
-
-                    _context.Question.Add(newObject);
-                    _context.SaveChanges();
-
-
-                    _context.Answer.Add(
-                        new Answer
+                        connection.Open();
+                        SqlTransaction transaction = connection.BeginTransaction("UpdateQuestion");
+                        SqlCommand[] commands = new SqlCommand[5];
+                        try
                         {
-                            QuestionId = newObject.Id,
-                            Content = questionModel.Answers[0].AnswerContent,
-                            Correct = questionModel.Answers[0].IsCorrect
-                        });
+                            commands[0] = connection.CreateCommand();
+                            commands[0].CommandText = "INSERT INTO Question (Content,QuizId) VALUES (@v1,@v2);SELECT CAST(scope_identity() AS int)";
+                            commands[0].Parameters.AddWithValue("@v1", questionModel.QuestionContent);
+                            commands[0].Parameters.AddWithValue("@v2", questionModel.QuizId);
+                            commands[0].Transaction = transaction;
+                            commands[0].Connection = connection;
 
-                    _context.Answer.Add(
-                        new Answer
+                            var InsertedQuestionId = Convert.ToInt32(commands[0].ExecuteScalar());
+
+                            for (int i = 0; i < 4; i++)
+                            {
+                                commands[i + 1] = connection.CreateCommand();
+                                commands[i + 1].CommandText = "INSERT INTO Answer (Content,Correct,QuestionId) VALUES (@v1,@v2,@v3)";
+                                commands[i + 1].Parameters.AddWithValue("@v1", questionModel.Answers[i].AnswerContent);
+                                commands[i + 1].Parameters.AddWithValue("@v2", questionModel.Answers[i].IsCorrect);
+                                commands[i + 1].Parameters.AddWithValue("@v3", InsertedQuestionId);
+                                commands[i + 1].Transaction = transaction;
+                                commands[i + 1].Connection = connection;
+                            }
+
+                            for (int i = 1; i < 5; i++)
+                            {
+                                commands[i].ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            connection.Close();
+                            return Json(new { Result = true, Message = "Pytanie zostało utworzone." });
+                        }
+                        catch (Exception )
                         {
-                            QuestionId = newObject.Id,
-                            Content = questionModel.Answers[1].AnswerContent,
-                            Correct = questionModel.Answers[1].IsCorrect
-                        });
-
-                    _context.Answer.Add(
-                        new Answer
-                        {
-                            QuestionId = newObject.Id,
-                            Content = questionModel.Answers[2].AnswerContent,
-                            Correct = questionModel.Answers[2].IsCorrect
-                        });
-
-                    _context.Answer.Add(
-                        new Answer
-                        {
-                            QuestionId = newObject.Id,
-                            Content = questionModel.Answers[3].AnswerContent,
-                            Correct = questionModel.Answers[3].IsCorrect
-                        });
-                    _context.SaveChanges();
-                    return Json(new { Result = true, Message = "Pytanie zostało utworzone." });
-
+                            try
+                            {
+                                transaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                Console.WriteLine("  Message: {0}", ex2.Message);
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -368,12 +401,54 @@ namespace CryptoWebService.Controllers
                     if (String.IsNullOrEmpty(questionModel.Answers[3].AnswerContent)) return Json(new { Result = false, Message = "Treść odpowiedzi 4 nie może być pusta." });
                     if (questionModel.Answers.Select(a => a.IsCorrect).Where(q => q == true).Count() <= 0) return Json(new { Result = false, Message = "Chociaż jedna odpowiedź musi być poprawna." });
 
-                    var quizToUpdate = _context.Question.Where(q => q.Id == questionModel.QuizId).SingleOrDefault();
+                    using (SqlConnection connection = new SqlConnection(connectionString))                   
+                    {
+                        connection.Open();
+                        SqlTransaction transaction = connection.BeginTransaction("UpdateQuestion");
+                        SqlCommand[] commands = new SqlCommand[5];
 
-                    quizToUpdate.Content = questionModel.QuestionContent;
+                        commands[0] = connection.CreateCommand();
+                        commands[0].CommandText = "UPDATE Question SET Content = @v1 WHERE Id = @v2";
+                        commands[0].Parameters.AddWithValue("@v1", questionModel.QuestionContent);
+                        commands[0].Parameters.AddWithValue("@v2", questionModel.QuestionId);
+                        commands[0].Transaction = transaction;
+                        commands[0].Connection = connection;
+                        
+                        for(int i = 0; i < 4; i++)
+                        {
+                            commands[i+1] = connection.CreateCommand();
+                            commands[i+1].CommandText = "UPDATE Answer SET Content = @v1,Correct = @v2 WHERE Id = @v3";
+                            commands[i+1].Parameters.AddWithValue("@v1", questionModel.Answers[i].AnswerContent);
+                            commands[i+1].Parameters.AddWithValue("@v2", questionModel.Answers[i].IsCorrect);
+                            commands[i+1].Parameters.AddWithValue("@v3", questionModel.Answers[i].AnswerId);
+                            commands[i+1].Transaction = transaction;
+                            commands[i+1].Connection = connection;
+                        }
 
-                    _context.SaveChanges();
-                    return Json(new { Result = true, Message = "Pytanie zostało zmodyfikowane." });
+                        try
+                        {                           
+                            for (int i = 0; i < 5; i++)
+                            {
+                                commands[i].ExecuteNonQuery();
+                            }
+                            transaction.Commit();
+                            connection.Close();
+
+                            return Json(new { Result = true, Message = "Pytanie zostało zmodyfikowane." });
+                        }
+                        catch (Exception )
+                        {
+                            try
+                            {
+                                transaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                Console.WriteLine("  Message: {0}", ex2.Message);
+                            }
+                        } 
+                    } 
                 }
             }
             else
@@ -382,6 +457,5 @@ namespace CryptoWebService.Controllers
             }
             return Json(new { Result = false, Message = "Nie udało się zmodyfikować pytania." });
         }
-
     }
 }
