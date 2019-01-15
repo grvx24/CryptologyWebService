@@ -27,6 +27,7 @@ namespace CryptoWebService.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     QuizName = table.Column<string>(unicode: false, maxLength: 255, nullable: false),
+                    QuizNumber = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

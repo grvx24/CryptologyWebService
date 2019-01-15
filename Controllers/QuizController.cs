@@ -59,6 +59,7 @@ namespace CryptoWebService.Controllers
                 if (quizNumber == null || quizNumber == 0)
                 {
                     var categoryDB = _context.Category.Where(c => c.CategoryName.Replace(" ", String.Empty) == categoryName).FirstOrDefault();
+                    if (categoryDB == null) return NotFound();
                     var viewModel = new QuizzesListViewModel()
                     {
                         CategoryName = categoryDB.CategoryName,
