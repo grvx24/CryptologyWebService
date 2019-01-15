@@ -1,13 +1,17 @@
-﻿CREATE TABLE [dbo].[Category] (
+﻿INSERT INTO [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'9eb97efe-27e9-48a2-af7a-4c0cf0f59d35', N'admin@gmail.com', N'ADMIN@GMAIL.COM', N'admin@gmail.com', N'ADMIN@GMAIL.COM', 0, N'AQAAAAEAACcQAAAAEDiiFQzlt5B7kS3NmYc1kiiq8m/hHIB9VeSKPFAZYrrCqDAH18fjCLdJAT7xWZA1WA==', N'5Z3TWRLL4AO7X5CANLAIGD74CDPE74QB', N'f6d6f643-ea3f-4a95-9c6a-23cf80552e25', NULL, 0, 0, NULL, 1, 0)
+GO
+
+CREATE TABLE [dbo].[Category] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
-    [CategoryName] VARCHAR (255) NOT NULL,
+    [CategoryName] NVARCHAR (255) NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 GO
 
 CREATE TABLE [dbo].[Quiz] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
-    [QuizName]     VARCHAR (255) NOT NULL,
+    [QuizName]     NVARCHAR (255) NOT NULL,
+	[QuizNumber]   INT           NOT NULL,
 	[CategoryId]   INT           NOT NULL,
     PRIMARY KEY    CLUSTERED ([ID] ASC),
 	FOREIGN KEY    ([CategoryId]) REFERENCES [dbo].[Category] ([ID])
@@ -16,7 +20,7 @@ GO
 
 CREATE TABLE [dbo].[Question] (
     [Id]         INT          IDENTITY(1,1)  NOT NULL,
-    [Content]    VARCHAR (255) NOT NULL,
+    [Content]    NVARCHAR (255) NOT NULL,
     [QuizId]     INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([QuizId]) REFERENCES [dbo].[Quiz] ([ID])
@@ -25,7 +29,7 @@ GO
 
 CREATE TABLE [dbo].[Answer] (
     [Id]         INT           IDENTITY(1,1) NOT NULL,
-    [Content]    VARCHAR (255) NOT NULL,
+    [Content]    NVARCHAR (255) NOT NULL,
     [Correct]    BIT           NOT NULL,
     [QuestionId] INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
@@ -33,26 +37,30 @@ CREATE TABLE [dbo].[Answer] (
 );
 GO
 
-INSERT INTO Category (CategoryName) values ('Generatory')
-INSERT INTO Category (CategoryName) values ('Szyfratory')
-INSERT INTO Category (CategoryName) values ('Funkcje Skrótu')
-INSERT INTO Category (CategoryName) values ('Podpisy Cyfrowe')
+INSERT INTO Category (CategoryName) values ('generatory')
+INSERT INTO Category (CategoryName) values ('szyfry blokowe')
+INSERT INTO Category (CategoryName) values ('szyfry klasyczne')
+INSERT INTO Category (CategoryName) values ('funkcje skrótu')
+INSERT INTO Category (CategoryName) values ('kryptografia asymetryczna')
+INSERT INTO Category (CategoryName) values ('szyfrowanie obrazów')
 GO
 
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Generatory',1)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Szyfratory',2)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Funkcje Skrótu',3)
-INSERT INTO Quiz (QuizName,CategoryId) values ('Startowy Quiz Podpisy Cyfrowe',4)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz generatory',1,1)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfry blokowe',1,2)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfry klasyczne',1,3)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz funkcje skrótu',1,4)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz kryptografia asymetryczna',1,5)
+INSERT INTO Quiz (QuizName, QuizNumber, CategoryId) values ('startowy quiz szyfrowanie obrazów',1,6)
 GO
 
-INSERT INTO Question (Content,QuizId) values ('Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
-INSERT INTO Question (Content,QuizId) values ('Które z poniższych generatorów wykorzystują zmienną liczbę rejestrów LSFR?',1)
-INSERT INTO Question (Content,QuizId) values ('Który z generatorów wykorzystuje trzy rejestry LFSR powiązane ze sobą nieliniowo przez multiplekser?',1)
-INSERT INTO Question (Content,QuizId) values ('Ile rejestrów LFSR wykorzystuje generator rozrzedzający?',1)
-INSERT INTO Question (Content,QuizId) values ('Do którego generatora pasuje poniższy opis? "Generator zbudowany z trzech rejestrów LSFR o różnej długości. LFSR-1 taktuje rejestr LFSR-2 jedynką, a rejestr LFSR-3 zerem. Ciąg wyjściowy jest sumą modulo 2 ciągów wyjściowych LSFR-2 i LFSR-3. "',1)
-INSERT INTO Question (Content,QuizId) values ('Generator samoobcinający jest odmianą genaratora rozrzedzającego (obcinającego), Zamiast dwóch rejestrów LFSR, stosuje parę bitów wyjściowych jednego rejestru LFSR. W porównaniu z generatorem rozrzedzającym generator samoobcinający... ',1)
-INSERT INTO Question (Content,QuizId) values ('Do którego generatora pasuje poniższy opis? "Generator wykorzystuje jeden rejestr LFSR i steruje własnym wyjściem zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LSFR jest taktowany d razy a gdy jest równe 1 to k razy,"',1)
-INSERT INTO Question (Content,QuizId) values ('Stan początkowy n bitów, z którego rejestr rozpoczyna pracę nazywamy:',1)
+INSERT INTO Question (Content,QuizId) values (N'Ciąg generowany przez LFSR o n komórkach  pamięcu nazywa się maksymalnym, jeśli jego okres wynosi: ',1)
+INSERT INTO Question (Content,QuizId) values (N'Które z poniższych generatorów wykorzystują zmienną liczbę rejestrów LSFR?',1)
+INSERT INTO Question (Content,QuizId) values (N'Który z generatorów wykorzystuje trzy rejestry LFSR powiązane ze sobą nieliniowo przez multiplekser?',1)
+INSERT INTO Question (Content,QuizId) values (N'Ile rejestrów LFSR wykorzystuje generator rozrzedzający?',1)
+INSERT INTO Question (Content,QuizId) values (N'Do którego generatora pasuje poniższy opis? "Generator zbudowany z trzech rejestrów LSFR o różnej długości. LFSR-1 taktuje rejestr LFSR-2 jedynką, a rejestr LFSR-3 zerem. Ciąg wyjściowy jest sumą modulo 2 ciągów wyjściowych LSFR-2 i LFSR-3. "',1)
+INSERT INTO Question (Content,QuizId) values (N'Generator samoobcinający jest odmianą genaratora rozrzedzającego (obcinającego), Zamiast dwóch rejestrów LFSR, stosuje parę bitów wyjściowych jednego rejestru LFSR. W porównaniu z generatorem rozrzedzającym generator samoobcinający... ',1)
+INSERT INTO Question (Content,QuizId) values (N'Do którego generatora pasuje poniższy opis? "Generator wykorzystuje jeden rejestr LFSR i steruje własnym wyjściem zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LSFR jest taktowany d razy a gdy jest równe 1 to k razy,"',1)
+INSERT INTO Question (Content,QuizId) values (N'Stan początkowy n bitów, z którego rejestr rozpoczyna pracę nazywamy:',1)
 GO
 
 INSERT INTO Answer (Content,Correct,QuestionId) values ('T=2^n-1',1,1)

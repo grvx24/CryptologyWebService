@@ -9,39 +9,31 @@
     <Compile Remove="Backend\ClassicCiphers\**" />
     <Compile Remove="Backend\FipsTests\**" />
     <Compile Remove="Backend\Generators\**" />
-    <Compile Remove="Backend\Quiz\**" />
     <Compile Remove="Backend\RSA\**" />
     <Compile Remove="Backend\StreamEncoder\**" />
     <Compile Remove="Images\**" />
     <Compile Remove="Services\**" />
-    <Compile Remove="_Database\**" />
     <Content Remove="Backend\ClassicCiphers\**" />
     <Content Remove="Backend\FipsTests\**" />
     <Content Remove="Backend\Generators\**" />
-    <Content Remove="Backend\Quiz\**" />
     <Content Remove="Backend\RSA\**" />
     <Content Remove="Backend\StreamEncoder\**" />
     <Content Remove="Images\**" />
     <Content Remove="Services\**" />
-    <Content Remove="_Database\**" />
     <EmbeddedResource Remove="Backend\ClassicCiphers\**" />
     <EmbeddedResource Remove="Backend\FipsTests\**" />
     <EmbeddedResource Remove="Backend\Generators\**" />
-    <EmbeddedResource Remove="Backend\Quiz\**" />
     <EmbeddedResource Remove="Backend\RSA\**" />
     <EmbeddedResource Remove="Backend\StreamEncoder\**" />
     <EmbeddedResource Remove="Images\**" />
     <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="_Database\**" />
     <None Remove="Backend\ClassicCiphers\**" />
     <None Remove="Backend\FipsTests\**" />
     <None Remove="Backend\Generators\**" />
-    <None Remove="Backend\Quiz\**" />
     <None Remove="Backend\RSA\**" />
     <None Remove="Backend\StreamEncoder\**" />
     <None Remove="Images\**" />
     <None Remove="Services\**" />
-    <None Remove="_Database\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,7 +63,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="ViewControls\QuizControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="ViewControls\QuizQuestionControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="ViewControls\VisualCryptography\ImageControl.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Quiz\CreatingQuestion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Quiz\Question.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Quiz\QuizzesList.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Quiz\QuizzesCategory.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Quiz\Quiz.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CustomLayout.cshtml">

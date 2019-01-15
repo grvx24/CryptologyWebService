@@ -1,0 +1,135 @@
+﻿@model CryptoWebService.Models.Quiz.ViewModel.QuestionViewModel
+
+<div id="Question_@(Model.Number)" class="question col-lg-12">
+    <div class="text-center">
+        <label class="questionContent">
+            @Model.QuestionContent
+        </label>
+    </div>
+        @if (User.Identity.IsAuthenticated && Model.CanEdit)
+        {
+    <div class="col-lg-12">
+        <a data-toggle="modal" style="margin-left:10px;float:right;font-size:20px" data-target="@(".EditModal_"+Model.QuestionId)" class="glyphicon glyphicon-edit" title="edytuj pytanie"></a>
+        <div class="modal fade @("EditModal_"+Model.QuestionId)" id="@("EditModal_"+Model.QuestionId)">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close">
+                            <span>&times;</span>
+                        </button>
+                        <div class="modal-title">
+                            edycja pytania
+                        </div>
+                    </div>
+                    <div class="modal-body col-lg-12">
+                        <div class="text-center alert col-lg-12 alert-danger" role="alert" id="updateQuestionAlert" style="display:none;">
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="@("UQC_" +Model.QuestionId)">treść pytania</label>
+                                <textarea class="form-control" id="@("UQC_" +Model.QuestionId)" placeholder="treść pytania" autofocus>@(Model.QuestionContent)</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)">odpowiedź 1</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" placeholder="odpowiedź numer 1">@(Model.Answers[0].AnswerContent)</textarea>
+                            </div>
+                            <div class="form-check text-center">
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)" checked="@(Model.Answers[0].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[0].AnswerId)">Poprawna odpowiedź</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)">odpowiedź 2</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)" placeholder="odpowiedź numer 2">@(Model.Answers[1].AnswerContent) </textarea>
+                            </div>
+                            <div class="form-check text-center">
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)" checked="@(Model.Answers[1].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[1].AnswerId)">Poprawna odpowiedź</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)">odpowiedź 3</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)" placeholder="odpowiedź numer 3">@(Model.Answers[2].AnswerContent)</textarea>
+                            </div>
+                            <div class="form-check text-center">
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)" checked="@(Model.Answers[2].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[2].AnswerId)">Poprawna odpowiedź</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)">odpowiedź 4</label>
+                                <textarea class="form-control" id="@("UQCA_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)" placeholder="odpowiedź numer 4">@(Model.Answers[3].AnswerContent)</textarea>
+                            </div>
+                            <div class="form-check text-center">
+                                <input type="checkbox" class="form-check-input" id="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)" checked="@(Model.Answers[3].IsCorrect)">
+                                <label class="form-check-label" for="@("UQCAIC_" +Model.QuestionId + "_"+Model.Answers[3].AnswerId)">Poprawna odpowiedź</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="@("UpdateQuestion("+Model.QuestionId+","+Model.Answers[0].AnswerId+","+Model.Answers[1].AnswerId+","+Model.Answers[2].AnswerId+","+Model.Answers[3].AnswerId+")")">
+                            Zapisz
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal">
+                            Anuluj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a data-toggle="modal" style=" float:right;font-size:20px" data-target="@(".ModalId_"+Model.QuestionId)" class="glyphicon glyphicon-trash" title="usuń pytanie"></a>
+        <div class="modal fade @("ModalId_"+Model.QuestionId)" id="@("ModalId_"+Model.QuestionId)">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button data-dismiss="modal" class="close">
+                            <span>&times;</span>
+                        </button>
+                        <div class="modal-title">
+                            Potwierdzenie
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">
+                            Czy na pewno chcesz usunąć pytanie ?
+                        </p>
+                        <p class="text-center">
+                            "@Model.QuestionContent"
+                        </p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="@("deleteQuestion("+Model.QuestionId+")")">
+                            Tak, Usuń
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal">
+                            Anuluj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+
+        @{
+            for (int i = 0; i < Model.Answers.Count(); i++)
+            {
+                <div class="Answer col-lg-6 text-center">
+                    <input id="question_@(Model.Number)_q_@(Model.QuestionId)_a_@(Model.Answers[i].AnswerId)" type="checkbox" />
+                    <label class="LabelAnswer" style="width:100%;height:100%;" for="question_@(Model.Number)_q_@(Model.QuestionId)_a_@(Model.Answers[i].AnswerId)">@Model.Answers[i].AnswerContent</label>
+                </div>
+            }
+        }
+
+        <div class="col-lg-12" style="margin-top:10px;">
+            <label style="float:right">
+                @(Model.Number)/@(Model.AmountOfQuestionsInQuiz)
+            </label>
+        </div>
+    </div>
