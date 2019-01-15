@@ -1,4 +1,7 @@
-﻿CREATE TABLE [dbo].[Category] (
+﻿INSERT INTO [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'9eb97efe-27e9-48a2-af7a-4c0cf0f59d35', N'admin@gmail.com', N'ADMIN@GMAIL.COM', N'admin@gmail.com', N'ADMIN@GMAIL.COM', 0, N'AQAAAAEAACcQAAAAEDiiFQzlt5B7kS3NmYc1kiiq8m/hHIB9VeSKPFAZYrrCqDAH18fjCLdJAT7xWZA1WA==', N'5Z3TWRLL4AO7X5CANLAIGD74CDPE74QB', N'f6d6f643-ea3f-4a95-9c6a-23cf80552e25', NULL, 0, 0, NULL, 1, 0)
+GO
+
+CREATE TABLE [dbo].[Category] (
     [ID]           INT          IDENTITY(1,1) NOT NULL,
     [CategoryName] NVARCHAR (255) NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
