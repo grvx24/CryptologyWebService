@@ -13,7 +13,7 @@ namespace CryptoWebService.Data.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryName = table.Column<string>(unicode: false, maxLength: 255, nullable: false)
+                    CategoryName = table.Column<string>(unicode: true, maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +26,7 @@ namespace CryptoWebService.Data.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    QuizName = table.Column<string>(unicode: false, maxLength: 255, nullable: false),
+                    QuizName = table.Column<string>(unicode: true, maxLength: 255, nullable: false),
                     QuizNumber = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
@@ -47,7 +47,7 @@ namespace CryptoWebService.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(unicode: false, maxLength: 255, nullable: false),
+                    Content = table.Column<string>(unicode: true, maxLength: 255, nullable: false),
                     QuizId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -67,7 +67,7 @@ namespace CryptoWebService.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(unicode: false, maxLength: 255, nullable: false),
+                    Content = table.Column<string>(unicode: true, maxLength: 255, nullable: false),
                     Correct = table.Column<bool>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false)
                 },
