@@ -63,9 +63,9 @@ namespace CryptoWebService.Controllers
 
                 return Json(sb.ToString());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest(new { Result = false, Message = "Liczby pierwsze nie mogą być takie same!" });
+                return BadRequest(new { Result = false, Message = e.Message });
             }
 
         }

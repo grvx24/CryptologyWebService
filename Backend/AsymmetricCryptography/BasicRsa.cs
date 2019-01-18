@@ -29,7 +29,7 @@ namespace CryptoWebService.Backend.AsymmetricCryptography
             return a;
         }
 
-        public void GenerateKey(int p, int q)
+        public void GenerateKey(BigInteger p, BigInteger q)
         {
             N = p * q;
             PHI = (p - 1) * (q - 1);
@@ -37,7 +37,7 @@ namespace CryptoWebService.Backend.AsymmetricCryptography
 
             for (int i = 0; i < primes.Count; i++)
             {
-                var item = primes[i];
+                ulong item = (ulong)primes[i];
                 if (GCD(item, PHI) == 1)
                 {
                     E = item;
