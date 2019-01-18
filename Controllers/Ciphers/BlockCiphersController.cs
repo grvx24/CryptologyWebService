@@ -36,7 +36,7 @@ namespace CryptoWebService.Controllers.Ciphers
 
             CustomAes aes = new CustomAes()
             {
-                CipherMode = (BlockCipherMode)mode,
+                CipherMode = (BlockCipherMode)mode
             };
 
             byte[] key = null;
