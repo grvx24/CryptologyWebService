@@ -256,7 +256,7 @@
     </div>
     <div class="col-lg-8" style="display: flex;flex-direction: column;">
         <label for="inputEncrypt">Opis metody</label>
-        <label class="form-control" style="height: 100%" id="MethodDescription"></label>
+        <label class="form-control" style="height: 100%;font-size:18px; font-weight:normal" id="MethodDescription"></label>
     </div>
 </div>
 <div class="layer" id="Method1_2" style="display:none;">
@@ -428,7 +428,7 @@
     var DisplayLayer = new Konva.Layer();
 
     var MethodsDescriptions = [];
-    MethodsDescriptions["1"] = ["Jedną z najprostrzych metod osadzania znaku wodnego jest moetoda polegajaca na zmianie najmniej znaczącego bitu słowa oposującego dany piksel.Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany, piksel, tym mniejsze znaczenie ma dla globalnegoodczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
+    MethodsDescriptions["1"] = ["Jedną z najprostrzych metod osadzania znaku wodnego jest metoda polegajaca na zmianie najmniej znaczącego bitu słowa opisującego dany piksel. Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany piksel, tym mniejsze znaczenie ma dla globalnego odczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
     MethodsDescriptions["2"] = ["opis paptchwork"];
 
     $(document).ready(function () {
