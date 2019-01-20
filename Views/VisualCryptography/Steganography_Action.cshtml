@@ -13,7 +13,12 @@
             <label>Metoda steganograficzna</label>
             <select id="MethodSelect" class="form-control" onchange="OnChangeMethodSelect(this.value)">
                 <option value="1" selected>algorytm najmniej znaczącego bitu</option>
-                <option value="2" >patchwork</option>
+                @{ 
+                    if (false)
+                    {
+                    <option value="2">patchwork</option>
+                    }
+                }
             </select>
         </div>
         <div class="layer" id="Method1_1" style="display:none;">
