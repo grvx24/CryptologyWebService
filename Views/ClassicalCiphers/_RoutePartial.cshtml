@@ -1,4 +1,6 @@
-﻿<div class="col-md-6">
+﻿@using CryptoWebService.Backend.ClassicalCiphers
+<h2 class="title">Szyfr ścieżkowy</h2>
+<div class="col-md-6">
     <div class="row">
         <div class="col-md-12">
             <h2 class="title" style="font-variant:normal">@Text.Encryptor</h2>
@@ -21,24 +23,33 @@
     <div class="row">
         <div class="form-group">
             <div class="col-md-12">
-                <label for="inputEncrypt">@Text.WriteTextToEncrypt</label>
-                <textarea class="form-control" rows="5" id="inputEncrypt"></textarea>
+                <label for="inputEncrypt" style="margin-top:5px">Tekst do zaszyfrowania</label>
+                <textarea class="form-control" rows="5" id="inputEncrypt" maxlength="500000" placeholder="@Text.WriteTextToEncrypt"></textarea>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <span class="col-md-8">
+            <label class="input-group">
+                <span class="btn btn-success" style="margin-top: 5px;" title="Kliknij, aby wczytać plik tekstowy z komputera">
+                    Wczytaj z pliku<input id="fileText" accept="text/plain" type="file" onchange="loadFileToEncrypt()" style="display: none;">
+                </span>
+            </label>
+        </span>
+    </div>
     <div class="row">
         <div class="form-group">
             <div class="col-md-12">
-                <label for="outputEncrypt">@Text.EncryptedText</label>
+                <label for="outputEncrypt" style="margin-top:5px">@Text.EncryptedText</label>
                 <textarea readonly class="form-control" rows="5" id="outputEncrypt"></textarea>
             </div>
         </div>
     </div>
     <div class="row">
         <span class="col-md-6">
-            <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" type="submit">@Text.Encrypt</button>
+            <button style="margin-top: 5px" class="btn btn-primary" id="encryptButton" title="Zaszyfruj tekst" type="submit">@Text.Encrypt</button>
+            <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" onclick="saveEncryptedAsFile()" title="Kliknij, aby zapisać zaszyfrowany tekst do pliku" type="submit">Zapisz do pliku</button>
         </span>
     </div>
 </div>
@@ -67,23 +78,33 @@
     <div class="row">
         <div class="form-group">
             <div class="col-md-12">
-                <label for="inputDecrypt">@Text.WriteTextToDecrypt</label>
-                <textarea class="form-control" rows="5" id="inputDecrypt"></textarea>
+                <label for="inputDecrypt" style="margin-top:5px">Tekst do odszyfrowania</label>
+                <textarea class="form-control" rows="5" id="inputDecrypt" maxlength="500000" placeholder="@Text.WriteTextToDecrypt"></textarea>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <span class="col-md-8">
+            <label class="input-group">
+                <span class="btn btn-success" style="margin-top: 5px;" title="Kliknij, aby wczytać plik tekstowy z komputera">
+                    Wczytaj z pliku<input id="fileTextDecrypt" accept="text/plain" type="file" onchange="loadFileToDecrypt()" style="display: none;">
+                </span>
+            </label>
+        </span>
+    </div>
     <div class="row">
         <div class="form-group">
             <div class="col-md-12">
-                <label for="outputDecrypt">@Text.DecryptedText</label>
+                <label for="outputDecrypt" style="margin-top:5px">@Text.DecryptedText</label>
                 <textarea readonly class="form-control" rows="5" id="outputDecrypt"></textarea>
             </div>
         </div>
     </div>
     <div class="row">
         <span class="col-md-6">
-            <button style="margin-top: 5px" class="btn btn-primary" id="decryptButton" type="submit">@Text.Decrypt</button>
+            <button style="margin-top: 5px" class="btn btn-primary" id="decryptButton" title="Zdeszyfruj tekst" type="submit">@Text.Decrypt</button>
+            <button style="margin-top: 5px;" class="btn btn-success" id="saveButton" onclick="saveDecryptedAsFile()" title="Kliknij, aby zapisać zdeszyfrowany tekst do pliku" type="submit">Zapisz do pliku</button>
         </span>
     </div>
 </div>

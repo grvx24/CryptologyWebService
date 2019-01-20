@@ -31,7 +31,7 @@
                 <label for="alphabetVizualization">@Text.ChooseAlphabet</label>
                 <select id="alphabetVisualization" class="form-control">
                     @{
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 6; i++)
                         {
                             @Html.Raw("<option value=" + i + ">" + Alphabets.AVAILABLE_ALPHABETS_NAME[i] + "</option>")
                         }
@@ -44,7 +44,7 @@
 <div class="col-md-12" style="margin-top:30px; margin-bottom:20px;">
     <row>
         <div class="col-md-8">
-            <textarea maxlength="50000" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
+            <textarea maxlength="50" placeholder="Wpisz tekst do zaszyfrowania" class="form-control" rows="1" id="inputCipher"></textarea>
         </div>
         <div>
             <button id="startButton" style="float: left; margin-right:10px;" class="btn btn-primary" disabled>Wizualizacja</button>
@@ -52,10 +52,12 @@
         </div>
     </row>
 </div>
-
-<div class="col-md-12" style="margin-left:12px;">
-    <div id="cipherOutput"></div>
+<div class="col-md-11"  style="margin-left:12px;">
+    <div class="tableHorizontal">
+        <div id="cipherOutput"></div>
+    </div>
 </div>
+
 
 <div class="col-md-12" style="margin-left:12px;margin-top:10px">
     <row>
@@ -63,10 +65,12 @@
     </row>
 </div>
 
-<div id="marginTable" class="col-md-12" style="margin-left:16px;margin-top:10px">
-    <row>
-        <div id="alphabetsTable"></div>
-    </row>
+<div id="marginTable" class="col-md-11" style="margin-left:16px;margin-top:10px">
+    <div class="tableHorizontal">
+        <row>
+            <div id="alphabetsTable"></div>
+        </row>
+    </div>  
 </div>
 
 

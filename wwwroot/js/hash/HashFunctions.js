@@ -1,4 +1,5 @@
-﻿var MD5FunctionInit = function (config) {
+﻿//#region MD5
+var MD5FunctionInit = function (config) {
 
     var encryptInit = function () {
 
@@ -17,6 +18,8 @@
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -25,6 +28,16 @@
             });
         });
     }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+        });
+             
 
     var init = function () {
         encryptInit();
@@ -470,9 +483,9 @@ var MD5VisualizationInit = function (config) {
     }
 
 }
+//#endregion
 
-
-
+//#region SHA1
 var SHA1FunctionInit = function (config) {
 
     var encryptInit = function () {
@@ -492,6 +505,8 @@ var SHA1FunctionInit = function (config) {
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -500,6 +515,15 @@ var SHA1FunctionInit = function (config) {
             });
         });
     }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+        });
 
     var init = function () {
         encryptInit();
@@ -510,8 +534,9 @@ var SHA1FunctionInit = function (config) {
     }
 
 }
+//#endregion
 
-
+//#region SHA256
 var SHA256FunctionInit = function (config) {
 
     var encryptInit = function () {
@@ -531,6 +556,8 @@ var SHA256FunctionInit = function (config) {
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -539,6 +566,15 @@ var SHA256FunctionInit = function (config) {
             });
         });
     }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+        });
 
     var init = function () {
         encryptInit();
@@ -549,8 +585,9 @@ var SHA256FunctionInit = function (config) {
     }
 
 }
+//#endregion
 
-
+//#region SHA512
 var SHA512FunctionInit = function (config) {
 
     var encryptInit = function () {
@@ -570,6 +607,8 @@ var SHA512FunctionInit = function (config) {
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
                 },
                 error: function (response) {
                     console.log(response.responseJSON.message);
@@ -579,6 +618,15 @@ var SHA512FunctionInit = function (config) {
         });
     }
 
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+        });
+
     var init = function () {
         encryptInit();
     }
@@ -586,10 +634,10 @@ var SHA512FunctionInit = function (config) {
     return {
         init: init
     }
-
 }
+//#endregion
 
-
+//#region HMAC
 var HMACInit = function (config) {
     var encryptInit = function () {
 
@@ -610,6 +658,8 @@ var HMACInit = function (config) {
                 success: function (data) {
 
                     $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
                 },
                 error: function (response) {
                     alert(response.responseJSON.message);
@@ -617,6 +667,33 @@ var HMACInit = function (config) {
             });
         });
     }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+           
+        });
+
+    $("#keyEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+             
+        });
+
+    $("#hashSelectTypeEncrypt").on('change',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+        });
 
     var init = function () {
         encryptInit();
@@ -626,33 +703,89 @@ var HMACInit = function (config) {
         init: init
     }
 }
+//#endregion
+
+//#region SHA3
+var SHA3Init = function (config) {
+    var encryptInit = function () {
+
+        $('#encryptButton').click(function () {
+
+            var model = {
+                message: $('#inputEncrypt').val(),
+                hashSize: $('#hashSelectSizeEncrypt option:selected').val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: config.urls.encryptUrl,
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(model),
+                success: function (data) {
+
+                    $('#outputEncrypt').val(data);
+                    $('#saveButton').attr('disabled', false);
+                    $('#saveButton').attr('title', 'Kliknij aby zapisać skrót do pliku');
+                },
+                error: function (response) {
+                    alert(response.responseJSON.message);
+                }
+            });
+        });
+    }
+
+    $("#inputEncrypt").on('input',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+
+                $('#encryptButton').attr('disabled', false);
+                $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');
+            
+        });
+
+    $("#hashSelectSizeEncrypt").on('change',
+        function () {
+            $('#outputEncrypt').val("");
+            $('#saveButton').attr('disabled', true);
+            $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+        });
+
+    var init = function () {
+        encryptInit();
+    }
+
+    return {
+        init: init
+    }
+}
+//#endregion
 
 
-
+//#region alllHash
 $(document).ready(function () {
-    $('#clearButton').click(function () {
+    $('#clearButton').click(function () {       
         /*Clear input */
         $('#inputEncrypt').val('');
         /*Clear output using id */
         $('#outputEncrypt').val('');
-    });
-});
 
-$(document).ready(function () {
-    $('#clearButton1').click(function () {
-        /*Clear key */
-        $('#keyEncrypt').val('');
-        /*Clear input */
-        $('#inputEncrypt').val('');
-        /*Clear output using id */
-        $('#outputEncrypt').val('');
+        $('#saveButton').attr('disabled', true);
+        $('#saveButton').attr('title', 'Przed zapisaniem skrótu musisz go najpierw obliczyć');
+        if ($("#keyEncrypt").length > 0) {
+            /*Clear key */
+            $('#keyEncrypt').val('');
+            $('#encryptButton').attr('title', "Tekst do obliczenia skrótu oraz klucz muszą być wpisane");
+        }
     });
 });
 
 function saveTextAsFile() {
     var textToWrite = document.getElementById("outputEncrypt").value;
     var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
-    var fileNameToSaveAs = 'hash';
+    var fileNameToSaveAs = 'hash' + Date.now();
 
     var downloadLink = document.createElement("a");
     downloadLink.download = fileNameToSaveAs;
@@ -674,20 +807,56 @@ function destroyClickedElement(event) {
     document.body.removeChild(event.target);
 }
 
-function loadFileAsText() {
-    var fileToLoad = document.getElementById("fileToLoad").files[0];
 
-    var fileReader = new FileReader();
-    fileReader.onload = function (fileLoadedEvent) {
-        var textFromFileLoaded = fileLoadedEvent.target.result;
-        document.getElementById("inputEncrypt").value = textFromFileLoaded;
-    };
-    fileReader.readAsText(fileToLoad, "UTF-8");
+
+function loadFileAsText() {
+    var file = document.getElementById("fileText").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            document.getElementById("inputEncrypt").value = evt.target.result;
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+    $('#fileText').val(null);
 }
 
 
+function loadFileAsText() {
+    var file = document.getElementById("fileText").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            var maxLength = $("#inputEncrypt").attr('maxlength');
+            document.getElementById("inputEncrypt").value = evt.target.result.substring(0, maxLength);
+            checkTextareaChange();
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+    $('#fileText').val(null);
+    
+}
 
+function checkTextareaChange() {
+    $('#outputEncrypt').val("");
+    $('#saveButton').attr('disabled', true);
+    if ($("#keyEncrypt").length > 0) {     
+            $('#encryptButton').attr('disabled', false);
+            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');     
+    }
+    else {       
+            $('#encryptButton').attr('disabled', false);
+            $('#encryptButton').attr('title', 'Kliknij aby obliczyć skrót');        
+    }
 
+}
+//#endregion
 
 
 

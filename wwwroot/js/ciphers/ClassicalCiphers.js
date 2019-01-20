@@ -668,12 +668,6 @@ var BaconVisualizationInit = function (config) {
         $('#part-4 tr td').each(function () {
            $(this).css('background-color', 'white');
         });
-        $('#part-5 tr td').each(function () {
-           $(this).css('background-color', 'white');
-        });
-        //$('#part-6 tr td').each(function () {
-        //   $(this).css('background-color', 'white');
-        //}); 
     }
 
     function removeTable() {
@@ -784,18 +778,6 @@ var BaconVisualizationInit = function (config) {
                             $(this).css('background-color', '#b6ff00');
                         }
                     });
-                    $('#part-5 tr td').each(function () {
-                        if ($(this).text() == cellValue) {
-                            $(this).next().css('background-color', '#33b5e5');
-                            $(this).css('background-color', '#b6ff00');
-                        }
-                    });
-                    //$('#part-6 tr td').each(function () {
-                    //    if ($(this).text() == cellValue) {
-                    //        $(this).next().css('background-color', '#33b5e5');
-                    //        $(this).css('background-color', '#b6ff00');
-                    //    }
-                    //});
 
                         var cipherOutput = document.getElementById("cipherOutput");
                         var rowsOutput = cipherOutput.getElementsByTagName("tr");
@@ -1002,8 +984,6 @@ var ColumnarTranspositionVisualizationInit = function (config) {
                     }
                     $tbody_numeredKey.append($tr);
 
-
-                    ////matrix tests
                     var rowsMatrix = Math.ceil(_input.length / _key.length);
 
                     var $table_encryptMatrix = $('#encryptMatrix');
@@ -1288,7 +1268,7 @@ var FenceVisualizationInit = function (config) {
                         var $tr = $('<tr />');
                         for (j = 0; j < _input.length; j++)
                          {
-                            $tr.append($('<td style="width:30px;height:30px"/>').html(_table[index]));
+                            $tr.append($('<td style="width:35px;height:35px"/>').html(_table[index]));
                             index++;
                         }
                         $tbody.append($tr);
@@ -1429,7 +1409,11 @@ var PlayfairCipherInit = function (config) {
             var regex = /^[a-zA-Z]+$/;
 
             var encryptKey = $("#keyEncrypt").val();
-            if (!regex.test(encryptKey)) {
+            if (encryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
+            else if (!regex.test(encryptKey)) {
                 alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
                 return;
             }
@@ -1461,7 +1445,11 @@ var PlayfairCipherInit = function (config) {
             var regex = /^[a-zA-Z]+$/;
 
             var decryptKey = $("#keyDecrypt").val();
-            if (!regex.test(decryptKey)) {
+            if (decryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
+            else if (!regex.test(decryptKey)) {
                 alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
                 return;
             }
@@ -1522,6 +1510,13 @@ var PlayfairVisualizationInit = function (config) {
 
         $('#startButton').click(function () {
 
+            var regex = /^[a-zA-Z]+$/;
+
+            var encryptKey = $("#keyVisualization").val();
+            if (!regex.test(encryptKey)) {
+                alert('Klucz może zawierać tylko podstawowe litery alfabetu!');
+                return;
+            } 
 
             var model = {
                 message: $('#inputCipher').val(),
@@ -2043,6 +2038,12 @@ var VigenereCipherInit = function (config) {
 
         $('#encryptButton').click(function () {
 
+                var encryptKey = $("#keyEncrypt").val();
+                if (encryptKey == "") {
+                    alert('Uzupełnij wartość tajnego klucza!');
+                    return;
+                }
+
             var model = {
                 message: $('#inputEncrypt').val(),
                 key: $("#keyEncrypt").val(),
@@ -2067,6 +2068,12 @@ var VigenereCipherInit = function (config) {
     }
     var decryptInit = function () {
         $('#decryptButton').click(function () {
+
+            var decryptKey = $("#keyDecrypt").val();
+            if (decryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
 
             var model = {
                 message: $('#inputDecrypt').val(),
@@ -2120,6 +2127,12 @@ var VigenereVisualizationInit = function (config) {
     var visualizationInit = function () {
 
         $('#startButton').click(function () {
+
+            var encryptKey = $("#keyVisualization").val();
+            if (encryptKey == "") {
+                alert('Uzupełnij wartość tajnego klucza!');
+                return;
+            }
 
             var model = {
                 message: $('#inputCipher').val(),
@@ -2360,3 +2373,83 @@ var VigenereVisualizationInit = function (config) {
 
 }
 //#endregion
+
+function loadFileToEncrypt() {
+    var file = document.getElementById("fileText").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            var maxLength = $("#inputEncrypt").attr('maxlength');
+            document.getElementById("inputEncrypt").value = evt.target.result.substring(0, maxLength);;
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+    $('#fileText').val(null);
+}
+
+
+function loadFileToDecrypt() {
+    var file = document.getElementById("fileTextDecrypt").files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            var maxLength = $("#inputDecrypt").attr('maxlength');
+            document.getElementById("inputDecrypt").value = evt.target.result.substring(0, maxLength);
+        }
+        reader.onerror = function (evt) {
+            alert("Wystąpił błąd podczas wczytywania pliku!");
+        }
+    }
+    $('#fileTextDecrypt').val(null);
+}
+
+function saveEncryptedAsFile() {
+    var textToWrite = document.getElementById("outputEncrypt").value;
+    var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    var fileNameToSaveAs = 'szyfrogram' + Date.now();
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null) {
+
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function saveDecryptedAsFile() {
+    var textToWrite = document.getElementById("outputDecrypt").value;
+    var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    var fileNameToSaveAs = 'Odszyfrowana' + Date.now();
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null) {
+
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function destroyClickedElement(event) {
+    document.body.removeChild(event.target);
+}
+

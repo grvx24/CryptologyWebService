@@ -12,13 +12,17 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">Szyfr Playfair'a</h2>
         <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu sapien mattis, condimentum erat eleifend, molestie nibh. Mauris pharetra suscipit felis, ac efficitur ante accumsan sed. Phasellus tincidunt maximus nibh, ac hendrerit mi pharetra id. Nunc fermentum nulla erat, commodo hendrerit risus bibendum ut. In et metus nec dui venenatis viverra. Vivamus eu urna orci. Sed ac risus elit. Suspendisse potenti. Cras facilisis ac augue eget iaculis. Vestibulum non sagittis neque.
-
-            Morbi semper neque in erat lacinia, quis porta sapien fringilla. Vivamus consectetur fermentum quam sed convallis. Pellentesque tincidunt scelerisque odio non lacinia. Donec faucibus, metus vel finibus iaculis, augue neque ullamcorper ex, a vehicula ante mi egestas velit. Fusce ut nibh pellentesque, mattis sapien sit amet, ullamcorper nisl. Pellentesque gravida, elit eleifend pretium finibus, felis justo rhoncus magna, et mollis turpis metus ut neque. Vivamus eu consectetur tellus. Nulla dapibus, urna eu viverra gravida, urna libero tempor augue, ut hendrerit libero ante ac tortor. Etiam at vestibulum elit. Maecenas ut ornare quam. Praesent mi ex, efficitur ac aliquam at, iaculis sed sapien. Mauris scelerisque, nunc sit amet dignissim commodo, sapien dolor viverra lorem, eu rhoncus ex augue ac tellus. Nunc blandit iaculis imperdiet.
-
-            Nullam porttitor ex luctus efficitur placerat. Proin sed accumsan orci, id ultricies massa. Suspendisse porta dictum venenatis. Sed ut sodales sapien, ut vulputate nibh. Pellentesque sit amet nisi dui. Vivamus at ipsum imperdiet nulla lacinia convallis. Nulla pretium urna non ligula luctus pretium. Aliquam sed malesuada diam, vel commodo libero.
-
-            Nullam ut lectus eu sem feugiat luctus at et purus. In accumsan lacinia consectetur. Sed vehicula erat est, finibus suscipit quam vestibulum sed. Sed viverra ipsum ullamcorper, eleifend ligula ultricies, faucibus sapien. Proin nec purus eget nibh dictum varius. Etiam felis magna, malesuada in hendrerit at, ullamcorper sit amet nunc. Quisque a risus a magna mattis mattis. Etiam consectetur nisi vel diam vulputate, at faucibus libero tristique. Fusce sed auctor est, sed interdum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin finibus orci turpis, sit amet dictum diam pulvinar quis. Integer eros sapien, congue at quam in, eleifend tristique augue.
+            <b>Szyfr Playfair</b> jest szyfrem podstawieniowym. Polega on na zastąpieniu par liter tekstu jawnego inną parą liter. Do szyfrowania wykorzystywana jest tabela o wymiarach 5 na 5 liter.
+            Tabela zawiera 25 liter alfabetu angielskiego (litery 'I' oraz 'J' traktowane są jako jedna litera).
+            <br>Pierwszym krokiem jest uzupełnienie pierwszych wierszy tabeli literami z klucza. Kolejne pojawienia się tych samych liter są pomijane. Następnie pozostałe wiersze uzupełniane są alfabetycznie kolejnymi znakami, które nie występowały w kluczu.
+            Kolejnym krokiem jest podzielenie tekstu jawnego na dwuliterowe części. W przypadku, gdy długość tekstu jawnego jest nieparzysta, należy dopełnić tekst literą 'X'.
+            Algorytm znajduje obie litery z każdej pary w tabeli i w zależności od ich wzajemnego położenia wyznacza litery szyfrogramu.
+            <br>&bull; Jeżeli obie litery znajdują się w tym samym wierszu, zastępowane są sąsiadującymi z nimi literami z prawej strony. W przypadku, gdy jedna z liter znajduje się na samym końcu wiersza, zastępowana jest pierwszą literą w tym wierszu. </li>
+            <br>&bull; Jeżeli obie litery znajdują się w tej samej kolumnie, zostają zastąpione przez litery leżące pod nimi.
+            <br>&bull; Jeżeli któraś litera znajduje się na końcu kolumny, zastępowana jest pierwszą literą w kolumnie.
+            <br>&bull; Litery znajdujące się w innych wierszach i innych kolumnach, wyznaczają prostokąt. Aby zaszyfrować literę, bierzemy przeciwny narożnik prostokąta,
+            znajdujący się w tym samym wierszu co szyfrowana litera. Jest to skrzyżowanie wiersza litery szyfrowanej z kolumną litery drugiej.
+            <br>&bull; Jeżeli szyfrujemy dwie takie same litery, stosujemy zasadę dotyczącą liter znajdujących się w tym samym wierszu.
 
         </p>
     </div>
