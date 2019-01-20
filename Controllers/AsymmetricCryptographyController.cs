@@ -51,15 +51,23 @@ namespace CryptoWebService.Controllers
             BigInteger E = BigInteger.Parse(viewModel.EorD);
             BigInteger N = BigInteger.Parse(viewModel.N);
 
-            StringBuilder sb = new StringBuilder(viewModel.Message.Length);
-            for (int i = 0; i < viewModel.Message.Length; i++)
+            try
             {
-                var value=rsa.Decrypt(BigInteger.Parse(viewModel.Message[i]), E, N);
-                sb.Append(Convert.ToChar(value));
+                StringBuilder sb = new StringBuilder(viewModel.Message.Length);
+                for (int i = 0; i < viewModel.Message.Length; i++)
+                {
+                    var value = rsa.Decrypt(BigInteger.Parse(viewModel.Message[i]), E, N);
+                    sb.Append(Convert.ToChar(value));
+                }
+
+
+                return Json(sb.ToString());
             }
-            
-            
-            return Json(sb.ToString());
+            catch (Exception e)
+            {
+                return BadRequest(new { Result = false, Message = e.Message });
+            }
+
         }
 
 

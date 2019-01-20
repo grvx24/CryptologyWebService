@@ -25,7 +25,7 @@
     }
 
     function isCommaSeparatedNumber(str) {
-        regexp = /^(\d+,)*\d+$/;
+        regexp = /^(-?\d+,)*-?\d+$/;
         if (regexp.test(str)) {
             return true;
         } else {
@@ -175,10 +175,14 @@
 
     var validatePQInputs = function() {
 
-        var reg = /^\d+$/;
+        var reg = /^-?\d+$/;
         var p_input = $('#p_value').val();
         var q_input = $('#q_value').val();
 
+        if (p_input == q_input) {
+            alert("Wartości P i Q muszą być różne!");
+            return;
+        }
 
         if (reg.test(p_input) && reg.test(q_input)) {
 
