@@ -10,8 +10,8 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">@Text.SHA1Hash</h2>
         <p class="description">
-            <b>SHA</b> <i>(Secure Hash Algorithm)</i> to rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. <b>SHA-1</b> opublikowany został w 1995 i całkowicie zastąpił wycofany
-            (ze względu na nieujawnione oficjalnie wady) z użytku SHA-0. Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2<sup>64</sup> bitów
+            <b>SHA</b> (<i>ang. Secure Hash Algorithm</i>) to rodzina powiązanych ze sobą kryptograficznych funkcji skrótu. <b>SHA-1</b> został opublikowany w 1995 jako następca wycofanego z użytku SHA-0
+            (ze względu na nieujawnione oficjalnie wady). Funkcja tworzy 160-bitowy skrót z wiadomości o maksymalnym rozmiarze 2<sup>64</sup> bitów
             i działa na podobnych zasadach co MD5.
             <br>
             <br>Wiadomości przetwarzane są w blokach 512-bitowych. Uzupełnianie wiadomości przebiega identyczne jak w MD5. Do wiadomości dodajemy '1' oraz tyle '0', aby uzupełnić wiadomość do długości
@@ -52,17 +52,13 @@
             <br><br>
             Ostateczna wartość rejestrów otrzymywana jest poprzez dodanie zainicjowanej na początku wartości rejestru do wartości rejestru po przetwarzaniu:
             <br><br>
-                <b>H<sub>0</sub></b> = H<sub>0</sub> + A,&nbsp;&nbsp;&nbsp; <b>H<sub>1</sub></b> = H<sub>1</sub> + B,&nbsp;&nbsp;&nbsp; <b>H<sub>2</sub></b> = H<sub>2</sub> + C,&nbsp;&nbsp;&nbsp; <b>H<sub>3</sub></b> = H<sub>3</sub> + D,&nbsp;&nbsp;&nbsp; <b>H<sub>4</sub></b> = H<sub>4</sub> + D.
+            <b>H<sub>0</sub></b> = H<sub>0</sub> + A,&nbsp;&nbsp;&nbsp; <b>H<sub>1</sub></b> = H<sub>1</sub> + B,&nbsp;&nbsp;&nbsp; <b>H<sub>2</sub></b> = H<sub>2</sub> + C,&nbsp;&nbsp;&nbsp; <b>H<sub>3</sub></b> = H<sub>3</sub> + D,&nbsp;&nbsp;&nbsp; <b>H<sub>4</sub></b> = H<sub>4</sub> + D.
             <br><br>
             Skrót wiadomości powstaje poprzez połączenie wartości rejestrów H<sub>0</sub>, H<sub>1</sub>, H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub> w kolejności od najmniej znaczącego bajtu rejestru H<sub>0</sub> do najbardziej znaczącego bajtu rejestru H<sub>4</sub> (pamiętaj, że jeden bajt to 2 znaki heksadecymalne).
             <br><br>W 2005 roku uczeni znaleźli słabości w SHA-1 i ocenili, że znalezienie kolizji zajmie w przybliżeniu 2<sup>63</sup> obliczeń.
             Ta liczba miałaby wartość 2<sup>80</sup>, jeśli algorytm byłby bez wad. Przeglądarka Chrome oznacza witryny wykorzystujące SHA-1 jako niebezpieczne.
             W 2001 powstały cztery następne warianty określane jako SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512).
         </p>
-    </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_SHA1Visualization")
     </div>
 
     <div id="Tools" class="tabcontent col-lg-12">

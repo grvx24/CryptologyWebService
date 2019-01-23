@@ -217,8 +217,7 @@ input[type=radio] {
 }
 
 .description {
-    box-shadow: 5px 6px 10px rgba(0,0,0,0.4);
-    background-color: #cbd9f2;
+    box-shadow: 6px 5px 7px 8px #a9c0dc;
     color: black;
     font-size: 17px;
     font-weight: 500;

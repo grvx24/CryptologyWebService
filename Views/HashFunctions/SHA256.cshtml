@@ -58,12 +58,9 @@
             <br> <b>H<sub>4</sub></b> = H<sub>4</sub> + E,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>5</sub></b> = H<sub>5</sub> + F,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>6</sub></b> = H<sub>6</sub> + G,&nbsp;&nbsp;&nbsp;&nbsp;<b>H<sub>7</sub></b> = H<sub>7</sub> + H.
             <br><br>
             Skrót wiadomości powstaje poprzez połączenie wartości rejestrów H<sub>0</sub>, H<sub>1</sub>, H<sub>2</sub>, H<sub>3</sub>, H<sub>4</sub>, H<sub>5</sub>, H<sub>6</sub>, H<sub>7</sub> w kolejności od najmniej znaczącego bajtu rejestru H<sub>0</sub> do najbardziej znaczącego bajtu rejestru H<sub>4</sub> (pamiętaj, że jeden bajt to 2 znaki heksadecymalne).
-
+            <br><br><br>
+            SHA-224 jest algorytmicznie identyczny z SHA-256. Różnica między nimi polega jedynie na tym, że wartość początkowa jest innym zbiorem 8 słów 32-bitowych i inna jest ostateczna długość skrótu.
         </p>
-    </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_SHA256Visualization")
     </div>
 
     <div id="Tools" class="tabcontent col-lg-12">

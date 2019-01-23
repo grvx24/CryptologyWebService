@@ -9,8 +9,25 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis generatora :)
-    </div>
+        <h2 class="title"> Generator obcinający</h2>
+        <p class="description">
+            Zaproponowany został w 1993 roku przez D.Coppersmitha, H.Krawczyka i
+            Y.Mansoura. Wykorzystuje dwa rejestry LFSR. Bity wyjściowe jednego
+            z rejestrów decydują, które bity wyjściowe drugiego rejestru będą wykorzystane, a
+            które odrzucone. Poniższy rysunek przedstawia schemat generatora obcinającego.
+            <br><br>
+            <img class="center-block" src="~/images/Description/Generators/gen_obcinajacy.png" alt="Shrinking" style="width:600px;">
+            <br><br>
+            Jeżeli na wyjściu rejestru S pojawi sie jedynka, bit wyjściowy z rejestru A jest dołączany
+            do ciagu klucza <i>k<sub>i</sub></i>. Obydwa rejestry pracują równocześnie. Częstość pojawiania
+            się bitów na wyjściu generatora nie jest regularna, jest więc źródłem kłopotów
+            w zastosowaniach – jeśli rejestr LFSR-S wytwarza długi ciśg zer, to na wyjściu tego
+            generatora nie pojawi się nic. Jeżeli długości rejestrów są względnie pierwsze, to
+            okres takiego generatora wynosi:
+            <br><br>
+                <strong><i>T</i> = (2<i><sup>L<sub>S</sub></sup></i> − 1)2<i><sup>L<sub>A</sub></sup></i>−1</strong>.
+            <br><br>
+</div>
     <div id="Tools" class="tabcontent col-lg-12">
 
         @await Html.PartialAsync("_ShrinkingPartial")

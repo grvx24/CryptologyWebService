@@ -9,7 +9,24 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis generatora kaskadowego :)
+        <h2 class="title">Kaskada Gollmanna</h2>
+        <p class="description">
+            Generator ten został zaproponowany przez D. Gollmanna. Składa sie on z
+            ciagu rejestrów LFSR, gdzie wyjście zegarowe kaśdego następnego rejestru w ciągu
+            jest sterowane przez poprzedni LFSR. W miarę zwiększania liczby
+            rejestrów, wygenerowany ciąg staje sie coraz bardziej losowy.
+            Ciągiem wyjściowym tego generatora jest ciąg wyjściowy ostatniego rejestru LFSR.
+            Złożoność liniowa generatora składajacego się z <i>n</i> rejestrów jest równa:
+            <br><br>
+            <strong><i>L</i>(2<sup><i>L</i></sup> − 1)<sup><i>n</i>−1</sup></strong>,
+            <br><br>
+            wtedy gdy wszystkie rejestry mają taką samą długość <i>L</i>. Jego okres jest <i>n</i>-tą potegą
+            okresu pojedynczego rejestru <i>T</i> = (2<sup><i>L</i></sup> − 1)<sup><i>n</i></sup>.
+            Poniższy rysunek przedstawia schemat kaskady Gollmanna.
+            <br><br>
+            <img class="center-block" src="~/images/Description/Generators/kaskada_gollmana.png" alt="Cascade" style="width:750px;">
+            <br><br>
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 

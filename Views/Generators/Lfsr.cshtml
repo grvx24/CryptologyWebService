@@ -9,7 +9,17 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis generatora kaskadowego :)
+        <h2 class="title">Liniowy rejestr przesuwający LFSR</h2>
+        <p class="description">
+            <b>Liniowy n-stopniowy rejestr przesuwający LFSR</b> składa się z <i>n</i> przerzutników
+            oraz liniowej funkcji sprzężenia zwrotnego <i>f</i>(<i>x<sub>0</sub></i>, <i>x<sub>1</sub></i>, ..., <i>x<sub>n–1</sub></i>). Przerzutniki są komórkami pamięci reprezentującymi jedną cyfrę dwójkową. W każdym kroku element <i>x<sub>i</sub></i>
+            znajdujący się w komórce o numerze <i>i</i> przesuwany jest w lewo do komórki o numerze <i>i</i>–1 dla <i>i</i> = 2, 3, 4, ..., <i>n</i>–1. Natomiast w komórce <i>n</i>–1 umieszczana jest wartość
+            funkcji sprzężenia zwrotnego <i>f</i>(<i>x<sub>0</sub></i>, <i>x<sub>1</sub></i>, ..., <i>x<sub>n–1</sub></i>) wyznaczona w poprzednim kroku.
+            Schemat działania rejestru został pokazany na poniższym rysunku. Ziarnem nazywamy stan
+            <i>n</i> bitów <i>x<sub>0</sub></i><i>x<sub>1</sub></i>...<i>x<sub>n–1</sub></i>, z którego rejestr rozpoczyna pracę.
+            <br><br>
+                <img class="center-block" src="~/images/Description/Generators/lfsr.jpg" alt="Lfsr" style="width:600px;">                  
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 
