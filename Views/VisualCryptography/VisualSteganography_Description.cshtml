@@ -3,8 +3,23 @@
 
 <div class="col-lg-12">
     <div class="body-content">
-        Steganografia wizualna polega na zaszyciu informacji ( obrazu ) w dóch osobnych obrazach,
-        jest ona na pierwszy rzut oka nie widoczna. Widoczna dopiero staje się po dokładnym nałożeniu dwóch obrazów na siebie.
+        Jest  to  rozwinięcie  kryptografii  wizualnej  i  działa  na  podobnych
+        zasadach.Dzięki tej metodzie możemy podzielić ukrywany obraz na udziały, ale
+        dodatkowymplusem jest to, że możemy wpływać na wygląd udziałów (rysunek 45).
+        Dzięki temuudziały wyglądają na mniej podejrzane. Ktoś kto będzie miał dostęp
+        do udziałówmoże nawet nie podejrzewać, że kryją dodatkową informację [2, 12]
+    </div>
+    <div class="body-content">
+        Jako dane wejściowe potrzebujemy 3 obrazów. Dwa z nich będą jawne – będąto udziały.
+        Po ich złączeniu ukaże nam się trzeci obraz (ukrywany). Ogólny schematdziałania 
+        algorytmu został przedstawiony na rysunku 46.
+    </div>
+    <div class="body-content">
+        W celu zakodowania obrazów algorytm, bierze pod uwagę kolor pikseli w da-nym miejscu
+        na wszystkich obrazach wejściowych i w zależności od kombinacji, każdyudział koduje 
+        inaczej. Wszystkie możliwe kombinacje kolorów zostały przedstawionew tabeli 4. 
+        Na przykład jeśli wszystkie obrazy wejściowe mają kolor czarny w da-nym miejscu, 
+        to do kodowania udziałów używamy permutacji macierzy z pierwszegowiersza tabeli 4.
     </div>
 </div>
 

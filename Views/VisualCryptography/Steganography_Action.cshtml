@@ -784,6 +784,18 @@
                 alerts.push('Nie wpisano tekstu do zakodowania');
             }
         }
+        if (_GreenBits === '00000000') {
+            if (_RedBits === '00000000') {
+                if (_BlueBits === '00000000') {
+                    if (_methodNumber == "1") {
+                        alerts.push('Nie wybrano bitów na których będzie kodowana wiadomość.');
+                    } else {
+                        alerts.push('Nie wybrano bitów na których szukać wiadomości.');
+                    }             
+                }
+            }
+        }
+
 
         if (alerts.length > 0) {
             showError(alerts.join('<br>'));
