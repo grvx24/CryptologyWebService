@@ -325,7 +325,7 @@
             <div id="DisplayContainer" class="myCanvas">
 
             </div>
-            <div class="text-center mySignature">Podgląd sekretów</div>
+            <div class="text-center mySignature">Podgląd obrazu</div>
         </div>
     </div>
 </div>
@@ -429,7 +429,7 @@
 
     var MethodsDescriptions = [];
     MethodsDescriptions["1"] = ["Jedną z najprostrzych metod osadzania znaku wodnego jest metoda polegajaca na zmianie najmniej znaczącego bitu słowa opisującego dany piksel. Jej wynik zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:im więcej bitów opisuje dany piksel, tym mniejsze znaczenie ma dla globalnego odczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów.Oznaczony wtaki sposób obraz można łątwo sfałszować, dokonując zamiany formatu, np.bmpna gif, zmniejszajac głębie koloru itp.bądź poddając go kompresji w trakciezmiany formatu na jpg.Zawarta w orbrazie informacja zostaje uszkodzona."];
-    MethodsDescriptions["2"] = ["opis paptchwork"];
+    MethodsDescriptions["2"] = ["opis patchwork"];
 
     $(document).ready(function () {
         $("#MethodSelect").val("1").change();
@@ -733,7 +733,7 @@
             var downloadLink = "";
             DisplayLayer.destroyChildren()
 
-            var ImageData = response.image;
+            var ImageData = response.data;
             LoadImageToLayerFromData(DisplayLayer, ImageData);
             downloadLink = downloadLink + '<div class="glyphicon glyphicon-download-alt" style="font-   ize:30px;"></div><a class="myDownload " href="data:application/octet-stream;charset=utf-16le;base64,' + ImageData + '" download="' + Date.now() + '_steganografia_out.png">obraz wyjściowy</a>';
 
@@ -755,28 +755,33 @@
         $('#ErrorPanel').hide();
     }
 
-    function sendDataToServer(imageData) {
-        var methodNumber = $('#MethodSelect option:selected').val();
-        imageData = imageData.replace('data:image/png;base64,', '');
-        var slider = document.getElementById("AmountOfBitsSlider");
-        var _AmountOfBitsValue = slider.value;
-        var _GeneratorKey = $('#in_key').val();
-        var _NaturalNumber = $('#in_n').val();
+    function getEightCheckBoxByName(basicName) {
+
+        var string = '';
+
+        for (var i = 8; i >0; i--) {
+            if (document.getElementById(basicName + i).checked) {
+                string = string + '1';
+            } else {
+                string = string + '0';
+            }   
+        }
+        return string;
+    }
+
+    function sendDataToServer(_imageData) {
+        var _methodNumber = $('#UseSelect option:selected').val();       
+        _imageData = _imageData.replace('data:image/png;base64,', '');
+
+        var _GreenBits = getEightCheckBoxByName('checkBoxG');
+        var _RedBits = getEightCheckBoxByName('checkBoxR');
+        var _BlueBits = getEightCheckBoxByName('checkBoxB');
         var _TextToHide = $('#TextInput').val();
         var alerts = [];
 
-        if (methodNumber == "1") {
+        if (_methodNumber == "1") {
             if (_TextToHide == "") {
                 alerts.push('Nie wpisano tekstu do zakodowania');
-            }
-        }
-
-        if (methodNumber == "2") {
-            if (_GeneratorKey == "") {
-                alerts.push('Nie wpisano klucza generatora pseudolosowego');
-            }
-            if (_NaturalNumber == "") {
-                alerts.push('Nie wpisano liczby naturalnej');
             }
         }
 
@@ -784,17 +789,17 @@
             showError(alerts.join('<br>'));
         } else {
             var model = {
-                MethodId: methodNumber,
-                Image: imageData,
-                AmountOfBitsValue: _AmountOfBitsValue,
-                GeneratorKey: _GeneratorKey,
-                NaturalNumber: _NaturalNumber,
+                PurposeId: _methodNumber,
+                Image: _imageData,
+                GreenBits: _GreenBits,
+                RedBits: _RedBits,
+                BlueBits: _BlueBits,
                 TextToHide: _TextToHide
             }
 
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Steganography", "VisualCryptography")',
+                url: '@Url.Action("SteganographyLSB", "VisualCryptography")',
                 data: JSON.stringify(model),
                 dataType: 'json',
                 contentType: "application/json",

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Text;
 using CryptoWebService.Models.VisualCryptography;
 
@@ -11,101 +12,56 @@ namespace CryptoWebService.Backend.VisualCryptography
 {
     public class Steganography
     {
+
         public string LsbMethod(SteganographyLsbViewModel data)
-        {
-
-            //int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
-            //int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
-            //int space = _TextToHide.Length * 8;
-            //if(space > bitsOnCoding)
-            //{
-            //    throw new IndexOutOfRangeException();
-            //}
-
-            //PixelFormat x = _Image.PixelFormat;
-
-            //var colorOfspecificPixel = _Image.GetPixel(0, 0);
-            //BitArray BitsToHide = new BitArray(Encoding.ASCII.GetBytes(_TextToHide));
-
-            //for (int bitIndexMsg = 0, i = 0, j = 0; bitIndexMsg < space;)
-            //{
-            //    var gra = BitsToHide[bitIndexMsg];
-            //    var color = _Image.GetPixel(i,j);
-            //    byte r = color.R;
-            //    byte g = color.G;
-            //    byte b = color.B;
-            //    for (int bitIndex = 7;  bitIndex >( 8 - amountOfBitsOnCoding); bitIndex--)
-            //    {
-            //        byte mask = (byte)(1 << bitIndex);
-
-            //        //self[byteIndex] ^= mask;
-            //        bitIndexMsg = bitIndexMsg + 3;
-            //    }
-
-            //    _Image.SetPixel(i, j, Color.FromArgb(r, g, b));
-
-
-            //    bitIndexMsg++;
-            //    j = bitIndexMsg % _Image.Width;
-            //    i = (j == 0 ? i + 1 : i);
-            //}
-
-            //MemoryStream ms = new MemoryStream();
-            //_Image.Save(ms, ImageFormat.Png);
-
-            //return Convert.ToBase64String(ms.ToArray());
-            return "elo";
+        {   
+            if(data.PurposeId == 1)
+            {
+                return LSBCode(data);
+            }
+            else if (data.PurposeId == 2)
+            {
+                return LSBFind(data);
+            }
+            else
+            {
+                throw new Exception("Unknow PurposeId");
+            }
         }
 
-        public string PatchWorkMethod(SteganographyPatchWorkViewModel data)
-        {
 
-            return "elo";
+        private string LSBFind(SteganographyLsbViewModel data)
+        {
+            byte[] imageBytes = Convert.FromBase64String(data.Image);
+
+            Bitmap bitmap = new Bitmap(new MemoryStream(imageBytes, 0, imageBytes.Length));
+
+            var _RedBTC = new List<bool>(data.RedBits.Select(c => c == '1').ToList());
+            var _GreenBTC = new List<bool>(data.GreenBits.Select(c => c == '1').ToList());
+            var _BlueBTC = new List<bool>(data.BlueBits.Select(c => c == '1').ToList());
+            int bitsOnCoding = _RedBTC.Where(c => c).Count() + _GreenBTC.Where(c => c).Count() + _BlueBTC.Where(c => c).Count();
+
+            int maxAmountOfBitsToHide = (bitmap.Width * bitmap.Height * bitsOnCoding);
+
+            int amountOfBitsToHide = data.TextToHide.Length * 8;
+
+            if (amountOfBitsToHide > maxAmountOfBitsToHide)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            PixelFormat x = bitmap.PixelFormat;
+
+
+            MemoryStream ms = new MemoryStream();
+            bitmap.Save(ms, ImageFormat.Png);
+
+            return Convert.ToBase64String(ms.ToArray());
         }
 
-        //private static string LeastSignificantBitMethod(Bitmap _Image, string _AmountOfBitsOnCoding, string _TextToHide)
-        //{
-        //    int amountOfBitsOnCoding = Int32.Parse(_AmountOfBitsOnCoding);
-        //    int bitsOnCoding = (_Image.Width * _Image.Height * amountOfBitsOnCoding);
-        //    int space = _TextToHide.Length * 8;
-        //    if (space > bitsOnCoding)
-        //    {
-        //        throw new IndexOutOfRangeException();
-        //    }
-
-        //    PixelFormat x = _Image.PixelFormat;
-
-        //    var colorOfspecificPixel = _Image.GetPixel(0, 0);
-        //    BitArray BitsToHide = new BitArray(Encoding.ASCII.GetBytes(_TextToHide));
-
-        //    for (int bitIndexMsg = 0, i = 0, j = 0; bitIndexMsg < space;)
-        //    {
-        //        var gra = BitsToHide[bitIndexMsg];
-        //        var color = _Image.GetPixel(i, j);
-        //        byte r = color.R;
-        //        byte g = color.G;
-        //        byte b = color.B;
-        //        for (int bitIndex = 7; bitIndex > (8 - amountOfBitsOnCoding); bitIndex--)
-        //        {
-        //            byte mask = (byte)(1 << bitIndex);
-
-        //            //self[byteIndex] ^= mask;
-        //            bitIndexMsg = bitIndexMsg + 3;
-        //        }
-
-        //        _Image.SetPixel(i, j, Color.FromArgb(r, g, b));
-
-
-        //        bitIndexMsg++;
-        //        j = bitIndexMsg % _Image.Width;
-        //        i = (j == 0 ? i + 1 : i);
-        //    }
-
-        //    MemoryStream ms = new MemoryStream();
-        //    _Image.Save(ms, ImageFormat.Png);
-
-        //    return Convert.ToBase64String(ms.ToArray());
-
-        //}
+        private string LSBCode(SteganographyLsbViewModel data)
+        {
+            return "nothink found";
+        }  
     }
 }

@@ -112,33 +112,8 @@ namespace CryptoWebService.Controllers
             {
                 try
                 {
-                    var image = new Steganography().LsbMethod(steganographyData);
-                    return Json(new { Result = true, image });
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    return Json(new { Result = false, Message = "Niewystarczająca ilość bitów przeznaczona na kodowanie. Zwiększ liczbę bitów lub rozdzielczość obrazu ewentualnie skróc wiadomość." });
-                }
-                catch (Exception e)
-                {
-                    return Json(new { Result = false, Message = "Wystąpił błąd po stronie serwera. Skontaktuj się administratorem Sytemu." });
-                }
-            }
-        }
-
-        [HttpPost]
-        public IActionResult SteganographyPatchWork([FromBody] SteganographyPatchWorkViewModel steganographyData)
-        {
-            if (steganographyData == null)
-            {
-                return Json(new { Result = false, Message = "ERROR - Dane nie zostały przesłane." });
-            }
-            else
-            {
-                try
-                {
-                    var image = new Steganography().PatchWorkMethod(steganographyData);
-                    return Json(new { Result = true, image });
+                    var data = new Steganography().LsbMethod(steganographyData);
+                    return Json(new { Result = true, data });
                 }
                 catch (IndexOutOfRangeException)
                 {
