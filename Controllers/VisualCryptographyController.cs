@@ -113,7 +113,11 @@ namespace CryptoWebService.Controllers
                 try
                 {
                     var data = new Steganography().LsbMethod(steganographyData);
-                    return Json(new { Result = true, data });
+                    return Json(new { Result = true, Mode = steganographyData.PurposeId, data });
+                }
+                catch (PictureInBadFormatException)
+                {
+                    return Json(new { Result = false, Message = "Zły format, aplikacja obsługuje obrazy w formacie 8 bitów na kolor." });
                 }
                 catch (IndexOutOfRangeException)
                 {
