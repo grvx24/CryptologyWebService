@@ -33,16 +33,41 @@ namespace CryptoWebService.Backend.VisualCryptography
         private string LSBCode(SteganographyLsbViewModel data)
         {
             byte[] imageBytes = Convert.FromBase64String(data.Image);
-
             Bitmap bitmap = new Bitmap(new MemoryStream(imageBytes, 0, imageBytes.Length));
 
-            var _RedBTC = new List<bool>(data.RedBits.Select(c => c == '1').ToList());
-            var _GreenBTC = new List<bool>(data.GreenBits.Select(c => c == '1').ToList());
-            var _BlueBTC = new List<bool>(data.BlueBits.Select(c => c == '1').ToList());
-            //int[] rIndex = data.RedBits.Select()
-            int rBits = _RedBTC.Where(c => c).Count();
-            int gBits = _GreenBTC.Where(c => c).Count();
-            int bBits = _BlueBTC.Where(c => c).Count();
+            List<int> rIndex = new List<int>();
+            int rBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if(data.RedBits[i] == '1')
+                {
+                    rIndex.Add(i);
+                    rBits++;
+                }
+            }
+
+            List<int> gIndex = new List<int>();
+            int gBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (data.GreenBits[i] == '1')
+                {
+                    gIndex.Add(i);
+                    gBits++;
+                }
+            }
+
+            List<int> bIndex = new List<int>();
+            int bBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (data.BlueBits[i] == '1')
+                {
+                    bIndex.Add(i);
+                    bBits++;
+                }
+            }
+
             int bitsOnCoding = rBits + gBits + bBits;
 
             int maxAmountOfBitsToHide = (bitmap.Width * bitmap.Height * bitsOnCoding);
@@ -83,21 +108,44 @@ namespace CryptoWebService.Backend.VisualCryptography
 
                     for (int r_iterator = 0; r_iterator < rBits && _CODING_INDEXER < _DATA_TO_CODE.Length; r_iterator++)
                     {
-                        mask = (byte)(1 << bitInByteIndex);
-                        currentRed
-                        var xaa = _DATA_TO_CODE[_CODING_INDEXER];
+                        mask = (byte)(1 << rIndex[r_iterator]);
+
+                        if (_DATA_TO_CODE[_CODING_INDEXER])
+                        {
+                            currentRed |= mask;
+                        }
+                        else
+                        {
+                            currentRed &= (byte)~mask;
+                        }                   
                         _CODING_INDEXER++;
                     }
                     for (int g_iterator = 0; g_iterator < gBits && _CODING_INDEXER < _DATA_TO_CODE.Length; g_iterator++)
                     {
-                        
-                        var xaa = _DATA_TO_CODE[_CODING_INDEXER];
+                        mask = (byte)(1 << gIndex[g_iterator]);
+
+                        if (_DATA_TO_CODE[_CODING_INDEXER])
+                        {
+                            currentGreen |= mask;
+                        }
+                        else
+                        {
+                            currentGreen &= (byte)~mask;
+                        }
                         _CODING_INDEXER++;
                     }
                     for (int b_iterator = 0; b_iterator < bBits && _CODING_INDEXER < _DATA_TO_CODE.Length; b_iterator++)
                     {
-                        
-                        var xaa = _DATA_TO_CODE[_CODING_INDEXER];
+                        mask = (byte)(1 << bIndex[b_iterator]);
+
+                        if (_DATA_TO_CODE[_CODING_INDEXER])
+                        {
+                            currentBlue |= mask;
+                        }
+                        else
+                        {
+                            currentBlue &= (byte)~mask;
+                        }
                         _CODING_INDEXER++;
                     }
                     bitmap.SetPixel(j, i, Color.FromArgb(currentPixel.A,currentRed,currentGreen,currentBlue));
@@ -129,19 +177,6 @@ namespace CryptoWebService.Backend.VisualCryptography
             }
 
             return "nothink found";
-        }
-
-        private byte[] PackBoolsInByteArray(bool[] bools)
-        {
-            int len = bools.Length;
-            int bytes = len >> 3;
-            if ((len & 0x07) != 0) ++bytes;
-            byte[] arr2 = new byte[bytes];
-            for (int i = 0; i < bools.Length; i++)
-            {
-                if (bools[i])
-                    arr2[i >> 3] |= (byte)(1 << (i & 0x07));
-            }
         }
     }
 }
