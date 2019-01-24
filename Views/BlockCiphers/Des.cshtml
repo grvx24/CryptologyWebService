@@ -8,7 +8,47 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Des to fajny szyfr.
+        <h2 class="title">DES</h2>
+        <p class="description">
+            DES (<i>ang. Data Encryption Standard</i>) został zaprojektowany w 1975 roku.
+            Od 1976 do 2001 roku był uznawany za standard szyfrowania dla celów niemilitarnych w USA, po czym został zastąpiony przez bezpieczniejszy AES. DES został zaprojektowany w taki sposób, aby implementacja sprzętowa była znacząco szybsza, co miało zniechęcić do programowej implementacji tego algorytmu.
+            Obecnie DES nie zapewnia wystarczającego bezpieczeństwa ze względu na stosunkowo niewielką długość klucza.
+            Algorytm operuje na blokach złożonych z 64 bitów i korzysta z klucza o tej samej długości. Do szyfrowania i deszyfrowania używane jest tylko 56 bitów klucza, pozostałe są bitami parzystości.
+            Zarówno szyfrowanie jak i deszyfrowanie składa się z 16 rund.
+            Podczas każdej rundy wykonywane są te same obliczenia na danych z rundy poprzedniej.
+            Przed pierwszą rundą i po ostatniej bity są przestawiane w odpowiedni sposób, nie wpływa to na bezpieczeństwo, 
+            ale ułatwia wprowadzanie danych do układów.
+        </p>
+        <h2 class="title">Szyfrowanie</h2>
+        <p class="description">
+            1. Permutacja początkowa – przestawienie bitów bloku wejściowego zgodnie z tabelą.<br /><br />
+            <img class="center-block" width="45%" height="45%" src="~/images/Description/des/desP1.PNG" /><br />
+            2. Po permutacji początkowej wejściowy blok danych jest dzielony na lewą i prawą część, obie o długościach 32 bitów.<br /><br />
+            3. Przekształcenie klucza – redukcja 64-bitowego klucza do długości 56 bitów. Dla każdej rundy jest generowany osobny podklucz. Podklucze są generowane w następujący sposób.<br /><br />
+            3.1. Klucz jest dzielony na 28-bitowe połowy, a następnie obie połowy są przesuwane w lewo o jeden lub dwa bity w zależności od numeru rundy.<br /><br />
+            <img class="center-block" width="55%" height="55%" src="~/images/Description/des/desshift.PNG" /><br />
+            3.2. Wybór 48 z 56 bitów i wykonanie permutacji z kompresją. Polega to na przestawieniu bitów według tabeli.<br /><br />
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/des/compressP.PNG" /><br />
+            Przykładowo pierwszy bit jest przestawiany na 14 pozycję, drugi na 17 pozycję i tak dalej.<br /><br />
+            4. Permutacja rozszerzona, w której prawy blok danych jest rozszerzany z 32 do 48 bitów na podstawie tabeli.
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/des/expermutation.PNG" /><br />
+            5. Sumowanie XOR rozszerzonego bloku danych z kluczem należącym do danej rundy.
+            6. Podstawienia – rozszerzony blok danych jest poddawany operacji podstawienia. DES składa się z ośmiu bloków podstawień. Ciąg 48-bitowych danych wejściowych jest dzielony na osiem 6-bitowych części. Każda część jest przetwarzana przez osobne S-bloki. Każdy S-blok składa się z czterech wierszy i szesnastu kolumn, a każdy element tabeli jest 4-bitową liczbą. Bity wejściowe określają element tabeli w następujący sposób: pierwszy i ostatni bit przyjmuje wartość 2-bitową i określa wiersz tabeli, natomiast pozostałe bity tworzą wartość 4-bitową i określają kolumnę tabeli. Przykładowo ciąg 101011 oznacza wiersz 3 (ciąg 11) i kolumnę 5 (ciąg 0101). Wiersze i kolumny są numerowane od zera.<br /><br />
+            <img class="center-block" width="90%" height="90%" src="~/images/Description/des/sblocks.PNG" /><br />
+            7. Permutacja w P-blokach – po operacji podstawienia, powstałe 32-bitowe bloki są permutowane w P-blokach.<br /><br />
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/des/pblock.PNG" /><br />
+            8. Wynik permutacji jest sumowany XOR z lewą połową początkowego bloku danych. Następnym krokiem jest zamiana lewej i prawej części i rozpoczęcie kolejnej rundy.<br /><br />
+            9. Po zakończeniu wszystkich rund następuje permutacja końcowa, która jest odwrotnością permutacji początkowej.
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/des/p2.PNG" /><br />
+
+        </p>
+        <h2 class="title">Deszyfrowanie</h2>
+        <p class="description">
+            Algorytm deszyfrujący wykonuje te same operacje co szyfrujący.
+            Jedyną różnicą jest to, że klucze muszą być użyte w odwrotnej kolejności.
+            Kolejną różnicą jest przesunięcie kluczy w prawo.
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/des/desDecrypt.PNG" /><br />
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 
