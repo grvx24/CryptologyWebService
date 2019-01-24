@@ -12,13 +12,11 @@
         <p class="description">
             <b>SHA-2</b> to zestaw kryptograficznych funkcji skrótu (<i>SHA-224, SHA-256, SHA-384, SHA-512</i>) dających skróty wielkości 224, 256, 384 lub 512 bitów.
             Skrót wiadomości w <b>SHA-512</b> ma długość 512 bitów. Wiadomość przetwarzana jest w 1024-bitowych blokach, operacje wykonywane są na 64-bitowych słowach.
-            Algorytm przetwarzania składa się z 80 kroków.
+            Algorytm przetwarzania składa się z 80 rund. Funkcja kompresji jest podobna do tej z SHA-256, z tym że są inne odległości rotacji, aby poradzić sobie z większymi słowami.
+            <br><br>
+            SHA-384 jest algorytmicznie identyczny z SHA-512. Różnica między nimi polega jedynie na tym, że mają inną wartość poczatkową i tworzą skróty różnej długości.
 
         </p>
-    </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_SHA512Visualization")
     </div>
 
     <div id="Tools" class="tabcontent col-lg-12">

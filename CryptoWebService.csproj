@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\desktop\" />
+    <Folder Include="wwwroot\images\NewFolder\" />
     <Folder Include="wwwroot\primes\" />
   </ItemGroup>
 

@@ -9,8 +9,20 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis generatora :)
-    </div>
+        <h2 class="title">generator samoobcinający</h2>
+        <p class="description">
+            Jest to generator podobny do obcinającego, ale zamiast dwóch rejestrów LFSR,
+            stosuje się parę bitów wyjściowych jednego rejestru LFSR. Działanie
+            polega na dwukrotnym taktowaniu LFSR i jeżeli pierwszym bitem w parze jest 1, to
+            bitem wyjściowym jest drugi bit z pary. Jeżeli pierwszym bitem w wygenerowanej
+            parze jest 0, to oba bity zostają odrzucone, po czym rozpoczynamy od nowa.
+            Wymagania pamięciowe tego generatora są o połowę mniejsze od generatora obcinającego,
+            ale za to jest o wiele wolniejszy.
+            Poniższy rysunek przedstawia schemat działania generatora samoobcinającego.
+            <br><br>
+            <img class="center-block" src="~/images/Description/Generators/gen_samoobcinajacy.png" alt="SelfShrinking" style="width:600px;">
+            <br><br>
+</div>
     <div id="Tools" class="tabcontent col-lg-12">
 
         @await Html.PartialAsync("_SelfShrinkingPartial")

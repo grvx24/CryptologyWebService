@@ -1,44 +1,60 @@
 ﻿<script src="~/js/generators/Generators.js"></script>
 <link rel="stylesheet" href="~/css/generators.css" />
 
-<div class="container">
-    <div class="tab">
-        <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
-        <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
-        <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+    <div class="container">
+        <div class="tab">
+            <button id="defaultPageButton" class="tablinks" onclick="openTab(event, 'Description')">@Text.Description</button>
+            <button class="tablinks" onclick="openTab(event, 'Tools')">@Text.Action</button>
+            <button class="tablinks" onclick="openTab(event, 'Visualization')">@Text.Visualization</button>
+        </div>
+
+        <div id="Description" class="tabcontent">
+            <h2 class="title"> Generator samodecymujący Rueppela </h2>
+            <p class="description">
+                Zaproponowany został w 1987r. przez R. A. Rueppela i steruje własnym wejściem
+                zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LFSR jest
+                taktowany <i>d</i> razy, a gdy jest równe 1 to <i>k</i> razy.
+                Okres generatora samodecymującego Rueppela jest równy:
+                <br><br>
+                    <strong><i>T</i> = 	&lfloor;&#8532;<i>T<sub>0</sub></i>&rfloor;</strong>,
+                <br><br>
+                wtedy gdy okres rejestru LFSR jest maksymalny i równy <i>T<sub>0</sub></i> gdzie &lfloor;&rfloor; oznacza całkowite
+                dolne ograniczenie. Na rysunku poniżej przedstawiono
+                schemat działania tego generatora.
+                <br><br>
+                <img class="center-block" src="~/images/Description/Generators/gen_Rueppela.png" alt="SelfDecimation" style="width:600px;">
+                <br><br>
+
+
+        </div>
+        <div id="Tools" class="tabcontent col-lg-12">
+
+            @await Html.PartialAsync("_SelfDecimationPartial")
+
+        </div>
+
+        <div id="Visualization" class="tabcontent col-lg-12">
+            @await Html.PartialAsync("_SelfDecimationVisualization")
+        </div>
+
+
     </div>
 
-    <div id="Description" class="tabcontent">
-        Opis generatora :)
-    </div>
-    <div id="Tools" class="tabcontent col-lg-12">
 
-        @await Html.PartialAsync("_SelfDecimationPartial")
+    <script>
+        document.getElementById("defaultPageButton").click();
 
-    </div>
-
-    <div id="Visualization" class="tabcontent col-lg-12">
-        @await Html.PartialAsync("_SelfDecimationVisualization")
-    </div>
-
-
-</div>
-
-
-<script>
-    document.getElementById("defaultPageButton").click();
-
-    function openTab(evt, tabName) {
-        var i;
-        var tabContent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
+        function openTab(evt, tabName) {
+            var i;
+            var tabContent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            var tabLinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
-        var tabLinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
+    </script>

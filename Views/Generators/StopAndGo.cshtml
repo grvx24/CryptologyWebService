@@ -9,7 +9,22 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis generatora :)
+        <h2 class="title">Generator stop and go</h2>
+        <p class="description">
+            Zaproponowany w 1987 r. przez C.G. Gunthera generator został zbudowany z
+            trzech rejestrów LFSR o różnej długości. LFSR-1 taktuje rejestr LFSR-
+            2 jedynka, a rejestr LFSR-3 zerem. Ciąg wyjściowy jest sumą modulo 2 ciągów
+            wyjściowych LFSR-2 i LFSR-3. Poniżej przedstawiono schemat generatora stop and go.
+            <br><br>
+            <img class="center-block" src="~/images/Description/Generators/gen_stop_and_go.png" alt="StopAndGo" style="width:600px;">
+            <br><br>
+            Jeżeli długości wszystkich trzech rejestrów są względnie pierwsze, a zarówno okresy
+            generatorów LFSR-2 i LFSR-3 (<i>gcd</i>(<i>T<sub>2</sub></i>, <i>T<sub>3</sub></i>) = 1), to okres generatora jest równy
+            iloczynowi okresów wszystkich rejestrów:
+            <br><br>
+                <strong><i>T</i> = <i>T<sub>1</sub>T<sub>2</sub>T<sub>2</sub></i></strong>.
+            <br><br>
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
 

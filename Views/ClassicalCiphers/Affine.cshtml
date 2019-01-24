@@ -11,14 +11,15 @@
     <div id="Description" class="tabcontent">
         <h2 class="title">Szyfr afiniczny</h2>
         <p class="description">
-            <b>Szyfr afiniczny</b> jest monoalfabetycznym szyfrem podstawieniowym. Pierwszym krokiem w procesie szyfrowania jest przekształcenie każdej litery alfabetu
-            w odpowiednią liczbę całkowitą z zakresu od 0 do m-1. Następnie proces szyfrowania dla każdej litery jest określony wzorem:
+            <b>Szyfr afiniczny</b> to szyfr podstawieniowy. Kluczem jest para liczb naturalnych
+            (<i>a</i>,<i>b</i>). Szyfrowana litera x jest wyliczana z funkcji:
             <br>
             <br>
-            <strong style="font-size:22px"> E(x) = (ax + b) mod m </strong>
+            <strong> f(<i>x</i>) = (<i>ax</i> + <i>b</i>) <i>mod m</i></strong>.
             <br>
             <br>
-            , gdzie <strong>a</strong> oraz <strong>b</strong> są kluczami szyfru natomiast <strong>m</strong> to długość alfabetu. Wykonywana jest operacja <strong>mod m</strong>, aby otrzymać liczbę krótszą od długości alfabetu.
+            Litera <i>m</i> we wzorze oznacza liczbe liter w alfabecie. W przypadku alfabetu angielskiego <i>m</i> = 26, a w przypadku polskiego <i>m</i> = 32.
+            Wykonywana jest operacja <i>mod m</i>, aby otrzymać liczbę krótszą od długości alfabetu.
         </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
