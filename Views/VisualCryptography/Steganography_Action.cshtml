@@ -267,6 +267,14 @@
         </div>
     </div>
 </div>
+<div class="layer" id="Method1_2_2" style="display:none;">
+    <div class="form-group">
+        <label for="DecodingtextLenght">dłguość zakodowanej wiadomości</label>
+        <div id="textPanelEncrypt">
+            <textarea maxlength="50000" placeholder="wpisz długość zakodowanej wiadomości" class="form-control" rows="1" id="DecodingtextLenght"></textarea>
+        </div>
+    </div>
+</div>
 <div class="col-lg-12">
     <hr />
 </div>
@@ -472,16 +480,20 @@
             $('#Method2').hide();
             if (number == 1) {
                 $('#Method1_2').show();
+                $('#Method1_2_2').hide();
             } else if (number == 2) {
+                $('#Method1_2_2').show();
                 $('#Method1_2').hide();
             }
         } else if (methodNumber == 2) {
             $('#Method1_1').hide();
             $('#Method1_2').hide();
+            $('#Method1_2_2').hide();
             $('#Method2').show();
         } else {
             $('#Method1_1').hide();
             $('#Method1_2').hide();
+            $('#Method1_2_2').hide();
             $('#Method2').hide();
             Console.log("InputMethodSelect value is unknow.")
             label.innerHTML = "";
@@ -495,9 +507,11 @@
         if (methodNumber == '1') {
             if (number == 1) {
                 $('#Method1_2').show();
+                $('#Method1_2_2').hide();
                 $('#sendData').html("Ukryj informacje !");
             } else if (number == 2) {
                 $('#Method1_2').hide();
+                $('#Method1_2_2').show();
                 $('#sendData').html("Znajdź informacje !");
             } else {
                 Console.log("InputUseSelect value is unknow.")
@@ -753,7 +767,8 @@
                 $('#PanelWithResult').show();
             } else if (response.mode == '2') {
                 $('#PanelWithResult').hide();
-
+                $('#decodedMsg').html(response.data);
+                
                 $('#PanelWithResult2').show();
             } else {
 
@@ -796,13 +811,20 @@
         var _RedBits = getEightCheckBoxByName('checkBoxR');
         var _BlueBits = getEightCheckBoxByName('checkBoxB');
         var _TextToHide = $('#TextInput').val();
+        var _a = $('#DecodingtextLenght').val();
         var alerts = [];
 
         if (_methodNumber == "1") {
             if (_TextToHide == "") {
                 alerts.push('Nie wpisano tekstu do zakodowania');
             }
+        } else if (_methodNumber == "2") {
+            if (_a == "") {
+                alerts.push('Nie wpisano długości zakodowanej wiadomości');
+            }
         }
+
+
         if (_GreenBits === '00000000') {
             if (_RedBits === '00000000') {
                 if (_BlueBits === '00000000') {
@@ -815,6 +837,9 @@
             }
         }
 
+        if (_methodNumber == "2") {
+            _TextToHide = _a;
+        }
 
         if (alerts.length > 0) {
             showError(alerts.join('<br>'));
@@ -825,7 +850,7 @@
                 GreenBits: _GreenBits,
                 RedBits: _RedBits,
                 BlueBits: _BlueBits,
-                TextToHide: _TextToHide
+                TextToHide:_TextToHide
             }
 
              $.ajax({

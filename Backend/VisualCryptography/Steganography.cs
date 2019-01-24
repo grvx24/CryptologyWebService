@@ -160,14 +160,42 @@ namespace CryptoWebService.Backend.VisualCryptography
 
         private string LSBFind(SteganographyLsbViewModel data)
         {
+            StringBuilder _result = new StringBuilder();
             byte[] imageBytes = Convert.FromBase64String(data.Image);
-
             Bitmap bitmap = new Bitmap(new MemoryStream(imageBytes, 0, imageBytes.Length));
 
-            var _RedBTC = new List<bool>(data.RedBits.Select(c => c == '1').ToList());
-            var _GreenBTC = new List<bool>(data.GreenBits.Select(c => c == '1').ToList());
-            var _BlueBTC = new List<bool>(data.BlueBits.Select(c => c == '1').ToList());
-            int bitsOnCoding = _RedBTC.Where(c => c).Count() + _GreenBTC.Where(c => c).Count() + _BlueBTC.Where(c => c).Count();
+            List<int> rIndex = new List<int>();
+            int rBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (data.RedBits[i] == '1')
+                {
+                    rIndex.Add(i);
+                    rBits++;
+                }
+            }
+
+            List<int> gIndex = new List<int>();
+            int gBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (data.GreenBits[i] == '1')
+                {
+                    gIndex.Add(i);
+                    gBits++;
+                }
+            }
+
+            List<int> bIndex = new List<int>();
+            int bBits = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (data.BlueBits[i] == '1')
+                {
+                    bIndex.Add(i);
+                    bBits++;
+                }
+            }
 
             PixelFormat x = bitmap.PixelFormat;
 
@@ -176,7 +204,58 @@ namespace CryptoWebService.Backend.VisualCryptography
                 throw new PictureInBadFormatException();
             }
 
-            return "nothink found";
+            Color currentPixel;
+            BitArray currentRed;
+            BitArray currentGreen;
+            BitArray currentBlue;
+
+
+            int _DecodingIterator = Int32.Parse(data.TextToHide) * 8;
+
+
+            for (int i = 0; i < bitmap.Height && _DecodingIterator > 0; i++)
+            {
+                for (int j = 0; j < bitmap.Width && _DecodingIterator > 0; j++)
+                {
+                    currentPixel = bitmap.GetPixel(j, i);
+                    currentRed = new BitArray(new byte[] { currentPixel.R });
+                    currentGreen = new BitArray(new byte[] { currentPixel.G });
+                    currentBlue = new BitArray(new byte[] { currentPixel.B});
+
+                    for (int r_iterator = 0; r_iterator < rBits && _DecodingIterator > 0; r_iterator++)
+                    {
+                        _result.Append(currentRed[rIndex[r_iterator]] ? "1":"0");
+                        _DecodingIterator--;
+                    }
+                    for (int g_iterator = 0; g_iterator < gBits && _DecodingIterator > 0; g_iterator++)
+                    {
+                        _result.Append(currentGreen[gIndex[g_iterator]] ? "1" : "0");
+                        _DecodingIterator--;
+                    }
+                    for (int b_iterator = 0; b_iterator < bBits && _DecodingIterator > 0; b_iterator++)
+                    {
+                        _result.Append(currentBlue[bIndex[b_iterator]] ? "1" : "0");
+                        _DecodingIterator--;
+                    }
+                }
+            }
+            var aaa = _result.ToString().Select(c => c == '1').ToArray();
+
+            return Encoding.ASCII.GetString(PackBoolsInByteArray(aaa)); ;
+        }
+
+        private byte[] PackBoolsInByteArray(bool[] bools)
+        {
+            int len = bools.Length;
+            int bytes = len >> 3;
+            if ((len & 0x07) != 0) ++bytes;
+            byte[] arr2 = new byte[bytes];
+            for (int i = 0; i < bools.Length; i++)
+            {
+                if (bools[i])
+                    arr2[i >> 3] |= (byte)(1 << (i & 0x07));
+            }
+            return arr2;
         }
     }
 }
