@@ -8,7 +8,28 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Opis RSA
+        <h2 class="title">RSA</h2>
+        <p class="description">
+            RSA (algorytm Rivesta-Shamira-Adlemana) należy do asymetrycznych algorytmów kryptograﬁcznych. 
+            RSA korzysta z dwóch kluczy – prywatnego oraz publicznego. 
+            Klucz publiczny może być używany przez każdego, kto chce zaszyfrować wiadomość, 
+            natomiast klucz prywatny musi być dostępny tylko dla osób mogących odszyfrować wiadomość. 
+            Poza szyfrowaniem, RSA jest używane także do podpisu cyfrowego, wtedy klucz prywatny odpowiada za szyfrowanie, 
+            a klucz publiczny za deszyfrowanie. Bezpieczeństwo algorytmu wynika z trudności faktoryzacji dużych liczb. 
+            W praktycznym zastosowaniu, do obliczania kluczy stosuje się duże liczby pierwsze zawierające ponad sto cyfr.
+        </p>
+        <h2 class="title">Opis algorytmu</h2>
+        <p class="description">
+            1. Wybieramy dwie duże liczby pierwsze <i>p</i> oraz <i>q</i> i obliczamy <i>n</i> = <i>pq</i>.<br/>
+            2. Losowo wybieramy liczbę <i>e</i> taką, że <i>e</i> i (<i>p-1</i>)(<i>q−1</i>) są względnie pierwsze.<br/>
+            3. Obliczamy <i>d</i> takie, że <i>ed = 1 mod </i>(<i>p−1</i>)(<i>q−1</i>). <br/>
+            4. Para liczb <i>n</i> i <i>e</i> jest kluczem publicznym, natomiast para <i>n</i> i <i>d</i>.
+            5. Liczby <i>p</i> i <i>q</i> nie są już potrzebne i powinny być usunięte.
+            Zaszyfrowaną wiadomość <i>c</i> otrzymuje się szyfrując bloki <i>m</i><sub>i</sub> z wykorzystaniem wzoru:<br/>
+            <img class="center-block" src="~/images/Description/rsaFormula1.PNG" width="20%" height="20%"/>
+            Aby odszyfrować wiadomość, dla każdego bloku ci obliczamy:
+            <img class="center-block" src="~/images/Description/rsaFormula2.PNG" width="20%" height="20%" />
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
         @await Html.PartialAsync("_RSAPartial")

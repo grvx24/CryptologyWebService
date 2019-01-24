@@ -8,7 +8,71 @@
     </div>
 
     <div id="Description" class="tabcontent">
-        Aes to fajny szyfr używany w wielu miejscach gdzie bezpieczeństwo to podstawa!
+        <h2 class="title">AES</h2>
+        <p class="description">
+            AES (<i>ang. Advanced Encryption Standard</i>) to najczęściej używany szyfr na świecie.
+            Od 2000 stał się światowym standardem szyfrowania, zastępując wcześniej używany szyfr blokowy DES.
+            AES operuje na blokach 128-bitowych i kluczach o długości 128, 192 lub 256 bitów.
+            Najczęściej stosowany jest klucz 128-bitowy ze względu na szybkość działania.
+            W przeciwieństwie do niektórych szyfrów blokowych, AES operuje na bajtach,
+            a nie bitach. Tekst jawny o wielkości 16 bajtów jest traktowany jako dwuwymiarowa tablica
+            bajtów o 4 wierszach i 4 kolumnach. AES przekształca bajty, kolumny i wiersze tej tablicy,
+            aby stworzyć szyfrogram.
+        </p>
+        <h2 class="title">Szyfrowanie</h2>
+        <p class="description">
+            1. Rozszerzenie klucza – z klucza początkowego tworzy się klucze dla każdej rundy.<br /><br />
+            2. Runda wstępna – sumowanie XOR klucza początkowego z blokiem danych.<br /><br />
+            3. Główne rundy – rundy, w których wykonuje się kolejno operacje: podstawienie bajtów, zamiana wierszy, mieszanie kolumn i dodanie klucza rundy. Ostatnia runda jest pozbawiona operacji mieszania kolumn. Liczba rund zależy od długości klucza i wynosi 10 dla klucza 128-bitowego, 12 dla klucza 192-bitowego oraz 14 dla klucza 256-bitowego.<br /><br />
+            3.1. Podstawienie bajtów – każdy bajt w bloku jest zastępowany innym na podstawie z góry ustalonej tabeli podstawień.<br />
+            <img class="center-block" width="40%" height="40%" src="~/images/Description/aes/sbox.PNG" /><br />
+            Tabela składa się z 16 wierszy i kolumn. Aby odczytać tabelę, każdy bajt jest dzielony na dwie 4-bitowe połówki, pierwsza połowa określa wiersz, a druga kolumnę. Przykładowo dla bajtu 4D wybieramy wiersz 4 oraz kolumnę D, w związku z tym nowa wartości bajtu zgodnie z tabelą wynosi E3.<br /><br />
+            3.2. Przesunięcie wierszy – w tej operacji wiersze bloku są przesuwane o określoną wartość. Wiersz pierwszy pozostaje bez zmian, wiersz drugi zostaje przesunięty o jedną pozycję w lewo, trzeci o dwie pozycje, a czwarty o trzy pozycje.<br /><br />
+            <img class="center-block" width="40%" height="40%" src="~/images/Description/aes/shiftRows.PNG" /><br />
+            3.3. Mieszanie kolumn – operacja jest przeprowadzana dla każdej kolumny osobno i polega na mnożeniu macierzy. Mnożenie jest wykonywane zgodnie z wykonywaniem tej operacji na ciele skończonym GF(28).<br /><br />
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/aes/mixCols.PNG" /><br />
+            3.4. Dodanie klucza rundy – polega na zsumowaniu XOR bloku danych i bloku klucza należącego do aktualnej rundy.<br /><br />
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/aes/addkey.PNG" /><br />
+            4. Runda ﬁnałowa, w której są wykonywane te same operacje co w poprzednich rundach,z wyjątkiem mieszania kolumn, które w tymprzypadku nie występuje.<br /><br />
+        </p>
+        <h2 class="title">Deszyfrowanie</h2>
+        <p class="description">
+            Algorytm deszyfrowania składa się z kroków odwrotnych do szyfrowania.<br /><br />
+            1. Rozszerzenie klucza – z klucza początkowego tworzy się klucze dla każdej rundy.<br /><br />
+            2. Dodanie klucza rundy – sumowanie XOR klucza rundy z blokiem danych.<br /><br />
+            3. Główne rundy – rundy, w których wykonuje się kolejno operacje: odwrócone podstawienie bajtów, odwrócone przesunięcie wierszy, odwrócone mieszanie kolumn i dodanie klucza rundy. Ostatnia runda jest pozbawiona operacji odwróconego mieszania kolumn. Liczba rund, tak samo jak w przypadku szyfrowania, zależy od długości klucza i wynosi 10 dla klucza 128-bitowego, 12 dla klucza 192-bitowego oraz 14 dla klucza 256-bitowego.<br /><br />
+            3.1. Podstawienie bajtów – każdy bajt w bloku jest zastępowany innym na podstawie z góry ustalonej odwróconej tabeli podstawień.<br /><br />
+            <img class="center-block" width="40%" height="40%" src="~/images/Description/aes/invSbox.PNG" /><br />
+            3.2. Odwrócone przesunięcie wierszy – w tej operacji wiersze bloku są przesuwane o określoną wartość. Wiersz pierwszy pozostaje bez zmian, wiersz drugi zostaje przesunięty o jedną pozycję w prawo, trzeci o dwie pozycje, a czwarty o trzy pozycje.<br /><br />
+            <img class="center-block" width="40%" height="40%" src="~/images/Description/aes/invShiftRows.PNG" /><br />
+            3.3. Odwrócone mieszanie kolumn – mnożenie każdej kolumny bloku ze stałą macierzą, która jest odwrotna do tej używanej w operacji szyfrowania.
+            <img class="center-block" width="50%" height="50%" src="~/images/Description/aes/invmixCols.PNG" /><br />
+            3.4. Dodanie klucza rundy–polega na zsumowaniu XOR blokudanych i bloku klucza należącego do aktualnej rundy. Operacja ta wygląda tak samo jak przy szyfrowaniu.<br /><br />
+            4. Runda ﬁnałowa, czyli wykonanie tych samych operacji co w poprzednich rundach, ale bez operacji mieszania kolumn.<br /><br />
+        </p>
+        <h2 class="title">Obliczanie kluczy rund</h2>
+        <p class="description">
+            Początkowy klucz musi zostać rozszerzony w zależności od jego długości. Klucz 128-bitowy jest rozszerzany do długości 176 bajtów, klucz 192-bitowy do 208 bajtów, a klucz 256-bitowy do 240 bajtów. Początkowe bajty rozszerzonego klucza są takie same jak oryginalny klucz.<br /><br />
+            1. Utworzenie pierwszych czterech kolejnych bajtów klucza.<br /><br />
+            1.1. Przechowanie 4 ostatnich bajtów aktualnego klucza w tymczasowej tablicy.<br /><br />
+            1.2. Przesunięcie bajtów o jedną pozycję w lewo.<br /><br />
+            1.3. Podstawienie bajtów bazując na tabeli podstawień <i>Rijndael S-box</i>.<br /><br />
+            1.4. Operacja Rcon – sumowanie XOR najbardziej lewego bajtu w tablicy z wartością zależną od numeru rundy.<br /><br />
+            <img class="center-block" width="40%" height="40%" src="~/images/Description/aes/rcon.PNG" /><br />
+            1.5. Dopisanie utworzonych bajtów do aktualnego klucza.<br /><br />
+            2. Stworzenie następnych 12 bajtów poprzez trzykrotne powtórzenie poniższych kroków.<br /><br />
+            2.1. Przechowanie czterech ostatnich bajtów rozszerzanego klucza w tymczasowej tablicy.<br /><br />
+            2.2. Sumowanie XOR tymczasowej 4-bajtowej tablicy z blokiem zaczynającym się n bajtów przed aktualnym końcem klucza, gdzie n oznacza długość w bajtach początkowego klucza. Suma zostaje dodana do rozszerzanego klucza.<br /><br />
+            3. Jeżeli klucz jest 256-bitowy to należy wykonać kolejne operacje.<br /><br />
+            3.1. Przechowanie 4 ostatnich bajtów tworzonego klucza w tymczasowej tablicy.<br /><br />
+            3.2. Zastąpienie każdego bajtu, bazując na tabeli podstawień <i>Rijndael S-box</i>.<br /><br />
+            3.3. Sumowanie XOR tymczasowej 4-bajtowej tablicy z blokiem zaczynającym się n bajtów przed aktualnym końcem rozszerzanego klucza, gdzie n oznacza długość w bajtach początkowego klucza. Suma zostaje dodana do rozszerzanego klucza.
+            4. Jeżeli klucz jest 192-bitowy, to należy wykonać poniższe operacje dwa razy, natomiast dla klucza 256-bitowego trzy razy.
+            4.1. Przechowanie 4 ostatnich bajtów tworzonego klucza w tymczasowej tablicy.<br /><br />
+            4.2. Sumowanie XOR tymczasowej tablicy z odległymi o n bajtami aktualnego klucza, gdzie n oznacza długość początkowego klucza. Suma zostaje dodana do rozszerzanego klucza.<br /><br />
+            5. Przejście do kolejnej iteracji rozszerzania klucza. Iteracje powtarza się aż do uzyskania właściwej długości klucza.
+
+        </p>
     </div>
     <div id="Tools" class="tabcontent col-lg-12">
         @await Html.PartialAsync("_AesPartial")
