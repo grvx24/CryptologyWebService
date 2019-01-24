@@ -2,44 +2,38 @@
 
 
 <div class="col-lg-12">
-    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Algorytm najmniej znaczącego bitu</label>
-    <div class="body-content" style="font-size:18px; margin-top:30px; margin-bottom:30px;">
-        Jedną z najprostrzych metod osadzania znaku wodnego jest moetoda polegajaca
-        na zmianie najmniej znaczącego bitu słowa oposującego dany piksel. Jej wynik
-        zależy ściśle od liczby bitów przeznaczonych do zapisu pojedynczego piksela:
-        im więcej bitów opisuje dany, piksel, tym mniejsze znaczenie ma dla globalnego
-        odczucia odbiorcy modyfikacja jednego lub kilku ostatnich bitów. Oznaczony w
-        taki sposób obraz można łątwo sfałszować, dokonując zamiany formatu , np. bmp
-        na gif, zmniejszajac głębie koloru itp. bądź poddając go kompresji w trakcie
-        zmiany formatu na jpg. Zawarta w orbrazie informacja zostaje uszkodzona.
+    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Steganografia</label>
+    <div class="body-content" style="font-size: 30px; margin-top:30px; margin-bottom:30px;">
+        Steganografia to technika ukrywania informacji poprzez osadzanie jednych wiadomości  w
+        innych.  Dzięki  niej  możemy  ukrywać  wiadomości  w  obrazie  w  sposób niewidoczny dla odbiorcy.
     </div>
-    <div class="body-content" style="font-size:18px; margin-top:30px;">
-        Jeśli wziąć pod uwagę obrazy 24-bitowe oraz założyc, że modyfikujemy po dwa
-        ostatnie bity z każdego piksela, to:
-        + obraz o rozmiarach 1024 x 768 zawiera 1 572 864 bity, które możemy przeznaczyć
-        na osadzenia informacji dodatkowej,
-        + jeśli skompresujemy wiadomość osadzoną przed osadzeniem, to powiększymy
-        wyliczony obszar w sposób zależny od jakosci algorytmu kompresji
+    <label class="text-center" style="font-size: 30px;  color: #1c5aa6;">Metoda najmniej znaczącego bitu</label>
+    <div class="body-content" style="font-size:30px; margin-top:30px;">
+        Jedną z najprostszych metod steganograficznych jest algorytm polegający
+        nazmianie najmniej znaczących bitów opisujących dany piksel na bity
+        ukrywanej wia-domości. Zmiany w obrazie są niewidoczne i porównując
+        obraz wejściowy i obraz zzaszyfrowaną wiadomością niemożliwe jest
+        ich rozróżnienie (rysunek 47). Im więcejbitów zostanie przeznaczone
+        na kodowanie, tym modyfikacja obrazu będzie bardziejwidoczna [11].
     </div>
-    <div>
-        <br />
-        <br />
+    <div class="body-content">
+        Jeżeli  obraz  mający  zakodowane  informacje  za  pomocą  tej  metody
+        zostaniepoddany kompresji, wygładzeniu, zmianie kolorów, skalowaniu,
+        poprawie kontrastulub innej czynności wpływającej na obraz, wszystkie
+        dane w nim zawarte najpraw-dopodobniej przepadną i nie
+        będziemy w stanie odkodować informacji.
     </div>
 
     <div>
         <br />
         <br />
     </div>
+    <h3 class="panel-group">Zastosowanie</h3>
     <div class="body-content">
-        Jak widać, każdy udział składa się z dwóch subpikseli. W wyniku nałożenia na siebie
-        udziałów piksela białego otrzymamy obraz składający się z białego i czarnego subpiksela,
-        co da w efekcie wrażenie koloru szarego. Udziały piksela czarnego po nałożeniu
-        dają obraz pierwotny. Obrazy składające się z udziałów nie dają żadnych informacji o zaszyfrowanej
-        wiadomości, ponieważ każda kombinacja subpikseli pojawia się z prawdopodobieństwem
-        50%, co jest równoważne z rozkładem losowym. Kiedy oba obrazy
-        zostaną na siebie nałożone, ukaże się obraz pierwotny (z tą różnicą, iż jego białe obszary
-        będą teraz widoczne jako szare). Można oczywiście dzielić piksele na więcej części,
-        tworząc tym samym więcej udziałów.
+        Steganografia idealnie sprawdza się w oznaczaniu obrazów znakami
+        cyfrowymi.Dodatkowo może też służyć jako kanał komunikacyjny
+        np. nie chcąc wysyłać sieciąjawnego  szyfrogramu,  możemy
+        dodatkowo  ukryć  go  w  niepozornie  wyglądającymobrazie.
     </div>
 </div>
 
