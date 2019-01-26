@@ -12,12 +12,13 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             List<AnimationViewModel> Animations = new List<AnimationViewModel>
             {
-                new AnimationViewModel("/images/1.bmp", "/images/2.bmp")
+                new AnimationViewModel("/images/Description/VisualCryptography/VisualCryptography/s_1.png",
+                "/images/Description/VisualCryptography/VisualCryptography/s_2.png")
                 {
-                    Width = 300,
+                    Width = 200,
                     Height = 200,
-                    Amplitude = 2,
-                    Period = 20000
+                    Amplitude = 100,
+                    Period = 50000
                 },
                 new AnimationViewModel("/images/1.bmp", "/images/2.bmp")
                 {
@@ -27,15 +28,25 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             List<ImageViewModel> Images = new List<ImageViewModel>
             {
-                new ImageViewModel("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                new ImageViewModel("/images/Description/VisualCryptography/VisualCryptography/SubPiksel.png","Kodowanie czarnego piksela")
                 {
-                    Width = 793,
-                    Height = 200
+                    Width = 420,
+                    Height = 99
                 },
-                new ImageViewModel("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                new ImageViewModel("/images/Description/VisualCryptography/VisualCryptography/WhitePixel.png","Kodowanie białęgo piksela")
                 {
-                    Width = 991,
-                    Height = 250
+                    Width = 742,
+                    Height = 220
+                },
+                new ImageViewModel("/images/Description/VisualCryptography/VisualCryptography/BlackPixel.png","Kodowanie białęgo piksela")
+                {
+                    Width = 742,
+                    Height = 220
+                },
+                new ImageViewModel("/images/Description/VisualCryptography/VisualCryptography/macierze.png","Kodowanie białęgo piksela")
+                {
+                    Width = 657,
+                    Height = 112
                 }
             };
             VieModelViewModel.AnimationList = Animations;
@@ -50,26 +61,27 @@ namespace CryptoWebService.Backend.VisualCryptography
 
             List<AnimationViewModel> Animations = new List<AnimationViewModel>
             {
-                new AnimationViewModel("/images/steganografia_sekret_2.png", "/images/steganografia_sekret_1.png")
+                new AnimationViewModel("/images/Description/VisualCryptography/steganografiawizualna/1545245985425_sekret_1.png",
+                "/images/Description/VisualCryptography/steganografiawizualna/1545245985430_sekret_2.png")
                 {
-                    Width = 600,
-                    Height = 300,
-                    Amplitude = 3,
-                    Period = 40000
+                    Width = 426,
+                    Height = 250,
+                    Amplitude = 100,
+                    Period = 2500
                 },
             };
 
             List<ImageViewModel> Images = new List<ImageViewModel>
             {
-                new ImageViewModel("/images/SimpleMethodBlackPixel.png","Kodowanie czarnego piksela")
+                new ImageViewModel("/images/Description/VisualCryptography/steganografiawizualna/model.png","schemat działania")
                 {
-                    Width = 793,
-                    Height = 200
+                    Width = 602,
+                    Height = 355
                 },
-                new ImageViewModel("/images/SimpleMethodWhitePixel.png","Kodowanie białęgo piksela")
+                new ImageViewModel("/images/Description/VisualCryptography/steganografiawizualna/tabela.png","Kodowanie białęgo piksela")
                 {
-                    Width = 991,
-                    Height = 250
+                    Width = 566,
+                    Height = 447
                 }
             };
             VieModelViewModel.AnimationList = Animations;

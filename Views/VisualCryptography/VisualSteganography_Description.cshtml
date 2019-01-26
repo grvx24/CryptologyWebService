@@ -1,25 +1,66 @@
 ﻿@using CryptoWebService.Helpers;
 @model PageViewModel;
 
-<div class="col-lg-12">
+
+<h2 class="title">steganografia wizualna</h2>
+<div class="description">
+    Jest  to  rozwinięcie  <a class="btn-link" style="font-weight:bold" asp-controller="VisualCryptography" asp-action="Sekret">kryptografii  wizualnej</a>  i  działa  na  podobnych
+    zasadach. Dzięki tej metodzie możemy podzielić ukrywany obraz na udziały, a
+    dodatkowo możemy wpływać na wygląd udziałów.
+    Tak skonstruowane udziały wyglądają na mniej podejrzane, a ktoś kto będzie miał dostęp
+    do udziałów może nawet nie podejrzewać, że kryją dodatkową informację.
+    <br class="col-lg-12">
+    <br class="col-lg-12">
     <div class="body-content">
-        Jest  to  rozwinięcie  kryptografii  wizualnej  i  działa  na  podobnych
-        zasadach.Dzięki tej metodzie możemy podzielić ukrywany obraz na udziały, ale
-        dodatkowymplusem jest to, że możemy wpływać na wygląd udziałów (rysunek 45).
-        Dzięki temuudziały wyglądają na mniej podejrzane. Ktoś kto będzie miał dostęp
-        do udziałówmoże nawet nie podejrzewać, że kryją dodatkową informację [2, 12]
+        <div class="FlexControl">
+            @{
+                await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("AnimationControl"), Model.AnimationList[0]);
+            }
+        </div>
+        <div class="FlexControl">
+            <p>
+                Steganografia wizualna animacja
+            </p>
+        </div>
     </div>
+    <br class="col-lg-12">
+    <br class="col-lg-12">
+    Jako dane wejściowe potrzebujemy 3 obrazów. Dwa z nich będą jawne – będą to udziały.
+    Po ich złączeniu ukaże nam się trzeci obraz (ukrywany). Ogólny schemat działania
+    algorytmu został przedstawiony na poniższym rysunku.
+    <br class="col-lg-12">
+    <br class="col-lg-12">
     <div class="body-content">
-        Jako dane wejściowe potrzebujemy 3 obrazów. Dwa z nich będą jawne – będąto udziały.
-        Po ich złączeniu ukaże nam się trzeci obraz (ukrywany). Ogólny schematdziałania 
-        algorytmu został przedstawiony na rysunku 46.
+        <div class="FlexControl">
+            @{
+                await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("ImageControl"), Model.ImageList[0]);
+            }
+        </div>
+        <div class="FlexControl">
+            <p>
+                schemat działania
+            </p>
+        </div>
     </div>
+    <br class="col-lg-12">
+    <br class="col-lg-12">
+    W celu zakodowania obrazów algorytm, bierze pod uwagę kolor pikseli w danym miejscu
+    na wszystkich obrazach wejściowych i w zależności od kombinacji, każdy udział koduje
+    inaczej. Wszystkie możliwe kombinacje kolorów zostały przedstawionew w ponizszej tabeli.
+    Na przykład jeśli wszystkie obrazy wejściowe mają kolor czarny w danym miejscu,
+    to do kodowania udziałów używamy permutacji macierzy z pierwszego wiersza tabeli.
+    <br class="col-lg-12">
+    <br class="col-lg-12">
     <div class="body-content">
-        W celu zakodowania obrazów algorytm, bierze pod uwagę kolor pikseli w da-nym miejscu
-        na wszystkich obrazach wejściowych i w zależności od kombinacji, każdyudział koduje 
-        inaczej. Wszystkie możliwe kombinacje kolorów zostały przedstawionew tabeli 4. 
-        Na przykład jeśli wszystkie obrazy wejściowe mają kolor czarny w da-nym miejscu, 
-        to do kodowania udziałów używamy permutacji macierzy z pierwszegowiersza tabeli 4.
+        <div class="FlexControl">
+            @{
+                await Html.RenderPartialAsync(ViewControlsHelper.GetVisualCryptographyControlPath("ImageControl"), Model.ImageList[1]);
+            }
+        </div>
+        <div class="FlexControl">
+            <p>
+                schemat działania
+            </p>
+        </div>
     </div>
 </div>
-

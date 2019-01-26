@@ -264,3 +264,9 @@ svg a.high_light {
     left: 2px;
     top: -5px
 }
+
+.FlexControl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

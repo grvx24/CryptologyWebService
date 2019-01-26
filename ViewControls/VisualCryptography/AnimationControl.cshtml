@@ -1,12 +1,12 @@
 ﻿
-<div class="col-lg-12">
-    <div id="Animation@(Model.UnicNumber)"
-         class="myCanvas"
-         style="
-         width:@(Model.TotalWidthWithBorders + "px" );
-         height:@(Model.TotalHeightWithBorders + "px")" />
+
+<div id="Animation@(Model.UnicNumber)"
+        class="myCanvas"
+        style="
+        width:@(Model.TotalWidthWithBorders + "px" );
+        height:@(Model.TotalHeightWithBorders + "px")" />
 </div>
-</div>
+
 
 <style>
     .myCanvas {
@@ -38,11 +38,47 @@
 
     stage.add(mainLayer);
 
-    var anim = new Konva.Animation(function (frame) {
-        AnimationKonvaImage@(Model.UnicNumber).setX((@(Model.Amplitude) * Math.sin(frame.time * 2 * Math.PI / @(Model.Period))) + @(Model.Amplitude));
+    var counter@(Model.UnicNumber) = 0;
+    var IsWaiting@(Model.UnicNumber) = false;
+    var canWait@(Model.UnicNumber) = true;
+    var GoRight@(Model.UnicNumber) = true;
+    AnimationKonvaImage@(Model.UnicNumber).setX(0);
+    var Waiting@(Model.UnicNumber) = 0;
+    var anim@(Model.UnicNumber) = new Konva.Animation(function (frame) {
+
+        if (IsWaiting@(Model.UnicNumber)) {
+            if (Waiting@(Model.UnicNumber) == 0) {              
+                IsWaiting@(Model.UnicNumber) = false;
+            } else {
+                Waiting@(Model.UnicNumber) = Waiting@(Model.UnicNumber) - 1;
+            }
+        } else {
+            if (counter@(Model.UnicNumber) == @(Model.Amplitude) && canWait@(Model.UnicNumber)) {
+                IsWaiting@(Model.UnicNumber) = true;
+                Waiting@(Model.UnicNumber) = @(Model.Amplitude);
+                canWait@(Model.UnicNumber) = false;
+            } else {
+                canWait@(Model.UnicNumber) = true;
+                if (GoRight@(Model.UnicNumber)) {
+                    if (counter@(Model.UnicNumber) < @(Model.Amplitude * 2)) {
+                        counter@(Model.UnicNumber) = counter@(Model.UnicNumber) + 1;
+                        AnimationKonvaImage@(Model.UnicNumber).setX(counter@(Model.UnicNumber));               
+                    } else {
+                        GoRight@(Model.UnicNumber) = false;
+                    }
+                } else {
+                    if (counter@(Model.UnicNumber) > 0) {
+                        counter@(Model.UnicNumber) = counter@(Model.UnicNumber) - 1;
+                        AnimationKonvaImage@(Model.UnicNumber).setX(counter@(Model.UnicNumber));          
+                    } else {
+                        GoRight@(Model.UnicNumber) = true;
+                    }
+                }
+            }
+        }
     }, mainLayer);
 
-    anim.start();
+    anim@(Model.UnicNumber).start();
 
     function InitImage(imageSrc, layer,XPosition) {
         var KonvaImage = new Konva.Image({

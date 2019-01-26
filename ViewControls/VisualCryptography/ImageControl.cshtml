@@ -1,18 +1,8 @@
-﻿<div class="col-lg-12">
-    <img id="Image@(Model.UnicNumber)" src="@(Model.ImagePath)"/>
-    <p class="description">@(Model.Name)</p>
-</div>
-<style>
-    .description{
-        font-style:italic;
-        margin-top:5px;
-        margin-bottom:20px;
-    }
-</style>
+﻿<img id="Image@(Model.UnicNumber)" src="@(Model.ImagePath)"/>
 <script>
     var image = document.getElementById("Image@(Model.UnicNumber)");
     image.style.background = "#F0F0F0";
     image.style.width = '@Model.Width' + "px";
     image.style.height = '@Model.Height' + "px";
-    image.style.border = '2px solid black';
+    image.style.border = '1px solid black';
 </script>
