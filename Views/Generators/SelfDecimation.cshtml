@@ -15,18 +15,17 @@
                 zegarowym. Kiedy wyjście rejestru LFSR jest równe 0, wtedy ten LFSR jest
                 taktowany <i>d</i> razy, a gdy jest równe 1 to <i>k</i> razy.
                 Okres generatora samodecymującego Rueppela jest równy:
-                <br><br>
-                    <strong><i>T</i> = 	&lfloor;&#8532;<i>T<sub>0</sub></i>&rfloor;</strong>,
-                <br><br>
+                <br>
+                <img class="center-block" src="~/images/Description/Generators/rueppela_formula.png" alt="SelfDecimationFormula" style="width:14%">
                 wtedy gdy okres rejestru LFSR jest maksymalny i równy <i>T<sub>0</sub></i> gdzie &lfloor;&rfloor; oznacza całkowite
                 dolne ograniczenie. Na rysunku poniżej przedstawiono
                 schemat działania tego generatora.
                 <br><br>
                 <img class="center-block" src="~/images/Description/Generators/gen_Rueppela.png" alt="SelfDecimation" style="width:600px;">
-                <br><br>
+                <br>
 
 
-        </div>
+</div>
         <div id="Tools" class="tabcontent col-lg-12">
 
             @await Html.PartialAsync("_SelfDecimationPartial")

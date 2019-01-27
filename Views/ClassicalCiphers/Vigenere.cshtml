@@ -21,16 +21,16 @@
             <br><br>
             W drugiej metodzie szyfrowania szyfrem Vigenère'a, każdej kolejnej literze alfabetu przypisana jest kolejna liczba z zakresu od 0 do <i>m</i>. Aby otrzymać <i>i</i>-tą literę szyfrogramu,
             należy podstawić do poniższego wzoru odpowiednie liczby oznaczające poszczególne litery alfabetu:
-            <br><br>
-                <strong> <i>C<sub>i</sub></i> =  <i>T<sub>i</sub></i> + <i>K<sub>i</sub></i> <i>mod m</i></strong>,
-            <br><br>
+            <br>
+            <img class="center-block" src="~/images/Description/Ciphers/vigenere_formula.png" alt="VigenereFormula" style="width:23%">
+            <br>
             gdzie  C<sub>i</sub> jest liczbą odpowiadającą <i>i</i>-tej literze szyfrogramu, T<sub>i</sub> jest liczbą odpowiadającą <i>i</i>-tej literze tajnego klucza (jeśli klucz jest krótszy od tekstu jawnego, należy zapętlać kolejne litery klucza), K<sub>i</sub> to liczba odpowiadająca <i>i</i>-tej literze tekstu jawnego natomiast litera <i>m</i> to liczność alfabetu.
             <br>
             <br>
             Przykład:
             <br><b>Tekst jawny</b>: <span style="color: #327AB7">Kryptografia</span>
-            <br><b>Klucz</b>: Kombajn 
-            <br><b>Liczność alfabetu</b>: 26 
+            <br><b>Klucz</b>: Kombajn
+            <br><b>Liczność alfabetu</b>: 26
             <br><b>Obliczenia</b>:
             <br> <b><span style="color: #327AB7">K</span></b> + <span style="color: #D9534F">K</span> = <span style="color: #327AB7">10</span> + <span style="color: #D9534F">10</span> = 20 MOD 26 = <b><span style="color: #9542CD">U</span></b>
             <br> <b><span style="color: #327AB7">R</span></b> + <span style="color: #D9534F">O</span> = <span style="color: #327AB7">17</span> + <span style="color: #D9534F">14</span> = 31 MOD 26 = <b><span style="color: #9542CD">F</span></b>

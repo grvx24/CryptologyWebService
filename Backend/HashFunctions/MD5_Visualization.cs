@@ -283,8 +283,8 @@ namespace CryptoWebService.Backend.HashFunctions
 
             sizeMsgBuff = (uint)((_byteInput.Length) + (pad / 8) + 8);
             sizeMsg = (ulong)_byteInput.Length * 8;
-            bMsg = new byte[sizeMsgBuff];   ///no need to pad with 0 coz new bytes
-            // are already initialize to 0 :)
+            bMsg = new byte[sizeMsgBuff];   ///no need to pad with 0 because new bytes
+            // are already initialize to 0
 
             ////copying string to buffer
             for (int i = 0; i < _byteInput.Length; i++)
