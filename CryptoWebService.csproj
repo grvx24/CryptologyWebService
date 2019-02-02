@@ -37,6 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="_Database\Deploy\QuizDataBase.sql" />
+    <Content Include="_Database\QuizDatabase.ldf" />
+    <Content Include="_Database\QuizDatabase.mdf" />
+    <Content Include="_Database\QuizDatabase_log.ldf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="SHA3.Net" Version="1.1.1" />

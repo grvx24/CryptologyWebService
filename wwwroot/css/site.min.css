@@ -1,1 +1,272 @@
-body{padding-top:50px;padding-bottom:20px}.body-content{padding-left:15px;padding-right:15px}.carousel-caption p{font-size:20px;line-height:1.4}.carousel-inner .item img[src$=".svg"]{width:100%}#qrCode{margin:15px}@media screen and (max-width:767px){.carousel-caption{display:none}}
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: #5c9def;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: 0.3s;
+    font-size: 16px;
+    border-radius: 14px;
+    margin-right: 5px;
+    margin-top:2px;
+}
+
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #a9c0dc;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #1c5aa6;
+    font-size: 18px;
+    margin-top: 0px
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-top: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.loader {
+    margin-top: 20px;
+    height: 8px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.loader:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -200px;
+    width: 200px;
+    height: 8px;
+    background-color: #2980b9;
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+     from {left: -200px; width: 30%;}
+     50% {width: 30%;}
+     70% {width: 70%;}
+     80% { left: 50%;}
+     95% {left: 120%;}
+     to {left: 100%;}
+ }
+
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #5c9def;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #5c9def;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1c5aa6;
+}
+
+input[type=radio] {
+    border: 0px;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.radio-text{
+    font-size: 16px;
+}
+
+.btn-space {
+    margin-right: 5px;
+}
+
+.btn-space-lg {
+    margin-right: 10px;
+}
+
+.alg-title {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+/*.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #1c5aa6;
+    cursor: pointer;
+}*/
+
+.title {
+    color: #5c9def;
+    font-family: Cambria, fantasy;
+    font-weight: 700;
+    font-variant: small-caps;
+    text-align: center;
+}
+
+.steps {
+    color: #5c9def;
+    font-family: Cambria, fantasy;
+    font-weight: 500;
+}
+
+.description {
+    box-shadow: 6px 5px 7px 8px #a9c0dc;
+    color: black;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: justify;
+    padding: 20px;
+    font-family: Verdana;
+    background-size: cover;
+    border-radius: 20px;
+}
+svg a image {
+    opacity: 0.6;
+    transition: 0.6s opacity;
+}
+
+svg a:hover image {
+     opacity: 1;
+    }
+
+svg a.high_light {
+    opacity: 0.65;
+    transition: 0.6s opacity;
+}
+
+    svg a.high_light:hover {
+        opacity: 1;
+    }
+
+.supsub {
+    position: absolute
+}
+
+.subscript {
+    color: green;
+    display: block;
+    position: relative;
+    left: 2px;
+    top: -5px
+}
+
+.superscript {
+    color: red;
+    display: block;
+    position: relative;
+    left: 2px;
+    top: -5px
+}
+
+.FlexControl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
